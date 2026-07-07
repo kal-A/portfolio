@@ -1,4 +1,4 @@
-export const metadata = { title: "About — Kamal Ahsan" };
+export const metadata = { title: "About · Kamal Ahsan" };
 
 const toolGroups = [
   {

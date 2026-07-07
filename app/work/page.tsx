@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { caseStudies } from "@/lib/content/case-studies";
 
-export const metadata = { title: "Case Studies — Kamal Ahsan" };
+export const metadata = { title: "Case Studies · Kamal Ahsan" };
 
 export default function WorkIndex() {
   return (

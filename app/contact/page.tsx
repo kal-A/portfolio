@@ -1,4 +1,4 @@
-export const metadata = { title: "Contact — Kamal Ahsan" };
+export const metadata = { title: "Contact · Kamal Ahsan" };
 
 export default function ContactPage() {
   return (

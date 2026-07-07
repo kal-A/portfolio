@@ -19,5 +19,5 @@ body {
 }
 
 .font-serif {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-dm-serif), Georgia, "Times New Roman", serif;
 }

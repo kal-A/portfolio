@@ -21,7 +21,7 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const cs = getCaseStudy(params.slug);
-  return { title: cs ? `${cs.title} — Kamal Ahsan` : "Case Study" };
+  return { title: cs ? `${cs.title} · Kamal Ahsan` : "Case Study" };
 }
 
 export default function CaseStudyPage({ params }: { params: { slug: string } }) {
@@ -43,10 +43,22 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       <p className="text-neutral-500 mt-3">
         {cs.role} · {cs.timeframe}
       </p>
+      <p className="text-neutral-700 mt-4 text-lg leading-relaxed">{cs.oneLiner}</p>
+
+      <div className="flex flex-wrap gap-2 mt-6">
+        {cs.artifacts.map((a) => (
+          <span
+            key={a}
+            className="text-xs border border-neutral-200 rounded-full px-2.5 py-1 text-neutral-500"
+          >
+            {a}
+          </span>
+        ))}
+      </div>
 
       {cs.team && (
         <div className="mt-6 border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-600">
-          <span className="font-medium text-neutral-800">Team project — </span>
+          <span className="font-medium text-neutral-800">Team project: </span>
           {cs.team}
           {cs.contribution && (
             <p className="mt-2 text-neutral-600">{cs.contribution}</p>
@@ -131,6 +143,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           ))}
         </ul>
       </section>
+
+      {cs.whatIdImprove && (
+        <section className="mt-10 border-t border-neutral-200 pt-6">
+          <h2 className="font-serif text-lg text-neutral-900 mb-2">What I'd improve next</h2>
+          <p className="text-neutral-600 text-sm leading-relaxed">{cs.whatIdImprove}</p>
+        </section>
+      )}
 
       {cs.links && cs.links.length > 0 && (
         <div className="mt-10 flex gap-4">

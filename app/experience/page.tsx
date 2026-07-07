@@ -3,19 +3,22 @@ import { experience } from "@/lib/content/experience";
 import { caseStudies } from "@/lib/content/case-studies";
 import Synopsis from "@/components/Synopsis";
 
-export const metadata = { title: "Experience — Kamal Ahsan" };
+export const metadata = { title: "Experience · Kamal Ahsan" };
 
 const projectSlugs = new Set(experience.map((e) => e.caseStudySlug).filter(Boolean));
 const standaloneProjects = caseStudies.filter((cs) => !projectSlugs.has(cs.slug));
 
-const workSynopsis = experience.map((job) => ({
-  key: `${job.company}-${job.timeframe}`,
-  heading: `${job.role} · ${job.company}`,
-  timeframe: job.timeframe,
-  summary: job.synopsis,
-  metric: job.bullets.find((b) => /\d/.test(b))?.match(/\d+%|\d+x|\d+\+/)?.[0],
-  slug: job.caseStudySlug,
-}));
+const workSynopsis = experience.map((job) => {
+  const cs = job.caseStudySlug ? caseStudies.find((c) => c.slug === job.caseStudySlug) : null;
+  return {
+    key: `${job.company}-${job.timeframe}`,
+    heading: `${job.role} · ${job.company}`,
+    timeframe: job.timeframe,
+    summary: cs?.summary ?? job.synopsis,
+    metric: cs?.metrics[0]?.value ?? job.bullets.find((b) => /\d/.test(b))?.match(/\d+%|\d+x|\d+\+/)?.[0],
+    slug: job.caseStudySlug,
+  };
+});
 
 const projectSynopsis = standaloneProjects.map((cs) => ({
   key: cs.slug,

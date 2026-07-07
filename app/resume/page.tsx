@@ -1,4 +1,4 @@
-export const metadata = { title: "Resume — Kamal Ahsan" };
+export const metadata = { title: "Resume · Kamal Ahsan" };
 
 export default function ResumePage() {
   return (

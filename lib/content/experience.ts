@@ -21,6 +21,7 @@ export const experience: ExperienceEntry[] = [
       "Coordinated execution across engineering, operations, and inventory (6+ stakeholders), improving delivery efficiency by 30%.",
       "Standardized tracking, documentation, and QA validation across hardware configurations, reducing assembly errors by 25% and improving on-time delivery by 30%.",
     ],
+    caseStudySlug: "forcen",
   },
   {
     role: "Product Designer Intern",
@@ -52,7 +53,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "Product Design & Marketing Intern",
     company: "Hera Fertility",
-    location: "Remote — New York, NY",
+    location: "Remote (New York, NY)",
     timeframe: "Jan 2023 – Apr 2023",
     synopsis:
       "Took a fintech onboarding experience from zero to shipped, bringing loan servicing in-house and doubling retention.",
@@ -66,7 +67,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "Product Designer & Developer Intern",
     company: "PathPeer",
-    location: "Remote — Waterloo, ON",
+    location: "Remote (Waterloo, ON)",
     timeframe: "May 2022 – Aug 2022",
     synopsis:
       "Built and shipped a mentorship platform solo, driving engagement up and drop-off down through iterative design.",
