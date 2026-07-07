@@ -93,6 +93,29 @@ the rest.
   overflow text. Text should fill its column (don't let copy trail off short
   while the box next to it is taller/shorter than the content).
 
+## Third mockup review (2026-07-07, late night) — node style locked in
+
+Approved direction for the hero mind map: **schematic/blueprint style, not
+glossy orbs.**
+
+- Faint background grid lines (thin, ~15% opacity) behind the whole diagram,
+  evoking engineering-paper/blueprint texture.
+- Nodes are **outlined circles** (stroke, not filled gradient blobs) with a
+  small solid center dot — like a schematic node, not a 3D button.
+- Monospace, uppercase labels (`Courier New` or similar), not the serif/sans
+  used elsewhere on the site — this is the one place a technical/schematic
+  font makes sense.
+- "Systems" node gets a double ring (outer thin ring + inner thicker ring) to
+  read as the hub/center of the diagram — it's the largest node and the
+  throughline of the positioning.
+- Near-monochrome resting state; on hover, ring + center dot flip to the rust
+  accent color as the only color moment (kept from earlier rounds).
+- **Explicitly still open for another pass:** grid density/spacing and the
+  exact circle rendering (stroke weight, size ratios) can still be pushed
+  further for more "pop and depth" — approved as a good direction, not a
+  final pixel-perfect spec. Revisit before hardcoding exact values in the
+  real SVG component.
+
 ## Open feedback not yet resolved
 
 - **Diction still reads "too AI-y" in places.** Specific culprits called
