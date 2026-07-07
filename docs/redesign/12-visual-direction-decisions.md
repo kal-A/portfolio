@@ -78,6 +78,21 @@ the rest.
   > of a workflow first, then turn them into clearer flows, prototypes,
   > tools, and handoffs.
 
+## Revised after second mockup review (2026-07-07)
+
+- **Node colors:** the multi-color palette (rust/teal/gold per node) was
+  rejected as "out of place." Switched to **near-monochrome charcoal/warm-gray
+  gradients** for all nodes, with saturation/color popping in only on hover
+  (kept the hover "pop" interaction, dropped the resting-state color variety).
+- **Node depth:** confirmed direction — 3-stop radial gradient + specular
+  highlight ellipse (light source, upper-left) + two-layer drop shadow. This
+  is the depth technique to carry into the real component.
+- **Case study row layout bug, now fixed in mockup:** the colored swatch and
+  text block must use `align-items: stretch` so the swatch's height matches
+  the actual text block height — not a small fixed box floating next to
+  overflow text. Text should fill its column (don't let copy trail off short
+  while the box next to it is taller/shorter than the content).
+
 ## Open feedback not yet resolved
 
 - **Diction still reads "too AI-y" in places.** Specific culprits called
