@@ -1,274 +1,250 @@
 import Link from "next/link";
 import { caseStudies } from "@/lib/content/case-studies";
 import { experience } from "@/lib/content/experience";
+import { caseStudyTheme } from "@/lib/content/theme";
+import Reveal from "@/components/Reveal";
+import Marquee from "@/components/Marquee";
+import Signature from "@/components/Signature";
+import RotatingWord from "@/components/RotatingWord";
 
-const featuredOrder = ["roomease", "hera-fertility", "greenhouse", "pill-pal", "forcen"];
+const featuredOrder = ["roomease", "hera-fertility", "greenhouse", "forcen"];
 const featured = featuredOrder
   .map((slug) => caseStudies.find((cs) => cs.slug === slug))
   .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
 
-const designWork = caseStudies.filter((cs) => cs.category === "visual");
-
-const howIWork = [
-  "Map the workflow",
-  "Find the friction",
-  "Structure the system",
-  "Design the experience",
-  "Prototype, test, or build",
-  "Document and hand off",
+const manifestoWords = [
+  "systems people actually use.",
+  "products people trust.",
+  "flows that make sense.",
+  "tools that cut the busywork.",
 ];
-
-const skillGroups = [
-  {
-    label: "Researching the workflow",
-    items: ["User Interviews", "Stakeholder Mapping", "Requirements Gathering", "Workflow Analysis", "Usability Testing"],
-  },
-  {
-    label: "Designing the experience",
-    items: ["UX Flows", "Wireframing", "Figma", "Prototyping", "UI Design", "Heuristic Evaluation"],
-  },
-  {
-    label: "Structuring the product",
-    items: ["Product Requirements", "Prioritization", "Roadmapping", "Sprint Planning", "Documentation"],
-  },
-  {
-    label: "Building and analyzing",
-    items: ["React", "Node.js", "Python", "SQL", "Analytics Dashboards"],
-  },
-  {
-    label: "Communicating the work",
-    items: ["Case Studies", "Reports", "Presentations", "Design Rationale"],
-  },
-];
-
-// Projects without artifacts strong enough for a full case study yet.
-const archiveOnly = experience.filter((job) => !job.caseStudySlug);
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-5xl px-6">
+    <div>
       {/* Hero */}
-      <section className="py-24 sm:py-32">
-        <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">
-          Product Design · UX · Systems
-        </p>
-        <h1 className="font-serif text-4xl sm:text-5xl mt-4 max-w-2xl leading-tight text-neutral-900">
-          I design products for messy real-world workflows.
-        </h1>
-        <p className="text-neutral-600 mt-6 max-w-xl text-lg">
-          I&apos;m a Management Engineering graduate from the University of Waterloo. I work
-          across product, UX/UI, operations, and technical systems, mapping the messy parts
-          first, then turning them into clearer flows, prototypes, tools, and handoffs.
-        </p>
-        <div className="flex gap-4 mt-8">
-          <Link
-            href="/work"
-            className="bg-neutral-900 text-white rounded-lg px-5 py-3 text-sm font-medium hover:bg-neutral-700 transition-colors"
-          >
-            View case studies
-          </Link>
-          <Link
-            href="/resume"
-            className="border border-neutral-300 rounded-lg px-5 py-3 text-sm font-medium hover:border-neutral-500 transition-colors"
-          >
-            See resume
-          </Link>
-        </div>
-      </section>
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(circle at 12% 8%, rgba(200,69,44,0.14) 0%, transparent 45%), radial-gradient(circle at 88% 15%, rgba(44,110,94,0.12) 0%, transparent 50%), linear-gradient(160deg, #fdf3ec 0%, #f6ede0 55%, #eef0e6 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-5xl px-6 py-24 sm:py-28">
+          <Reveal className="flex flex-wrap gap-2">
+            <Tag color="#c8452c" label="Product Management" />
+            <Tag color="#2c6e5e" label="Product Design" />
+            <Tag color="#3a6b93" label="Systems" />
+            <Tag color="#c2900a" label="UX / UI" />
+          </Reveal>
 
-      {/* Selected Case Studies */}
-      <section className="pb-24">
-        <div className="flex items-baseline justify-between mb-10">
-          <h2 className="font-serif text-3xl text-neutral-900">Selected Case Studies</h2>
-          <Link
-            href="/work"
-            className="text-sm text-neutral-500 hover:text-rose-500 transition-colors"
-          >
-            All work →
-          </Link>
-        </div>
-        <div className="space-y-4">
-          {featured.map((cs, i) => (
-            <Link
-              key={cs.slug}
-              href={`/work/${cs.slug}`}
-              className="group flex gap-6 items-start border border-neutral-200 rounded-xl p-6 hover:border-rose-200 hover:bg-rose-50/20 transition-all"
-            >
-              <span className="font-serif text-4xl text-neutral-200 group-hover:text-rose-200 transition-colors leading-none mt-0.5 select-none shrink-0 w-10">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-xs font-medium text-rose-500 uppercase tracking-wider">
-                    {cs.company}
-                  </p>
-                  {cs.category === "systems" && (
-                    <span className="text-[10px] uppercase tracking-wide text-neutral-400 border border-neutral-200 rounded-full px-2 py-0.5">
-                      Public-safe process case study
-                    </span>
-                  )}
-                </div>
-                <h3 className="font-serif text-xl mt-1 text-neutral-900 group-hover:text-rose-600 transition-colors leading-snug">
-                  {cs.title}
-                </h3>
-                <p className="text-neutral-600 mt-2 text-sm leading-relaxed">{cs.oneLiner}</p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {cs.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs bg-neutral-100 text-neutral-600 rounded-full px-2.5 py-1"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+          <div className="flex flex-col md:flex-row gap-10 md:gap-8 items-center mt-8">
+            <Reveal delay={120} className="flex-1">
+              <h1 className="font-serif text-4xl sm:text-5xl leading-tight text-neutral-900 max-w-xl">
+                I design products for{" "}
+                <em className="italic text-rose-500">messy real-world workflows.</em>
+              </h1>
+              <p className="text-neutral-600 mt-5 max-w-md text-lg">
+                Management Engineering, University of Waterloo. I map the messy parts of a
+                workflow first, then turn them into clearer flows, prototypes, tools, and
+                handoffs.
+              </p>
+              <Signature />
+              <div className="flex gap-4 mt-6">
+                <Link
+                  href="/work"
+                  className="bg-neutral-900 text-white rounded-lg px-5 py-3 text-sm font-medium hover:bg-neutral-700 transition-colors"
+                >
+                  View case studies
+                </Link>
+                <Link
+                  href="/resume"
+                  className="border border-neutral-300 rounded-lg px-5 py-3 text-sm font-medium hover:border-neutral-500 transition-colors"
+                >
+                  See resume
+                </Link>
               </div>
-              {cs.metrics[0] && (
-                <div className="shrink-0 text-right hidden sm:block">
-                  <p className="font-serif text-2xl text-neutral-800 leading-none">
-                    {cs.metrics[0].value}
-                  </p>
-                  <p className="text-xs text-neutral-500 mt-1 max-w-[100px] leading-tight">
-                    {cs.metrics[0].label}
-                  </p>
-                </div>
-              )}
-            </Link>
-          ))}
+            </Reveal>
+
+            <Reveal delay={250} className="shrink-0">
+              <PhotoStack />
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Design Work / Visual Evidence */}
-      <section className="pb-24">
-        <h2 className="font-serif text-3xl text-neutral-900 mb-3">Design Work, Grounded in Systems</h2>
-        <p className="text-neutral-600 max-w-2xl mb-10">
-          I like design work most when it&apos;s tied to a real workflow. The interface matters,
-          but so do the handoffs, edge cases, and constraints people need to complete the task.
-          These projects show the more visual side of the work: interfaces, flows, campaign
-          assets, and prototypes.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {designWork.map((cs) => {
-            const thumbnail =
-              cs.slug === "greenhouse"
-                ? { src: "/case-studies/greenhouse/amazon-12pack.png", alt: "Greenhouse Juices Amazon 12-pack lineup" }
-                : cs.slug === "roomease"
-                  ? null
-                  : cs.images?.[0];
+      {/* Marquee */}
+      <Reveal>
+        <Marquee />
+      </Reveal>
+
+      {/* Selected case studies */}
+      <section className="mx-auto max-w-5xl px-6 py-20">
+        <Reveal>
+          <h2 className="font-serif text-3xl text-neutral-900 mb-10">Selected case studies</h2>
+        </Reveal>
+        <div className="grid sm:grid-cols-2 gap-5">
+          {featured.map((cs, i) => {
+            const theme = caseStudyTheme[cs.slug];
             return (
-              <Link
-                key={cs.slug}
-                href={`/work/${cs.slug}`}
-                className="group border border-neutral-200 rounded-xl overflow-hidden hover:border-neutral-400 transition-colors"
-              >
-                {thumbnail ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={thumbnail.src}
-                    alt={thumbnail.alt}
-                    className="w-full h-48 object-cover object-center bg-neutral-50"
+              <Reveal key={cs.slug} delay={i * 90}>
+                <Link
+                  href={`/work/${cs.slug}`}
+                  className="group relative block rounded-xl overflow-hidden p-5"
+                  style={{ border: "2.5px solid #181614" }}
+                >
+                  <span
+                    className="absolute inset-0 origin-bottom scale-y-0 opacity-0 transition-all duration-300 group-hover:scale-y-100 group-hover:opacity-100"
+                    style={{ background: theme?.fill ?? "#f4f1ea" }}
                   />
-                ) : (
-                  <div className="w-full h-48 bg-gradient-to-br from-rose-50 via-neutral-50 to-neutral-100 flex items-center justify-center">
-                    <p className="text-xs uppercase tracking-widest text-neutral-400">
-                      Booking + Admin Flow
-                    </p>
+                  <span className="absolute inset-0 -z-10" style={{ background: theme?.bg ?? "#fdfaf5" }} />
+                  <div className="relative">
+                    <div
+                      className="w-8 h-8 rounded-lg mb-3 transition-transform duration-300 group-hover:-translate-y-0.5"
+                      style={{ background: theme?.icon ?? "#181614" }}
+                    />
+                    <h3 className="font-serif text-lg text-neutral-900">{cs.title}</h3>
+                    <p className="text-xs text-neutral-500 mt-1.5">{cs.company}</p>
                   </div>
-                )}
-                <div className="p-5">
-                  <p className="text-xs text-neutral-500 uppercase tracking-wide">{cs.company}</p>
-                  <h3 className="font-serif text-lg mt-1 text-neutral-900 group-hover:text-rose-500 transition-colors">
-                    {cs.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {cs.artifacts.slice(0, 3).map((a) => (
-                      <span
-                        key={a}
-                        className="text-[11px] border border-neutral-200 rounded-full px-2 py-0.5 text-neutral-500"
-                      >
-                        {a}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </Reveal>
             );
           })}
         </div>
       </section>
 
-      {/* How I Work */}
-      <section className="pb-24">
-        <h2 className="font-serif text-3xl text-neutral-900 mb-3">How I Work</h2>
-        <p className="text-neutral-600 max-w-2xl mb-10">
-          I usually start by mapping the workflow before touching the interface. Who is
-          involved? Where does the handoff break? What information is missing? What is being
-          tracked manually? What does the user actually need to finish the task? Then I turn
-          that into the product layer: flows, requirements, prototypes, dashboards, or
-          implementation details.
-        </p>
-        <div className="grid sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {howIWork.map((step, i) => (
-            <div key={step} className="border border-neutral-200 rounded-lg px-4 py-4">
-              <p className="font-serif text-2xl text-rose-400">{i + 1}</p>
-              <p className="text-sm text-neutral-700 mt-2 leading-snug">{step}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Project Archive */}
-      <section className="pb-24">
-        <h2 className="font-serif text-3xl text-neutral-900 mb-3">Project Archive</h2>
-        <p className="text-neutral-600 max-w-2xl mb-8">
-          Roles and projects with less physical/visual artifact material to draw on right now,
-          documented honestly rather than dressed up as full case studies.
-        </p>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {archiveOnly.map((job) => (
-            <div
-              key={`${job.company}-${job.timeframe}`}
-              className="border border-neutral-200 rounded-lg px-5 py-4"
-            >
-              <p className="text-xs text-neutral-500 uppercase tracking-wide">{job.timeframe}</p>
-              <h3 className="font-medium text-neutral-900 mt-1">
-                {job.role} · {job.company}
-              </h3>
-              <p className="text-sm text-neutral-600 mt-2 leading-relaxed">{job.synopsis}</p>
-            </div>
-          ))}
-        </div>
-        <Link
-          href="/experience"
-          className="inline-block mt-6 text-sm text-rose-500 hover:text-rose-600 font-medium"
-        >
-          See full work timeline →
-        </Link>
-      </section>
-
-      {/* Skills / Ways I Work */}
-      <section className="pb-24">
-        <h2 className="font-serif text-3xl text-neutral-900 mb-8">Ways I Work</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillGroups.map((group) => (
-            <div key={group.label}>
-              <p className="text-xs font-medium text-neutral-400 uppercase tracking-widest mb-3">
-                {group.label}
+      {/* Work experience */}
+      <section className="mx-auto max-w-5xl px-6 py-20 flex flex-col sm:flex-row gap-8">
+        <Reveal className="sm:w-40 shrink-0">
+          <h2 className="font-serif text-3xl text-neutral-900 leading-tight">
+            Work
+            <br />
+            experience
+          </h2>
+        </Reveal>
+        <div className="flex-1 border-l-2 border-dashed border-neutral-200 pl-7">
+          {experience.map((job, i) => (
+            <Reveal key={`${job.company}-${job.timeframe}`} delay={i * 80} className="relative pb-9 last:pb-0">
+              <span className="absolute -left-[38px] top-0.5 w-3.5 h-3.5 rounded-full border-[1.5px] border-neutral-900 bg-[#fdfaf5] flex items-center justify-center">
+                <span className="w-1 h-1 rounded-full bg-rose-500" />
+              </span>
+              <p className="font-serif text-lg text-neutral-900">{job.company}</p>
+              <p className="text-xs text-neutral-500 mt-1">
+                {job.role} · {job.location} · {job.timeframe}
               </p>
-              <div className="flex flex-wrap gap-2">
-                {group.items.map((skill) => (
-                  <span
-                    key={skill}
-                    className="text-sm border border-neutral-200 rounded-full px-3 py-1.5 text-neutral-700 bg-neutral-50"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+              <p className="text-sm text-neutral-600 mt-2 max-w-md leading-relaxed">
+                {job.synopsis}
+              </p>
+              {job.caseStudySlug ? (
+                <Link
+                  href={`/work/${job.caseStudySlug}`}
+                  className="text-xs font-medium text-rose-500 hover:text-rose-600 mt-2 inline-block"
+                >
+                  Read more →
+                </Link>
+              ) : (
+                <span className="text-xs font-medium text-neutral-400 mt-2 inline-block">
+                  Full bullet detail on the{" "}
+                  <Link href="/experience" className="text-rose-500 hover:text-rose-600">
+                    Experience
+                  </Link>{" "}
+                  page
+                </span>
+              )}
+            </Reveal>
           ))}
         </div>
       </section>
+
+      {/* Craft manifesto / stat strip */}
+      <Reveal>
+        <section className="bg-neutral-900 py-14">
+          <div className="mx-auto max-w-5xl px-6">
+            <p className="text-[10px] uppercase tracking-widest text-neutral-500">
+              Craft manifesto
+            </p>
+            <h2 className="font-serif text-2xl sm:text-3xl text-neutral-50 mt-2 mb-8">
+              I build <RotatingWord words={manifestoWords} />
+            </h2>
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
+              <Stat label="Internships" value="5" />
+              <Stat label="Case Studies" value={String(caseStudies.length)} />
+              <Stat label="Building Since" value="2022" />
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* CTA block */}
+      <Reveal>
+        <section
+          className="py-16 text-center"
+          style={{ background: "linear-gradient(135deg,#f0c9b8,#f6ded0)" }}
+        >
+          <h2 className="font-serif text-3xl text-neutral-900">Let&apos;s connect.</h2>
+          <p className="text-sm text-neutral-700 mt-2">
+            Open to product, TPM, and product design roles — reach out.
+          </p>
+          <a
+            href="https://linkedin.com/in/kamal-ahsan"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-neutral-900 text-white rounded-lg px-6 py-3 text-sm font-medium mt-6 hover:bg-neutral-700 transition-colors"
+          >
+            Connect on LinkedIn ↗
+          </a>
+        </section>
+      </Reveal>
+    </div>
+  );
+}
+
+function Tag({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="text-xs font-bold border border-neutral-900 rounded-full px-3 py-1.5 flex items-center gap-1.5 bg-white/70 text-neutral-900">
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+      {label}
+    </span>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="pr-8 border-r border-neutral-700 last:border-r-0 last:pr-0">
+      <div className="w-5 h-5 rounded-full border-[1.5px] border-rose-500 relative mb-2">
+        <span className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-rose-500 -translate-x-1/2 -translate-y-1/2" />
+      </div>
+      <p className="text-[10px] uppercase tracking-wide text-neutral-500">{label}</p>
+      <p className="font-serif text-xl text-neutral-50 mt-0.5">{value}</p>
+    </div>
+  );
+}
+
+function PhotoStack() {
+  return (
+    <div className="relative w-[210px] h-[250px]">
+      <div className="absolute w-[185px] h-[220px] bg-neutral-900 rounded-lg p-2 shadow-lg top-7 -left-2 rotate-[-9deg] z-10">
+        <div
+          className="w-full h-full rounded"
+          style={{ background: "linear-gradient(160deg,#d8e4dc,#b7c8bd)" }}
+        />
+      </div>
+      <div className="absolute w-[185px] h-[220px] bg-neutral-900 rounded-lg p-2 shadow-lg top-3 left-4 rotate-[6deg] z-20">
+        <div
+          className="w-full h-full rounded"
+          style={{ background: "linear-gradient(160deg,#e3dccb,#cdbfa1)" }}
+        />
+      </div>
+      <div className="absolute w-[185px] h-[220px] bg-neutral-900 rounded-lg p-2 shadow-lg top-0 left-1.5 rotate-[-2deg] z-30">
+        <div
+          className="w-full h-full rounded relative"
+          style={{ background: "linear-gradient(160deg,#e8e3d6,#c9d6cd 55%,#a9b8ae)" }}
+        >
+          <span className="absolute bottom-2 left-2 bg-[#fdfaf5] text-[9px] font-bold px-2 py-0.5 rounded text-neutral-900">
+            KAMAL_01.JPG
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

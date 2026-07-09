@@ -19,13 +19,15 @@ export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const cs = getCaseStudy(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const cs = getCaseStudy(slug);
   return { title: cs ? `${cs.title} · Kamal Ahsan` : "Case Study" };
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const cs = getCaseStudy(params.slug);
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const cs = getCaseStudy(slug);
   if (!cs) notFound();
 
   return (
