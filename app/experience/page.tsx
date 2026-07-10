@@ -29,16 +29,16 @@ const projectSynopsis = standaloneProjects.map((cs) => ({
 
 export default function ExperiencePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
       <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Experience</p>
-      <h1 className="font-serif text-4xl mt-3 text-neutral-900">Work Timeline</h1>
-      <p className="text-neutral-600 mt-4">
+      <h1 className="font-serif text-5xl mt-3 text-neutral-900">Work Timeline</h1>
+      <p className="text-lg text-neutral-600 mt-4">
         Five internships across product design, product operations, and hardware/product
-        engineering — 2022 to present.
+        engineering, 2022 to present.
       </p>
 
-      <div className="mt-12">
-        <h2 className="font-serif text-xl text-neutral-900 mb-1">Quick Synopsis</h2>
+      <div className="mt-14">
+        <h2 className="font-serif text-2xl text-neutral-900 mb-1">Quick Synopsis</h2>
         <p className="text-sm text-neutral-500 mb-6">
           A resume-style scan of every role and project — full detail and case studies below.
         </p>
@@ -46,7 +46,7 @@ export default function ExperiencePage() {
       </div>
 
       <div className="mt-16">
-        <h2 className="font-serif text-xl text-neutral-900 mb-1">Every Internship, In Full</h2>
+        <h2 className="font-serif text-2xl text-neutral-900 mb-1">Every Internship, In Full</h2>
         <p className="text-sm text-neutral-500 mb-8">
           This section always shows all five internships in full bullet detail — it doesn&apos;t
           filter by the Work/Projects toggle above, since that toggle is just a quick scan.

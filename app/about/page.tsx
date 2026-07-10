@@ -30,34 +30,34 @@ const toolGroups = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
       <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">About</p>
-      <h1 className="font-serif text-4xl mt-3 text-neutral-900">Kamal Ahsan</h1>
+      <h1 className="font-serif text-5xl mt-3 text-neutral-900">Kamal Ahsan</h1>
 
-      <div className="mt-8 space-y-4 text-neutral-700 leading-relaxed">
+      <div className="mt-8 space-y-5 text-lg text-neutral-700 leading-relaxed">
         <p>
-          I&apos;m a Management Engineering student at the University of Waterloo (2021–2026),
-          a program that blends systems engineering, business, and design — which is a fairly
-          accurate description of what I like doing: understanding a problem end to end, then
-          building the thing that solves it.
+          I&apos;m a Management Engineering graduate from the University of Waterloo, a program
+          that blends systems engineering, business, and design, which is a fairly accurate
+          description of what I like doing: understanding a problem end to end, then building
+          the thing that solves it.
         </p>
         <p>
           Across five internships I&apos;ve moved between product design, product operations,
-          and hardware/product engineering roles — designing onboarding flows for a fintech
+          and hardware/product engineering roles: designing onboarding flows for a fintech
           startup, running sprints for an 8-person team, and owning a hardware transfer
           workflow across procurement, assembly, and shipment. I&apos;m equally comfortable
           running a user research session and writing the React/Node code behind the
           feature it informs.
         </p>
         <p>
-          That range is intentional. I&apos;m aiming for roles — product management, technical
-          program management, product design — where being able to speak both the user&apos;s
-          language and the engineer&apos;s language is the actual job.
+          That range is intentional. I&apos;m now looking for full-time roles in product
+          management, technical program management, and product design, where being able to
+          speak both the user&apos;s language and the engineer&apos;s language is the actual job.
         </p>
       </div>
 
-      <div className="mt-14">
-        <h2 className="font-serif text-2xl text-neutral-900 mb-6">Skills & Tools</h2>
+      <div className="mt-16">
+        <h2 className="font-serif text-3xl text-neutral-900 mb-6">Skills & Tools</h2>
         <div className="space-y-6">
           {toolGroups.map((group) => (
             <div key={group.label}>

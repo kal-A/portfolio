@@ -16,12 +16,12 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-neutral-200 bg-white/80 backdrop-blur sticky top-0 z-50">
+    <header className="border-b border-neutral-200 bg-[#fdfaf5]/90 backdrop-blur sticky top-0 z-50">
       <nav className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="font-serif text-lg tracking-tight text-neutral-900">
+        <Link href="/" className="font-serif text-xl tracking-tight text-neutral-900">
           Kamal Ahsan
         </Link>
-        <ul className="flex gap-6 text-sm">
+        <ul className="flex gap-6 text-[15px]">
           {links.map((link) => {
             const active =
               link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);

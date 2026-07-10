@@ -2,12 +2,12 @@ export const metadata = { title: "Resume · Kamal Ahsan" };
 
 export default function ResumePage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
       <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Resume</p>
-      <h1 className="font-serif text-4xl mt-3 text-neutral-900">Resume</h1>
-      <p className="text-neutral-600 mt-4">
-        Bachelor of Applied Science in Honours Management Engineering, University of
-        Waterloo (Sep 2021 – May 2026).
+      <h1 className="font-serif text-5xl mt-3 text-neutral-900">Resume</h1>
+      <p className="text-lg text-neutral-600 mt-4">
+        B.A.Sc. in Honours Management Engineering, University of Waterloo (2026). Looking for
+        full-time product roles.
       </p>
 
       <a
@@ -18,7 +18,7 @@ export default function ResumePage() {
         Download PDF ↓
       </a>
 
-      <div className="mt-10 border border-neutral-200 rounded-xl overflow-hidden">
+      <div className="mt-10 rounded-xl overflow-hidden" style={{ border: "2px solid #181614" }}>
         <object
           data="/resume/Kamal-Ahsan-Resume.pdf"
           type="application/pdf"
@@ -36,7 +36,7 @@ export default function ResumePage() {
           <p className="text-neutral-700">
             University of Waterloo, B.A.Sc., Honours Management Engineering
           </p>
-          <p className="text-sm text-neutral-500">Sep 2021 – May 2026</p>
+          <p className="text-sm text-neutral-500">2021 – 2026</p>
         </div>
 
         <div>

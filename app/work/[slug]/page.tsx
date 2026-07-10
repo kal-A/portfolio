@@ -33,21 +33,27 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const theme = caseStudyTheme[cs.slug];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
       <Link href="/work" className="text-sm text-neutral-500 hover:text-neutral-900">
         ← All case studies
       </Link>
 
-      <p className="text-sm text-rose-500 font-medium tracking-wide uppercase mt-6">
+      <div
+        className="w-12 h-12 rounded-lg mt-6 flex items-center justify-center font-serif text-base font-bold"
+        style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
+      >
+        {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
+      </div>
+      <p className="text-sm text-rose-500 font-medium tracking-wide uppercase mt-4">
         {cs.company}
       </p>
-      <h1 className="font-serif text-3xl sm:text-4xl mt-3 text-neutral-900 leading-tight">
+      <h1 className="font-serif text-4xl sm:text-5xl mt-3 text-neutral-900 leading-tight">
         {cs.title}
       </h1>
       <p className="text-neutral-500 mt-3">
         {cs.role} · {cs.timeframe}
       </p>
-      <p className="text-neutral-700 mt-4 text-lg leading-relaxed">{cs.oneLiner}</p>
+      <p className="text-neutral-700 mt-4 text-xl leading-relaxed">{cs.oneLiner}</p>
 
       <div className="flex flex-wrap gap-2 mt-6">
         {cs.artifacts.map((a) => (
@@ -80,12 +86,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       </div>
 
       <section className="mt-12">
-        <h2 className="font-serif text-xl text-neutral-900 mb-3">Problem</h2>
+        <h2 className="font-serif text-2xl text-neutral-900 mb-3">Problem</h2>
         <p className="text-neutral-700 leading-relaxed">{cs.problem}</p>
       </section>
 
       <section className="mt-10">
-        <h2 className="font-serif text-xl text-neutral-900 mb-3">Process</h2>
+        <h2 className="font-serif text-2xl text-neutral-900 mb-3">Process</h2>
         <ul className="space-y-3">
           {cs.process.map((p, i) => (
             <li key={i} className="text-neutral-700 leading-relaxed flex gap-3">
@@ -140,7 +146,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       )}
 
       <section className="mt-12">
-        <h2 className="font-serif text-xl text-neutral-900 mb-3">Outcome</h2>
+        <h2 className="font-serif text-2xl text-neutral-900 mb-3">Outcome</h2>
         <ul className="space-y-2">
           {cs.outcome.map((o, i) => (
             <li key={i} className="text-neutral-700 leading-relaxed flex gap-3">

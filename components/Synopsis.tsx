@@ -60,15 +60,25 @@ export default function Synopsis({
                   <span className="absolute inset-0 -z-10" style={{ background: theme.bg }} />
                 </>
               )}
-              <div className="relative">
-                <div className="flex flex-wrap items-baseline gap-x-2">
-                  <span className="text-xs uppercase tracking-wide text-neutral-400">
-                    {tab === "work" ? "Work" : "Project"}
-                  </span>
-                  <span className="text-xs text-neutral-500">{item.timeframe}</span>
+              <div className="relative flex items-start gap-3.5">
+                {theme && (
+                  <div
+                    className="w-8 h-8 rounded-md flex items-center justify-center font-serif text-xs font-bold shrink-0"
+                    style={{ background: theme.icon, color: "#fdfaf5" }}
+                  >
+                    {theme.mark}
+                  </div>
+                )}
+                <div>
+                  <div className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="text-xs uppercase tracking-wide text-neutral-400">
+                      {tab === "work" ? "Work" : "Project"}
+                    </span>
+                    <span className="text-xs text-neutral-500">{item.timeframe}</span>
+                  </div>
+                  <p className="font-medium text-neutral-900 mt-1">{item.heading}</p>
+                  <p className="text-sm text-neutral-600 mt-1">{item.summary}</p>
                 </div>
-                <p className="font-medium text-neutral-900 mt-1">{item.heading}</p>
-                <p className="text-sm text-neutral-600 mt-1">{item.summary}</p>
               </div>
               {item.slug && (
                 <span className="relative text-neutral-400 group-hover/card:text-rose-500 group-hover/card:translate-x-0.5 transition-all shrink-0">

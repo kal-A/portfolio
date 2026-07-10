@@ -35,7 +35,7 @@ function Track() {
 export default function Marquee() {
   return (
     <div className="border-y border-neutral-200 bg-neutral-50/60 py-3.5 overflow-hidden">
-      <div className="flex w-max animate-[marquee_26s_linear_infinite]">
+      <div className="flex w-max gap-7 animate-[marquee_26s_linear_infinite]">
         <Track />
         <Track />
       </div>
