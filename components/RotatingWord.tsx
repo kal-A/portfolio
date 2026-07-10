@@ -19,15 +19,12 @@ export default function RotatingWord({ words }: { words: string[] }) {
   }, [words.length]);
 
   return (
-    <span className="relative inline-block text-rose-500">
-      <span
-        className={`inline-block transition-all duration-500 ${
-          leaving ? "opacity-0 -translate-y-1.5" : "opacity-100 translate-y-0"
-        }`}
-      >
-        {words[index]}
-      </span>
-      <span className="absolute left-0 right-0 -bottom-1 border-b-2 border-dashed border-rose-500" />
+    <span
+      className={`inline-block border-b-2 border-dashed border-rose-500 text-rose-500 pb-0.5 transition-all duration-500 ${
+        leaving ? "opacity-0 -translate-y-1.5" : "opacity-100 translate-y-0"
+      }`}
+    >
+      {words[index]}
     </span>
   );
 }

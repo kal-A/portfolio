@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
+import { Geist, Geist_Mono, DM_Serif_Display, Caveat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -20,6 +20,12 @@ const dmSerifDisplay = DM_Serif_Display({
   weight: "400",
 });
 
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: "700",
+});
+
 export const metadata: Metadata = {
   title: "Kamal Ahsan · Product & TPM Portfolio",
   description:
@@ -34,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${dmSerifDisplay.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${dmSerifDisplay.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-neutral-900">
         <Nav />

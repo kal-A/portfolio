@@ -7,7 +7,7 @@ import Marquee from "@/components/Marquee";
 import Signature from "@/components/Signature";
 import RotatingWord from "@/components/RotatingWord";
 
-const featuredOrder = ["roomease", "hera-fertility", "greenhouse", "forcen"];
+const featuredOrder = ["roomease", "forcen", "greenhouse", "hera-fertility"];
 const featured = featuredOrder
   .map((slug) => caseStudies.find((cs) => cs.slug === slug))
   .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
@@ -161,7 +161,7 @@ export default function Home() {
         <section className="bg-neutral-900 py-14">
           <div className="mx-auto max-w-5xl px-6">
             <p className="text-[10px] uppercase tracking-widest text-neutral-500">
-              Craft manifesto
+              What I build
             </p>
             <h2 className="font-serif text-2xl sm:text-3xl text-neutral-50 mt-2 mb-8">
               I build <RotatingWord words={manifestoWords} />

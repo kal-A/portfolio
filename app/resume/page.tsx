@@ -18,11 +18,23 @@ export default function ResumePage() {
         Download PDF ↓
       </a>
 
+      <div className="mt-10 border border-neutral-200 rounded-xl overflow-hidden">
+        <object
+          data="/resume/Kamal-Ahsan-Resume.pdf"
+          type="application/pdf"
+          className="w-full h-[720px]"
+        >
+          <p className="p-6 text-sm text-neutral-500">
+            Your browser can&apos;t display the embedded PDF. Use the download link above instead.
+          </p>
+        </object>
+      </div>
+
       <div className="mt-14 space-y-8">
         <div>
           <h2 className="font-serif text-xl text-neutral-900 mb-2">Education</h2>
           <p className="text-neutral-700">
-            University of Waterloo — B.A.Sc., Honours Management Engineering
+            University of Waterloo, B.A.Sc., Honours Management Engineering
           </p>
           <p className="text-sm text-neutral-500">Sep 2021 – May 2026</p>
         </div>
@@ -30,11 +42,11 @@ export default function ResumePage() {
         <div>
           <h2 className="font-serif text-xl text-neutral-900 mb-3">Experience Snapshot</h2>
           <ul className="space-y-2 text-neutral-700 text-sm">
-            <li>Product Engineer Intern — ForceN (Sep 2025 – Dec 2025)</li>
-            <li>Product Designer Intern — Greenhouse Juices (Jan 2025 – Apr 2025)</li>
-            <li>Product Operations & UX Research Intern — Informatica (Sep 2023 – Dec 2023)</li>
-            <li>Product Design & Marketing Intern — Hera Fertility (Jan 2023 – Apr 2023)</li>
-            <li>Product Designer & Developer Intern — PathPeer (May 2022 – Aug 2022)</li>
+            <li>Product Engineer Intern, ForceN (Sep 2025 – Dec 2025)</li>
+            <li>Product Designer Intern, Greenhouse Juices (Jan 2025 – Apr 2025)</li>
+            <li>Product Operations & UX Research Intern, Informatica (Sep 2023 – Dec 2023)</li>
+            <li>Product Design & Marketing Intern, Hera Fertility (Jan 2023 – Apr 2023)</li>
+            <li>Product Designer & Developer Intern, PathPeer (May 2022 – Aug 2022)</li>
           </ul>
         </div>
 

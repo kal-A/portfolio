@@ -32,7 +32,7 @@ export interface CaseStudy {
   whatIdImprove?: string;
 }
 
-export const caseStudies: CaseStudy[] = [
+const caseStudiesData: CaseStudy[] = [
   {
     slug: "hera-fertility",
     category: "visual",
@@ -220,6 +220,14 @@ export const caseStudies: CaseStudy[] = [
     note: "Internal tracking sheets, tools, and company-specific materials are omitted for confidentiality. This case study uses a reconstructed public-safe workflow to explain the product operations and systems thinking behind the work.",
   },
 ];
+
+// Reverse-chronological display order (most recent first). Course/undated
+// projects (pill-pal) sort last.
+const displayOrder = ["roomease", "forcen", "greenhouse", "hera-fertility", "pill-pal"];
+
+export const caseStudies: CaseStudy[] = displayOrder
+  .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))
+  .filter((cs): cs is CaseStudy => Boolean(cs));
 
 export function getCaseStudy(slug: string) {
   return caseStudies.find((c) => c.slug === slug);

@@ -15,7 +15,6 @@ const workSynopsis = experience.map((job) => {
     heading: `${job.role} · ${job.company}`,
     timeframe: job.timeframe,
     summary: cs?.summary ?? job.synopsis,
-    metric: cs?.metrics[0]?.value ?? job.bullets.find((b) => /\d/.test(b))?.match(/\d+%|\d+x|\d+\+/)?.[0],
     slug: job.caseStudySlug,
   };
 });
@@ -25,7 +24,6 @@ const projectSynopsis = standaloneProjects.map((cs) => ({
   heading: `${cs.role} · ${cs.company}`,
   timeframe: cs.timeframe,
   summary: cs.summary,
-  metric: cs.metrics[0]?.value,
   slug: cs.slug,
 }));
 
@@ -47,7 +45,20 @@ export default function ExperiencePage() {
         <Synopsis work={workSynopsis} projects={projectSynopsis} />
       </div>
 
-      <div className="mt-16 space-y-10">
+      <div className="mt-16">
+        <h2 className="font-serif text-xl text-neutral-900 mb-1">Every Internship, In Full</h2>
+        <p className="text-sm text-neutral-500 mb-8">
+          This section always shows all five internships in full bullet detail — it doesn&apos;t
+          filter by the Work/Projects toggle above, since that toggle is just a quick scan.
+          Standalone projects (RoomEase, Pill Pal) aren&apos;t internships, so they live in{" "}
+          <Link href="/work" className="text-rose-500 hover:text-rose-600">
+            Case Studies
+          </Link>{" "}
+          instead.
+        </p>
+      </div>
+
+      <div className="space-y-10">
         {experience.map((job) => (
           <div key={`${job.company}-${job.timeframe}`} className="border-t border-neutral-200 pt-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">

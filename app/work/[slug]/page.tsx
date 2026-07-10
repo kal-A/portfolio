@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { caseStudies, getCaseStudy } from "@/lib/content/case-studies";
+import { caseStudyTheme } from "@/lib/content/theme";
 import Metric from "@/components/Metric";
 import {
   HeraOnboardingMockup,
@@ -29,6 +30,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const { slug } = await params;
   const cs = getCaseStudy(slug);
   if (!cs) notFound();
+  const theme = caseStudyTheme[cs.slug];
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
@@ -59,7 +61,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       </div>
 
       {cs.team && (
-        <div className="mt-6 border border-neutral-200 rounded-lg px-4 py-3 text-sm text-neutral-600">
+        <div
+          className="mt-6 rounded-lg px-4 py-3 text-sm text-neutral-600"
+          style={{ border: "2px solid #181614", background: theme?.bg ?? "#fdfaf5" }}
+        >
           <span className="font-medium text-neutral-800">Team project: </span>
           {cs.team}
           {cs.contribution && (
@@ -70,7 +75,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
         {cs.metrics.map((m) => (
-          <Metric key={m.label} value={m.value} label={m.label} />
+          <Metric key={m.label} value={m.value} label={m.label} accent={theme?.icon ?? "#181614"} />
         ))}
       </div>
 
