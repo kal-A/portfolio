@@ -36,6 +36,10 @@ export default function Home() {
             <Tag color="#2c6e5e" label="Product Design" />
             <Tag color="#3a6b93" label="Systems" />
             <Tag color="#c2900a" label="UX / UI" />
+            <span className="text-sm font-bold rounded-full px-3.5 py-2 flex items-center gap-2 bg-neutral-900 text-white">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              Open to full-time roles
+            </span>
           </Reveal>
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-10 items-center mt-10">
@@ -45,8 +49,9 @@ export default function Home() {
                 <em className="italic text-rose-500">messy real-world workflows.</em>
               </h1>
               <p className="text-neutral-600 mt-6 max-w-md text-xl leading-relaxed">
-                Management Engineering graduate, University of Waterloo. Looking for full-time
-                product roles.
+                Over the past four years I&apos;ve shipped a fintech onboarding flow, run
+                sprints for an 8-person team, owned a hardware operations system, and built a
+                capstone platform real student clubs used to book rooms.
               </p>
               <Signature />
               <div className="flex gap-4 mt-7">
@@ -115,45 +120,50 @@ export default function Home() {
       </section>
 
       {/* Work experience */}
-      <section className="mx-auto max-w-6xl px-6 py-16 flex flex-col sm:flex-row gap-8">
-        <Reveal className="sm:w-48 shrink-0">
-          <h2 className="font-serif text-4xl text-neutral-900 leading-tight">
-            Work
-            <br />
-            experience
-          </h2>
-        </Reveal>
-        <div className="flex-1 border-l-2 border-dashed border-neutral-300 pl-8">
-          {experience.map((job, i) => (
-            <Reveal key={`${job.company}-${job.timeframe}`} delay={i * 80} className="relative pb-10 last:pb-0">
-              <span className="absolute -left-[42px] top-0.5 w-4 h-4 rounded-full border-2 border-neutral-900 bg-[#fdfaf5] flex items-center justify-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-              </span>
-              <p className="font-serif text-xl text-neutral-900">{job.company}</p>
-              <p className="text-sm text-neutral-500 mt-1">
-                {job.role} · {job.location} · {job.timeframe}
-              </p>
-              <p className="text-base text-neutral-600 mt-2 max-w-md leading-relaxed">
-                {job.synopsis}
-              </p>
-              {job.caseStudySlug ? (
-                <Link
-                  href={`/work/${job.caseStudySlug}`}
-                  className="text-xs font-medium text-rose-500 hover:text-rose-600 mt-2 inline-block"
-                >
-                  Read more →
-                </Link>
-              ) : (
-                <span className="text-xs font-medium text-neutral-400 mt-2 inline-block">
-                  Full bullet detail on the{" "}
-                  <Link href="/experience" className="text-rose-500 hover:text-rose-600">
-                    Experience
-                  </Link>{" "}
-                  page
-                </span>
-              )}
-            </Reveal>
-          ))}
+      <section
+        style={{
+          background:
+            "linear-gradient(160deg, #eef2f7 0%, #f3eee0 55%, #eef5e6 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-6xl px-6 py-20 flex flex-col sm:flex-row gap-10">
+          <Reveal className="sm:w-64 shrink-0">
+            <h2 className="font-serif text-5xl sm:text-6xl text-neutral-900 leading-[1.05]">
+              Work
+              <br />
+              experience
+            </h2>
+          </Reveal>
+          <div className="flex-1 border-l-2 border-dashed border-neutral-400 pl-9">
+            {experience.map((job, i) => (
+              <Reveal key={`${job.company}-${job.timeframe}`} delay={i * 80} className="relative pb-14 last:pb-0">
+                <span className="absolute -left-[47px] top-1 w-5 h-5 rounded-full bg-neutral-900 border-4 border-[#eef2f7] flex items-center justify-center" />
+                <p className="font-serif text-3xl text-neutral-900">{job.company}</p>
+                <p className="text-base text-neutral-600 mt-1.5 font-medium">
+                  {job.role} · {job.location} · {job.timeframe}
+                </p>
+                <p className="text-lg text-neutral-700 mt-3 max-w-lg leading-relaxed">
+                  {job.synopsis}
+                </p>
+                {job.caseStudySlug ? (
+                  <Link
+                    href={`/work/${job.caseStudySlug}`}
+                    className="text-sm font-bold text-rose-600 hover:text-rose-700 mt-3 inline-block"
+                  >
+                    Read more →
+                  </Link>
+                ) : (
+                  <span className="text-sm font-medium text-neutral-500 mt-3 inline-block">
+                    Full bullet detail on the{" "}
+                    <Link href="/experience" className="text-rose-600 hover:text-rose-700 font-bold">
+                      Experience
+                    </Link>{" "}
+                    page
+                  </span>
+                )}
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

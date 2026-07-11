@@ -6,15 +6,25 @@ export const metadata = { title: "Case Studies · Kamal Ahsan" };
 
 export default function WorkIndex() {
   return (
-    <div className="mx-auto max-w-5xl px-6 pt-10 pb-20">
-      <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Work</p>
-      <h1 className="font-serif text-5xl mt-3 text-neutral-900">Case Studies</h1>
-      <p className="text-lg text-neutral-600 mt-4 max-w-2xl">
-        Five projects spanning product design, systems/process work, technical builds, and
-        formal usability evaluation, most recent first.
-      </p>
+    <div className="pb-20">
+      <div
+        className="pt-10 pb-14"
+        style={{
+          background:
+            "radial-gradient(circle at 10% 0%, rgba(58,107,147,0.1) 0%, transparent 45%), radial-gradient(circle at 90% 20%, rgba(194,144,10,0.1) 0%, transparent 50%), #fdfaf5",
+        }}
+      >
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Work</p>
+          <h1 className="font-serif text-5xl mt-3 text-neutral-900">Case Studies</h1>
+          <p className="text-lg text-neutral-600 mt-4 max-w-2xl">
+            Five projects spanning product design, systems/process work, technical builds, and
+            formal usability evaluation, most recent first.
+          </p>
+        </div>
+      </div>
 
-      <div className="grid sm:grid-cols-2 gap-6 mt-12">
+      <div className="mx-auto max-w-5xl px-6 grid sm:grid-cols-2 gap-6 mt-12">
         {caseStudies.map((cs) => {
           const theme = caseStudyTheme[cs.slug];
           return (

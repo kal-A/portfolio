@@ -33,39 +33,49 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const theme = caseStudyTheme[cs.slug];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
-      <Link href="/work" className="text-sm text-neutral-500 hover:text-neutral-900">
-        ← All case studies
-      </Link>
-
+    <div className="pb-20">
       <div
-        className="w-12 h-12 rounded-lg mt-6 flex items-center justify-center font-serif text-base font-bold"
-        style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
+        className="pt-10 pb-12"
+        style={{
+          background: `linear-gradient(160deg, ${theme?.bg ?? "#fdfaf5"} 0%, #fdfaf5 85%)`,
+        }}
       >
-        {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
-      </div>
-      <p className="text-sm text-rose-500 font-medium tracking-wide uppercase mt-4">
-        {cs.company}
-      </p>
-      <h1 className="font-serif text-4xl sm:text-5xl mt-3 text-neutral-900 leading-tight">
-        {cs.title}
-      </h1>
-      <p className="text-neutral-500 mt-3">
-        {cs.role} · {cs.timeframe}
-      </p>
-      <p className="text-neutral-700 mt-4 text-xl leading-relaxed">{cs.oneLiner}</p>
+        <div className="mx-auto max-w-3xl px-6">
+          <Link href="/work" className="text-sm text-neutral-500 hover:text-neutral-900">
+            ← All case studies
+          </Link>
 
-      <div className="flex flex-wrap gap-2 mt-6">
-        {cs.artifacts.map((a) => (
-          <span
-            key={a}
-            className="text-xs border border-neutral-200 rounded-full px-2.5 py-1 text-neutral-500"
+          <div
+            className="w-12 h-12 rounded-lg mt-6 flex items-center justify-center font-serif text-base font-bold"
+            style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
           >
-            {a}
-          </span>
-        ))}
+            {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
+          </div>
+          <p className="text-sm text-rose-500 font-medium tracking-wide uppercase mt-4">
+            {cs.company}
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl mt-3 text-neutral-900 leading-tight">
+            {cs.title}
+          </h1>
+          <p className="text-neutral-500 mt-3">
+            {cs.role} · {cs.timeframe}
+          </p>
+          <p className="text-neutral-700 mt-4 text-xl leading-relaxed">{cs.oneLiner}</p>
+
+          <div className="flex flex-wrap gap-2 mt-6">
+            {cs.artifacts.map((a) => (
+              <span
+                key={a}
+                className="text-xs border border-neutral-900/15 rounded-full px-2.5 py-1 text-neutral-600 bg-white/60"
+              >
+                {a}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
+      <div className="mx-auto max-w-3xl px-6">
       {cs.team && (
         <div
           className="mt-6 rounded-lg px-4 py-3 text-sm text-neutral-600"
@@ -179,6 +189,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

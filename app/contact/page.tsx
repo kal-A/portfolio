@@ -2,15 +2,25 @@ export const metadata = { title: "Contact · Kamal Ahsan" };
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-10 pb-20">
-      <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Contact</p>
-      <h1 className="font-serif text-5xl mt-3 text-neutral-900">Let&apos;s talk</h1>
-      <p className="text-lg text-neutral-600 mt-4 max-w-xl">
-        Open to full-time product management, product design, UX/UI, and TPM roles. Reach out
-        any time.
-      </p>
+    <div className="pb-20">
+      <div
+        className="pt-10 pb-14"
+        style={{
+          background:
+            "radial-gradient(circle at 85% 0%, rgba(200,69,44,0.12) 0%, transparent 50%), linear-gradient(160deg, #fdfaf5 0%, #f6ede0 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-3xl px-6">
+          <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Contact</p>
+          <h1 className="font-serif text-5xl mt-3 text-neutral-900">Let&apos;s talk</h1>
+          <p className="text-lg text-neutral-600 mt-4 max-w-xl">
+            Open to full-time product management, product design, UX/UI, and TPM roles. Reach out
+            any time.
+          </p>
+        </div>
+      </div>
 
-      <div className="mt-10 space-y-4">
+      <div className="mx-auto max-w-3xl px-6 mt-10 space-y-4">
         <a
           href="mailto:kamal24.ahsan05@gmail.com"
           className="group relative flex items-center justify-between rounded-lg px-5 py-4 overflow-hidden"
