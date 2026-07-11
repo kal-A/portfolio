@@ -41,10 +41,10 @@ export default function ExperiencePage() {
 
       <div
         className="mt-14 py-14"
-        style={{ background: "linear-gradient(160deg, #fbeaf0 0%, #faeeda 100%)" }}
+        style={{ background: "linear-gradient(160deg, #f7d9e4 0%, #f7e6c4 100%)" }}
       >
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="font-serif text-2xl text-neutral-900 mb-1">Quick Synopsis</h2>
+          <h2 className="font-serif text-4xl text-neutral-900 mb-1">Quick Synopsis</h2>
           <p className="text-sm text-neutral-600 mb-6">
             A resume-style scan of every role and project — full detail and case studies below.
           </p>
@@ -53,7 +53,7 @@ export default function ExperiencePage() {
       </div>
 
       <div className="mx-auto max-w-3xl px-6 mt-16">
-        <h2 className="font-serif text-2xl text-neutral-900 mb-1">Every Internship, In Full</h2>
+        <h2 className="font-serif text-4xl text-neutral-900 mb-1">Every Internship, In Full</h2>
         <p className="text-sm text-neutral-500 mb-8">
           This section always shows all five internships in full bullet detail — it doesn&apos;t
           filter by the Work/Projects toggle above, since that toggle is just a quick scan.

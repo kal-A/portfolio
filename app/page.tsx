@@ -27,7 +27,7 @@ export default function Home() {
         className="relative overflow-hidden"
         style={{
           background:
-            "radial-gradient(circle at 12% 8%, rgba(200,69,44,0.14) 0%, transparent 45%), radial-gradient(circle at 88% 15%, rgba(44,110,94,0.12) 0%, transparent 50%), linear-gradient(160deg, #fdf3ec 0%, #f6ede0 55%, #eef0e6 100%)",
+            "radial-gradient(circle at 12% 8%, rgba(200,69,44,0.22) 0%, transparent 48%), radial-gradient(circle at 88% 15%, rgba(44,110,94,0.2) 0%, transparent 52%), linear-gradient(160deg, #fbe9dd 0%, #f3e3cc 55%, #e2ecd8 100%)",
         }}
       >
         <div className="mx-auto max-w-6xl px-6 pt-14 pb-20 sm:pt-16 sm:pb-24">
@@ -85,7 +85,7 @@ export default function Home() {
       {/* Selected case studies */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
-          <h2 className="font-serif text-4xl text-neutral-900 mb-10">Selected case studies</h2>
+          <h2 className="font-serif text-5xl sm:text-6xl text-neutral-900 mb-10">Selected case studies</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-6">
           {featured.map((cs, i) => {
@@ -123,10 +123,10 @@ export default function Home() {
       <section
         style={{
           background:
-            "linear-gradient(160deg, #eef2f7 0%, #f3eee0 55%, #eef5e6 100%)",
+            "linear-gradient(160deg, #d7e3ee 0%, #ede2c4 55%, #d9ecc9 100%)",
         }}
       >
-        <div className="mx-auto max-w-6xl px-6 py-20 flex flex-col sm:flex-row gap-10">
+        <div className="mx-auto max-w-6xl px-6 py-20 flex flex-col sm:flex-row gap-20">
           <Reveal className="sm:w-64 shrink-0">
             <h2 className="font-serif text-5xl sm:text-6xl text-neutral-900 leading-[1.05]">
               Work
@@ -134,10 +134,10 @@ export default function Home() {
               experience
             </h2>
           </Reveal>
-          <div className="flex-1 border-l-2 border-dashed border-neutral-400 pl-9">
+          <div className="flex-1 border-l-2 border-dashed border-neutral-500 pl-12">
             {experience.map((job, i) => (
               <Reveal key={`${job.company}-${job.timeframe}`} delay={i * 80} className="relative pb-14 last:pb-0">
-                <span className="absolute -left-[47px] top-1 w-5 h-5 rounded-full bg-neutral-900 border-4 border-[#eef2f7] flex items-center justify-center" />
+                <span className="absolute -left-[47px] top-1 w-5 h-5 rounded-full bg-neutral-900 border-4 border-[#d7e3ee] flex items-center justify-center" />
                 <p className="font-serif text-3xl text-neutral-900">{job.company}</p>
                 <p className="text-base text-neutral-600 mt-1.5 font-medium">
                   {job.role} · {job.location} · {job.timeframe}

@@ -34,11 +34,11 @@ export default function ResumePage() {
 
       <div
         className="mt-14 py-14"
-        style={{ background: "linear-gradient(160deg, #eaf3de 0%, #e9f1f8 100%)" }}
+        style={{ background: "linear-gradient(160deg, #dfeecb 0%, #dcebf6 100%)" }}
       >
         <div className="mx-auto max-w-3xl px-6 space-y-8">
           <div>
-            <h2 className="font-serif text-2xl text-neutral-900 mb-2">Education</h2>
+            <h2 className="font-serif text-4xl text-neutral-900 mb-2">Education</h2>
             <p className="text-neutral-700">
               University of Waterloo, B.A.Sc., Honours Management Engineering
             </p>
@@ -46,7 +46,7 @@ export default function ResumePage() {
           </div>
 
           <div>
-            <h2 className="font-serif text-2xl text-neutral-900 mb-3">Experience Snapshot</h2>
+            <h2 className="font-serif text-4xl text-neutral-900 mb-3">Experience Snapshot</h2>
             <ul className="space-y-2 text-neutral-700 text-sm">
               <li>Product Engineer Intern, ForceN (Sep 2025 – Dec 2025)</li>
               <li>Product Designer Intern, Greenhouse Juices (Jan 2025 – Apr 2025)</li>

@@ -11,7 +11,7 @@ export default function WorkIndex() {
         className="pt-10 pb-14"
         style={{
           background:
-            "radial-gradient(circle at 10% 0%, rgba(58,107,147,0.1) 0%, transparent 45%), radial-gradient(circle at 90% 20%, rgba(194,144,10,0.1) 0%, transparent 50%), #fdfaf5",
+            "radial-gradient(circle at 10% 0%, rgba(58,107,147,0.2) 0%, transparent 48%), radial-gradient(circle at 90% 20%, rgba(194,144,10,0.2) 0%, transparent 52%), #fdfaf5",
         }}
       >
         <div className="mx-auto max-w-5xl px-6">

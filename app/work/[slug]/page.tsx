@@ -37,7 +37,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <div
         className="pt-10 pb-12"
         style={{
-          background: `linear-gradient(160deg, ${theme?.bg ?? "#fdfaf5"} 0%, #fdfaf5 85%)`,
+          background: `linear-gradient(160deg, ${theme?.fill ?? "#f4f1ea"} 0%, #fdfaf5 95%)`,
         }}
       >
         <div className="mx-auto max-w-3xl px-6">

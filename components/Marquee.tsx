@@ -13,19 +13,19 @@ const items = [
 
 function Track() {
   return (
-    <div className="flex items-center gap-7 shrink-0">
+    <div className="flex items-center gap-9 shrink-0">
       {items.map((item, i) => (
-        <span key={i} className="flex items-center gap-7">
+        <span key={i} className="flex items-center gap-9">
           <span
             className={
               item.strong
-                ? "font-serif text-neutral-800 text-sm"
-                : "text-neutral-400 text-sm"
+                ? "font-serif text-neutral-900 text-xl font-bold"
+                : "text-neutral-600 text-lg"
             }
           >
             {item.label}
           </span>
-          <span className="w-1 h-1 rounded-full bg-rose-500 shrink-0" />
+          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
         </span>
       ))}
     </div>
@@ -34,8 +34,11 @@ function Track() {
 
 export default function Marquee() {
   return (
-    <div className="border-y border-neutral-200 bg-neutral-50/60 py-3.5 overflow-hidden">
-      <div className="flex w-max gap-7 animate-[marquee_26s_linear_infinite]">
+    <div
+      className="border-y-2 border-neutral-900 py-5 overflow-hidden"
+      style={{ background: "linear-gradient(90deg, #f7e6c4 0%, #f7d9e4 50%, #dcebf6 100%)" }}
+    >
+      <div className="flex w-max gap-9 animate-[marquee_26s_linear_infinite]">
         <Track />
         <Track />
       </div>

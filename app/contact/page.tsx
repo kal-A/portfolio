@@ -7,7 +7,7 @@ export default function ContactPage() {
         className="pt-10 pb-14"
         style={{
           background:
-            "radial-gradient(circle at 85% 0%, rgba(200,69,44,0.12) 0%, transparent 50%), linear-gradient(160deg, #fdfaf5 0%, #f6ede0 100%)",
+            "radial-gradient(circle at 85% 0%, rgba(200,69,44,0.22) 0%, transparent 50%), linear-gradient(160deg, #fbe9dd 0%, #f0dcc0 100%)",
         }}
       >
         <div className="mx-auto max-w-3xl px-6">
