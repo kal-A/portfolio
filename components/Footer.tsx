@@ -2,7 +2,7 @@
 
 export default function Footer() {
   return (
-    <footer className="border-t border-neutral-200 mt-24">
+    <footer className="border-t border-neutral-200">
       <div className="mx-auto max-w-5xl px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
         <div className="flex flex-wrap items-center gap-5">
           <p>© {new Date().getFullYear()} Kamal Ahsan</p>
