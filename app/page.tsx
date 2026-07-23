@@ -7,7 +7,7 @@ import Marquee from "@/components/Marquee";
 import Signature from "@/components/Signature";
 import RotatingWord from "@/components/RotatingWord";
 
-const featuredOrder = ["roomease", "forcen", "greenhouse", "hera-fertility"];
+const featuredOrder = ["roomease", "hera-fertility", "forcen", "greenhouse"];
 const featured = featuredOrder
   .map((slug) => caseStudies.find((cs) => cs.slug === slug))
   .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
@@ -104,6 +104,12 @@ export default function Home() {
                   <span className="absolute inset-0 -z-10" style={{ background: theme?.bg ?? "#fdfaf5" }} />
                   <div className="relative">
                     <div
+                      className="w-full aspect-[16/10] rounded-lg mb-5 transition-transform duration-300 group-hover:-translate-y-0.5"
+                      style={{
+                        background: `linear-gradient(135deg, ${theme?.fill ?? "#e4ded0"}, ${theme?.icon ?? "#181614"})`,
+                      }}
+                    />
+                    <div
                       className="w-11 h-11 rounded-lg mb-4 transition-transform duration-300 group-hover:-translate-y-0.5 flex items-center justify-center font-serif text-sm font-bold"
                       style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
                     >
@@ -169,7 +175,13 @@ export default function Home() {
 
       {/* Craft manifesto / stat strip */}
       <Reveal>
-        <section className="bg-neutral-900 py-16">
+        <section
+          className="py-16"
+          style={{
+            background:
+              "linear-gradient(160deg, #2b2118 0%, #241c15 55%, #1f1712 100%)",
+          }}
+        >
           <div className="mx-auto max-w-6xl px-6">
             <p className="text-xs uppercase tracking-widest text-neutral-500">
               What I build
