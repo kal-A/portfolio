@@ -1,8 +1,14 @@
 export const caseStudyTheme: Record<
   string,
-  { bg: string; fill: string; icon: string; mark: string }
+  { bg: string; fill: string; icon: string; mark: string; image?: string }
 > = {
-  roomease: { bg: "#e9f1f8", fill: "#b9d3e8", icon: "#3a6b93", mark: "RE" },
+  roomease: {
+    bg: "#e9f1f8",
+    fill: "#b9d3e8",
+    icon: "#3a6b93",
+    mark: "RE",
+    image: "/case-studies/roomease/hero.png",
+  },
   "hera-fertility": { bg: "#fbeaf0", fill: "#f0b8ce", icon: "#993556", mark: "HF" },
   greenhouse: { bg: "#faeeda", fill: "#edcb7e", icon: "#c2900a", mark: "GH" },
   forcen: { bg: "#eaf3de", fill: "#b9d99a", icon: "#3b6d11", mark: "FN" },
