@@ -101,8 +101,8 @@ export default function Home() {
               <Reveal key={cs.slug} delay={i * 90} className="h-full">
                 <Link
                   href={`/work/${cs.slug}`}
-                  className="group relative block h-full rounded-xl overflow-hidden border-[2.5px] border-solid border-[#181614] transition-colors duration-300 hover:border-[color:var(--hover-border)] p-7"
-                  style={{ "--hover-border": theme?.icon ?? "#181614" } as React.CSSProperties}
+                  className="group relative block h-full rounded-xl overflow-hidden p-7"
+                  style={{ border: "2.5px solid #181614" }}
                 >
                   <span
                     className="absolute inset-0 origin-bottom scale-y-0 opacity-0 transition-all duration-300 group-hover:scale-y-100 group-hover:opacity-100"
@@ -110,10 +110,7 @@ export default function Home() {
                   />
                   <span className="absolute inset-0 -z-10" style={{ background: theme?.bg ?? "#fdfaf5" }} />
                   <div className="relative">
-                    <div
-                      className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5"
-                      style={theme?.image ? { background: theme.bg } : undefined}
-                    >
+                    <div className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5">
                       {theme?.image ? (
                         <Image
                           src={theme.image}
