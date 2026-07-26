@@ -219,11 +219,39 @@ const caseStudiesData: CaseStudy[] = [
     whatIdImprove: "The tracking system I built was internal to ForceN and specific to their tooling — the version here is a reconstructed, public-safe description of the same workflow logic rather than the actual interface.",
     note: "Internal tracking sheets, tools, and company-specific materials are omitted for confidentiality. This case study uses a reconstructed public-safe workflow to explain the product operations and systems thinking behind the work.",
   },
+  {
+    slug: "pathpeer",
+    category: "systems",
+    title: "Shipping a mentorship platform solo",
+    company: "PathPeer",
+    role: "Product Designer & Developer Intern",
+    timeframe: "May 2022 – Aug 2022",
+    oneLiner: "Built and shipped a mentorship platform solo, driving engagement up and drop-off down through iterative design.",
+    summary:
+      "Built and launched a mentorship web platform end-to-end as a solo designer and developer, then iterated on the design to increase engagement and reduce inactive user drop-off.",
+    tags: ["Product Design", "Full-Stack Development", "Mentorship Platform"],
+    artifacts: [],
+    metrics: [
+      { value: "50%", label: "increase in user engagement" },
+      { value: "40%", label: "reduction in inactive user drop-off" },
+    ],
+    problem:
+      "Full write-up in progress. PathPeer was a mentorship web platform I built and shipped solo, end-to-end, as a Product Designer & Developer Intern.",
+    process: [
+      "Built and launched a mentorship web platform end-to-end, handling both design and development solo.",
+      "Iterated on the design based on how users were actually behaving on the platform.",
+    ],
+    outcome: [
+      "Increased user engagement by 50%.",
+      "Reduced inactive user drop-off by 40% through iterative design changes.",
+    ],
+    note: "This case study is a placeholder — full write-up in progress.",
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
 // projects (pill-pal) sort last.
-const displayOrder = ["roomease", "forcen", "greenhouse", "hera-fertility", "pill-pal"];
+const displayOrder = ["roomease", "forcen", "greenhouse", "hera-fertility", "pathpeer", "pill-pal"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

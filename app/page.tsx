@@ -8,7 +8,7 @@ import Marquee from "@/components/Marquee";
 import Signature from "@/components/Signature";
 import RotatingWord from "@/components/RotatingWord";
 
-const featuredOrder = ["roomease", "hera-fertility", "forcen", "greenhouse"];
+const featuredOrder = ["roomease", "forcen", "greenhouse", "pathpeer"];
 const featured = featuredOrder
   .map((slug) => caseStudies.find((cs) => cs.slug === slug))
   .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
@@ -98,11 +98,11 @@ export default function Home() {
           {featured.map((cs, i) => {
             const theme = caseStudyTheme[cs.slug];
             return (
-              <Reveal key={cs.slug} delay={i * 90}>
+              <Reveal key={cs.slug} delay={i * 90} className="h-full">
                 <Link
                   href={`/work/${cs.slug}`}
-                  className="group relative block rounded-xl overflow-hidden p-7"
-                  style={{ border: "2.5px solid #181614" }}
+                  className="group relative block h-full rounded-xl overflow-hidden border-[2.5px] border-solid border-[#181614] transition-colors duration-300 hover:border-[color:var(--hover-border)] p-7"
+                  style={{ "--hover-border": theme?.icon ?? "#181614" } as React.CSSProperties}
                 >
                   <span
                     className="absolute inset-0 origin-bottom scale-y-0 opacity-0 transition-all duration-300 group-hover:scale-y-100 group-hover:opacity-100"
@@ -112,7 +112,7 @@ export default function Home() {
                   <div className="relative">
                     <div
                       className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5"
-                      style={theme?.image ? { background: theme.icon } : undefined}
+                      style={theme?.image ? { background: theme.bg } : undefined}
                     >
                       {theme?.image ? (
                         <Image
@@ -137,8 +137,24 @@ export default function Home() {
                     >
                       {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
                     </div>
-                    <h3 className="font-serif text-2xl text-neutral-900 leading-snug">{cs.title}</h3>
-                    <p className="text-sm text-neutral-500 mt-2">{cs.company}</p>
+                    <h3
+                      className={`font-serif text-2xl leading-snug transition-colors duration-300 ${
+                        cs.slug === "roomease" || cs.slug === "greenhouse"
+                          ? "text-neutral-900 group-hover:text-[#fdfaf5]"
+                          : "text-neutral-900"
+                      }`}
+                    >
+                      {cs.title}
+                    </h3>
+                    <p
+                      className={`text-sm mt-2 transition-colors duration-300 ${
+                        cs.slug === "roomease" || cs.slug === "greenhouse"
+                          ? "text-neutral-500 group-hover:text-[#f0dfb8]"
+                          : "text-neutral-500"
+                      }`}
+                    >
+                      {cs.company}
+                    </p>
                   </div>
                 </Link>
               </Reveal>

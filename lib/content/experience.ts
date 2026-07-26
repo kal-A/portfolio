@@ -75,5 +75,6 @@ export const experience: ExperienceEntry[] = [
       "Built and launched a mentorship web platform end-to-end, increasing engagement by 50%.",
       "Reduced inactive user drop-off by 40% through iterative design changes.",
     ],
+    caseStudySlug: "pathpeer",
   },
 ];
