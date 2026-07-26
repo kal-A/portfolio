@@ -84,9 +84,15 @@ export default function Home() {
       </Reveal>
 
       {/* Selected case studies */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
+      <section
+        style={{
+          background:
+            "linear-gradient(160deg, #17232e 0%, #362d1a 55%, #1c2a1c 100%)",
+        }}
+      >
+        <div className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
-          <h2 className="font-serif text-5xl sm:text-6xl text-neutral-900 mb-10">Selected case studies</h2>
+          <h2 className="font-serif text-5xl sm:text-6xl text-neutral-50 mb-10">Selected case studies</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-6">
           {featured.map((cs, i) => {
@@ -104,14 +110,17 @@ export default function Home() {
                   />
                   <span className="absolute inset-0 -z-10" style={{ background: theme?.bg ?? "#fdfaf5" }} />
                   <div className="relative">
-                    <div className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <div
+                      className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5"
+                      style={theme?.image ? { background: theme.icon } : undefined}
+                    >
                       {theme?.image ? (
                         <Image
                           src={theme.image}
                           alt=""
                           width={640}
                           height={400}
-                          className="w-full h-full object-cover object-left-top"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
                         <div
@@ -135,6 +144,7 @@ export default function Home() {
               </Reveal>
             );
           })}
+        </div>
         </div>
       </section>
 
@@ -192,7 +202,7 @@ export default function Home() {
           className="py-16"
           style={{
             background:
-              "linear-gradient(160deg, #2b2118 0%, #241c15 55%, #1f1712 100%)",
+              "linear-gradient(160deg, #17232e 0%, #362d1a 55%, #1c2a1c 100%)",
           }}
         >
           <div className="mx-auto max-w-6xl px-6">
@@ -247,8 +257,8 @@ function Tag({ color, label }: { color: string; label: string }) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="pr-10 border-r border-neutral-700 last:border-r-0 last:pr-0">
-      <div className="w-6 h-6 rounded-full border-2 border-rose-500 relative mb-2.5">
-        <span className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full bg-rose-500 -translate-x-1/2 -translate-y-1/2" />
+      <div className="w-6 h-6 rounded-full border-2 border-amber-400 relative mb-2.5">
+        <span className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full bg-amber-400 -translate-x-1/2 -translate-y-1/2" />
       </div>
       <p className="text-xs uppercase tracking-wide text-neutral-500">{label}</p>
       <p className="font-serif text-3xl text-neutral-50 mt-1">{value}</p>
