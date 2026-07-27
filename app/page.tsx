@@ -1,12 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { caseStudies } from "@/lib/content/case-studies";
 import { experience } from "@/lib/content/experience";
-import { caseStudyTheme } from "@/lib/content/theme";
 import Reveal from "@/components/Reveal";
 import Marquee from "@/components/Marquee";
 import Signature from "@/components/Signature";
 import RotatingWord from "@/components/RotatingWord";
+import CaseStudyCard from "@/components/CaseStudyCard";
 
 const featuredOrder = ["roomease", "forcen", "greenhouse", "pathpeer"];
 const featured = featuredOrder
@@ -95,68 +94,9 @@ export default function Home() {
           <h2 className="font-serif text-5xl sm:text-6xl text-neutral-50 mb-10">Selected case studies</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-6">
-          {featured.map((cs, i) => {
-            const theme = caseStudyTheme[cs.slug];
-            return (
-              <Reveal key={cs.slug} delay={i * 90} className="h-full">
-                <Link
-                  href={`/work/${cs.slug}`}
-                  className="group relative block h-full rounded-xl overflow-hidden p-7"
-                  style={{ border: "2.5px solid #181614" }}
-                >
-                  <span
-                    className="absolute inset-0 origin-bottom scale-y-0 opacity-0 transition-all duration-300 group-hover:scale-y-100 group-hover:opacity-100"
-                    style={{ background: theme?.fill ?? "#f4f1ea" }}
-                  />
-                  <span className="absolute inset-0 -z-10" style={{ background: theme?.bg ?? "#fdfaf5" }} />
-                  <div className="relative">
-                    <div className="w-full aspect-[16/10] rounded-lg mb-5 overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5">
-                      {theme?.image ? (
-                        <Image
-                          src={theme.image}
-                          alt=""
-                          width={640}
-                          height={400}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div
-                          className="w-full h-full"
-                          style={{
-                            background: `linear-gradient(135deg, ${theme?.fill ?? "#e4ded0"}, ${theme?.icon ?? "#181614"})`,
-                          }}
-                        />
-                      )}
-                    </div>
-                    <div
-                      className="w-11 h-11 rounded-lg mb-4 transition-transform duration-300 group-hover:-translate-y-0.5 flex items-center justify-center font-serif text-sm font-bold"
-                      style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
-                    >
-                      {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
-                    </div>
-                    <h3
-                      className={`font-serif text-2xl leading-snug transition-colors duration-300 ${
-                        cs.slug === "roomease" || cs.slug === "greenhouse"
-                          ? "text-neutral-900 group-hover:text-[#fdfaf5]"
-                          : "text-neutral-900"
-                      }`}
-                    >
-                      {cs.title}
-                    </h3>
-                    <p
-                      className={`text-sm mt-2 transition-colors duration-300 ${
-                        cs.slug === "roomease" || cs.slug === "greenhouse"
-                          ? "text-neutral-500 group-hover:text-[#f0dfb8]"
-                          : "text-neutral-500"
-                      }`}
-                    >
-                      {cs.company}
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            );
-          })}
+          {featured.map((cs, i) => (
+            <CaseStudyCard key={cs.slug} cs={cs} delay={i * 90} />
+          ))}
         </div>
         </div>
       </section>
@@ -187,21 +127,13 @@ export default function Home() {
                 <p className="text-lg text-neutral-700 mt-3 max-w-lg leading-relaxed">
                   {job.synopsis}
                 </p>
-                {job.caseStudySlug ? (
+                {job.caseStudySlug && (
                   <Link
                     href={`/work/${job.caseStudySlug}`}
                     className="text-sm font-bold text-rose-600 hover:text-rose-700 mt-3 inline-block"
                   >
                     Read more →
                   </Link>
-                ) : (
-                  <span className="text-sm font-medium text-neutral-500 mt-3 inline-block">
-                    Full bullet detail on the{" "}
-                    <Link href="/experience" className="text-rose-600 hover:text-rose-700 font-bold">
-                      Experience
-                    </Link>{" "}
-                    page
-                  </span>
                 )}
               </Reveal>
             ))}

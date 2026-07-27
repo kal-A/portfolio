@@ -7,14 +7,21 @@ export interface CaseStudy {
   slug: string;
   /** Which card/page treatment this project gets. See docs/redesign/06-project-card-types.md */
   category: "visual" | "systems" | "archive";
+  entryType: "internship" | "capstone" | "course-project";
   title: string;
   company: string;
   role: string;
+  /** Only set for internship entries. */
+  location?: string;
   timeframe: string;
   /** One-line problem statement for cards, not a buzzword summary. */
   oneLiner: string;
+  /** Also used as the 1-2 sentence synopsis shown on the card. */
   summary: string;
+  /** Responsibility/domain tags, e.g. "Product Operations", "Robotics" — card tag row 1. */
   tags: string[];
+  /** Software/tools used, e.g. "Confluence", "Python" — card tag row 2. */
+  toolTags: string[];
   /** Artifact chips, e.g. "Figma", "Workflow Map", "Internal Materials Omitted". */
   artifacts: string[];
   metrics: Metric[];
@@ -36,14 +43,17 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "hera-fertility",
     category: "visual",
+    entryType: "internship",
     title: "Bringing loan servicing in-house",
     company: "Hera Fertility",
     role: "Product Design & Marketing Intern",
+    location: "Remote (New York, NY)",
     timeframe: "Jan 2023 – Apr 2023",
     oneLiner: "A financing product with no in-house loan servicing and no existing onboarding to build from.",
     summary:
       "Designed the onboarding and payment experience for a fertility financing platform from scratch, as the team moved loan servicing in-house.",
     tags: ["Fintech UX", "Product Design", "User Research"],
+    toolTags: ["Figma", "Google Analytics", "Looker"],
     artifacts: ["Figma", "Wireframes", "Product Roadmap", "Recreated Mockups"],
     metrics: [
       { value: "2x", label: "user retention (internal analytics)" },
@@ -71,6 +81,7 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "roomease",
     category: "visual",
+    entryType: "capstone",
     title: "Making club room booking less scattered",
     company: "RoomEase · Capstone Project",
     role: "Product Lead, Management Engineering Capstone (MSE 402)",
@@ -79,6 +90,7 @@ const caseStudiesData: CaseStudy[] = [
     summary:
       "Turned a scattered, partly-manual club room booking process into a structured booking flow, tested through iterative usability rounds with student organizations.",
     tags: ["Requirements Gathering", "UX Design", "Systems Thinking"],
+    toolTags: ["Figma", "React", "Node.js"],
     artifacts: ["Figma", "Booking Flow", "Room Dataset", "Capstone Report", "Presentation"],
     metrics: [
       { value: "33% → 90%", label: "booking completion rate (usability testing)" },
@@ -110,14 +122,17 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "greenhouse",
     category: "visual",
+    entryType: "internship",
     title: "Design production across retail and digital channels",
     company: "Greenhouse Juices",
     role: "Product Designer Intern",
+    location: "Mississauga, ON",
     timeframe: "Jan 2025 – Apr 2025",
     oneLiner: "A small team shipping campaigns across retail, Amazon, e-commerce, and U.S. distribution at once, without a consistent sprint cadence.",
     summary:
       "Designed and shipped campaign and storefront assets across every channel Greenhouse sold through, while helping the 8-person team establish a sprint cadence it hadn't had before.",
     tags: ["Campaign Design", "Sprint Leadership", "Brand & E-commerce"],
+    toolTags: ["Figma", "Klaviyo", "Shopify"],
     artifacts: ["Campaign Assets", "Storefront Assets", "Brand Design", "Sprint Board"],
     metrics: [
       { value: "20%", label: "engagement increase (campaign analytics)" },
@@ -147,6 +162,7 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "pill-pal",
     category: "visual",
+    entryType: "course-project",
     title: "Designing a medication tracker for older adults, then breaking it on purpose",
     company: "Pill Pal · HCI Course Project (MSE 343)",
     role: "Team Member, Redesign Rationale, Prototyping & Evaluation",
@@ -155,6 +171,7 @@ const caseStudiesData: CaseStudy[] = [
     summary:
       "An Apple Watch medication-tracking app for older adults, designed through cognitive walkthroughs and medium-fidelity prototyping, then stress-tested with a 4-evaluator heuristic evaluation that surfaced 20 ranked usability issues.",
     tags: ["HCI", "Usability Evaluation", "Wearable UX"],
+    toolTags: ["Figma", "Apple Watch SDK"],
     artifacts: ["Figma Prototype", "Cognitive Walkthrough", "Heuristic Evaluation", "Severity Report"],
     metrics: [
       { value: "2", label: "core tasks cognitive-walked" },
@@ -190,14 +207,17 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "forcen",
     category: "systems",
+    entryType: "internship",
     title: "Turning production handoffs into a trackable system",
     company: "ForceN",
     role: "Product Engineer Intern",
+    location: "Toronto, ON",
     timeframe: "Sep 2025 – Dec 2025",
     oneLiner: "A hardware dev-kit process spanning procurement, assembly, calibration, and shipment, with status living in people's heads instead of a system.",
     summary:
       "ForceN's dev kit workflow touched procurement, assembly, calibration, inventory, and shipment. I helped make that process easier to track by organizing unit status, clarifying handoffs, and coordinating across engineering and operations so fewer details lived only in people's heads.",
     tags: ["Product Operations", "Hardware Workflow", "Process Design"],
+    toolTags: ["Confluence", "Onshape", "AI Agents", "Python"],
     artifacts: ["Workflow Map", "Process Tracker", "Handoff Table", "Internal Materials Omitted"],
     metrics: [
       { value: "14+", label: "hardware units coordinated" },
@@ -222,14 +242,17 @@ const caseStudiesData: CaseStudy[] = [
   {
     slug: "pathpeer",
     category: "systems",
+    entryType: "internship",
     title: "Shipping a mentorship platform solo",
     company: "PathPeer",
     role: "Product Designer & Developer Intern",
+    location: "Remote (Waterloo, ON)",
     timeframe: "May 2022 – Aug 2022",
     oneLiner: "Built and shipped a mentorship platform solo, driving engagement up and drop-off down through iterative design.",
     summary:
       "Built and launched a mentorship web platform end-to-end as a solo designer and developer, then iterated on the design to increase engagement and reduce inactive user drop-off.",
     tags: ["Product Design", "Full-Stack Development", "Mentorship Platform"],
+    toolTags: ["Figma", "Full-Stack Dev"],
     artifacts: [],
     metrics: [
       { value: "50%", label: "increase in user engagement" },
@@ -247,11 +270,45 @@ const caseStudiesData: CaseStudy[] = [
     ],
     note: "This case study is a placeholder — full write-up in progress.",
   },
+  {
+    slug: "informatica",
+    category: "systems",
+    entryType: "internship",
+    title: "Turning UX research into workflow fixes",
+    company: "Informatica",
+    role: "Product Operations & UX Research Intern",
+    location: "Mississauga, ON",
+    timeframe: "Sep 2023 – Dec 2023",
+    oneLiner: "Cross-team deliverables were slipping and system friction was going unaddressed because no one owned turning research into fixes.",
+    summary:
+      "Translated UX research findings into concrete workflow improvements and coordinated cross-team deliverables to reduce missed deadlines during a product operations internship.",
+    tags: ["Product Operations", "UX Research", "Cross-Team Coordination"],
+    toolTags: ["User Research", "Workflow Documentation"],
+    artifacts: ["Internal Materials Omitted"],
+    metrics: [
+      { value: "18%", label: "user engagement increase (internal reporting)" },
+      { value: "20%", label: "internal task efficiency gain (internal reporting)" },
+      { value: "30%", label: "on-time delivery improvement (internal reporting)" },
+    ],
+    problem:
+      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and cross-team deliverables were slipping. As a Product Operations & UX Research Intern, the work was to close that gap — translate research into action and keep deliverables moving across teams.",
+    process: [
+      "Translated UX research findings into specific workflow improvements rather than leaving them as a research readout.",
+      "Identified system friction points affecting internal task efficiency and addressed them directly.",
+      "Coordinated cross-team deliverables to reduce missed deadlines and improve on-time delivery.",
+    ],
+    outcome: [
+      "User engagement increased 18%, per internal reporting from the internship period.",
+      "Internal task efficiency improved 20% by addressing identified friction points.",
+      "Cross-team on-time delivery improved 30%.",
+    ],
+    note: "This case study is a placeholder — full write-up in progress. Metrics are as reported internally during the internship; internal tools and materials are omitted for confidentiality.",
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
 // projects (pill-pal) sort last.
-const displayOrder = ["roomease", "forcen", "greenhouse", "hera-fertility", "pathpeer", "pill-pal"];
+const displayOrder = ["roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

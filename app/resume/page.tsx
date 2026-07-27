@@ -57,8 +57,8 @@ export default function ResumePage() {
           </div>
 
           <p className="text-sm text-neutral-600">
-            See the <a href="/experience" className="text-rose-600 hover:text-rose-700 font-medium">Experience</a>{" "}
-            page for full bullet detail, or the <a href="/work" className="text-rose-600 hover:text-rose-700 font-medium">Case Studies</a> for in-depth project write-ups.
+            See <a href="/work" className="text-rose-600 hover:text-rose-700 font-medium">Work</a>{" "}
+            for full case-study write-ups on each role and project.
           </p>
         </div>
       </div>

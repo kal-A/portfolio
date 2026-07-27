@@ -49,6 +49,7 @@ export const experience: ExperienceEntry[] = [
       "Improved internal task efficiency by 20% by identifying and addressing system friction points.",
       "Coordinated cross-team deliverables, reducing missed deadlines and improving on-time delivery by 30%.",
     ],
+    caseStudySlug: "informatica",
   },
   {
     role: "Product Design & Marketing Intern",

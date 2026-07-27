@@ -37,7 +37,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <div
         className="pt-10 pb-12"
         style={{
-          background: `linear-gradient(160deg, ${theme?.fill ?? "#f4f1ea"} 0%, #fdfaf5 95%)`,
+          background: `linear-gradient(160deg, ${theme?.fillTo ?? "#f4f1ea"} 0%, #fdfaf5 95%)`,
         }}
       >
         <div className="mx-auto max-w-3xl px-6">
@@ -47,7 +47,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
           <div
             className="w-12 h-12 rounded-lg mt-6 flex items-center justify-center font-serif text-base font-bold"
-            style={{ background: theme?.icon ?? "#181614", color: "#fdfaf5" }}
+            style={{ background: theme?.iconBg ?? "#181614", color: "#fdfaf5" }}
           >
             {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
           </div>
@@ -58,7 +58,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {cs.title}
           </h1>
           <p className="text-neutral-500 mt-3">
-            {cs.role} · {cs.timeframe}
+            {cs.role} · {cs.location ? `${cs.location} · ` : ""}
+            {cs.timeframe}
           </p>
           <p className="text-neutral-700 mt-4 text-xl leading-relaxed">{cs.oneLiner}</p>
 
@@ -91,7 +92,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
         {cs.metrics.map((m) => (
-          <Metric key={m.label} value={m.value} label={m.label} accent={theme?.icon ?? "#181614"} />
+          <Metric key={m.label} value={m.value} label={m.label} accent={theme?.accent ?? "#181614"} />
         ))}
       </div>
 
