@@ -1958,15 +1958,466 @@ When using this example as guidance:
 
 ---
 
-# 24. Amendments (added 2026-07-28, on top of the original draft)
+# 24. ForceN Details Page Implementation Plan (added 2026-07-31)
 
-## 24.1 Diagrams and illustrations are a priority, not a fallback
+This section supersedes the earlier simplified ForceN framing (Section 23's worked example, and the "Turning production handoffs into a trackable system" title/spine used in early layout previews) wherever the two conflict.
+
+The ForceN details page must not be presented primarily as a tracking or handoff cleanup project. The core story is the development of a ground-up operating roadmap for ForceN's standardized Dev Systems, designed to support an inventory-backed, off-the-shelf product line.
+
+The existing project card and portfolio browsing experience are already designed and must remain unchanged. This plan applies only to the ForceN details page opened after the existing card is selected.
+
+## 24.1 Central narrative
+
+### Primary business objective
+
+ForceN wanted Dev Systems to become a repeatable, off-the-shelf product line:
+
+- Standard configurations would be produced ahead of demand.
+- Completed units would be held in finished-product inventory.
+- An incoming order could be fulfilled from available stock instead of triggering a new build from the beginning.
+- The standard Dev System line would support a greater share of orders, reducing reliance on custom configurations as the default product path.
+
+### Main project assignment
+
+Kamal's principal task was to develop the operating roadmap that connected:
+
+1. Product configuration
+2. Component requirements
+3. Inventory checks
+4. Procurement
+5. Assembly
+6. Primary calibration
+7. Rework after calibration failure
+8. Lamination
+9. Secondary calibration
+10. Quality validation
+11. Finished-product shelving
+12. Finished-inventory updates
+13. Order fulfilment
+14. Shipment
+15. Replenishment
+
+### Narrative spine
+
+> I helped design the operating system required to turn ForceN's Dev Systems into a standardized, inventory-backed product line rather than products that had to be assembled from the beginning whenever an order arrived.
+
+Every section, visual, and result on the page should support this story.
+
+## 24.2 Revised page title and hero
+
+### Preferred title
+
+> **Building an inventory-backed production system for ForceN's Dev Systems**
+
+### Strong alternate title
+
+> **Turning Dev Systems from order-triggered builds into a ready-to-ship product line**
+
+### Avoid
+
+- Turning production handoffs into a trackable system
+- Status lived in people's heads as the primary headline
+- Dev System transfer
+- Generic titles centred only on tracking
+
+Those ideas may appear as supporting issues, but they should not define the project.
+
+### Hero supporting copy
+
+> ForceN wanted its standard Dev Systems to become the default product offering: produced ahead of demand, held in finished inventory, and ready to ship when an order arrived. I developed the end-to-end operating roadmap connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment.
+
+### Hero metadata
+
+- **Company:** ForceN
+- **Role:** Product Engineer Intern
+- **Location:** Toronto, ON
+- **Dates:** Use confirmed dates only
+- **Project type:** Product operations / process engineering / hardware product systems
+- **Confidentiality note:** Internal trackers, scripts, and company-specific records are omitted or reconstructed
+
+Do not use the confidentiality notice as a project tag.
+
+## 24.3 Revised snapshot panel
+
+Preserve the existing four-column visual treatment, but rewrite the content.
+
+### Challenge
+
+> ForceN needed a complete operating process for producing standardized Dev System configurations ahead of demand while maintaining the parts and finished-product inventory required to fulfil incoming orders.
+
+### Contribution
+
+> Developed the roadmap from configuration and component planning through procurement, assembly, calibration, quality validation, finished inventory, and shipment, with documentation and ownership requirements defined at each stage.
+
+### Outcome
+
+Until every percentage is fully verified, use:
+
+> Created the operating foundation for an inventory-backed Dev System product line, reducing dependence on order-triggered production and undocumented process knowledge.
+
+### Tools
+
+List tools with purpose, not as an unexplained logo wall:
+
+- **Arena:** part records, configuration references, and component identification
+- **Confluence:** process and work-instruction documentation
+- **Onshape:** product and assembly context
+- **Calibration scripts:** sensor validation across configurations
+- **Python / automation:** inventory checks, process support, or calibration logic where verified
+- **AI tools:** documentation or workflow assistance only where the exact use can be explained and verified
+
+Do not use the label `AI agents` unless the exact tool, task, output, and verification process are documented.
+
+## 24.4 Revised details-page structure
+
+### 01 — The product strategy behind the workflow
+
+Explain:
+
+- ForceN wanted Dev Systems to become the standardized, off-the-shelf product line.
+- Standard configurations were intended to be built before an order arrived.
+- Finished units would be placed into inventory and become available for immediate fulfilment.
+- This approach reduced dependence on custom builds as the default order path.
+- The production system therefore had to connect demand, component availability, assembly, quality, and replenishment.
+
+Suggested heading:
+
+> **From build-to-order to inventory readiness**
+
+Suggested supporting sentence:
+
+> The roadmap was not only about moving a unit between teams. It had to make standard Dev Systems producible, testable, stockable, and ready to fulfil an order without restarting the entire process.
+
+### 02 — Mapping the complete production system
+
+This section should contain the primary reconstructed system diagram.
+
+#### Required high-level flow
+
+```text
+STANDARD DEV SYSTEM CONFIGURATION
+                |
+PARTS / BOM / ARENA REFERENCES
+                |
+COMPONENT INVENTORY CHECK
+          |             |
+Below threshold         Available
+      |                    |
+PROCUREMENT            ASSEMBLY
+      |____________________|
+                    PRIMARY CALIBRATION
+                      |          |
+                    Fail         Pass
+                     |             |
+              RETURN TO         LAMINATION
+               ASSEMBLY             |
+                         SECONDARY CALIBRATION
+                                  |
+                           QUALITY VALIDATION
+                                  |
+                         FINISHED-PRODUCT SHELF
+                                  |
+                       CONFIGURATION INVENTORY +1
+                                  |
+                           ORDER FULFILMENT
+                                  |
+                               SHIPMENT
+                                  |
+                    FINISHED-INVENTORY REVIEW
+                                  |
+                       REPLENISH AS REQUIRED
+```
+
+#### Required component-inventory loop
+
+```text
+PART DEDUCTION
+      |
+CHECK REMAINING STOCK
+      |
+IS STOCK BELOW THE MINIMUM THRESHOLD?
+      |                      |
+    Yes                      No
+     |                        |
+TRIGGER REPLENISHMENT    CONTINUE WORKFLOW
+```
+
+#### Visual requirements
+
+Claude Code must:
+
+- Distinguish component inventory from work in progress and finished-product inventory.
+- Show calibration failure returning to assembly.
+- Show lamination only after successful primary calibration.
+- Show secondary calibration after lamination.
+- Show finished inventory increasing only after quality validation.
+- Show replenishment logic after component use.
+- Show finished-product replenishment after fulfilment or when target stock is not met.
+- Label the visual as reconstructed and public-safe.
+- Avoid attaching unverified percentages directly to workflow stages.
+- Build a responsive mobile layout that stacks vertically or supports accessible horizontal scrolling.
+- Keep the current editorial visual language, warm palette, rounded borders, and restrained line work.
+
+Suggested title:
+
+> **How a Dev System moved from configuration to finished inventory**
+
+Suggested caption:
+
+> Reconstructed from the roadmap and documentation I developed. Internal tooling, thresholds, and product-specific details have been simplified for confidentiality.
+
+### 03 — Designing the production and replenishment logic
+
+Replace the current simplified "Standardizing the handoffs" framing with three operational decision modules.
+
+#### Decision A — Standard configurations as repeatable products
+
+**Situation:** ForceN wanted Dev Systems to support a greater share of orders instead of treating most incoming work as a custom unit or configuration.
+
+**Decision:** Define repeatable configuration paths with known parts, assembly requirements, calibration procedures, and finished-inventory records.
+
+**Why it mattered:** A standard product line can only be stocked ahead of demand when each configuration is sufficiently defined to be reproduced consistently.
+
+**Result:** The roadmap connected product configuration to a repeatable production and inventory process.
+
+#### Decision B — Replenishment triggered by actual component usage
+
+**Situation:** A future build could be delayed even when the production roadmap was clear if a required substrate, Force Film, or other component was unavailable.
+
+**Decision:** Connect part deductions to minimum-stock checks so inventory status was evaluated after component use and replenishment could begin before the next build was blocked.
+
+**Why it mattered:** Inventory shortages had to be addressed upstream rather than discovered only when assembly was ready to begin.
+
+**Result:** Component availability became part of the production logic instead of a separate, reactive activity.
+
+#### Decision C — Calibration as a quality gate with a rework loop
+
+**Situation:** A failed calibration could not be treated as an undefined exception.
+
+**Decision:** Create an explicit route from failed calibration back to assembly for diagnosis and correction, followed by repeat testing. Allow only successful units to proceed to lamination and secondary calibration.
+
+**Why it mattered:** Quality failures became part of the planned operating model rather than ad hoc interruptions.
+
+**Result:** The process defined how a unit progressed, how it failed, and how it re-entered production.
+
+### 04 — Making the system executable through documentation
+
+The roadmap was not complete until every stage had the information required for another employee or team to execute it.
+
+Create a documentation-system visual organized around one Dev System configuration.
+
+#### Required documentation categories
+
+- Configuration definition
+- Arena part numbers
+- Bill of materials or parts list
+- Component inventory requirements
+- Minimum stock thresholds
+- Procurement instructions
+- Assembly work instructions
+- Calibration instructions
+- Calibration scripts
+- Acceptance criteria
+- Lamination instructions
+- Secondary-calibration procedure
+- QA validation records
+- Inventory deductions
+- Finished-product inventory update
+- Ownership and handoff requirements
+- Shipment or fulfilment requirements
+
+Suggested heading:
+
+> **A roadmap only works when another person can execute it**
+
+Suggested copy:
+
+> Each step needed more than a status label. It needed the correct part references, work instructions, calibration procedure, quality record, inventory transaction, and ownership information so that the process could be repeated across teams and continued by future employees.
+
+#### Visual concept
+
+Show a central Dev System configuration card surrounded by its supporting documentation — assembly work instructions and Arena part references feeding in, calibration scripts alongside, inventory/QA/handoff records underneath. This should look like a connected operating-information system, not a decorative document gallery.
+
+## 24.5 Additional product engineering responsibilities
+
+Add a distinct section after the central roadmap story.
+
+Suggested heading:
+
+> **Additional product engineering responsibilities**
+
+The section should make clear that these responsibilities supported the wider Dev System work but were not all separate case studies.
+
+### Sensor calibration across configurations
+
+Suggested copy:
+
+> I calibrated sensors across multiple Dev System configurations, applying the appropriate setup and validation process for each unit. This gave me direct exposure to how configuration differences affected assembly, calibration, quality checks, and the production roadmap.
+
+Show only verified details about: number or range of configurations, calibration equipment, acceptance criteria, failure analysis, records created. Do not imply ownership of the underlying calibration science unless confirmed.
+
+### Calibration scripts
+
+Suggested copy:
+
+> I worked with calibration scripts used to validate sensor performance and support repeatable testing across configurations. The final case study should distinguish whether I ran, modified, debugged, parameterized, or authored each script, explain how the output was checked, and show how the scripts supported the production and QA process.
+
+Claude must distinguish among: running existing scripts, updating script parameters, debugging, writing new scripts, automating outputs, interpreting calibration results. Do not collapse these into "built calibration automation" unless accurate.
+
+### Dev System assembly work instructions
+
+Suggested copy:
+
+> I created and maintained assembly work-instruction documentation for Dev Systems, connecting the required parts, Arena references, assembly sequence, validation steps, and handoff expectations needed to reproduce a configuration consistently.
+
+Possible artifacts: redacted work-instruction structure, reconstructed instruction-page layout, assembly step hierarchy, part-to-step relationship diagram, revision or approval flow.
+
+### Web design input
+
+Suggested copy:
+
+> I also contributed product and design input to ForceN's web experience, helping communicate the product more clearly from the perspective of someone working closely with the Dev Systems, configurations, and supporting technical material.
+
+Claude must confirm: which page or feature received input, whether the work involved UX feedback/content hierarchy/product messaging/visual design/implementation, what recommendation was made, whether it was adopted. Keep this responsibility proportionate — it should not distract from the operating-roadmap story unless artifacts and ownership justify deeper coverage.
+
+## 24.6 Suggested design for the additional-responsibilities section
+
+Use a quieter treatment than the primary roadmap.
+
+Recommended layout: four-column row on large screens, two-by-two grid on tablets, single-column stack on mobile.
+
+Each module should contain: responsibility title, one concise explanation, tool or method, optional artifact or diagram, scope note, evidence status where required.
+
+Do not use generic icons as the only evidence. Prefer a calibration output excerpt, simplified script logic, redacted assembly instruction, or small web-design annotation. If artifacts cannot be shown, use restrained reconstructed diagrams with clear captions.
+
+## 24.7 Revised results section
+
+Preserve the existing dark visual treatment, but change the copy and evidence model.
+
+### Remove
+
+> Four numbers, each tied to a specific change above — not a repeat of the workflow counts, the actual before/after.
+
+This sounds defensive and should not appear publicly.
+
+### Recommended introduction
+
+> The roadmap connected product configuration, component availability, production, quality, and finished inventory into one repeatable operating model.
+
+### Qualitative outcomes to include
+
+Use only those supported by the source material:
+
+- Established a ground-up roadmap from component planning through finished inventory and shipment.
+- Supported the shift toward producing standard Dev Systems ahead of incoming orders.
+- Reduced the risk of assembly delays caused by missing components.
+- Connected component deductions to minimum-stock replenishment logic.
+- Defined a repeatable rework route for failed calibration.
+- Clarified when a unit was ready to enter finished-product inventory.
+- Created configuration-specific work instructions and process documentation.
+- Improved continuity across engineering, operations, inventory, and future employees.
+- Supported calibration and validation across Dev System configurations.
+
+### Metric treatment
+
+The existing figures may remain only after confirming baseline, measurement period, exact definition, source, and whether the figure was measured, estimated, or taken from the resume.
+
+Potential figures currently shown: 35% turnaround-time reduction, 25% assembly-error reduction, 30% on-time-delivery improvement, 30% delivery-efficiency improvement, 14+ units, 6+ stakeholders.
+
+Until verified: remove the metrics from the workflow diagram; either omit them from the public page or keep them disabled in draft data; do not map one metric to one stage merely because it is visually convenient; use qualitative results rather than unsupported numerical precision.
+
+## 24.8 Revised reflection section
+
+Replace the current tracking-centred cards with the following.
+
+### Product strategy depends on the operating system behind it
+
+> Making Dev Systems the standard offering was not only a product-positioning decision. It required an operating model capable of maintaining parts, producing repeatable configurations, verifying quality, and replenishing finished inventory ahead of demand.
+
+### Inventory problems begin before the shelf is empty
+
+> The most useful inventory check was not a periodic count after a shortage appeared. It was connecting every component deduction to a minimum threshold so replenishment could begin before the next build was blocked.
+
+### Quality requires explicit feedback loops
+
+> Calibration was not simply a final checkpoint. A failed result needed a defined route back to assembly, followed by correction and re-testing, so exceptions remained part of the planned workflow.
+
+### A process is only scalable when someone new can execute it
+
+> Arena references, assembly instructions, calibration procedures, scripts, inventory rules, and ownership records turned the roadmap from a diagram into a system that could be followed and improved by future employees.
+
+### Confidentiality treatment
+
+Do not use "This is a reconstructed version" as a reflection card. Place one small italic note beneath the primary workflow visual instead:
+
+> Internal trackers, calibration materials, scripts, and company-specific documentation are omitted for confidentiality. The visuals on this page reconstruct the same process logic in a public-safe form.
+
+## 24.9 Tool and AI treatment
+
+The tools section must explain how each tool contributed:
+
+- **Arena** — how part numbers or configuration records were referenced, how that supported repeatable assembly/procurement, whether Kamal entered/reviewed/relied on the records.
+- **Confluence** — what process documentation or work instructions were created, who needed it, how it supported continuity/handoffs.
+- **Onshape** — how product assemblies or technical models informed the work, whether reviewed/annotated/modified. Do not imply mechanical design ownership unless confirmed.
+- **Calibration scripts / Python** — whether scripts were run, modified, debugged, or authored; input/output handled; how results were verified; how script use fit into QA and the roadmap.
+- **AI-assisted workflow** — include only when the exact use is known, following the "confirmed tool + context supplied + output checked" structure already established in Section 9.12. Do not use vague phrases such as "AI agents," "leveraged AI," or "improved efficiency with AI" without a concrete workflow and verification method.
+
+## 24.10 Claude Code implementation tasks
+
+1. **Audit the current ForceN page** — identify existing components, route, text content, metric sources, reconstructed visuals, mobile behavior, and statements unsupported by source notes. Do not modify the project card.
+2. **Replace the content model** — update the ForceN case-study data to reflect `projectType: "systems-operations"`, the inventory-backed central story, the main contribution (end-to-end operating roadmap), and supporting contributions (sensor calibration, calibration scripts, assembly work instructions, web design input).
+3. **Rebuild the system diagram** — as reusable diagram data (nodes/edges), not hard-coded visual boxes. Required nodes: configuration definition, parts/Arena references, component inventory check, procurement, assembly, primary calibration, lamination, secondary calibration, QA validation, finished inventory, order fulfilment, shipment, finished-inventory review. Required loops: component inventory below threshold → procurement; primary calibration failure → assembly; finished inventory below target → production planning.
+4. **Add a documentation-system visual** — a component showing how one configuration connects to parts, Arena numbers, assembly instructions, calibration instructions, scripts, QA records, inventory rules, and ownership/handoff requirements.
+5. **Add supporting-responsibility modules** — sensor calibration, calibration scripts, assembly work instructions, web design input, each with description/tools/artifact/scope note/evidence status.
+6. **Rewrite the results section** — preserve the dark editorial style, replace defensive copy, prioritize verified outcomes, hide unverified metric cards through data flags (`status`, `public` fields — only render `public: true`).
+7. **Rewrite reflection** — use the four lessons in §24.8. Do not use confidentiality as a reflection lesson.
+8. **Validate terminology** — use "Dev Systems," "Dev System configuration," "component inventory," "work in progress," "finished-product inventory," "production roadmap," "assembly," "primary/secondary calibration," "lamination," "quality validation," "fulfilment," "shipment" consistently. Avoid "Dev System transfer," "tracker" as the main project, or treating fulfilment/shipment as interchangeable.
+9. **Test responsive behavior** — desktop preserves editorial split layouts/bordered panels with a legible workflow diagram; mobile stacks workflow stages vertically, preserves branches/loops, keeps text ≥16px, keeps diagram content available to screen readers, stacks supporting-responsibility modules one per row.
+10. **Run QA** against the checklist in §20, plus: component inventory and finished inventory are visibly distinct; calibration failure visibly returns to assembly; lamination occurs after successful primary calibration; secondary calibration occurs after lamination; documentation is shown as part of the operating system; additional responsibilities present but don't overpower the main story; no unverified metrics appear publicly.
+
+## 24.11 Internal `NEEDS_INPUT` list
+
+Before publishing the final ForceN details page, confirm:
+
+1. Exact dates and public title
+2. Exact definition of "Dev Systems"
+3. Which standard configurations were included
+4. Whether the goal was minimum finished inventory, forecast inventory, or another replenishment model
+5. Exact component inventory thresholds and whether they can be described publicly
+6. Whether stock checks were fully automated, partially automated, or designed as automation requirements
+7. Whether Kamal built the automation, specified it, or supported it
+8. Exact role in procurement logic
+9. Exact role in assembly
+10. Exact role in primary and secondary calibration
+11. Exact role with calibration scripts
+12. Whether scripts were run, modified, debugged, parameterized, or created
+13. Exact role in lamination
+14. Exact Arena usage
+15. Exact Confluence documentation created
+16. Exact Onshape usage
+17. Exact web-design input and whether it was adopted
+18. Number of configurations calibrated
+19. Number of units produced or supported
+20. Number and type of stakeholders
+21. Definitions and sources for all percentages
+22. Which artifacts can be shown, redacted, or reconstructed
+23. Whether the process was implemented fully, partially, piloted, or documented as a roadmap
+24. What was handed off to future employees
+25. What continued after Kamal's co-op
+
+Do not expose this list publicly.
+
+---
+
+# 25. Amendments (added 2026-07-28, on top of the original draft)
+
+## 25.1 Diagrams and illustrations are a priority, not a fallback
 
 The original draft (Section 10, "Reconstructed visuals") already allows reconstructed diagrams when no real artifacts exist. This amendment makes it a **default preference, not a last resort**: for every process/systems-flavored case study (ForceN, Informatica, and any operational chapters inside otherwise visual case studies), actively build a diagram or illustration of the workflow, decision, or system being described — even where photos exist, a clean diagram is often the *clearer* artifact for explaining a process than a screenshot is. Treat "no real screenshots available" as permission to invest more in diagrams, not as a reason to fall back to plain text.
 
 Every such diagram still follows the existing rules: captioned as reconstructed, built only from confirmed facts, no invented specifics, restrained visual style consistent with the rest of the portfolio (no glassmorphism/neon/obvious-AI-generated look, per Section 10's "Image treatment").
 
-## 24.2 Known architecture mismatch to resolve before implementation
+## 25.2 Known architecture mismatch — resolved 2026-07-30
 
 This spec's Section 12 (Component System) and Section 13 (Data Architecture) describe a *new* system — MDX case-study files, a `components/case-study/` library of ~18 components, a `data/case-studies.ts` + `data/artifacts.ts` split, `content/_source-notes/`.
 
@@ -1976,4 +2427,16 @@ The actual current codebase (as of 2026-07-28, after this session's Experience/W
 - `app/work/[slug]/page.tsx` — the one existing detail-page renderer for all 7 projects.
 - `components/CaseStudyCard.tsx`, `components/ProjectIcon.tsx`, `components/Tag.tsx` — the just-built card system (explicitly out of scope for this spec per Section 18, and should stay untouched).
 
-Before writing real case-study content, we need to decide: extend the existing `CaseStudy` interface + detail-page template with new optional fields/sections (decisions, constraints, artifact figures, etc.) rather than introducing a parallel MDX system — or actually adopt this spec's MDX architecture wholesale, replacing the current renderer. The existing system is simpler and already working end-to-end for all 7 projects; the MDX system offers richer structure per Section 12/13 but is a bigger lift. **Not decided yet — resolve this before starting implementation.**
+**Resolved 2026-07-30: extend, don't replace.** The existing `CaseStudy` interface and `app/work/[slug]/page.tsx` renderer were extended with new optional fields (`caseStudyType`, `tier`, `snapshot`, `constraints`, `decisions`, `figures`, `reflection`) and matching conditional sections, following the same pattern already used for `team`/`note`/`mockups`. No MDX layer, no `data/artifacts.ts` split, no `content/_source-notes/` directory. Diagrams are hand-built React/SVG components (see `components/case-study/Diagram.tsx`), not images or a separate content format.
+
+## 25.3 Site-wide visual amendments (added 2026-07-31, from ForceN layout review)
+
+These apply to every case-study details page, not just ForceN — they came out of iterating the ForceN layout preview but are meant as standing direction.
+
+**Section dividers ("divots").** Between major sections, use a hand-drawn-feeling divider line (a gently irregular horizontal rule, not a straight `<hr>`) rather than plain whitespace or a dashed rule alone. Vary the divot's shape/curve per section break rather than repeating the identical line every time — the point is a small bit of organic, human flair between chapters, not a repeating decorative element. Keep it restrained: a single thin stroke in the page's ink or accent color, not a heavy illustration.
+
+**Background continuity with `/` and `/work`.** The soft multi-stop gradient bloom already used on the homepage and `/work` index (radial color blooms over a linear base, `background-attachment: fixed`) is the established site-wide background language — detail pages should keep using it rather than reverting to flat cream, but each divot/section transition is a reasonable place to let the bloom shift slightly (a different bloom emphasis or intensity per chapter) so long scrolling pages still read as one continuous background, not stacked flat panels.
+
+**Section numbers should read as a real visual element, not a caption.** Chapter numerals ("01", "02"...) were too small relative to the chapter titles next to them — they should be sized and weighted so they act as a genuine visual counterweight to the heading, not a small label easily missed.
+
+**Edge margins.** Keep the reasoning for generous edge whitespace explicit rather than assumed: it exists so the reading column stays a comfortable line length on wide screens, matching the constrained reading columns used elsewhere on the site (e.g. the ~66ch body-text max-width already used in `/work/[slug]`). But that reasoning should be weighed against how wide the actual content column is at common desktop widths — if the margins read as excessive rather than intentional, widen the content column rather than just noting the rationale.

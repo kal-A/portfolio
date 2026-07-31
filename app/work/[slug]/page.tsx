@@ -15,6 +15,7 @@ import {
   PillPalReminderMockup,
   PillPalEmergencyMockup,
 } from "@/components/mockups/PillPalMockups";
+import Diagram from "@/components/case-study/Diagram";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -90,11 +91,46 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         </div>
       )}
 
+      {cs.snapshot && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 text-sm">
+          <div>
+            <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Challenge</p>
+            <p className="text-neutral-700 leading-relaxed">{cs.snapshot.challenge}</p>
+          </div>
+          <div>
+            <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Contribution</p>
+            <p className="text-neutral-700 leading-relaxed">{cs.snapshot.contribution}</p>
+          </div>
+          <div>
+            <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Outcome</p>
+            <p className="text-neutral-700 leading-relaxed">{cs.snapshot.outcome}</p>
+          </div>
+          <div>
+            <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Tools</p>
+            <p className="text-neutral-700 leading-relaxed">{cs.snapshot.tools.join(", ")}</p>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10">
         {cs.metrics.map((m) => (
           <Metric key={m.label} value={m.value} label={m.label} accent={theme?.accent ?? "#181614"} />
         ))}
       </div>
+
+      {cs.constraints && cs.constraints.length > 0 && (
+        <section className="mt-10">
+          <h2 className="font-serif text-lg text-neutral-900 mb-2">Constraints</h2>
+          <ul className="space-y-1.5">
+            {cs.constraints.map((c, i) => (
+              <li key={i} className="text-neutral-600 text-sm leading-relaxed flex gap-2">
+                <span className="text-neutral-300">—</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="mt-12">
         <h2 className="font-serif text-2xl text-neutral-900 mb-3">Problem</h2>
@@ -112,6 +148,44 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           ))}
         </ul>
       </section>
+
+      {cs.figures && cs.figures.length > 0 && (
+        <section className="mt-10">
+          {cs.figures.map((f) => (
+            <Diagram key={f.id} figure={f} />
+          ))}
+        </section>
+      )}
+
+      {cs.decisions && cs.decisions.length > 0 && (
+        <section className="mt-10">
+          <h2 className="font-serif text-2xl text-neutral-900 mb-4">Key decisions</h2>
+          <div className="space-y-6">
+            {cs.decisions.map((d, i) => (
+              <div
+                key={i}
+                className="rounded-lg px-4 py-3"
+                style={{ border: "2px solid #181614", background: theme?.bg ?? "#fdfaf5" }}
+              >
+                <p className="font-medium text-neutral-900">{d.decision}</p>
+                <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">{d.rationale}</p>
+                {d.alternatives && (
+                  <p className="mt-1.5 text-sm text-neutral-500 leading-relaxed">
+                    <span className="text-neutral-400">Alternatives considered: </span>
+                    {d.alternatives}
+                  </p>
+                )}
+                {d.result && (
+                  <p className="mt-1.5 text-sm text-neutral-500 leading-relaxed">
+                    <span className="text-neutral-400">Result: </span>
+                    {d.result}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {cs.note && (
         <p className="mt-8 text-sm text-neutral-500 italic border-l-2 border-neutral-200 pl-4">
@@ -167,6 +241,20 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           ))}
         </ul>
       </section>
+
+      {cs.reflection && cs.reflection.length > 0 && (
+        <section className="mt-10 border-t border-neutral-200 pt-6">
+          <h2 className="font-serif text-lg text-neutral-900 mb-2">Reflection</h2>
+          <ul className="space-y-2">
+            {cs.reflection.map((r, i) => (
+              <li key={i} className="text-neutral-600 text-sm leading-relaxed flex gap-2">
+                <span className="text-neutral-300">—</span>
+                <span>{r}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {cs.whatIdImprove && (
         <section className="mt-10 border-t border-neutral-200 pt-6">

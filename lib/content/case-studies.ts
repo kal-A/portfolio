@@ -8,6 +8,16 @@ export interface CaseStudy {
   /** Which card/page treatment this project gets. See docs/redesign/06-project-card-types.md */
   category: "visual" | "systems" | "archive";
   entryType: "internship" | "capstone" | "course-project";
+  /** Narrative type, drives which detail-page sections get emphasis. See PORTFOLIO_CASE_STUDY_SYSTEM.md §5. */
+  caseStudyType:
+    | "product-ux"
+    | "systems-operations"
+    | "visual-growth"
+    | "research-strategy"
+    | "technical"
+    | "compact";
+  /** Depth target for detail-page content. See PORTFOLIO_CASE_STUDY_SYSTEM.md §6 (targets tightened per plan). */
+  tier: "featured" | "standard" | "compact";
   title: string;
   company: string;
   role: string;
@@ -37,6 +47,16 @@ export interface CaseStudy {
   /** Confidentiality note or artifact-recreation disclaimer, shown as an italic aside. */
   note?: string;
   whatIdImprove?: string;
+  /** Compact Challenge/Contribution/Outcome/Tools grid, shown near the hero. */
+  snapshot?: { challenge: string; contribution: string; outcome: string; tools: string[] };
+  /** Only the constraints that actually shaped decisions. */
+  constraints?: string[];
+  /** 2-5 decision blocks: situation/evidence/options -> decision -> tradeoff/result. */
+  decisions?: { decision: string; rationale: string; alternatives?: string; result?: string }[];
+  /** Reconstructed/verified diagrams. `id` maps to a component in components/case-study/Diagram.tsx. */
+  figures?: { id: string; caption: string; evidence: "reconstructed" | "verified" }[];
+  /** 2-4 specific lessons, per PORTFOLIO_CASE_STUDY_SYSTEM.md §9.14. Distinct from the lighter whatIdImprove field. */
+  reflection?: string[];
 }
 
 const caseStudiesData: CaseStudy[] = [
@@ -44,6 +64,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "hera-fertility",
     category: "visual",
     entryType: "internship",
+    caseStudyType: "product-ux",
+    tier: "standard",
     title: "Bringing loan servicing in-house",
     company: "Hera Fertility",
     role: "Product Design & Marketing Intern",
@@ -82,6 +104,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "roomease",
     category: "visual",
     entryType: "capstone",
+    caseStudyType: "product-ux",
+    tier: "featured",
     title: "Making club room booking less scattered",
     company: "RoomEase · Capstone Project",
     role: "Product Lead, Management Engineering Capstone (MSE 402)",
@@ -123,6 +147,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "greenhouse",
     category: "visual",
     entryType: "internship",
+    caseStudyType: "visual-growth",
+    tier: "featured",
     title: "Design production across retail and digital channels",
     company: "Greenhouse Juices",
     role: "Product Designer Intern",
@@ -163,6 +189,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "pill-pal",
     category: "visual",
     entryType: "course-project",
+    caseStudyType: "product-ux",
+    tier: "standard",
     title: "Designing a medication tracker for older adults, then breaking it on purpose",
     company: "Pill Pal · HCI Course Project (MSE 343)",
     role: "Team Member, Redesign Rationale, Prototyping & Evaluation",
@@ -208,6 +236,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "forcen",
     category: "systems",
     entryType: "internship",
+    caseStudyType: "systems-operations",
+    tier: "featured",
     title: "Turning production handoffs into a trackable system",
     company: "ForceN",
     role: "Product Engineer Intern",
@@ -243,6 +273,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "pathpeer",
     category: "systems",
     entryType: "internship",
+    caseStudyType: "compact",
+    tier: "compact",
     title: "Shipping a mentorship platform solo",
     company: "PathPeer",
     role: "Product Designer & Developer Intern",
@@ -274,6 +306,8 @@ const caseStudiesData: CaseStudy[] = [
     slug: "informatica",
     category: "systems",
     entryType: "internship",
+    caseStudyType: "research-strategy",
+    tier: "compact",
     title: "Turning UX research into workflow fixes",
     company: "Informatica",
     role: "Product Operations & UX Research Intern",
