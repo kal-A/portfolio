@@ -2439,4 +2439,19 @@ These apply to every case-study details page, not just ForceN — they came out 
 
 **Section numbers should read as a real visual element, not a caption.** Chapter numerals ("01", "02"...) were too small relative to the chapter titles next to them — they should be sized and weighted so they act as a genuine visual counterweight to the heading, not a small label easily missed.
 
-**Edge margins.** Keep the reasoning for generous edge whitespace explicit rather than assumed: it exists so the reading column stays a comfortable line length on wide screens, matching the constrained reading columns used elsewhere on the site (e.g. the ~66ch body-text max-width already used in `/work/[slug]`). But that reasoning should be weighed against how wide the actual content column is at common desktop widths — if the margins read as excessive rather than intentional, widen the content column rather than just noting the rationale.
+**Edge margins.** Keep the reasoning for generous edge whitespace explicit rather than assumed: it exists so the reading column stays a comfortable line length on wide screens, matching the constrained reading columns used elsewhere on the site (e.g. the ~66ch body-text max-width already used in `/work/[slug]`). But that reasoning should be weighed against how wide the actual content column is at common desktop widths — if the margins read as excessive rather than intentional, widen the content column rather than just noting the rationale. Use otherwise-blank space near the hero productively — e.g. a compact on-page section nav — rather than leaving it empty.
+
+## 25.4 Box language: "comic-box" (added 2026-07-31, supersedes 25.3's softer rounded-gradient card description for boxed content)
+
+Every boxed element on a details page (snapshot items, decision panels, documentation nodes, responsibility cards, outcome rows, reflection cards) should share one consistent treatment:
+
+- 3px solid ink-colored border, ~16px border radius.
+- A **solid, hard-edged offset drop shadow** (e.g. `6px 6px 0 var(--ink)`), not a soft blurred shadow — this is what gives the "pop"/comic-panel feel the user has repeatedly asked for.
+- On hover, the box lifts (translate up-left a few px) and the offset shadow grows — a real, felt interaction, not just a color change.
+- Two fill modes only, reused everywhere for consistency: a light mode (project's own pale fill tint) and a dark mode (graphite, used for quality-gate/decision-emphasis moments), never an arbitrary third color introduced for variety's sake.
+
+Section dividers ("divots") should be a single bold, solid stroke (not a thin wavy or dashed line) and must sit exactly at a real background color change between two solid section blocks — the divot **is** the seam, not a decorative element floating over a continuous gradient.
+
+All caps subheadings/labels (CHALLENGE, CONTRIBUTION, CONSTRAINTS, KEY DECISIONS, etc.) should be sized and weighted consistently across the whole page — not smaller in some sections than others — and tool/software names referenced in body copy should be bolded.
+
+Diagrams that describe a multi-step process should be interactive where the step count is high enough to benefit: clicking a node opens a small popover (comic-box styled) with that step's explanation, with prev/next controls to page through every step and a click-outside-to-close affordance — rather than relying on caption text alone to carry all the explanatory weight.
