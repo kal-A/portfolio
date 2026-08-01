@@ -1960,7 +1960,7 @@ When using this example as guidance:
 
 # 24. ForceN Details Page Implementation Plan (added 2026-07-31)
 
-This section supersedes the earlier simplified ForceN framing (Section 23's worked example, and the "Turning production handoffs into a trackable system" title/spine used in early layout previews) wherever the two conflict.
+This section supersedes the earlier simplified ForceN framing (Section 23's worked example, and the "Turning production handoffs into a trackable system" title/spine used in early layout previews) wherever the two conflict. **Updated 2026-08-01**: §24.4's diagram content and the new §24.12 below supersede this section's earlier, simplified single-column workflow chart — the accurate model is two connected systems (stock production and customer fulfilment), not one straight line, and every node now has exact public-safe copy, a defined shape, and interaction behavior. Do not infer missing node copy, shape types, branch behavior, or interaction text from the old diagram.
 
 The ForceN details page must not be presented primarily as a tracking or handoff cleanup project. The core story is the development of a ground-up operating roadmap for ForceN's standardized Dev Systems, designed to support an inventory-backed, off-the-shelf product line.
 
@@ -2090,73 +2090,113 @@ Suggested supporting sentence:
 
 ### 02 — Mapping the complete production system
 
-This section should contain the primary reconstructed system diagram.
+This section should contain the primary reconstructed system diagram. **Superseded 2026-08-01**: the flow below replaces the earlier single-column chart. The full, authoritative node catalogue, edge catalogue, shape legend, and interaction spec are in §24.12 — this subsection gives the narrative overview; §24.12 is binding for implementation.
 
-#### Required high-level flow
+The diagram represents **two connected systems**, not one straight production line:
+
+- **A. Stock production system** — a standard configuration is selected for a planned build; required components are checked, missing parts are procured, available parts are deducted, stock thresholds are evaluated, and the unit moves through assembly and quality validation before entering finished inventory.
+- **B. Customer fulfilment system** — a customer order checks finished inventory for the requested configuration; an available unit is allocated and shipped; finished inventory is then deducted and checked against its target, and low stock returns a replenishment requirement to production planning.
+
+These two systems must stay visually and structurally distinct — never compress them into one line.
+
+#### Authoritative high-level flow (production system)
 
 ```text
-STANDARD DEV SYSTEM CONFIGURATION
-                |
-PARTS / BOM / ARENA REFERENCES
-                |
-COMPONENT INVENTORY CHECK
-          |             |
-Below threshold         Available
-      |                    |
-PROCUREMENT            ASSEMBLY
-      |____________________|
-                    PRIMARY CALIBRATION
-                      |          |
-                    Fail         Pass
-                     |             |
-              RETURN TO         LAMINATION
-               ASSEMBLY             |
-                         SECONDARY CALIBRATION
-                                  |
-                           QUALITY VALIDATION
-                                  |
-                         FINISHED-PRODUCT SHELF
-                                  |
-                       CONFIGURATION INVENTORY +1
-                                  |
-                           ORDER FULFILMENT
-                                  |
-                               SHIPMENT
-                                  |
-                    FINISHED-INVENTORY REVIEW
-                                  |
-                       REPLENISH AS REQUIRED
+Planned stock build (or finished inventory below target)
+  ↓
+Select standard configuration and build quantity
+  ↓
+Configuration package (BOM / Arena refs / assembly instructions / calibration procedure / scripts)
+  ↓
+Decision: Are all required components available?
+  ├─ No  → Procure and receive missing components → back to Component inventory → recheck
+  └─ Yes → Kit required parts and deduct component inventory
+             ↓
+           Automated minimum-stock check
+             ↓
+           Decision: Did any part fall below its threshold?
+             ├─ Yes → Trigger component replenishment (runs in parallel — does not block the current build)
+             └─ No / current kit complete → Assembly
+                                               ↓
+                                             Primary calibration
+                                               ↓
+                                             Decision: Did primary calibration pass?
+                                               ├─ Fail → Diagnose and rework → back to Assembly
+                                               └─ Pass → Lamination
+                                                           ↓
+                                                         Secondary calibration
+                                                           ↓
+                                                         Decision: Did secondary calibration and QA pass?
+                                                           ├─ Fail → Diagnose and rework (path to confirm before publication)
+                                                           └─ Pass → Complete calibration, QA, and production records
+                                                                       ↓
+                                                                     Post completed unit to finished-product inventory
+                                                                       ↓
+                                                                     Finished Dev System inventory
+```
+
+#### Customer fulfilment flow (connected, structurally separate)
+
+```text
+Customer order received
+  ↓
+Decision: Is the requested configuration in finished inventory?
+  ├─ No  → Create build/replenishment requirement → back to "Select configuration and build quantity" above
+  └─ Yes → Allocate finished unit
+             ↓
+           Prepare and pack order
+             ↓
+           Shipment
+             ↓
+           Deduct finished-product inventory
+             ↓
+           Decision: Is finished inventory below target?
+             ├─ Yes → Trigger planned stock build → back to top of production flow
+             └─ No  → Inventory remains available (end state)
 ```
 
 #### Required component-inventory loop
 
+The automated component check runs after parts are deducted for a build, not as a one-time gate at the start.
+
 ```text
-PART DEDUCTION
-      |
-CHECK REMAINING STOCK
-      |
-IS STOCK BELOW THE MINIMUM THRESHOLD?
-      |                      |
-    Yes                      No
-     |                        |
-TRIGGER REPLENISHMENT    CONTINUE WORKFLOW
+Kit parts for a Dev System build
+  ↓
+Deduct each used part from component inventory
+  ↓
+Automatically compare remaining quantity with the part's minimum stock threshold
+  ↓
+Decision: Did any part fall below its threshold?
+  ├─ Yes → Create a replenishment requirement (procurement runs in parallel; does not block the current build)
+  └─ No  → Continue the current build
 ```
 
-#### Visual requirements
+#### Required corrections to the earlier chart
 
 Claude Code must:
 
-- Distinguish component inventory from work in progress and finished-product inventory.
-- Show calibration failure returning to assembly.
+- Never connect procurement directly to calibration.
+- Return procured and received components to component inventory before the build continues.
+- Represent the component-availability question as a decision, not as a process box.
+- Distinguish component inventory from finished-product inventory (two separate data stores).
+- Keep work in progress conceptually separate from both inventory stores.
+- Show parts being kitted and deducted before assembly.
+- Run the minimum-stock check after those deductions, not before.
+- Show component replenishment as a parallel loop that protects future builds, not a blocking step.
+- Show primary-calibration failure returning to a diagnosis-and-rework path, then back to assembly.
 - Show lamination only after successful primary calibration.
-- Show secondary calibration after lamination.
-- Show finished inventory increasing only after quality validation.
-- Show replenishment logic after component use.
-- Show finished-product replenishment after fulfilment or when target stock is not met.
-- Label the visual as reconstructed and public-safe.
-- Avoid attaching unverified percentages directly to workflow stages.
-- Build a responsive mobile layout that stacks vertically or supports accessible horizontal scrolling.
-- Keep the current editorial visual language, warm palette, rounded borders, and restrained line work.
+- Show secondary calibration after lamination, with its own pass/fail gate.
+- Move a unit into finished inventory only after the final quality gate and required records are complete.
+- Replace "Configuration inventory +1" with two distinct elements: the action "Post completed unit to finished-product inventory" and the data store "Finished Dev System inventory."
+- Separate customer-order fulfilment from the production flow entirely.
+- Draw customer orders from finished inventory rather than placing them directly in the production chain.
+- After shipment, deduct finished inventory and check the remaining quantity against the target for that configuration.
+- Return a finished-stock replenishment requirement to configuration and production planning, not directly to assembly.
+- Avoid attaching unverified percentages to diagram stages.
+- Label the figure as reconstructed and public-safe.
+- Preserve the existing ForceN editorial language, warm palette, typography, and bordered presentation.
+- Use standard flowchart shape semantics (§24.12.2) so the shape communicates meaning independently of color.
+- Build a responsive mobile version that stacks vertically while preserving all branch labels and loops.
 
 Suggested title:
 
@@ -2164,7 +2204,7 @@ Suggested title:
 
 Suggested caption:
 
-> Reconstructed from the roadmap and documentation I developed. Internal tooling, thresholds, and product-specific details have been simplified for confidentiality.
+> Reconstructed from the roadmap and documentation I developed. Internal tooling, thresholds, scripts, and product-specific details have been simplified for confidentiality.
 
 ### 03 — Designing the production and replenishment logic
 
@@ -2404,6 +2444,241 @@ Before publishing the final ForceN details page, confirm:
 23. Whether the process was implemented fully, partially, piloted, or documented as a roadmap
 24. What was handed off to future employees
 25. What continued after Kamal's co-op
+
+Do not expose this list publicly.
+
+## 24.12 Interactive flowchart: complete implementation specification (added 2026-08-01)
+
+This section is authoritative. Claude Code should not infer missing node copy, shape types, branch behavior, or interaction text from the visual alone.
+
+### 24.12.1 Conceptual model
+
+The flowchart represents two connected systems:
+
+**A. Stock production system** — a standard Dev System configuration is selected for a planned build. Its component requirements, Arena references, assembly instructions, calibration procedures, and scripts define how the unit is produced. Required components are checked, missing parts are procured, available parts are deducted, stock thresholds are evaluated, and the unit moves through assembly and quality validation before entering finished inventory.
+
+**B. Customer fulfilment system** — a customer order checks finished Dev System inventory for the requested configuration. An available unit is allocated and shipped. Finished inventory is then deducted and checked against its target. If stock is too low, a replenishment build returns to production planning.
+
+These must not be compressed into one straight production line.
+
+### 24.12.2 Shape and line legend
+
+| Meaning | Required shape | Styling and behavior |
+|---|---|---|
+| Start, trigger, or external event | Pill / terminator | Used for planned stock build and customer order received |
+| Manual or operational action | Rectangle | Used for planning, procurement, assembly, lamination, allocation, packing, shipment, and rework |
+| Yes/no or pass/fail check | Diamond | Must expose labelled outgoing branches |
+| Stored inventory or system of record | Cylinder | Used for component inventory and finished Dev System inventory |
+| Specifications, instructions, or records | Document shape | Used for the configuration package and completed quality/production records |
+| Automated repeatable operation | Double-border rectangle | Used for threshold checks and automated inventory deductions where verified |
+| End or stable state | Pill / endpoint | Used for inventory remaining available |
+| Required sequence | Solid arrow | The next step cannot begin without the prior step |
+| Decision branch | Solid arrow with label | Labels must say Yes, No, Pass, Fail, Available, or Below threshold |
+| Parallel replenishment | Dashed arrow | A supporting process that can proceed while the current build continues |
+| Rework loop | Curved or returning solid arrow | Returns a failed unit to diagnosis and assembly |
+| Inventory/data update | Dotted or thin solid arrow with update label | Shows a process reading from or writing to a data store |
+
+Dark fill may emphasize major quality or inventory gates, but color must not replace shape semantics — a decision is a diamond regardless of fill color, a data store is a cylinder regardless of fill color, and so on.
+
+### 24.12.3 Interaction pattern
+
+Every visible node must be interactive.
+
+**Desktop**: clicking or pressing Enter/Space on a node opens a right-side information drawer. The active node receives a clear focus and selected state. Its direct incoming and outgoing edges are emphasized. Unrelated nodes may dim slightly but must remain legible. The drawer should not cover the entire workflow when sufficient viewport width exists.
+
+**Mobile**: tapping a node opens a bottom sheet. The sheet should allow vertical scrolling. The chart remains in its previous scroll position when the sheet closes. Do not depend on hover.
+
+**Drawer or bottom-sheet content order**: 1) Node title, 2) Node type in plain language, 3) "What it does," 4) "Inputs," 5) "Output or completion criteria," 6) "Documentation," 7) "Automation" (when applicable), 8) "Exception or rework path" (when applicable), 9) Confidentiality or scope note (when applicable). Hide empty fields rather than showing blank headings.
+
+**Accessibility**: use a real button or focusable interactive element for every node. Each button's accessible name must include the node title and type. Use `aria-expanded` and `aria-controls`. Close with Escape, a visible close button, or outside click/tap. Restore focus to the selected node after closing. Preserve logical keyboard navigation in process order. Provide a screen-reader-only ordered outline containing every node and branch. Decision nodes must announce the meaning and destination of each branch. Do not place essential information only in the drawer — the chart labels must remain understandable by themselves.
+
+### 24.12.4 Node catalogue and synopsis copy
+
+The synopsis copy below is the default public-safe copy. Use it directly unless Kamal later confirms a more precise version. Each node's synopsis follows: What it does / Inputs / Outputs or completion criteria / Documentation / Automation / Exception / Scope note, as applicable.
+
+**`stock-build-trigger`** — "Planned stock build" (event/terminator, planning). Starts production for a standard configuration before a customer order necessarily arrives, from a planned finished-stock target or from inventory falling below the required level. Inputs: current finished inventory by configuration, target/replenishment requirement, expected demand where available. Output: a requirement to build a specific configuration plus a required build quantity. Scope note: the public flow describes the operating logic without exposing internal forecasts, quantities, or thresholds.
+
+**`select-configuration`** — "Select configuration and build quantity" (process, planning). Identifies which standard configuration to produce and how many units are needed. Inputs: replenishment requirement, current finished stock, configuration demand/priority, existing build plan. Output: one selected configuration, defined production quantity, identifier passed into production. Documentation: configuration record, build requirement, production/roadmap status.
+
+**`configuration-package`** — "Configuration package" (document, configuration). Provides the complete public-safe set of references required to reproduce the selected configuration consistently. Includes: BOM/required-parts list, Arena part numbers, assembly work instructions, primary-calibration procedure, calibration scripts/references, lamination instructions, secondary-calibration procedure, acceptance/quality requirements. Output: the production team can identify the correct parts, sequence, validation steps, and records. Scope note: exact internal specifications, files, and part details remain confidential.
+
+**`component-inventory`** — "Component inventory" (data store/cylinder, component inventory). Represents current recorded quantities of substrates, Force Film, and other parts required for standard configurations. Inputs: received components, inventory adjustments, deductions from kitted builds. Outputs: available quantity by part, data used for availability/threshold checks. Documentation: Arena/internal part reference, quantity on hand, minimum stock threshold, transaction history where available.
+
+**`parts-availability-decision`** — "All required parts available?" (decision/diamond, component inventory). Confirms whether the selected build can be kitted without waiting on a missing component. Branches: Yes/Available → continue to kit the required parts; No/Missing → procure and receive the missing components first. Completion criteria: every part required for the planned quantity is available.
+
+**`procure-components`** — "Procure and receive components" (process, procurement). Initiates ordering for missing/replenishment components and returns received parts to component inventory. Inputs: missing-parts list, replenishment requirement, Arena/supplier references, required quantity where applicable. Outputs: purchase/replenishment request, received and recorded components, updated component inventory. Completion criteria: required parts received, identified, and available. Exception: lead times, substitutions, and supplier-specific handling are outside the public workflow unless separately approved.
+
+**`kit-and-deduct-components`** — "Kit parts and deduct inventory" (process, component inventory). Collects exact parts needed for the configuration and build quantity, then records them as consumed/committed. Inputs: configuration package, build quantity, available component inventory. Outputs: complete part kit for assembly, updated component quantities, an inventory deduction event per part used. Documentation: part identifiers, quantities deducted, configuration/unit association, build/production record.
+
+**`component-threshold-check`** — "Automated minimum-stock check" (automated subprocess, component inventory). Runs after component deductions; compares each remaining part quantity against its defined minimum threshold. Inputs: updated component quantities, minimum threshold per part. Outputs: pass state when stock is sufficient, replenishment signal when any part falls below threshold. Automation: intended to run after each relevant deduction so replenishment begins before a future build is blocked. Scope note: confirm whether Kamal implemented, specified, or supported this automation before assigning ownership in public copy.
+
+**`component-threshold-decision`** — "Any component below threshold?" (decision/diamond, component inventory). Determines whether replenishment should begin after parts are deducted. Branches: Yes/Below threshold → create a replenishment requirement; No/Sufficient → continue current production. Important: when the current build is already fully kitted, replenishment can proceed in parallel without stopping assembly.
+
+**`trigger-component-replenishment`** — "Trigger component replenishment" (process, procurement). Creates the requirement to restore a component to minimum/target stock before another build needs it. Inputs: component identifier, remaining quantity, minimum threshold, replenishment quantity/rule. Outputs: replenishment request passed to procurement, visibility that future availability is addressed. Completion criteria: requirement recorded and entered into procurement. Automation: may be generated automatically from the stock check or require human review, depending on the confirmed implementation.
+
+**`assembly`** — "Assembly" (process, production). Builds the unit using the configuration's approved parts and assembly work instructions. Inputs: kitted parts, configuration package, assembly instructions, required tools/fixtures. Outputs: assembled unit ready for primary calibration, completed assembly records/status. Completion criteria: unit physically assembled per the documented configuration, ready for the first validation gate. Documentation: assembly instructions, part/configuration traceability, assembly completion record, deviations where required.
+
+**`primary-calibration`** — "Primary calibration" (process, quality). Tests the assembled unit before lamination and records whether it meets required performance criteria. Inputs: assembled unit, primary-calibration instructions, calibration script/parameters, configuration-specific acceptance criteria. Outputs: calibration results, pass/fail status, diagnostic data on failure. Completion criteria: a valid, recorded calibration run. Documentation: calibration script/version, configuration parameters, calibration output, unit/configuration identifier, operator/timestamp where required.
+
+**`primary-calibration-decision`** — "Primary calibration passed?" (decision/diamond, quality). Prevents an unsuccessful unit from advancing to lamination. Branches: Pass → lamination; Fail → diagnosis and assembly rework. Completion criteria: result evaluated against approved criteria, not judgment alone.
+
+**`diagnose-and-rework`** — "Diagnose and rework" (process, production). Investigates a failed calibration, corrects the unit through the defined path, and prepares it for another calibration attempt. Inputs: failed result, calibration output, assembly/configuration records, relevant troubleshooting knowledge. Outputs: corrected unit, rework record, unit returned to assembly or the appropriate test-preparation step. Completion criteria: identified issue addressed sufficiently to repeat primary calibration. Exception: detailed failure modes and troubleshooting procedures remain confidential.
+
+**`lamination`** — "Lamination" (process, production). Completes lamination after the unit passes primary calibration. Inputs: primary-calibration pass, approved unit, lamination instructions/materials. Output: laminated unit ready for final validation. Completion criteria: lamination completed per the documented process, records updated.
+
+**`secondary-calibration`** — "Secondary calibration" (process, quality). Re-tests the unit after lamination to confirm it still meets required performance/quality criteria. Inputs: laminated unit, secondary-calibration instructions, calibration script/parameters, final acceptance criteria. Outputs: secondary-calibration results, pass/fail status, final validation evidence. Completion criteria: a valid, recorded post-lamination calibration run.
+
+**`secondary-quality-decision`** — "Secondary calibration and QA passed?" (decision/diamond, quality). The final release gate before a unit can be recorded as sellable finished inventory. Branches: Pass → complete calibration/QA/production records; Fail → the defined failure-investigation and rework path. Scope note: the diagram may show the failure branch returning to `diagnose-and-rework`, but the exact disposition of a post-lamination failure must be confirmed before publication.
+
+**`complete-production-records`** — "Complete QA and production records" (document, quality). Completes the traceability and release documentation required before a verified unit enters finished inventory. Inputs: configuration record, assembly completion, primary-calibration result, lamination completion, secondary-calibration result, final QA status. Outputs: complete production record, quality-release evidence, unit ready for finished-inventory posting. Documentation: unit identifier, configuration identifier, part/build references, calibration outputs, QA result, completion status, required ownership/approval.
+
+**`post-to-finished-inventory`** — "Post unit to finished inventory" (process, finished inventory). Records the completed, verified unit as available finished product under its specific configuration. Inputs: released unit, complete QA/production records, configuration identifier. Outputs: finished-inventory quantity increased for that configuration, unit available for allocation. Completion criteria: unit shelved/placed in its approved location and the inventory record reflects availability.
+
+**`finished-inventory`** — "Finished Dev System inventory" (data store/cylinder, finished inventory). Represents completed, tested, documented standard units ready to be allocated to incoming orders. Inputs: verified units posted after final quality validation, inventory adjustments. Outputs: available quantity by configuration, data used for order allocation and replenishment checks. Documentation: configuration, unit identifier, availability state, inventory location, allocation/shipment state.
+
+**`customer-order`** — "Customer order received" (event/terminator, fulfilment). Starts the order-fulfilment flow for a requested configuration. Inputs: requested configuration, order quantity, required order details. Outputs: inventory-availability check, fulfilment requirement. Scope note: sales, commercial approval, pricing, and customer-communication steps are outside this process unless separate evidence supports their inclusion.
+
+**`finished-availability-decision`** — "Requested configuration available?" (decision/diamond, fulfilment). Determines whether the order can be fulfilled from finished inventory. Inputs: customer order, finished inventory by configuration. Branches: Yes/Available → allocate a completed unit; No/Unavailable → create a build/replenishment requirement. Completion criteria: availability confirmed for the required quantity.
+
+**`create-order-build-requirement`** — "Create build requirement" (process, planning). Creates a production requirement when the requested configuration isn't available in finished inventory. Inputs: requested configuration, required order quantity, current finished inventory. Output: configuration and quantity returned to production planning. Scope note: the public flow does not imply a particular backorder or lead-time policy.
+
+**`allocate-finished-unit`** — "Allocate finished unit" (process, fulfilment). Reserves an available completed unit for the specific order. Inputs: customer order, available finished unit, configuration match. Outputs: unit associated with the order, inventory status changed from available to allocated. Completion criteria: a specific verified unit reserved and unavailable to other orders.
+
+**`prepare-and-pack`** — "Prepare and pack order" (process, fulfilment). Prepares the allocated unit and its required accessories, records, and packaging for shipment. Inputs: allocated unit, order details, required accessories, packing/shipment instructions. Output: complete, shipment-ready package. Completion criteria: correct unit, configuration, accessories, documentation, and destination confirmed.
+
+**`shipment`** — "Shipment" (process, fulfilment). Transfers the completed order to the shipping/delivery process. Inputs: shipment-ready package, confirmed destination, required shipment information. Outputs: shipped order, shipment status/tracking record, trigger to update finished inventory. Completion criteria: order has left the finished-product location through the approved shipment process.
+
+**`deduct-finished-inventory`** — "Deduct finished inventory" (automated subprocess, finished inventory). Updates the available quantity for the shipped configuration after allocation or shipment. Inputs: shipped/allocated unit, finished-inventory record. Outputs: updated available quantity, trigger for a finished-stock target check. Automation: the exact timing/automation level must reflect the confirmed ForceN process — if it was manual, render this as a standard process, not an automated subprocess.
+
+**`finished-threshold-decision`** — "Finished stock below target?" (decision/diamond, finished inventory). Determines whether the shipped configuration needs another stock build. Inputs: updated finished inventory, target/replenishment rule for the configuration. Branches: Yes/Below target → trigger a planned stock build; No/Sufficient → leave available for future orders. Scope note: do not expose confidential target quantities.
+
+**`inventory-available-end`** — "Inventory remains available" (endpoint/terminator, finished inventory). The stable state where the configuration remains sufficiently stocked. Input: a finished-stock check indicating the target is met. Completion criteria: no immediate replenishment build required.
+
+### 24.12.5 Edge catalogue
+
+Claude Code should encode at least the following edges:
+
+```ts
+const forceNWorkflowEdges: WorkflowEdge[] = [
+  { id: "e01", from: "stock-build-trigger", to: "select-configuration", style: "required" },
+  { id: "e02", from: "select-configuration", to: "configuration-package", style: "required" },
+  { id: "e03", from: "configuration-package", to: "parts-availability-decision", style: "required" },
+  { id: "e04", from: "component-inventory", to: "parts-availability-decision", label: "quantity on hand", style: "data-update" },
+  { id: "e05", from: "parts-availability-decision", to: "procure-components", label: "No, missing", condition: "no", style: "decision" },
+  { id: "e06", from: "procure-components", to: "component-inventory", label: "receive and record", style: "data-update" },
+  { id: "e07", from: "component-inventory", to: "parts-availability-decision", label: "recheck", style: "required" },
+  { id: "e08", from: "parts-availability-decision", to: "kit-and-deduct-components", label: "Yes, available", condition: "yes", style: "decision" },
+  { id: "e09", from: "kit-and-deduct-components", to: "component-inventory", label: "deduct quantities", style: "data-update" },
+  { id: "e10", from: "kit-and-deduct-components", to: "component-threshold-check", style: "required" },
+  { id: "e11", from: "component-threshold-check", to: "component-threshold-decision", style: "required" },
+  { id: "e12", from: "component-threshold-decision", to: "trigger-component-replenishment", label: "Yes, below threshold", condition: "below-threshold", style: "replenishment" },
+  { id: "e13", from: "trigger-component-replenishment", to: "procure-components", label: "parallel replenishment", style: "parallel" },
+  { id: "e14", from: "component-threshold-decision", to: "assembly", label: "No, sufficient", condition: "no", style: "decision" },
+  { id: "e15", from: "component-threshold-decision", to: "assembly", label: "current kit complete", condition: "yes", style: "parallel" },
+  { id: "e16", from: "assembly", to: "primary-calibration", style: "required" },
+  { id: "e17", from: "primary-calibration", to: "primary-calibration-decision", style: "required" },
+  { id: "e18", from: "primary-calibration-decision", to: "diagnose-and-rework", label: "Fail", condition: "fail", style: "rework" },
+  { id: "e19", from: "diagnose-and-rework", to: "assembly", label: "correct and rebuild", style: "rework" },
+  { id: "e20", from: "primary-calibration-decision", to: "lamination", label: "Pass", condition: "pass", style: "decision" },
+  { id: "e21", from: "lamination", to: "secondary-calibration", style: "required" },
+  { id: "e22", from: "secondary-calibration", to: "secondary-quality-decision", style: "required" },
+  { id: "e23", from: "secondary-quality-decision", to: "diagnose-and-rework", label: "Fail, defined rework path", condition: "fail", style: "rework" },
+  { id: "e24", from: "secondary-quality-decision", to: "complete-production-records", label: "Pass", condition: "pass", style: "decision" },
+  { id: "e25", from: "complete-production-records", to: "post-to-finished-inventory", style: "required" },
+  { id: "e26", from: "post-to-finished-inventory", to: "finished-inventory", label: "configuration quantity +1", style: "data-update" },
+  { id: "e27", from: "customer-order", to: "finished-availability-decision", style: "required" },
+  { id: "e28", from: "finished-inventory", to: "finished-availability-decision", label: "available quantity", style: "data-update" },
+  { id: "e29", from: "finished-availability-decision", to: "create-order-build-requirement", label: "No, unavailable", condition: "no", style: "decision" },
+  { id: "e30", from: "create-order-build-requirement", to: "select-configuration", label: "configuration and quantity", style: "replenishment" },
+  { id: "e31", from: "finished-availability-decision", to: "allocate-finished-unit", label: "Yes, available", condition: "yes", style: "decision" },
+  { id: "e32", from: "allocate-finished-unit", to: "prepare-and-pack", style: "required" },
+  { id: "e33", from: "prepare-and-pack", to: "shipment", style: "required" },
+  { id: "e34", from: "shipment", to: "deduct-finished-inventory", style: "required" },
+  { id: "e35", from: "deduct-finished-inventory", to: "finished-inventory", label: "update available quantity", style: "data-update" },
+  { id: "e36", from: "deduct-finished-inventory", to: "finished-threshold-decision", style: "required" },
+  { id: "e37", from: "finished-threshold-decision", to: "stock-build-trigger", label: "Yes, below target", condition: "yes", style: "replenishment" },
+  { id: "e38", from: "finished-threshold-decision", to: "inventory-available-end", label: "No, sufficient stock", condition: "no", style: "decision" },
+];
+```
+
+Companion data types:
+
+```ts
+type WorkflowNodeType = "event" | "process" | "decision" | "data-store" | "document" | "automated-subprocess" | "endpoint";
+type WorkflowCategory = "planning" | "configuration" | "component-inventory" | "procurement" | "production" | "quality" | "finished-inventory" | "fulfilment";
+type WorkflowSynopsis = {
+  summary: string; inputs?: string[]; outputs?: string[]; completionCriteria?: string[];
+  documentation?: string[]; automation?: string; exception?: string; scopeNote?: string;
+};
+type WorkflowNode = { id: string; title: string; shortTitle?: string; type: WorkflowNodeType; category: WorkflowCategory; synopsis: WorkflowSynopsis };
+type WorkflowEdgeStyle = "required" | "decision" | "parallel" | "rework" | "replenishment" | "data-update";
+type WorkflowEdge = { id: string; from: string; to: string; label?: string; style: WorkflowEdgeStyle; condition?: "yes" | "no" | "pass" | "fail" | "below-threshold" | "available" };
+```
+
+The renderer must: read all public copy from the node data; use node `type` to select the correct semantic shape; use edge `style` to distinguish required sequence, decisions, parallel replenishment, rework, and data updates; keep production and fulfilment visually connected but structurally distinct; allow every node to open its full synopsis; never use color alone to convey node type, pass/fail state, or edge meaning; hide no branch or node on mobile; expose an equivalent text outline for screen readers.
+
+### 24.12.6 Recommended component architecture
+
+```text
+components/case-study/forcen/
+  ForceNWorkflow.tsx
+  ForceNWorkflowNode.tsx
+  ForceNWorkflowEdge.tsx
+  ForceNWorkflowLegend.tsx
+  ForceNWorkflowDrawer.tsx
+  ForceNWorkflowBottomSheet.tsx
+  ForceNWorkflowTextOutline.tsx
+
+data/case-studies/
+  forceNWorkflow.ts
+```
+
+`ForceNWorkflow.tsx` lays out the production and fulfilment zones. `ForceNWorkflowNode.tsx` maps node types to semantic shapes and buttons. `ForceNWorkflowEdge.tsx` renders labelled edges and line styles. `ForceNWorkflowLegend.tsx` explains the shapes and line meanings. `ForceNWorkflowDrawer.tsx` presents the desktop synopsis. `ForceNWorkflowBottomSheet.tsx` presents the mobile synopsis. `ForceNWorkflowTextOutline.tsx` exposes the complete process and branch logic to assistive technology. `forceNWorkflow.ts` stores all node, edge, and synopsis content.
+
+Note: this component path (`components/case-study/forcen/`) is more granular than §25.2's resolved architecture decision (extend the existing system, hand-built Diagram components rather than a full node/edge renderer library). When implementing, adapt this to a single `ForceNWorkflowDiagram.tsx` (or similar) that reads from a local node/edge data array, consistent with `components/case-study/Diagram.tsx`'s existing pattern, rather than building out the full seven-component structure listed above, unless the interactivity requirements in §24.12.3 turn out to need that separation in practice.
+
+### 24.12.7 Visual zoning
+
+On wide screens, organize the flow into three labelled zones:
+
+1. **Plan and supply** — planned stock build, select configuration, configuration package, component inventory, availability, procurement, kitting, stock threshold and replenishment.
+2. **Build and validate** — assembly, primary calibration, rework, lamination, secondary calibration, final QA, records.
+3. **Stock and fulfil** — post to finished inventory, finished inventory, customer order, availability decision, allocation, packing, shipment, finished-stock threshold, replenishment.
+
+On mobile, render the same zones as a vertical sequence. Use compact jump links such as "Plan," "Build," and "Fulfil," but do not remove any node.
+
+### 24.12.8 Public-copy guardrails
+
+- Do not claim Kamal independently owned procurement, inventory systems, calibration science, product strategy, or sales policy unless confirmed.
+- Use first-person wording for the roadmap, documentation, calibration work, scripts, and assembly instructions only to the extent supported by source notes.
+- Use "we" for ForceN's business objective and shared cross-team decisions.
+- Keep exact thresholds, product specifications, scripts, calibration criteria, supplier details, and internal records confidential.
+- Do not show metrics inside the flowchart.
+- Do not call the reconstructed diagram the actual internal interface.
+- Do not describe the threshold logic as fully automated unless implementation ownership and automation level are confirmed.
+- Do not imply that customer orders never triggered production — the goal was to reduce that dependency through ready finished inventory.
+- Use "Dev Systems" consistently as the product line name.
+- Use "component inventory," "work in progress," and "finished Dev System inventory" as distinct concepts.
+
+### 24.12.9 Flow-specific NEEDS_INPUT
+
+Before public release, confirm:
+
+1. Whether planned builds began from a fixed target, forecast, manual decision, or a combination.
+2. Whether component availability was stored and checked in Arena or another system.
+3. Whether minimum-stock checks were already implemented, built by Kamal, specified by Kamal, or supported by Kamal.
+4. Whether the replenishment request was fully automatic or required approval.
+5. Whether current assembly continued in parallel once a below-threshold condition was detected.
+6. Whether primary-calibration failure always returned to assembly.
+7. The exact disposition of a secondary-calibration or post-lamination failure.
+8. Whether final QA was a separate step or part of secondary calibration.
+9. When finished inventory was deducted: allocation, packing, shipment, or another event.
+10. Whether finished-product targets were fixed by configuration.
+11. How an out-of-stock customer order was handled operationally.
+12. Whether order fulfilment included accessories, documentation, or additional checks.
+13. Whether "shipment" or "delivery" is the correct public term.
+14. Which flow nodes reflect processes Kamal personally designed, executed, documented, or merely observed.
+15. Which synopsis statements require softer wording because they represent intended future-state behavior rather than a fully implemented process.
 
 Do not expose this list publicly.
 
