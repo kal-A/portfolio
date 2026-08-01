@@ -2730,3 +2730,218 @@ Section dividers ("divots") should be a single bold, solid stroke (not a thin wa
 All caps subheadings/labels (CHALLENGE, CONTRIBUTION, CONSTRAINTS, KEY DECISIONS, etc.) should be sized and weighted consistently across the whole page — not smaller in some sections than others — and tool/software names referenced in body copy should be bolded.
 
 Diagrams that describe a multi-step process should be interactive where the step count is high enough to benefit: clicking a node opens a small popover (comic-box styled) with that step's explanation, with prev/next controls to page through every step and a click-outside-to-close affordance — rather than relying on caption text alone to carry all the explanatory weight.
+
+---
+
+# 26. Interactive Diagram System (added 2026-08-01)
+
+Two documents were provided as source-of-truth for how interactive diagrams (starting with ForceN's, but written as a *reusable* standard for any future workflow diagram, system map, architecture diagram, service blueprint, decision tree, or roadmap) should be built: `INTERACTIVE_DIAGRAM_SYSTEM_GUIDE.md` (the reusable architecture) and `FORCEN_WORKFLOW_DIAGRAM_IMPLEMENTATION.md` (ForceN's specific application of it). Where they overlap, the general guide governs the reusable architecture and the ForceN document governs ForceN's process logic, node copy, and page-specific behavior.
+
+## 26.1 Architecture decision flagged — not yet resolved
+
+**This conflicts with §25.2 / §24.12.6's existing decision** (extend the current system with hand-built, static `Diagram.tsx`-style components, no new heavy dependencies). These two new documents specify a real graph-engine stack:
+
+- `@xyflow/react` for node rendering, interaction, focus, and viewport handling
+- `elkjs` for deterministic automatic layout and orthogonal edge routing
+- A structured node/edge/port data model with runtime collision detection, geometric validation, and automated test coverage (`vitest`, `@testing-library/react`, `playwright`, `@axe-core/playwright`)
+
+This is a materially bigger commitment than "one hand-built diagram component" — it's a permanent, reusable diagram subsystem with new npm dependencies, a layout engine, and its own test suite. **Not decided yet.** Before implementing, confirm with Kamal whether to:
+
+- **(a)** Adopt this stack as specified — real payoff (automatic, collision-free layout; reusable for every future diagram; drawer/bottom-sheet interaction; full accessibility) at the cost of two new dependencies and meaningfully more implementation time, or
+- **(b)** Keep hand-built SVG (current approach) and treat this document's *rules* (shape semantics, port conventions, label placement, exterior routing lanes, zone structure, accessibility requirements) as authoring guidelines to apply by hand rather than enforce programmatically — cheaper, faster, but geometry/collision correctness is manually maintained rather than validated by code.
+
+The layout preview artifact has been updated to follow this document's shape semantics, zoning, and labeling rules by hand (see chat) as a preview of the visual target either approach would produce — that update does **not** imply the architecture decision has been made.
+
+## 26.2 Core objective and non-negotiable principles
+
+Every diagram must be understandable without guessing: what each node represents and its type, what enters/leaves it, where every arrow starts and ends, which branch belongs to which decision, which paths are required vs. optional/parallel/corrective/replenishment, what's stored vs. what reads/writes it, and which zone each stage belongs to — at normal zoom, on desktop/tablet/mobile, without relying on color alone, with keyboard and screen-reader access, and when a synopsis panel is open.
+
+**Use a graph, not a poster.** Structured node data, structured edge data, explicit ports, a layout engine, a routing engine, collision detection, separate responsive layouts. Not: permanent hand-authored absolute coordinates, CSS borders as arrows, decorative paths with no source/target semantics, diagonal connectors for workflow diagrams, browser-scaling a desktop graph onto mobile, or a screenshot as the only representation of an interactive workflow.
+
+**Meaning lives in structure, not just color**: node shape, label, port location, edge type/style, arrow direction, branch label, zone placement, synopsis content, and the accessible text outline all carry meaning independently.
+
+**Every edge is point-to-point**: one source node, one source port, one target node, one target port, a visible tail leaving the source boundary, a routed path, a visible arrowhead entering the target boundary. An arrow must never begin in empty space, stop beside a node, cross through an unrelated node or its text, share an arrowhead with another path, or rely on an undocumented ambiguous junction.
+
+**Legibility over compactness**: widen the canvas, allow horizontal scroll on tablet, use a separate vertical mobile layout, shorten visible labels and push detail into the synopsis panel — rather than shrinking text, rotating labels, or stacking multiple branches off one exact port.
+
+**Public diagrams must be truthful**: no unverified metrics, unconfirmed automation, unconfirmed ownership, internal thresholds, confidential scripts/supplier details/acceptance criteria, or speculative process stages. Reconstructed diagrams get the standard caption (§10 / §25.1's existing rule already covers this).
+
+## 26.3 Diagram types
+
+Workflow (ordered work/decisions/rework/handoffs — ForceN's type), system map, architecture diagram, service blueprint, journey map, decision tree, roadmap/timeline, data-flow diagram. Don't combine types in one visualization unless the relationship is essential; use separate diagrams/tabs/layers instead.
+
+## 26.4 Required planning before coding any diagram
+
+```md
+## Diagram plan
+- Diagram type:
+- Audience:
+- Main question answered:
+- Primary reading direction:
+- Required zones:
+- Required nodes:
+- Required decisions:
+- Required data stores:
+- Required loops:
+- External events:
+- Confidential details to omit:
+- Desktop interaction:
+- Mobile interaction:
+- Layout engine:
+- Routing mode:
+- Unresolved process questions:
+```
+
+## 26.5 Data model (general, reusable)
+
+```ts
+export type DiagramNodeType = "event" | "process" | "decision" | "data-store" | "document" | "automated-subprocess" | "endpoint";
+export type PortSide = "north" | "south" | "east" | "west";
+export type DiagramPort = { id: string; side: PortSide; kind: "source" | "target" | "both"; order?: number };
+export type DiagramSynopsis = {
+  summary: string; inputs?: string[]; outputs?: string[]; completionCriteria?: string[];
+  documentation?: string[]; automation?: string; exception?: string; scopeNote?: string;
+};
+export type DiagramNode = {
+  id: string; title: string; shortTitle?: string; type: DiagramNodeType; category: string; zone: string;
+  ports: DiagramPort[]; synopsis: DiagramSynopsis; width?: number; height?: number;
+  emphasis?: "normal" | "major-gate" | "supporting"; public?: boolean;
+};
+export type DiagramEdgeStyle = "required" | "decision" | "parallel" | "rework" | "replenishment" | "data-update";
+export type DiagramEdgeCondition = "yes" | "no" | "pass" | "fail" | "available" | "unavailable" | "below-threshold" | "sufficient";
+export type DiagramEdge = {
+  id: string; source: string; sourcePort: string; target: string; targetPort: string;
+  label?: string; style: DiagramEdgeStyle; condition?: DiagramEdgeCondition; priority?: number; public?: boolean;
+};
+export type DiagramZone = { id: string; title: string; description?: string; order: number };
+export type InteractiveDiagram = {
+  id: string; title: string; description: string; caption?: string;
+  type: "workflow" | "system-map" | "architecture" | "service-blueprint";
+  direction: "right" | "down"; zones: DiagramZone[]; nodes: DiagramNode[]; edges: DiagramEdge[];
+};
+```
+
+Standard ports: `{north: target}, {south: source}, {east: both}, {west: both}`. Decision ports: `{input: north/target}, {primary: south/source}, {secondary: east/source}, {alternate: west/source}`. Data-store ports: `{read: east/source}, {write: west/target}, {north/south: both}`.
+
+## 26.6 Shape semantics (binding — do not encode meaning in color alone)
+
+| Meaning | Shape |
+|---|---|
+| Start/trigger/external event | Pill / terminator |
+| Manual or operational action | Rectangle |
+| Yes/no or pass/fail check | Diamond, ≥2 labelled outgoing branches, no hidden default |
+| Stored data / inventory | Cylinder, reads and writes shown separately where possible |
+| Specification or record | Document shape |
+| Automated repeatable operation | Double-border rectangle — **only when automation is actually confirmed**; if uncertain, use a normal process node and flag for verification |
+| End / stable state | Pill / endpoint |
+
+Node sizes (px): event 230×64, process 240×72, decision 270×110, document 250×84, data-store 240×92, automated-subprocess 250×76, endpoint 230×64. Minimum text: 16px desktop/mobile, 15px tablet. Max 2 visible lines (3 for decisions) — grow the node before shrinking text; put full explanation in the synopsis panel, not the node.
+
+## 26.7 Layout engine (if stack (a) from §26.1 is chosen)
+
+```ts
+export const desktopLayoutOptions = {
+  "elk.algorithm": "layered", "elk.direction": "RIGHT", "elk.edgeRouting": "ORTHOGONAL",
+  "elk.spacing.nodeNode": "48", "elk.spacing.edgeNode": "28", "elk.spacing.edgeEdge": "18",
+  "elk.layered.spacing.nodeNodeBetweenLayers": "80", "elk.layered.spacing.edgeNodeBetweenLayers": "32",
+  "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+  "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
+  "elk.layered.considerModelOrder.strategy": "NODES_AND_EDGES",
+  "elk.portConstraints": "FIXED_SIDE",
+};
+export const mobileLayoutOptions = { ...desktopLayoutOptions, "elk.direction": "DOWN", "elk.spacing.nodeNode": "40", "elk.layered.spacing.nodeNodeBetweenLayers": "56" };
+```
+
+Desktop uses horizontal rightward-layered zones; mobile uses a separate downward layout (not a scaled-down desktop graph) with optional jump links (e.g. "Plan | Build | Fulfil").
+
+## 26.8 Routing, tails, arrowheads, labels
+
+Orthogonal (Manhattan) routing only for workflow connectors — no diagonals. A visible 12–20px straight tail before the first bend at the source, and a 12–20px straight final approach into the target port (arrowhead stops 1–2px before the outline, never floats). Line styles: required = solid; decision = solid + label; parallel/replenishment = dashed accent; rework = solid return loop; data-update = thin dotted/muted solid.
+
+Long loops (rework, component replenishment, finished-stock replenishment, out-of-stock build requirement) must each use a **dedicated exterior gutter** (56–80px wide) so they never share a segment or cross the main flow — left gutter for missing-components/procurement-return loops, separate right gutters for rework vs. the two fulfilment-side replenishment loops.
+
+Branch labels: Pass/Yes sits 10–14px below the decision, centered on the outgoing vertical segment; Fail/No sits 12–16px from the decision side, above the first horizontal segment. Never rotate a label. Never place one inside a diamond, over a node, over another edge, or over an arrowhead. Keep wording to `Pass`, `Fail`, `Yes`, `No`, `Available`, `Below threshold` — two short lines max.
+
+## 26.9 Interaction and accessibility
+
+**Desktop**: click/Enter/Space opens a right-side drawer (360–420px), highlights the active node and its direct edges, dims unrelated nodes by no more than ~20–25%, never moves/resizes the graph. **Mobile**: tap opens a bottom sheet (≈70vh, expandable, independently scrollable), preserves diagram scroll position, no hover dependency. Drawer/sheet content order: title → type → what it does → inputs → outputs/completion criteria → documentation → automation → exception/rework path → scope note — hide empty fields, don't show blank headings.
+
+Every node is a real focusable button with `aria-expanded`/`aria-controls` and an accessible name including title + type; Escape/close-button/outside-click all close it; focus returns to the selected node; keyboard tab order follows process order; a screen-reader-only ordered outline lists every node and describes every branch/loop; nothing essential lives only in the drawer — node labels must stand alone.
+
+## 26.10 Collision detection (if stack (a) is chosen)
+
+Structural + geometric validation should run after layout and fail the build on violation: no edge segment may intersect an unrelated node's expanded bounds; no edge label may overlap a node or another label. Recovery order: increase node spacing → increase layer spacing → move the label to another segment → move the loop to another gutter → re-run layout → shorten the visible label — never silently accept a collision. Every decision must validate to ≥2 outgoing edges, each labeled, each with a distinct condition and single target.
+
+## 26.11 File architecture (general, reusable — if stack (a) is chosen)
+
+```text
+components/diagrams/
+  DiagramCanvas.tsx, DiagramNode.tsx, DiagramEdge.tsx, DiagramLegend.tsx, DiagramZone.tsx,
+  DiagramDrawer.tsx, DiagramBottomSheet.tsx, DiagramTextOutline.tsx, DiagramToolbar.tsx
+  shapes/EventNode.tsx, ProcessNode.tsx, DecisionNode.tsx, DataStoreNode.tsx,
+         DocumentNode.tsx, AutomatedSubprocessNode.tsx, EndpointNode.tsx
+lib/diagrams/
+  layoutWithElk.ts, routeEdges.ts, validateDiagram.ts, collisionDetection.ts, labelPlacement.ts, diagramTypes.ts
+data/diagrams/
+  forceNWorkflow.ts
+```
+
+ForceN-specific variant (per `FORCEN_WORKFLOW_DIAGRAM_IMPLEMENTATION.md` §23) nests under `components/case-study/forcen/` instead — reconcile the two proposed paths (general `components/diagrams/` vs. ForceN-specific `components/case-study/forcen/`) if stack (a) is chosen; the general reusable shapes/canvas belong in `components/diagrams/`, with only ForceN's data file and any truly ForceN-specific composition under the case-study path.
+
+## 26.12 ForceN-specific application
+
+ForceN's exact node IDs, synopsis catalogue, and edge list are already recorded in §24.12.4–24.12.5 and remain the content source of truth (the two new documents' ForceN sections restate the same node set with an added, more precise **port** on every edge — see §26.13). ForceN's zones map directly to §24.12.7's three zones (Plan & Supply / Build & Validate / Stock & Fulfil). Title: "How a Dev System moves from configuration to a shipped order" (alternate: "From planned stock to a shipped Dev System") — supersedes the earlier §24.2 preferred title for the *diagram* specifically (the page-level hero title in §24.2 is unchanged).
+
+## 26.13 ForceN edge-to-port refinement
+
+Where §24.12.5's edge catalogue only names source/target nodes, this refinement adds the exact port on each end (useful once/if a real port-constrained layout engine is adopted):
+
+| Connection | Source → port | Target → port |
+|---|---|---|
+| Planned build → Select configuration | south | north |
+| Select configuration → Configuration package | south | north |
+| Configuration package → Parts available? | south | input (north) |
+| Component inventory → Parts available? | read (east) | west |
+| Parts available? → Procurement (No) | alternate (west) | north/east |
+| Procurement → Component inventory | east/north | write (west)/south |
+| Component inventory → Parts available? (recheck) | read (east) | west |
+| Parts available? → Kit parts (Yes) | primary (south) | north |
+| Kit parts → Component inventory | west | write |
+| Kit parts → Minimum-stock check | south | north |
+| Minimum-stock check → Assembly | south | north |
+| Minimum-stock check → Component replenishment (below min) | west | east |
+| Component replenishment → Procurement | west/north | south |
+| Assembly → Primary calibration | south | north |
+| Primary calibration → Primary decision | south | input |
+| Primary decision → Lamination (Pass) | primary (south) | north |
+| Primary decision → Rework (Fail) | secondary (east) | west |
+| Rework → Assembly | north | east |
+| Lamination → Secondary calibration | south | north |
+| Secondary calibration → QA decision | south | input |
+| QA decision → Records (Pass) | primary (south) | north |
+| QA decision → Rework (Fail) | secondary (east) | west |
+| Records → Post to finished inventory | south | north |
+| Post to finished inventory → Finished inventory | south | north |
+| Customer order → Availability decision | south | input |
+| Finished inventory → Availability decision | read (east/south) | west/north |
+| Availability decision → Allocate (Yes) | primary (south) | north |
+| Availability decision → Build requirement (No) | secondary (east) | west |
+| Build requirement → Select configuration | north | east |
+| Allocate → Prepare and pack | south | north |
+| Prepare and pack → Shipment | south | north |
+| Shipment → Deduct inventory | south | north |
+| Deduct inventory → Finished inventory | west/north | write (south/east) |
+| Deduct inventory → Stock decision | south | input |
+| Stock decision → Stable endpoint (No) | primary (south) | north |
+| Stock decision → Planned build (Yes) | secondary (east) | east/north |
+
+The two right-side loops (calibration rework vs. the two fulfilment replenishment loops) must use separate exterior gutters — do not let them share a lane.
+
+## 26.14 ForceN-specific NEEDS_INPUT (diagram implementation, supplements §24.12.9)
+
+1. Whether kitting/deduction genuinely happened before assembly in the real process, or was reconstructed for narrative clarity.
+2. Whether the current build could actually continue in parallel with a triggered replenishment, or whether it blocked in practice.
+3. The precise disposition of a post-lamination failure (same open question as §24.12.9 item 7, restated here since it directly determines whether the "Fail" edge from `secondary-quality-decision` truly targets `diagnose-and-rework` or a different node).
+4. Whether `deduct-finished-inventory` should render as a plain process or the automated-subprocess shape — confirm implementation before publishing either way.
+
+Do not expose this list publicly.
