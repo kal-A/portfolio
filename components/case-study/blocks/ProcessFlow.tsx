@@ -37,7 +37,15 @@ function StepBox({
   );
 }
 
-export default function ProcessFlow({ steps, accent }: { steps: ProcessStep[]; accent: string }) {
+export default function ProcessFlow({
+  steps,
+  accent,
+  middleLabel = "Review clears the way to tracking",
+}: {
+  steps: ProcessStep[];
+  accent: string;
+  middleLabel?: string;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const row1 = steps.slice(0, ROW_1_LEN);
   const row2 = steps.slice(ROW_1_LEN);
@@ -70,7 +78,7 @@ export default function ProcessFlow({ steps, accent }: { steps: ProcessStep[]; a
             ↓
           </span>
           <span className="text-xs font-extrabold uppercase tracking-wide" style={{ color: "var(--ink-soft)" }}>
-            Review clears the way to tracking
+            {middleLabel}
           </span>
         </div>
         {renderRow(row2, ROW_1_LEN)}

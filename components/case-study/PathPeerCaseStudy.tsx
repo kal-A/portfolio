@@ -414,7 +414,11 @@ export default function PathPeerCaseStudy() {
           <p className="text-sm font-extrabold mb-8" style={{ color: ACCENT_ORANGE }}>
             Select a stage to see what happened there.
           </p>
-          <ProcessFlow steps={FRICTION_STEPS} accent={ACCENT_ORANGE} />
+          <ProcessFlow
+            steps={FRICTION_STEPS}
+            accent={ACCENT_ORANGE}
+            middleLabel="A hypothesis only matters once it is scoped into something buildable"
+          />
         </div>
       </div>
 
