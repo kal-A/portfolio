@@ -939,6 +939,11 @@ export default function HeraCaseStudy() {
           </Chapter>
 
           <div className="mt-12">
+            <Reveal>
+              <p className="text-xs font-extrabold uppercase tracking-wide mb-3" style={{ color: NAVY }}>
+                Reconstructed roadmap
+              </p>
+            </Reveal>
             <RoadmapTable />
           </div>
         </div>
