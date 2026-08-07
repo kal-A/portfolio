@@ -303,36 +303,81 @@ const caseStudiesData: CaseStudy[] = [
     category: "systems",
     entryType: "internship",
     caseStudyType: "research-strategy",
-    tier: "compact",
-    title: "Turning UX research into workflow fixes",
+    tier: "standard",
+    title: "Turning scattered research and content requests into plans a team could run on",
     company: "Informatica",
     role: "Product Operations & UX Research Intern",
     location: "Mississauga, ON",
     timeframe: "Sep 2023 – Dec 2023",
-    oneLiner: "Cross-team deliverables were slipping and system friction was going unaddressed because no one owned turning research into fixes.",
+    oneLiner: "UX research, web application requests, and educational content work were competing for attention with no shared way to evaluate, sequence, or track them.",
     summary:
-      "Translated UX research findings into concrete workflow improvements and coordinated cross-team deliverables to reduce missed deadlines during a product operations internship.",
-    tags: ["Product Operations", "UX Research", "Cross-Team Coordination"],
-    toolTags: ["User Research", "Workflow Documentation"],
-    artifacts: ["Internal Materials Omitted"],
+      "Translated UX research into concrete decisions, helped route requests to the right build path, and structured the planning and content workflows behind Informatica's web and educational content work.",
+    tags: ["Product Operations", "UX Research", "Workflow Planning"],
+    toolTags: ["Trello", "Microsoft Planner", "Microsoft Loop"],
+    artifacts: ["Research Synthesis", "Planning Framework", "Workflow Documentation", "Internal Materials Omitted"],
     metrics: [
       { value: "18%", label: "user engagement increase (internal reporting)" },
       { value: "20%", label: "internal task efficiency gain (internal reporting)" },
       { value: "30%", label: "on-time delivery improvement (internal reporting)" },
     ],
     problem:
-      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and cross-team deliverables were slipping. As a Product Operations & UX Research Intern, the work was to close that gap - translate research into action and keep deliverables moving across teams.",
+      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and requests for web application features, educational content updates, and process fixes arrived from different teams with no shared way to evaluate, sequence, or track them. As a Product Operations & UX Research Intern, the work was to close that gap: translate research into decisions, choose the right build path for each request, and keep deliverables moving across teams.",
     process: [
-      "Translated UX research findings into specific workflow improvements rather than leaving them as a research readout.",
-      "Identified system friction points affecting internal task efficiency and addressed them directly.",
+      "Translated UX research findings into specific workflow improvements and requirements rather than leaving them as a research readout.",
+      "Organized incoming requests, research questions, and content work into a shared plan with owners, priorities, and dependencies.",
+      "Weighed no-code, lightweight custom builds, and classic front-end approaches against each request's actual speed, maintainability, and handoff needs.",
+      "Used Trello, Microsoft Planner, and Microsoft Loop to keep task ownership, status, and decisions visible across teams.",
+      "Supported an AI-assisted content workflow for educational and blog-style updates, with human review before anything published.",
       "Coordinated cross-team deliverables to reduce missed deadlines and improve on-time delivery.",
     ],
     outcome: [
       "User engagement increased 18%, per internal reporting from the internship period.",
       "Internal task efficiency improved 20% by addressing identified friction points.",
       "Cross-team on-time delivery improved 30%.",
+      "UX research findings moved into tracked requirements instead of ending as a readout no one acted on.",
     ],
-    note: "This case study is a placeholder - full write-up in progress. Metrics are as reported internally during the internship; internal tools and materials are omitted for confidentiality.",
+    snapshot: {
+      challenge:
+        "Web application requests, educational content work, and process fixes competing for attention with no shared way to evaluate, sequence, or track them.",
+      contribution:
+        "Structured research into decisions, built the planning and delivery workflow around web and content work, and helped route each request to the right build path.",
+      outcome:
+        "A clearer, more repeatable way to move from a research question or content request to a tracked, delivered piece of work.",
+      tools: ["Trello", "Microsoft Planner", "Microsoft Loop", "AI-assisted drafting"],
+    },
+    constraints: [
+      "Internal trackers, boards, and company-specific records are confidential. This write-up reconstructs the same planning and research logic in a public-safe form.",
+      "Requests came from multiple teams with different formats and urgency, so any fix had to work without forcing every team onto one rigid process.",
+      "No single system tracked a request from research question through to delivery, so status lived across conversations, inboxes, and individual memory.",
+    ],
+    decisions: [
+      {
+        decision: "Route each request through a shared research-to-plan flow instead of handling requests case by case.",
+        rationale:
+          "Research findings and stakeholder requests were arriving in different formats with no consistent path from question to action, which made it easy for a valid finding to stall without ever becoming a requirement.",
+        result: "Requests moved through the same question, research, synthesis, recommendation, requirement, and plan sequence, regardless of which team raised them.",
+      },
+      {
+        decision: "Match the implementation path to the request instead of defaulting to one build approach.",
+        rationale:
+          "A quick content fix, an internal tool, and a customer-facing feature had different requirements for speed, maintainability, and who needed to maintain it after launch.",
+        alternatives: "Defaulting every request to the same custom build path regardless of complexity or urgency.",
+        result: "Smaller or faster-moving requests went through no-code or lightweight paths, while requests that needed real logic or long-term flexibility got the additional setup time up front.",
+      },
+      {
+        decision: "Keep AI-assisted content drafting paired with a mandatory human review step.",
+        rationale:
+          "AI tools could speed up the repetitive part of turning research or notes into a first-pass draft, but accuracy and tone still needed a human check before anything reached a reader.",
+        result: "Draft turnaround got faster without removing the review step that caught accuracy and tone issues before publishing.",
+      },
+    ],
+    reflection: [
+      "Research only pays off when it narrows a decision. A finding that stays in a document doesn't change anything on its own; it has to become a specific recommendation someone can accept or reject.",
+      "Planning tools are only as good as the ownership they make visible. Trello, Planner, and Loop helped because every item had a clear owner and status, not because of the tools themselves.",
+      "The simplest implementation path is often the right one. It was tempting to default to the fullest custom build every time; matching effort to the actual requirement mattered more than building the most capable version of everything.",
+      "Automation should remove repetition, not judgment. AI-assisted drafting saved time on the repetitive part of content work, but it never replaced the review step, since that's where the real quality control happened.",
+    ],
+    note: "Internal trackers, boards, and company-specific materials are omitted for confidentiality. This case study uses reconstructed, public-safe diagrams to explain the research and planning logic behind the work. Metrics are as reported internally during the internship.",
   },
 ];
 
