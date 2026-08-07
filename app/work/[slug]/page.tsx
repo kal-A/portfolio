@@ -5,11 +5,6 @@ import { caseStudies, getCaseStudy } from "@/lib/content/case-studies";
 import { caseStudyTheme } from "@/lib/content/theme";
 import Metric from "@/components/Metric";
 import {
-  HeraOnboardingMockup,
-  HeraPaymentPlanMockup,
-  HeraDashboardMockup,
-} from "@/components/mockups/HeraMockups";
-import {
   PillPalMyMedsMockup,
   PillPalAddMedicationMockup,
   PillPalReminderMockup,
@@ -18,6 +13,7 @@ import {
 import Diagram from "@/components/case-study/Diagram";
 import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
 import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
+import HeraCaseStudy from "@/components/case-study/HeraCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -35,6 +31,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (!cs) notFound();
   if (cs.slug === "forcen") return <ForceNCaseStudy />;
   if (cs.slug === "greenhouse") return <GreenhouseCaseStudy />;
+  if (cs.slug === "hera-fertility") return <HeraCaseStudy />;
   const theme = caseStudyTheme[cs.slug];
 
   return (
@@ -194,16 +191,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <p className="mt-8 text-sm text-neutral-500 italic border-l-2 border-neutral-200 pl-4">
           {cs.note}
         </p>
-      )}
-
-      {cs.mockups === "hera" && (
-        <section className="mt-10 overflow-x-auto">
-          <div className="flex gap-6 pb-4 min-w-max">
-            <HeraOnboardingMockup />
-            <HeraPaymentPlanMockup />
-            <HeraDashboardMockup />
-          </div>
-        </section>
       )}
 
       {cs.mockups === "pillpal" && (
