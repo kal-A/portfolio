@@ -498,6 +498,9 @@ export default function InformaticaCaseStudy() {
             </div>
           </Reveal>
 
+          <p className="sm:hidden text-xs font-extrabold uppercase tracking-wide mb-2" style={{ color: "#3a6b93" }}>
+            Swipe to see the full table &rarr;
+          </p>
           <div className="cs-box white overflow-hidden mt-10">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[640px]">
