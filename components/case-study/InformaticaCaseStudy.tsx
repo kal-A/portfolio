@@ -22,7 +22,7 @@ const TONE_DARK =
 const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
   {
     href: "#s-plan",
-    label: "The plan",
+    label: "The curriculum problem",
     icon: (
       <>
         <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -42,7 +42,7 @@ const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
   },
   {
     href: "#s-implementation",
-    label: "Implementation path",
+    label: "No-code vs. coded",
     icon: (
       <>
         <path d="M12 4v5" />
@@ -52,7 +52,7 @@ const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
   },
   {
     href: "#s-delivery",
-    label: "Organizing delivery",
+    label: "Organizing six people",
     icon: (
       <>
         <rect x="4" y="4" width="7" height="7" rx="1.5" />
@@ -92,32 +92,32 @@ const RESEARCH_STEPS: ProcessStep[] = [
   {
     title: "Question",
     synopsis:
-      "A stakeholder, a support pattern, or a piece of user feedback raised something worth answering: was a page confusing, was a workflow slower than it needed to be, was a feature worth building at all.",
+      "For the cybersecurity curriculum: what does a reader actually need to understand about personal, school, workplace, or network security, and at what depth for that audience? For other requests: was a page confusing, was a workflow slower than it needed to be, was a feature worth building at all.",
   },
   {
     title: "Research",
     synopsis:
-      "I gathered the relevant UX research and existing data, or reviewed the workflow directly, to understand what was actually happening instead of acting on assumption.",
+      "Looked at how the topic was best taught, not just what to say about it: what structure, diagrams, or activities would actually get the concept across, instead of assuming a page of text was enough.",
   },
   {
     title: "Synthesis",
     synopsis:
-      "Findings got distilled into a few clear takeaways: what was working, what wasn't, and what mattered enough to act on.",
+      "Findings got distilled into a few clear takeaways: what a topic track needed to cover, what format would teach it best, and what could wait for a later pass.",
   },
   {
     title: "Recommendation",
     synopsis:
-      "I turned synthesis into a specific recommendation, not just a summary of findings, so stakeholders had something concrete to respond to.",
+      "Turned synthesis into a specific recommendation, such as a page structure or an implementation approach, not just a summary of findings, so the team had something concrete to build against.",
   },
   {
     title: "Requirement",
     synopsis:
-      "Accepted recommendations became requirements, specific enough for the request to move into planning instead of staying an open discussion.",
+      "Accepted recommendations became requirements specific enough to hand to whoever was building that page or track next.",
   },
   {
     title: "Plan",
     synopsis:
-      "The requirement got a priority, an owner, and a place in the sequence of other work already in flight.",
+      "The requirement got an owner, a place in its topic track's sequence, and a build method, no-code or coded, based on what the page actually needed.",
   },
 ];
 
@@ -154,25 +154,22 @@ const AUTOMATION_STEPS: ProcessStep[] = [
 
 const IMPLEMENTATION_PATHS = [
   {
-    path: "No-code / low-code tools",
-    speed: "Fastest to launch",
-    maintainability: "Depends on the platform",
-    flexibility: "Limited to what the tool supports",
-    handoff: "Easy for non-technical owners",
+    path: "No-code tools",
+    example: "General informational and knowledge pages",
+    why: "Fast to produce and easy for the team to edit directly",
+    tradeoff: "Not built for scoring, state, or custom interaction logic",
   },
   {
-    path: "Lightweight custom build (JavaScript / React)",
-    speed: "Slower to start",
-    maintainability: "Good, if documented",
-    flexibility: "High",
-    handoff: "Needs a developer to maintain",
+    path: "Classic web development",
+    example: "Structured, mostly-static testing and activity pages",
+    why: "Full control over layout and interaction without a framework's overhead",
+    tradeoff: "More setup time than no-code, but far more flexible",
   },
   {
-    path: "Classic static frontend (HTML / CSS / JS)",
-    speed: "Moderate",
-    maintainability: "Simple, few moving parts",
-    flexibility: "Moderate",
-    handoff: "Easy for most web-literate owners",
+    path: "Java-based frameworks",
+    example: "More complex interactive testing and activity experiences",
+    why: "Handled logic and state that no-code and static pages couldn't support",
+    tradeoff: "Needed a developer to build and maintain",
   },
 ];
 
@@ -247,20 +244,22 @@ export default function InformaticaCaseStudy() {
                 Informatica · Product Operations &amp; UX Research Intern
               </p>
               <h1
-                className="font-serif text-4xl sm:text-[50px] leading-[1.08] mt-3 max-w-2xl text-balance"
+                className="font-serif text-4xl sm:text-[46px] leading-[1.1] mt-3 max-w-2xl text-balance"
                 style={{ color: "var(--ink)" }}
               >
-                Turning scattered research and content requests into plans a team could run on
+                Breaking an ambiguous cybersecurity curriculum into work a six-person team could execute
               </h1>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
                 Mississauga, ON · Sep 2023 – Dec 2023
               </p>
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
-                Requests for new web application features, educational content, and process fixes
-                were coming from different teams with no shared way to evaluate, sequence, or track
-                them. I turned UX research into decisions the team could act on, helped route each
-                request to the right build path, and structured the planning and content workflows
-                behind the work.
+                Informatica set out to build a new set of cybersecurity educational web experiences,
+                covering personal, school, and workplace security plus safe networking practices,
+                each with multiple levels and course-like pages. The real problem was never
+                publishing the information. It was figuring out how to teach it well, and how six
+                co-op students could actually build it together. I helped turn that open-ended goal
+                into research, page structure, and build assignments the team could execute, then
+                applied the same approach to the rest of Informatica&apos;s web and content requests.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-7">
                 {cs.artifacts.map((chip) => (
@@ -277,7 +276,7 @@ export default function InformaticaCaseStudy() {
                   On this page
                 </p>
                 <p className="text-[13px] leading-relaxed mb-5" style={{ color: "var(--ink-soft)" }}>
-                  Seven sections, from the planning structure through to what I&apos;d take forward.
+                  Seven sections, from the curriculum problem through to what I&apos;d take forward.
                 </p>
                 {NAV_LINKS.map((link, i) => (
                   <a
@@ -312,24 +311,21 @@ export default function InformaticaCaseStudy() {
                 accentGradient={BLUE_GRADIENT}
                 icon={<><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.2v.1" /></>}
               >
-                Web application requests, educational content work, and process fixes competing for
-                attention with no shared way to evaluate, sequence, or track them.
+                {cs.snapshot?.challenge}
               </SnapshotBox>
               <SnapshotBox
                 label="Contribution"
                 accentGradient={RED_GRADIENT}
                 icon={<path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L4 17l3 3 5.1-5.1a4 4 0 0 0 5.6-5.6l-2.6 2.6-2-2z" />}
               >
-                Structured research into decisions, built the planning and delivery workflow around
-                web and content work, and helped route each request to the right build path.
+                {cs.snapshot?.contribution}
               </SnapshotBox>
               <SnapshotBox
                 label="Outcome"
                 accentGradient={BLUE_GRADIENT}
                 icon={<><path d="M4 18l5-6 4 3 7-9" /><path d="M14 6h6v6" /></>}
               >
-                A clearer, more repeatable way to move from a research question or content request to
-                a tracked, delivered piece of work.
+                {cs.snapshot?.outcome}
               </SnapshotBox>
               <div className="cs-box white h-full px-6 py-6">
                 <div
@@ -353,7 +349,8 @@ export default function InformaticaCaseStudy() {
                     ["Trello", "backlog and task tracking"],
                     ["Microsoft Planner", "cross-team task ownership"],
                     ["Microsoft Loop", "shared docs and decision logs"],
-                    ["ChatGPT / Claude", "first-pass content drafts"],
+                    ["Java / classic web dev", "testing and activity pages"],
+                    ["No-code tools", "general informational pages"],
                   ].map(([tool, use]) => (
                     <li key={tool} className="text-[14.5px]" style={{ color: "#4c473e" }}>
                       <b className="font-extrabold" style={{ color: "var(--ink)" }}>
@@ -371,61 +368,51 @@ export default function InformaticaCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- 01: The plan ---------- */}
+      {/* ---------- 01: The curriculum problem ---------- */}
       <div id="s-plan" className="cs-seam" style={{ background: TONE_BLUE }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Chapter num="01" title="Turning scattered work into a plan">
+          <Chapter num="01" title="An educational goal, and no structure to build it from">
             <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
-              Requests showed up from different directions: a UX finding that needed a follow-up
-              decision, a web application feature a stakeholder wanted, an educational content page
-              that needed rebuilding, a process fix someone flagged in passing. None of it arrived in
-              one place or one format. I organized it into a shared plan: what the request was, what
-              evidence backed it, who owned it, how urgent it was, and what order it needed to happen
-              in.
+              Informatica wanted a full set of cybersecurity educational web experiences: personal
+              cybersecurity, school-related cybersecurity, workplace cybersecurity, and correct
+              networking and security practices, each with multiple levels and course-like pages.
+              That goal didn&apos;t come with a page structure, a teaching approach, or a plan for
+              dividing the work. Six co-op students, including me, had to build all of it, and I
+              helped organize how that work got broken up, researched, and built.
             </p>
 
-            <div className="flex items-center gap-5 flex-wrap my-9">
-              <div className="cs-box white flex-1 px-6 py-4">
-                <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: "#3a6b93" }}>
-                  Before
-                </p>
-                <p className="text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Requests tracked wherever they landed
-                </p>
-              </div>
-              <span className="text-3xl font-black shrink-0 rotate-90 sm:rotate-0" style={{ color: "var(--ink)" }}>
-                →
-              </span>
-              <div className="cs-box light flex-1 px-6 py-4">
-                <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: "#a12f2f" }}>
-                  Now
-                </p>
-                <p className="text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Requests routed through one shared plan
-                </p>
-              </div>
+            <div className="cs-box white px-6 py-6 mt-8">
+              <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: "#3a6b93" }}>
+                Team
+              </p>
+              <p className="text-[15px] leading-relaxed" style={{ color: "#4c473e" }}>
+                {cs.team} My part of that was helping break the educational objective into research,
+                planning, diagrams, activities, page design, and development tasks, sequencing them
+                across topic tracks, and keeping documentation and coordination visible across all
+                six of us.
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-[1fr_1.2fr_1fr] gap-4.5 items-center">
+            <div className="grid md:grid-cols-[1fr_1.2fr_1fr] gap-4.5 items-center mt-9">
               <div className="flex flex-col gap-3.5">
                 <div className="cs-box white text-center px-4 py-4 text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Research questions
+                  Personal cybersecurity
                 </div>
                 <div className="cs-box white text-center px-4 py-4 text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Web app requests
+                  School cybersecurity
                 </div>
               </div>
               <div className="cs-box dark text-center px-5 py-7 font-serif font-bold text-lg">
-                Coordinated plan
+                Four independent
                 <br />
-                owner · priority · sequence
+                topic tracks
               </div>
               <div className="flex flex-col gap-3.5">
                 <div className="cs-box white text-center px-4 py-4 text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Content updates
+                  Workplace cybersecurity
                 </div>
                 <div className="cs-box white text-center px-4 py-4 text-sm font-bold" style={{ color: "var(--ink)" }}>
-                  Dependencies &amp; order
+                  Networking &amp; security practices
                 </div>
               </div>
             </div>
@@ -436,8 +423,8 @@ export default function InformaticaCaseStudy() {
               >
                 Reconstructed diagram
               </span>
-              Based on the categories I used to organize incoming requests. Company-specific tool
-              names and records are simplified or omitted.
+              Based on the four topic areas the curriculum was organized around. Company-specific
+              tool names and records are simplified or omitted.
             </p>
 
             <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
@@ -470,11 +457,13 @@ export default function InformaticaCaseStudy() {
               Research
             </p>
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
-              Research that informed what to build
+              Research that shaped how each topic got taught
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
-              Not every question needed new research, and not every finding needed a new build.
-              Select a stage below to see what happened there.
+              The question was rarely just what to say about a topic. It was how to teach it, what
+              structure, diagrams, or activities would actually get the concept across to the
+              audience that topic track was written for. Select a stage below to see what happened
+              there.
             </p>
           </Reveal>
           <ProcessFlow steps={RESEARCH_STEPS} accent="#3a6b93" connectorLabel="Synthesis turns findings into a recommendation" />
@@ -482,14 +471,14 @@ export default function InformaticaCaseStudy() {
           <DecisionCallout
             accent={BLUE_GRADIENT}
             accentDeep="#3a6b93"
-            title="Route requests through one shared research-to-plan flow"
-            situation="Research findings and stakeholder requests arrived in different formats with no consistent path from question to action, which made it easy for a valid finding to stall without ever becoming a requirement."
-            result="Requests moved through the same question, research, synthesis, recommendation, requirement, and plan sequence, regardless of which team raised them."
+            title="Split the curriculum into four independent topic tracks instead of one continuous course"
+            situation="Personal, school, workplace, and networking and security practices are different audiences with different depth needs. Treating them as one continuous course would have forced six people to build sequentially instead of in parallel."
+            result="Each topic track could be researched, structured, and built independently, so the six-person team could work at the same time instead of waiting on a shared sequence."
           />
         </div>
       </div>
 
-      {/* ---------- 03: Implementation path ---------- */}
+      {/* ---------- 03: No-code vs. coded ---------- */}
       <div id="s-implementation" className="cs-seam" style={{ background: TONE_BLUE }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
@@ -498,12 +487,13 @@ export default function InformaticaCaseStudy() {
             </p>
             <div className="mt-2">
               <h2 className="font-serif text-[32px] leading-tight text-balance" style={{ color: "var(--ink)" }}>
-                Choosing the right implementation path
+                Matching the build method to the page, not the project
               </h2>
               <p className="text-lg leading-relaxed max-w-2xl mt-4" style={{ color: "var(--ink)" }}>
-                A quick content fix, an internal tool, and a customer-facing feature had different
-                needs for speed, maintainability, and who had to maintain it after launch. Rather than
-                defaulting to one build approach, I helped weigh which path actually fit the request.
+                A general page explaining what phishing is has very different needs from an
+                interactive quiz testing whether someone can spot one. Rather than pick one build
+                approach for the whole curriculum, each page type got matched to the method that
+                actually fit it.
               </p>
             </div>
           </Reveal>
@@ -513,7 +503,7 @@ export default function InformaticaCaseStudy() {
               <table className="w-full text-left border-collapse min-w-[640px]">
                 <thead>
                   <tr style={{ background: "linear-gradient(135deg, #7fb0dd, #3a6b93)" }}>
-                    {["Path", "Speed to ship", "Maintainability", "Flexibility", "Handoff"].map((h) => (
+                    {["Build method", "Used for", "Why", "Tradeoff"].map((h) => (
                       <th key={h} className="px-5 py-3.5 text-xs font-extrabold uppercase tracking-wide text-[#fff9ee]">
                         {h}
                       </th>
@@ -527,16 +517,13 @@ export default function InformaticaCaseStudy() {
                         {row.path}
                       </td>
                       <td className="px-5 py-4 text-sm" style={{ color: "#4c473e" }}>
-                        {row.speed}
+                        {row.example}
                       </td>
                       <td className="px-5 py-4 text-sm" style={{ color: "#4c473e" }}>
-                        {row.maintainability}
+                        {row.why}
                       </td>
                       <td className="px-5 py-4 text-sm" style={{ color: "#4c473e" }}>
-                        {row.flexibility}
-                      </td>
-                      <td className="px-5 py-4 text-sm" style={{ color: "#4c473e" }}>
-                        {row.handoff}
+                        {row.tradeoff}
                       </td>
                     </tr>
                   ))}
@@ -551,33 +538,36 @@ export default function InformaticaCaseStudy() {
             >
               Reconstructed framework
             </span>
-            Describes how implementation paths were generally weighed, not a literal internal
-            document.
+            Describes the general split used across the curriculum, not a literal internal document.
           </p>
 
           <p className="text-lg leading-relaxed max-w-2xl mt-8" style={{ color: "var(--ink)" }}>
-            For most educational content and small feature requests, a no-code or lightweight path
-            meant a stakeholder could see something working in days, not weeks. For work that needed
-            real logic or long-term flexibility, the extra setup time up front paid for itself later.
+            General informational and knowledge pages, the bulk of the curriculum, went through
+            no-code tools, so content could be produced and edited quickly. Specialized testing,
+            activity, and interactive pages needed logic no-code couldn&apos;t reliably support, so
+            those went through classic web development or Java-based frameworks instead, matching
+            the extra setup time to the pages that actually needed the flexibility.
           </p>
 
           <DecisionCallout
             accent={RED_GRADIENT}
             accentDeep="#a12f2f"
-            title="Match the implementation path to the request instead of defaulting to one build approach"
-            situation="A quick content fix, an internal tool, and a customer-facing feature had different requirements for speed, maintainability, and who needed to maintain it after launch."
-            result="Smaller or faster-moving requests went through no-code or lightweight paths, while requests that needed real logic or long-term flexibility got the additional setup time up front."
+            title="Match implementation method to page type instead of picking one build approach for the whole project"
+            situation="General knowledge pages needed to be quick to produce and easy to edit, but testing, activity, and interactive pages needed logic such as scoring, state, or custom interaction that no-code tools couldn't reliably support."
+            result="No-code tools covered the general informational pages, while classic web development and Java-based frameworks covered the testing, activity, and interactive pages that actually needed the flexibility."
           />
         </div>
       </div>
 
-      {/* ---------- 04: Organizing delivery ---------- */}
+      {/* ---------- 04: Organizing six people ---------- */}
       <div id="s-delivery" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Chapter num="03" title="Organizing delivery">
+          <Chapter num="03" title="Keeping six people's work visible and consistent">
             <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
-              None of these tools mattered on their own. What mattered was that ownership, status,
-              and context lived somewhere findable instead of in someone&apos;s inbox.
+              None of these tools mattered on their own. What mattered was that six people building
+              across four topic tracks could see who owned what, what stage it was at, and where a
+              decision had already been made, instead of that living in one person&apos;s head or a
+              single conversation.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-5 mt-8">
@@ -585,7 +575,7 @@ export default function InformaticaCaseStudy() {
                 {
                   accent: "#3a6b93",
                   title: "Trello",
-                  body: "Backlog and task tracking for smaller, faster-moving requests: content fixes, small research follow-ups, and one-off asks that didn't need a full project structure.",
+                  body: "Tracked individual page and activity builds inside each topic track, so day-to-day progress across four tracks and six people stayed visible without a status meeting.",
                   icon: (
                     <>
                       <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -597,13 +587,13 @@ export default function InformaticaCaseStudy() {
                 {
                   accent: "#a12f2f",
                   title: "Microsoft Planner",
-                  body: "Task ownership and timelines for larger, cross-team deliverables, so a request with multiple owners had one place tracking who owned what and by when.",
+                  body: "Owned the larger deliverables, a full topic track spanning research, page design, and development, so a piece of work with more than one owner had one place tracking who owned what and by when.",
                   icon: <><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></>,
                 },
                 {
                   accent: "#3a6b93",
                   title: "Microsoft Loop",
-                  body: "Shared documentation and decision logs, so a recommendation or requirement didn't live only in someone's head or a single meeting.",
+                  body: "Held shared documentation and decision logs, including the page-structure and build-method calls, so six people writing and building in parallel worked from the same decisions instead of six different interpretations.",
                   icon: <><path d="M4 4h16v16H4z" /><path d="M8 9h8M8 13h8M8 17h5" /></>,
                 },
               ].map((t, i) => (
@@ -627,6 +617,13 @@ export default function InformaticaCaseStudy() {
                 </Reveal>
               ))}
             </div>
+
+            <p className="text-lg leading-relaxed max-w-2xl mt-9" style={{ color: "var(--ink)" }}>
+              The same planning approach carried over past the curriculum project: as other web
+              application requests, content updates, and process fixes came in from different
+              teams, they moved through the same research-to-decision flow and the same
+              implementation-path question, rather than getting handled as one-off asks.
+            </p>
           </Chapter>
         </div>
       </div>
@@ -642,8 +639,9 @@ export default function InformaticaCaseStudy() {
               Automating content work, without removing the review
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
-              Educational content and blog-style updates followed a repeatable shape, which made part
-              of the workflow worth automating without removing the judgment calls that mattered.
+              Educational and blog-style content updates followed a repeatable shape, which made
+              part of the workflow worth automating without removing the judgment calls that
+              mattered.
             </p>
           </Reveal>
           <ProcessFlow steps={AUTOMATION_STEPS} accent="#a12f2f" connectorLabel="Human review gates everything before it publishes" />
@@ -682,8 +680,9 @@ export default function InformaticaCaseStudy() {
               <h2 className="font-serif text-4xl text-white">Outcomes</h2>
             </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d5dfe8" }}>
-              The work connected UX research, planning, and content delivery into one repeatable
-              path, instead of three separate efforts moving on their own schedules.
+              The clearest result was turning one ambiguous educational goal into work six people
+              could actually execute. The metrics below describe the internship more broadly, not
+              the curriculum project in isolation.
             </p>
           </Reveal>
 
@@ -727,8 +726,8 @@ export default function InformaticaCaseStudy() {
             {[
               {
                 accent: "#3a6b93",
-                title: "Research only pays off when it narrows a decision",
-                body: "A finding that stays in a document doesn't change anything on its own. It has to become a specific recommendation someone can accept or reject.",
+                title: "An ambiguous goal gets built once it's broken into ownable pieces",
+                body: "Splitting the curriculum into four topic tracks, instead of one shared course, was what actually let six people work at the same time.",
                 icon: (
                   <>
                     <circle cx="10.5" cy="10.5" r="6.5" />
@@ -738,8 +737,8 @@ export default function InformaticaCaseStudy() {
               },
               {
                 accent: "#a12f2f",
-                title: "Planning tools are only as good as the ownership they make visible",
-                body: "Trello, Planner, and Loop helped because every item had a clear owner and status, not because of the tools themselves.",
+                title: "The right build method depends on the page, not a default",
+                body: "Knowledge pages and testing or activity pages needed genuinely different approaches. Treating them the same would have wasted effort either way.",
                 icon: (
                   <>
                     <rect x="4" y="4" width="7" height="7" rx="1.5" />
@@ -750,8 +749,8 @@ export default function InformaticaCaseStudy() {
               },
               {
                 accent: "#3a6b93",
-                title: "The simplest implementation path is often the right one",
-                body: "It was tempting to default to the fullest custom build every time. Matching effort to the actual requirement mattered more than building the most capable version of everything.",
+                title: "Planning tools are only as good as the ownership they make visible",
+                body: "Trello, Planner, and Loop helped because every page and task had a clear owner across a six-person team, not because of the tools themselves.",
                 icon: <path d="M12 4v5M12 9l-6 5v6M12 9l6 5v6" />,
               },
               {
@@ -781,6 +780,17 @@ export default function InformaticaCaseStudy() {
               </Reveal>
             ))}
           </div>
+
+          {cs.whatIdImprove && (
+            <div className="cs-box light px-6 py-6 mt-8">
+              <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: "#a12f2f" }}>
+                What I&apos;d improve
+              </p>
+              <p className="text-[15px] leading-relaxed" style={{ color: "#4c473e" }}>
+                {cs.whatIdImprove}
+              </p>
+            </div>
+          )}
 
           <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
             Internal trackers, boards, and company-specific documentation are omitted for
