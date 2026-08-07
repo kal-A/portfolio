@@ -1,8 +1,12 @@
-// Hera Fertility case study. Built from five real source artifacts audited
+// Hera Fertility case study. Built from six real source artifacts audited
 // during this rewrite: financial app wireframes.pdf, finacial app product
-// roadmap.pdf, marketing metrics.pdf, payment plans designs.pdf, and
-// Near me design.pdf. See PORTFOLIO_CASE_STUDY_SYSTEM.md for the shared
-// case-study architecture this follows.
+// roadmap.pdf, marketing metrics.pdf, payment plans designs.pdf, and two
+// Near me design PDFs, all in the gitignored `Herafertility work/` folder.
+// Per Kamal's direction, raw handwritten notes are now used as source
+// material rather than the primary visual: most sections present polished,
+// portfolio-native reconstructions (tables, flow diagrams, matrices) built
+// from that material, with the original sketches kept only where a rough
+// thinking -> polished concept comparison genuinely adds value.
 //
 // NEEDS_INPUT (kept off the public page, for Kamal to confirm later):
 // - Baseline/period/definition for the resume's "2x retention" and "50% less
@@ -12,12 +16,14 @@
 //   moving loan servicing in-house.
 // - Exact user count behind "500+ users tracked."
 // - Whether formal moderated user research occurred, versus the competitive/
-//   pattern research and internal review the artifacts actually document.
-// - What "Upgrade to Missouri" (the roadmap's Phase 2 label) refers to.
+//   pattern research, Hotjar review, and internal review the artifacts
+//   actually document.
 // - Whether Phase 3 (site-wide launch) shipped before the internship ended.
+// - The roadmap's Phase 2 label ("Upgrade to Missouri") is not used publicly
+//   since Kamal doesn't remember what it referred to; the phase is described
+//   functionally instead (QA, production keys, production API).
 
 import Link from "next/link";
-import Image from "next/image";
 import { getCaseStudy } from "@/lib/content/case-studies";
 import Chapter from "@/components/case-study/blocks/Chapter";
 import Icon from "@/components/case-study/blocks/Icon";
@@ -27,13 +33,13 @@ import SketchPanel from "@/components/case-study/blocks/SketchPanel";
 import Reveal from "@/components/Reveal";
 import {
   HeraFinancingFlowMockup,
-  HeraPaymentPlanMockup,
   HeraClinicSearchMockup,
   HeraClinicDetailMockup,
 } from "@/components/mockups/HeraMockups";
 
 const BLUE_GRADIENT = "linear-gradient(135deg, #6fa0c4, #1f3a52)";
 const NAVY = "#1f3a52";
+const INK_SOFT_BODY = "#4c473e";
 
 const HERO_BG =
   "radial-gradient(circle at 12% 8%, rgba(58,107,147,0.16) 0%, transparent 48%), radial-gradient(circle at 88% 15%, rgba(111,160,196,0.2) 0%, transparent 52%), radial-gradient(circle at 14% 10%, rgba(31,58,82,0.1) 0%, transparent 42%), radial-gradient(circle at 88% 85%, rgba(43,46,51,0.05) 0%, transparent 46%), #f2eee2";
@@ -52,7 +58,7 @@ const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
   },
   {
     href: "#s-financing",
-    label: "Financing flow",
+    label: "Financing & segmentation",
     icon: <><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M3 10h18M7 14.5h4" /></>,
   },
   {
@@ -89,31 +95,344 @@ const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
 
 const ANALYTICS_STEPS: ProcessStep[] = [
   {
-    title: "Behaviour signal",
+    title: "Observe behaviour",
     synopsis:
-      "Google Analytics and Looker Studio were scoped to specific flows, financing sign-up, Hera Care, and Hera Care+, instead of tracking the whole site the same way. Sessions, engagement rate, and clicks-per-page were the core signals.",
+      "Google Analytics and Looker Studio were scoped to specific flows, financing sign-up, Hera Care, and Hera Care+, and Hotjar recordings showed how people actually moved through them, not just what the aggregate numbers said.",
   },
   {
-    title: "Interpretation",
+    title: "Identify friction or opportunity",
     synopsis:
-      "Channel-level and landing-page metrics (sessions, new users, average session time, engagement by channel group) showed which entry points and pages actually held attention.",
+      "Session, engagement, and clicks-per-page data, read alongside what the recordings showed, surfaced where people were dropping off or hesitating instead of moving forward.",
   },
   {
-    title: "Product question",
+    title: "Investigate",
     synopsis:
-      "Where in the financing sign-up or clinic-discovery flow people were most likely to drop off, and which channels were worth designing for first.",
+      "Checked whether a pattern held across a specific flow, page, or channel before treating it as a real signal, since analytics alone can't explain why something happened.",
   },
   {
-    title: "Feature or UX action",
+    title: "Propose redesign or feature",
     synopsis:
-      "Fed into design decisions like collapsing the address step to one autofill field and deciding which clinic-discovery filters were worth finishing first.",
+      "Turned a confirmed pattern into a specific proposal, like collapsing the address step to one field or prioritizing which clinic-discovery filters to finish first.",
   },
   {
-    title: "Measurement",
+    title: "Update flow or plan",
     synopsis:
-      "The same dashboards would confirm whether a change actually moved engagement or completion, closing the loop back to signal instead of treating a redesign as a one-way bet.",
+      "Folded the proposal into the wireframes or the roadmap directly, rather than leaving it as a standalone recommendation nobody owned.",
+  },
+  {
+    title: "Hand off or implement",
+    synopsis:
+      "Passed the updated flow into the shared wireframe set and roadmap the rest of the team was building from.",
+  },
+  {
+    title: "Evaluate",
+    synopsis:
+      "The same scoped dashboards would confirm whether the change actually moved engagement or completion, closing the loop back to signal instead of treating a redesign as a one-way bet.",
   },
 ];
+
+const ROADMAP_PHASES = [
+  {
+    phase: "Phase 1",
+    title: "Onto AWS",
+    objective:
+      "Get the in-house financing app running in a real hosted environment the team could test against, instead of iterating against a live third-party dependency.",
+    tasks: [
+      "Request Loanglide's existing loan process and API keys",
+      "Stand up a staging subdomain on herafertility.co",
+      "Upload the codebase to GitHub",
+      "Deploy the staging build to AWS",
+    ],
+    dependencies:
+      "Needed Loanglide to hand over the existing process and keys before the in-house build could take over, and needed an external technical contact for the AWS deployment, since the team had no in-house cloud deployment coverage.",
+    owner: "Faiq (GitHub upload), an external technical contact (AWS deployment), Thiv & Kamal (PM coordination)",
+    validation: "An internal test-and-interact pass on the staging subdomain before any wider review.",
+    outcome: "A working staging environment, separate from Loanglide's live process, ready for QA.",
+  },
+  {
+    phase: "Phase 2",
+    title: "Harden for production",
+    objective: "Close the gap between working in staging and being safe to run for real users.",
+    tasks: ["QA, documentation, and bug fixes", "Implement production Loanglide API keys", "Bring the production API online"],
+    dependencies:
+      "Production API keys depended on Loanglide again, this time for production credentials rather than the underlying process.",
+    owner: "Thiv & Kamal (shared PM responsibility)",
+    validation: "A QA pass and documentation review before switching over to the production API.",
+    outcome: "A production-ready build, not yet exposed to every user.",
+  },
+  {
+    phase: "Phase 3",
+    title: "Site-wide launch",
+    objective: "Replace Loanglide's live financing flow with the in-house build for every user.",
+    tasks: ["Roll the in-house financing app out to all users"],
+    dependencies:
+      "Depended on Phase 1 and Phase 2 landing cleanly, since a site-wide launch is the point where an untested staging assumption becomes a live incident.",
+    owner: "Thiv & Kamal",
+    validation: "Planned as the final phase of the six-week window. Whether it shipped before the internship ended isn't confirmed.",
+    outcome: "Full cutover from Loanglide to the in-house app, planned as the end state of the roadmap.",
+  },
+];
+
+const PAYMENT_MATRIX = [
+  {
+    pattern: "Boston IVF, Wellness Center",
+    why: "The clearest fertility-specific precedent found: services grouped into package-style cards.",
+    call: "Borrowed",
+    decision: "Basis for grouping treatments (IVF, egg freezing, IUI) into their own package pages.",
+  },
+  {
+    pattern: "Costco, membership tiers",
+    why: "A two-tier comparison table with a checklist of what each tier includes.",
+    call: "Borrowed",
+    decision: "Informed presenting multiple payment plans side by side instead of a single default option.",
+  },
+  {
+    pattern: "Walmart, Subscribe & Save",
+    why: "Percentage-off subscription blocks, built for recurring retail purchases.",
+    call: "Rejected",
+    decision: "Ruled out framing payment plans as a subscription discount; financing isn't a recurring purchase.",
+  },
+  {
+    pattern: "GoodRx Gold",
+    why: "A single membership upsell with one clear price point.",
+    call: "Rejected",
+    decision: "Ruled out a single-tier upsell, since users needed to compare multiple plans, not accept one default.",
+  },
+  {
+    pattern: "Bitly",
+    why: "A four-tier pricing table with a flagged best-value option. Called out in the research notes as personally the strongest design to choose from.",
+    call: "Borrowed, direct model",
+    decision: "Became the direct model for Hera's three-option, per-treatment payment-plan layout.",
+  },
+  {
+    pattern: "FCI, Shady Grove Fertility, Alabama Fertility",
+    why: "Direct fertility competitors, but their marketing pages were nearly identical to each other and none presented financing as comparable packages.",
+    call: "Rejected as a pattern source",
+    decision: "Looked outside the immediate category for a real payment-plan pattern, instead of following direct competitors.",
+  },
+];
+
+const NEARME_PASSES = [
+  { n: "01", title: "Map beside hours", body: "Hours of operation and a large square map sat side by side at the top of the page." },
+  { n: "02", title: "Hours beside the title", body: "Moved hours of operation up next to the clinic name, giving the map a wider, shorter band beneath it." },
+  { n: "03", title: "Narrower map", body: "Tightened the map's width and reduced surrounding whitespace to bring related listings higher on the page." },
+  { n: "04", title: "Single column, settled", body: "Settled on a compact single-column layout with the map spanning the full width beneath the header, the version carried into the final design." },
+];
+
+const ANALYTICS_INSIGHTS = [
+  {
+    signal: "Sessions, engagement rate, and average session time, scoped to financing sign-up, Hera Care, and Hera Care+ rather than the whole site.",
+    interpretation: "Only a few flows were actually worth designing and tracking closely.",
+    opportunity: "Focus design and instrumentation effort on the flows tied to a real decision instead of the whole site.",
+    action: "Scoped both the analytics plan and the design review to those named flows.",
+    measurement: "Recheck the same scoped dashboards after a design change lands.",
+  },
+  {
+    signal: "Engagement rate and average engagement time by channel group.",
+    interpretation: "Some channels brought users in but didn't hold their attention once they arrived.",
+    opportunity: "Know which channel's entry experience was worth designing for first.",
+    action: "Prioritized the sign-up flow's first-touch experience for the channels with both volume and engagement.",
+    measurement: "Compare channel-level engagement before and after the prioritized changes.",
+  },
+  {
+    signal: "Landing-page sessions, new users, and average session time on specific pages like the 'Get started' page.",
+    interpretation: "A few pages carried outsized traffic relative to the rest of the site.",
+    opportunity: "Those pages deserved deliberate design attention rather than a default template.",
+    action: "Fed page-level findings into which UI to redesign first, like collapsing the address step and prioritizing which clinic filters to finish.",
+    measurement: "Track completion and drop-off on the redesigned page specifically.",
+  },
+  {
+    signal: "CAC, LTV, and geographic and device-level breakdowns were listed as 'maybe' additions in the planning notes.",
+    interpretation: "These would help understand acquisition cost and lifetime value, but weren't tied to the sign-up and clinic-discovery problems in front of the team.",
+    opportunity: "Tracking everything by default dilutes what a small team can actually act on.",
+    action: "Deliberately left CAC, LTV, and geographic and device-level tracking out of the core plan.",
+    measurement: "Revisit once acquisition, not conversion, becomes the active product question.",
+  },
+];
+
+function DashedRow({ children, i }: { children: React.ReactNode; i: number }) {
+  return (
+    <div
+      className="grid sm:grid-cols-[1fr_1.6fr_140px_1.4fr] gap-3 sm:gap-5 px-5 py-5 items-start"
+      style={{ borderTop: i === 0 ? "none" : "1.5px dashed rgba(32,28,23,0.16)" }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10.5px] font-extrabold uppercase tracking-wide mb-1.5 sm:hidden" style={{ color: NAVY }}>
+      {children}
+    </p>
+  );
+}
+
+function PaymentDecisionMatrix() {
+  return (
+    <div className="cs-box white overflow-hidden">
+      <div
+        className="hidden sm:grid grid-cols-[1fr_1.6fr_140px_1.4fr] gap-5 px-5 py-3 text-[11px] font-extrabold uppercase tracking-wide"
+        style={{ color: NAVY, background: "rgba(58,107,147,0.08)" }}
+      >
+        <span>Pattern observed</span>
+        <span>Why it mattered</span>
+        <span>Call</span>
+        <span>Resulting Hera decision</span>
+      </div>
+      {PAYMENT_MATRIX.map((row, i) => (
+        <DashedRow key={row.pattern} i={i}>
+          <div>
+            <FieldLabel>Pattern observed</FieldLabel>
+            <p className="text-sm font-bold" style={{ color: "var(--ink)" }}>{row.pattern}</p>
+          </div>
+          <div>
+            <FieldLabel>Why it mattered</FieldLabel>
+            <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{row.why}</p>
+          </div>
+          <div>
+            <FieldLabel>Call</FieldLabel>
+            <span
+              className="inline-block text-[11px] font-extrabold uppercase tracking-wide rounded-full px-2.5 py-1 border-2"
+              style={{
+                color: row.call.startsWith("Rejected") ? "var(--ink)" : "#fff9ee",
+                borderColor: "var(--ink)",
+                background: row.call.startsWith("Rejected") ? "transparent" : BLUE_GRADIENT,
+              }}
+            >
+              {row.call}
+            </span>
+          </div>
+          <div>
+            <FieldLabel>Resulting Hera decision</FieldLabel>
+            <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{row.decision}</p>
+          </div>
+        </DashedRow>
+      ))}
+    </div>
+  );
+}
+
+function SegmentationFlow() {
+  const steps = [
+    {
+      title: "Homepage",
+      body: "Three treatment entry points (IVF, egg freezing, IUI), each showing a synopsis, basic procedure, and a payment-plans call to action, modeled on Boston IVF's package layout.",
+    },
+    {
+      title: "Create an account",
+      body: "A single ‘I am looking for…’ selection (IVF medication, IUI freezing, or egg freezing) captured at sign-up, alongside a promotional-email consent checkbox.",
+    },
+    {
+      title: "Segmented experience",
+      body: "New users land in the payment-plan and content path matching their selection instead of one generic flow.",
+    },
+  ];
+  return (
+    <div className="flex flex-col sm:flex-row items-stretch gap-4">
+      {steps.map((s, i) => (
+        <div key={s.title} className="flex items-center gap-4 flex-1">
+          <div className="cs-box light px-5 py-5 flex-1 h-full">
+            <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+              Step {i + 1}
+            </p>
+            <p className="font-serif font-bold text-base mb-2" style={{ color: "var(--ink)" }}>{s.title}</p>
+            <p className="text-[13px] leading-relaxed" style={{ color: INK_SOFT_BODY }}>{s.body}</p>
+          </div>
+          {i < steps.length - 1 && (
+            <span className="text-2xl font-black shrink-0 rotate-90 sm:rotate-0" style={{ color: "var(--ink)" }}>
+              →
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RoadmapTable() {
+  return (
+    <div className="flex flex-col gap-6">
+      {ROADMAP_PHASES.map((p) => (
+        <Reveal key={p.phase}>
+          <div className="cs-box white overflow-hidden">
+            <div className="flex items-center gap-3 px-6 py-4" style={{ background: "rgba(58,107,147,0.08)" }}>
+              <span
+                className="text-[11px] font-extrabold uppercase tracking-wide rounded-full px-3 py-1 border-2"
+                style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "#fff9ee" }}
+              >
+                {p.phase}
+              </span>
+              <h4 className="font-serif font-bold text-lg" style={{ color: "var(--ink)" }}>{p.title}</h4>
+            </div>
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-5 px-6 py-6">
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Objective</p>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{p.objective}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Owner / team</p>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{p.owner}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Tasks</p>
+                <ul className="flex flex-col gap-1">
+                  {p.tasks.map((t) => (
+                    <li key={t} className="text-sm leading-relaxed flex gap-2" style={{ color: INK_SOFT_BODY }}>
+                      <span style={{ color: NAVY }}>&#8226;</span>{t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Dependencies</p>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{p.dependencies}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Validation</p>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{p.validation}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>Outcome</p>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>{p.outcome}</p>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+function AnalyticsInsightTable() {
+  return (
+    <div className="flex flex-col gap-4">
+      {ANALYTICS_INSIGHTS.map((row, i) => (
+        <Reveal key={row.signal} delay={i * 60}>
+          <div className="cs-box white px-6 py-6">
+            <div className="grid md:grid-cols-5 gap-4">
+              {[
+                ["Signal / behaviour observed", row.signal],
+                ["Interpretation", row.interpretation],
+                ["Product opportunity", row.opportunity],
+                ["Proposed action", row.action],
+                ["Measurement", row.measurement],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <p className="text-[10.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+                    {label}
+                  </p>
+                  <p className="text-[13px] leading-relaxed" style={{ color: INK_SOFT_BODY }}>{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
 
 export default function HeraCaseStudy() {
   const cs = getCaseStudy("hera-fertility")!;
@@ -155,9 +474,9 @@ export default function HeraCaseStudy() {
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
                 Hera&apos;s financing application ran through a third-party loan processor, and there
                 was no in-house product to design the sign-up, payment, or clinic-discovery experience
-                around. I designed the financing flow, a payment-plan concept grounded in competitive
-                research, and the clinic-discovery experience, then planned the analytics needed to
-                decide what came next.
+                around. I designed and shipped the financing flow and account-segmentation, built a
+                payment-plan concept grounded in competitive research, and designed the clinic-discovery
+                experience, then used Hotjar and Google Analytics to decide what came next.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-7">
                 {cs.artifacts.map((chip) => (
@@ -245,7 +564,8 @@ export default function HeraCaseStudy() {
                 {[
                   ["Figma", "financing, payment plan & clinic-discovery wireframes"],
                   ["Balsamiq", "early flow sketches"],
-                  ["Google Analytics", "behaviour tracking plan"],
+                  ["Google Analytics", "behaviour tracking, scoped by flow"],
+                  ["Hotjar", "session recordings, reviewed for friction"],
                   ["Looker Studio", "reporting scoped to specific flows"],
                 ].map(([tool, use]) => (
                   <li key={tool} className="text-[14.5px]" style={{ color: "#4c473e" }}>
@@ -258,6 +578,12 @@ export default function HeraCaseStudy() {
                   </li>
                 ))}
               </ul>
+              <p className="text-[11px] font-extrabold uppercase tracking-wide mt-4 mb-1.5" style={{ color: NAVY }}>
+                Also used
+              </p>
+              <p className="text-[12.5px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                WordPress &amp; Umso (web design), HubSpot (marketing/CRM), Excel (reporting)
+              </p>
             </div>
           </SnapshotGrid>
 
@@ -272,14 +598,14 @@ export default function HeraCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Chapter num="01" title="A high-stakes decision with no in-house product to shape it">
             <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
-              Fertility financing is dense before a user ever sees a form: a requested amount, a
-              repayment plan, and clinic pricing, decided at a moment that is already stressful.
-              Hera&apos;s financing application ran entirely through Loanglide, a third-party loan
-              processor, which limited how much of that experience the team could actually design.
-              There was no existing in-house product to iterate from, no payment-plan presentation of
-              its own, and no dedicated way for someone to find a nearby clinic and see what it would
-              cost. The goal was to design all three and stand up an in-house build to replace the
-              third-party dependency.
+              Choosing how to pay for fertility treatment is not a decision most people are practiced
+              at making: a requested loan amount, a repayment plan, and clinic pricing, all worked out
+              while already navigating a stressful medical process. Hera&apos;s financing application
+              ran entirely through Loanglide, a third-party loan processor, which limited how much of
+              that experience the team could actually design or control. There was no existing in-house
+              product to iterate from, no payment-plan presentation of its own, and no dedicated way for
+              someone to find a nearby clinic and see what it would cost. The goal was to design all
+              three and stand up an in-house build to replace the third-party dependency.
             </p>
 
             <div className="flex items-center gap-5 flex-wrap my-9">
@@ -326,7 +652,7 @@ export default function HeraCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- 02: Financing flow ---------- */}
+      {/* ---------- 02: Financing & segmentation ---------- */}
       <div id="s-financing" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
@@ -389,6 +715,31 @@ export default function HeraCaseStudy() {
               </Reveal>
             ))}
           </div>
+
+          <div className="mt-16">
+            <Reveal>
+              <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+                Shipped
+              </p>
+              <h3 className="font-serif text-2xl mb-3" style={{ color: "var(--ink)" }}>
+                Account creation and treatment segmentation
+              </h3>
+              <p className="text-base leading-relaxed max-w-2xl mb-7" style={{ color: "#33302a" }}>
+                Unlike the financing wireframes above, this flow shipped. New users self-select a
+                treatment path at sign-up instead of landing on one generic homepage experience.
+              </p>
+            </Reveal>
+            <SegmentationFlow />
+            <p className="mt-4 text-sm flex items-center gap-3 flex-wrap leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+              <span
+                className="text-[11px] font-extrabold uppercase tracking-wide rounded-full px-3 py-1 border-2 shrink-0"
+                style={{ color: "var(--ink)", borderColor: "var(--ink)", background: BLUE_GRADIENT }}
+              >
+                Shipped, reconstructed diagram
+              </span>
+              The flow itself shipped; this diagram reconstructs it for a clearer presentation.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -397,56 +748,20 @@ export default function HeraCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
-              Sketch to product, payment plans
+              Reconstructed decision matrix
             </p>
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
               Making payment options easier to understand
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
               Fertility treatment financing rarely gets presented as a clear set of comparable options.
-              Before designing Hera&apos;s version, I looked at how other products, inside and outside
-              fertility, presented payment choices, and used that research to pick a direction.
+              Before designing Hera&apos;s version, I ran a cited, URL-sourced audit of how other
+              products, inside and outside fertility, presented payment choices, and used it to make a
+              specific, defensible call rather than just collecting examples.
             </p>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 mb-14">
-            {[
-              { title: "Boston IVF", body: "A wellness center page that groups services into package-style cards, the clearest fertility-specific precedent found.", tool: "Package cards" },
-              { title: "Costco & Walmart", body: "A two-tier comparison table (Costco) and percentage-off subscription blocks (Walmart), neither matched a financing decision well.", tool: "Tiers vs. % off" },
-              { title: "GoodRx Gold", body: "A single membership upsell with one clear price. Simple, but not built for comparing multiple plans side by side.", tool: "Single-tier upsell" },
-              { title: "Bitly", body: "A four-tier pricing table with a clear best-value flag. The strongest match for comparing discrete payment plans.", tool: "Rated the best fit" },
-            ].map((r, i) => (
-              <Reveal key={r.title} delay={i * 80}>
-                <div className="cs-box white h-full px-5 py-6">
-                  <div
-                    className="w-9 h-9 rounded-[10px] flex items-center justify-center mb-3.5 border-2 font-serif font-bold text-sm"
-                    style={{ background: BLUE_GRADIENT, borderColor: "var(--ink)", color: "#fff9ee" }}
-                  >
-                    {i + 1}
-                  </div>
-                  <h4 className="font-serif font-bold text-base mb-2" style={{ color: "var(--ink)" }}>
-                    {r.title}
-                  </h4>
-                  <p className="text-[13px] leading-relaxed" style={{ color: "#4c473e" }}>
-                    {r.body}
-                  </p>
-                  <p className="text-[11px] font-extrabold uppercase tracking-wide mt-3" style={{ color: NAVY }}>
-                    {r.tool}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <SketchPanel
-            sketchSrc="/case-studies/hera-fertility/sketch-payment-concept.png"
-            sketchAlt="Handwritten concept sketch for the Hera Fertility homepage, treatment blocks, sign-up modal, and IVF payment plan cards, annotated with design references"
-            sketchCaption="The homepage concept: three treatment blocks (IVF, egg freezing, IUI), each leading to its own payment-plan page, annotated with the competitive references behind the layout."
-            accent={NAVY}
-            reconstructedCaption="Reconstructed concept: the treatment blocks and a three-option payment-plan layout, following the pricing-table pattern from the research above."
-          >
-            <HeraPaymentPlanMockup />
-          </SketchPanel>
+          <PaymentDecisionMatrix />
 
           <div className="mt-10">
             {cs.decisions!.slice(2, 3).map((d) => (
@@ -503,55 +818,50 @@ export default function HeraCaseStudy() {
               className="text-[11px] font-extrabold uppercase tracking-wide rounded-full px-2.5 py-1 border-2 mr-2"
               style={{ color: "var(--ink)", borderColor: "var(--ink)", background: BLUE_GRADIENT }}
             >
-              Left open
+              Open design hypothesis
             </span>
             The price-range filter is marked &ldquo;Difficult&rdquo; in the original sketch. It stayed
-            in the design as a flagged, unresolved problem, since clinic pricing wasn&apos;t
+            in the design as a flagged, unresolved hypothesis, since clinic pricing wasn&apos;t
             consistently available to filter against, rather than shipped as a filter that looked
-            functional but wasn&apos;t.
+            functional but wasn&apos;t. It was never user-tested.
           </p>
 
-          <div className="grid sm:grid-cols-2 gap-5 mt-12 mb-4">
-            <Reveal>
-              <div className="cs-box white overflow-hidden">
-                <div className="relative w-full bg-white" style={{ aspectRatio: "4 / 5" }}>
-                  <Image
-                    src="/case-studies/hera-fertility/sketch-nearme-iterations-1-2.png"
-                    alt="Clinic detail page layout iterations 1 and 2, testing map size and position"
-                    fill
-                    className="object-contain"
-                  />
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-12 mb-4">
+            {NEARME_PASSES.map((pass, i) => (
+              <Reveal key={pass.n} delay={i * 70}>
+                <div className="cs-box white h-full px-5 py-6">
+                  <div
+                    className="w-9 h-9 rounded-[10px] flex items-center justify-center mb-3.5 border-2 font-serif font-bold text-sm"
+                    style={{ background: BLUE_GRADIENT, borderColor: "var(--ink)", color: "#fff9ee" }}
+                  >
+                    {pass.n}
+                  </div>
+                  <h4 className="font-serif font-bold text-base mb-2" style={{ color: "var(--ink)" }}>
+                    {pass.title}
+                  </h4>
+                  <p className="text-[13px] leading-relaxed" style={{ color: "#4c473e" }}>
+                    {pass.body}
+                  </p>
                 </div>
-              </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div className="cs-box white overflow-hidden">
-                <div className="relative w-full bg-white" style={{ aspectRatio: "4 / 5" }}>
-                  <Image
-                    src="/case-studies/hera-fertility/sketch-nearme-iterations-3-4.png"
-                    alt="Clinic detail page layout iterations 3 and 4, moving toward a compact single-column layout"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            ))}
           </div>
-          <p className="text-[11px] font-extrabold uppercase tracking-wide mb-8" style={{ color: NAVY }}>
-            Four layout passes for the clinic-detail page, moving the map and related listings until
-            the page read clearly at a glance
+          <p className="text-[11px] font-extrabold uppercase tracking-wide mb-10" style={{ color: NAVY }}>
+            Reconstructed summary of four layout passes for the clinic-detail page
           </p>
 
-          <SketchPanel
-            sketchSrc="/case-studies/hera-fertility/sketch-nearme-flow.png"
-            sketchAlt="Handwritten clinic detail page wireframe with map, contact and pre-approval buttons, and related links"
-            sketchCaption="The clinic-detail sketch: name, address, phone, hours, map, a Contact/Connect and a Get Pre-Approved button, and cross-links to the loan calculator and FAQ."
-            accent={NAVY}
-            reconstructedLabel="Reconstructed final layout"
-            reconstructedCaption="The settled single-column layout, applied to a real clinic listing used as the working example in the original files."
-          >
-            <HeraClinicDetailMockup />
-          </SketchPanel>
+          <Reveal>
+            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+              Reconstructed product screen
+            </p>
+            <div className="cs-box white overflow-hidden">
+              <HeraClinicDetailMockup />
+            </div>
+            <p className="text-sm leading-relaxed mt-3 max-w-2xl" style={{ color: "#4c473e" }}>
+              The settled single-column layout (pass 04), applied to a real clinic listing used as the
+              working example in the original files.
+            </p>
+          </Reveal>
 
           <div className="mt-10">
             {cs.decisions!.slice(3, 4).map((d) => (
@@ -588,36 +898,32 @@ export default function HeraCaseStudy() {
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
               Rather than track everything on the site the same way, the Google Analytics and Looker
-              Studio plan was scoped to the flows that mattered most: the financing sign-up, and the
-              Hera Care and Hera Care+ paths. Analytics alone cannot prove why something happened, so
-              the plan paired each signal with a specific product question it was meant to answer.
+              Studio plan was scoped to the flows that mattered most, and paired with Hotjar session
+              recordings so the numbers had a behavioural story behind them. Analytics alone cannot
+              prove why something happened, so every signal here was paired with a specific product
+              question it was meant to answer.
             </p>
           </Reveal>
-
-          <Reveal>
-            <div className="cs-box white overflow-hidden mb-12">
-              <div className="relative w-full bg-white" style={{ aspectRatio: "4 / 3" }}>
-                <Image
-                  src="/case-studies/hera-fertility/sketch-ga-metrics.png"
-                  alt="Handwritten Google Analytics and Looker Studio planning notes, covering general overview, audience, traffic, and behaviour metrics scoped to the financing sign-up flow"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </Reveal>
-          <p className="text-[11px] font-extrabold uppercase tracking-wide -mt-8 mb-10" style={{ color: NAVY }}>
-            Original planning notes for the analytics dashboards, scoped by flow (sign-up, Hera Care,
-            Hera Care+) rather than tracked generically
-          </p>
 
           <Reveal>
             <ProcessFlow
               steps={ANALYTICS_STEPS}
               accent={NAVY}
-              middleLabel="Interpretation turns signal into a question worth answering"
+              middleLabel="Investigation turns a pattern into something worth proposing"
             />
           </Reveal>
+
+          <div className="mt-14">
+            <Reveal>
+              <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+                Reconstructed insight table
+              </p>
+              <h3 className="font-serif text-2xl mb-6" style={{ color: "var(--ink)" }}>
+                From signal to measured action
+              </h3>
+            </Reveal>
+            <AnalyticsInsightTable />
+          </div>
         </div>
       </div>
 
@@ -630,81 +936,10 @@ export default function HeraCaseStudy() {
               Thiv, the project owner and primary stakeholder, and Faiq, the other co-op. Kamal and
               Thiv split product-management responsibility for planning and sequencing the rollout.
             </p>
-
-            <div className="grid sm:grid-cols-3 gap-5 mt-9">
-              {[
-                {
-                  phase: "Phase 1",
-                  title: "Onto AWS",
-                  items: [
-                    "Request the existing loan process and API keys from Loanglide",
-                    "Stand up a staging subdomain for internal testing",
-                    "Upload the codebase and deploy to AWS",
-                  ],
-                },
-                {
-                  phase: "Phase 2",
-                  title: "Harden for production",
-                  items: [
-                    "QA, documentation, and bug fixes",
-                    "Implement production API keys",
-                    "Bring the production API online",
-                  ],
-                },
-                {
-                  phase: "Phase 3",
-                  title: "Site-wide launch",
-                  items: [
-                    "Roll the in-house financing app out to all users",
-                  ],
-                },
-              ].map((p, i) => (
-                <Reveal key={p.phase} delay={i * 90}>
-                  <div className="cs-box white h-full px-5 py-6">
-                    <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1" style={{ color: NAVY }}>
-                      {p.phase}
-                    </p>
-                    <h4 className="font-serif font-bold text-lg mb-3" style={{ color: "var(--ink)" }}>
-                      {p.title}
-                    </h4>
-                    <ul className="flex flex-col gap-2">
-                      {p.items.map((it) => (
-                        <li key={it} className="text-[13px] leading-relaxed flex gap-2" style={{ color: "#4c473e" }}>
-                          <span style={{ color: NAVY }}>&#8226;</span>
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-            <p className="text-sm leading-relaxed mt-6" style={{ color: "var(--ink-soft)" }}>
-              Phase 1 was where the in-house build and the third-party dependency actually met: getting
-              Hera&apos;s own app onto AWS meant first getting Loanglide&apos;s existing process and
-              keys, so the new build could take over what Loanglide had been running.
-            </p>
           </Chapter>
 
-          <div className="mt-14">
-            <Reveal>
-              <div className="cs-box white overflow-hidden">
-                <div className="relative w-full bg-white" style={{ aspectRatio: "16 / 10" }}>
-                  <Image
-                    src="/case-studies/hera-fertility/sketch-roadmap.png"
-                    alt="Handwritten execution roadmap for launching the Hera financing app, listing project owner, co-ops, timeline, and three launch phases"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </Reveal>
-            <p className="text-[11px] font-extrabold uppercase tracking-wide mt-3" style={{ color: NAVY }}>
-              Original roadmap: reconstructed diagram
-            </p>
-            <p className="text-sm leading-relaxed mt-1" style={{ color: "#4c473e" }}>
-              The team&apos;s working roadmap notes, timeline, resourcing, and phased launch plan.
-            </p>
+          <div className="mt-12">
+            <RoadmapTable />
           </div>
         </div>
       </div>
@@ -724,8 +959,8 @@ export default function HeraCaseStudy() {
             </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#cbd8e3" }}>
               This internship&apos;s usability-test results and post-launch analytics were not
-              preserved, so the outcomes below describe what was designed, decided, and handed off
-              rather than measured percentages.
+              preserved, so most of the outcomes below describe what was designed, decided, and handed
+              off, rather than measured percentages. The segmentation flow is the exception: it shipped.
             </p>
           </Reveal>
 
