@@ -86,7 +86,7 @@ export function PillPalReminderMockup() {
       </div>
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-1">
         <p className="text-rose-400 font-medium">Pill Reminder</p>
-        <p className="text-neutral-200">Advil — 2pc</p>
+        <p className="text-neutral-200">Advil - 2pc</p>
         <p className="text-neutral-500">7:00 PM</p>
       </div>
       <div className="space-y-1">
@@ -105,7 +105,7 @@ export function PillPalEmergencyMockup() {
       <p className="text-neutral-400">Contacts</p>
       <div className="mt-2 space-y-1.5 flex-1">
         <div className="bg-rose-600 rounded px-2 py-1.5 flex items-center justify-between">
-          <span>Emergency — 911</span>
+          <span>Emergency - 911</span>
           <span>📞</span>
         </div>
         <div className="bg-neutral-800 rounded px-2 py-1.5 flex items-center justify-between">

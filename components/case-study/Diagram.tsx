@@ -1,3 +1,5 @@
+import ForceNWorkflowDiagram from "@/components/case-study/ForceNWorkflowDiagram";
+
 export interface DiagramFigure {
   id: string;
   caption: string;
@@ -5,11 +7,13 @@ export interface DiagramFigure {
 }
 
 /**
- * Hand-built diagrams, one per figure id. No image files — same approach as
+ * Hand-built diagrams, one per figure id. No image files - same approach as
  * ProjectIcon.tsx. Add a case here as each case study's content is written.
  */
 function DiagramBody({ id }: { id: string }) {
   switch (id) {
+    case "forcen-workflow":
+      return <ForceNWorkflowDiagram />;
     default:
       return (
         <div className="flex items-center justify-center h-40 rounded-lg border border-dashed border-neutral-300 text-sm text-neutral-400">
@@ -20,11 +24,18 @@ function DiagramBody({ id }: { id: string }) {
 }
 
 export default function Diagram({ figure }: { figure: DiagramFigure }) {
+  // The ForceN workflow diagram frames and sizes itself (including breaking
+  // out of the narrow content column), so it skips the generic padded card.
+  const selfFramed = figure.id === "forcen-workflow";
   return (
     <figure className="mt-6">
-      <div className="rounded-lg border border-neutral-200 bg-white/60 p-4">
+      {selfFramed ? (
         <DiagramBody id={figure.id} />
-      </div>
+      ) : (
+        <div className="rounded-lg border border-neutral-200 bg-white/60 p-4">
+          <DiagramBody id={figure.id} />
+        </div>
+      )}
       <figcaption className="mt-2 text-sm text-neutral-500">
         {figure.caption}
         <span className="ml-2 text-xs uppercase tracking-wide text-neutral-400">

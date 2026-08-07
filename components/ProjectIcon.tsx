@@ -53,9 +53,11 @@ const paths: Record<string, React.ReactNode> = {
 export default function ProjectIcon({
   slug,
   className,
+  style,
 }: {
   slug: string;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const path = paths[slug];
   if (!path) return null;
@@ -69,6 +71,7 @@ export default function ProjectIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
     >
       {path}
     </svg>

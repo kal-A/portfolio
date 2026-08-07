@@ -16,6 +16,8 @@ import {
   PillPalEmergencyMockup,
 } from "@/components/mockups/PillPalMockups";
 import Diagram from "@/components/case-study/Diagram";
+import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
+import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -31,6 +33,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const { slug } = await params;
   const cs = getCaseStudy(slug);
   if (!cs) notFound();
+  if (cs.slug === "forcen") return <ForceNCaseStudy />;
+  if (cs.slug === "greenhouse") return <GreenhouseCaseStudy />;
   const theme = caseStudyTheme[cs.slug];
 
   return (
@@ -64,11 +68,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           </p>
           <p className="text-neutral-700 mt-4 text-xl leading-relaxed">{cs.oneLiner}</p>
 
-          <div className="flex flex-wrap gap-2 mt-6">
+          <div className="flex flex-wrap gap-2.5 mt-6">
             {cs.artifacts.map((a) => (
               <span
                 key={a}
-                className="text-xs border border-neutral-900/15 rounded-full px-2.5 py-1 text-neutral-600 bg-white/60"
+                className="cs-pill text-xs font-bold px-3 py-1.5 text-neutral-800"
               >
                 {a}
               </span>
@@ -80,8 +84,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <div className="mx-auto max-w-3xl px-6">
       {cs.team && (
         <div
-          className="mt-6 rounded-lg px-4 py-3 text-sm text-neutral-600"
-          style={{ border: "2px solid #181614", background: theme?.bg ?? "#fdfaf5" }}
+          className="cs-box mt-6 px-4 py-3 text-sm text-neutral-600"
+          style={{ background: theme?.bg ?? "#fdfaf5" }}
         >
           <span className="font-medium text-neutral-800">Team project: </span>
           {cs.team}
@@ -93,19 +97,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       {cs.snapshot && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 text-sm">
-          <div>
+          <div className="cs-box px-4 py-3.5">
             <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Challenge</p>
             <p className="text-neutral-700 leading-relaxed">{cs.snapshot.challenge}</p>
           </div>
-          <div>
+          <div className="cs-box px-4 py-3.5">
             <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Contribution</p>
             <p className="text-neutral-700 leading-relaxed">{cs.snapshot.contribution}</p>
           </div>
-          <div>
+          <div className="cs-box px-4 py-3.5">
             <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Outcome</p>
             <p className="text-neutral-700 leading-relaxed">{cs.snapshot.outcome}</p>
           </div>
-          <div>
+          <div className="cs-box px-4 py-3.5">
             <p className="text-neutral-400 uppercase tracking-wide text-xs mb-1">Tools</p>
             <p className="text-neutral-700 leading-relaxed">{cs.snapshot.tools.join(", ")}</p>
           </div>
@@ -120,12 +124,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       {cs.constraints && cs.constraints.length > 0 && (
         <section className="mt-10">
-          <h2 className="font-serif text-lg text-neutral-900 mb-2">Constraints</h2>
-          <ul className="space-y-1.5">
+          <h2 className="font-serif text-lg text-neutral-900 mb-3">Constraints</h2>
+          <ul className="space-y-2.5">
             {cs.constraints.map((c, i) => (
-              <li key={i} className="text-neutral-600 text-sm leading-relaxed flex gap-2">
-                <span className="text-neutral-300">—</span>
-                <span>{c}</span>
+              <li key={i} className="cs-box px-4 py-2.5 text-neutral-700 text-sm leading-relaxed">
+                {c}
               </li>
             ))}
           </ul>
@@ -164,8 +167,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {cs.decisions.map((d, i) => (
               <div
                 key={i}
-                className="rounded-lg px-4 py-3"
-                style={{ border: "2px solid #181614", background: theme?.bg ?? "#fdfaf5" }}
+                className="cs-box px-5 py-4"
+                style={{ background: theme?.bg ?? "#fdfaf5" }}
               >
                 <p className="font-medium text-neutral-900">{d.decision}</p>
                 <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">{d.rationale}</p>
@@ -248,7 +251,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           <ul className="space-y-2">
             {cs.reflection.map((r, i) => (
               <li key={i} className="text-neutral-600 text-sm leading-relaxed flex gap-2">
-                <span className="text-neutral-300">—</span>
+                <span className="text-neutral-300">-</span>
                 <span>{r}</span>
               </li>
             ))}

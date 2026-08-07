@@ -3,6 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --ink: #201c17;
+  --ink-soft: #5c564c;
+  /* Theme-able comic-box accent (defaults to ForceN's amber). Bespoke
+     case-study pages override these on their root wrapper to re-tint every
+     .cs-box hover wash, light variant, and on-page-nav hover in one place. */
+  --cs-wash-from: #fdf1de;
+  --cs-wash-to: #eaa64a;
+  --cs-light-from: #fdf6e7;
+  --cs-light-to: #f6dfb2;
+  --cs-accent-deep: #a15a10;
+  --cs-accent-wash-rgb: 217, 135, 31;
 }
 
 @theme inline {
@@ -20,4 +31,101 @@ body {
 
 .font-serif {
   font-family: var(--font-dm-serif), Georgia, "Times New Roman", serif;
+}
+
+/* Comic-box treatment: bold ink border, hard offset shadow, hover-pop.
+   See PORTFOLIO_CASE_STUDY_SYSTEM.md §25.4. */
+.cs-box {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--ink);
+  background: linear-gradient(160deg, #fffefb 0%, #f7f1e3 100%);
+  transition: transform 0.16s ease-out, box-shadow 0.16s ease-out;
+}
+.cs-box:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+/* Fill-wash hover: same color-wash pattern as CaseStudyCard/homepage.
+   z-index: -1 (inside .cs-box's own isolated stacking context) keeps this
+   behind ALL content -- including bare text nodes, which paint above
+   positioned z-index:0+ siblings but below negative ones. */
+.cs-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(150deg, var(--cs-wash-from) 0%, var(--cs-wash-to) 100%);
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}
+.cs-box:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.cs-box.dark::before {
+  background: linear-gradient(150deg, #3a3e44 0%, #1c1f23 100%);
+}
+.cs-pill {
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  background: linear-gradient(160deg, #fffefb 0%, #f5efe1 100%);
+  transition: transform 0.14s ease-out, box-shadow 0.14s ease-out;
+}
+.cs-pill:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.cs-pill.highlight:hover {
+  background: var(--cs-accent-deep, #181614);
+  color: #fff9ee;
+  border-color: var(--cs-accent-deep, #181614);
+}
+.cs-box.dark {
+  background: linear-gradient(160deg, #34383e 0%, #23262b 100%);
+  color: #f3efe6;
+  border-color: #1c1f23;
+  box-shadow: 5px 5px 0 #1c1f23;
+}
+.cs-box.dark:hover {
+  box-shadow: 8px 8px 0 #1c1f23;
+}
+.cs-box.light {
+  background: linear-gradient(160deg, var(--cs-light-from) 0%, var(--cs-light-to) 100%);
+}
+.cs-seam {
+  border-top: 5px solid var(--ink);
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* On-page section nav: icon swap + row highlight on hover. */
+.opn-link {
+  transition: color 0.12s ease, background 0.12s ease;
+  border-radius: 10px;
+}
+.opn-link:hover {
+  color: var(--cs-accent-deep);
+  background: rgba(var(--cs-accent-wash-rgb), 0.12);
+}
+.opn-link .navicon {
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.opn-link .navicon svg {
+  transition: stroke 0.12s ease;
+}
+.opn-link:hover .navicon {
+  background: var(--ink);
+  transform: scale(1.12) rotate(-4deg);
+}
+.opn-link:hover .navicon svg {
+  stroke: #fff9ee;
 }

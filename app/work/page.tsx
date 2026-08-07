@@ -1,5 +1,5 @@
 import { caseStudies } from "@/lib/content/case-studies";
-import CaseStudyCard from "@/components/CaseStudyCard";
+import WorkTabs from "@/components/WorkTabs";
 
 export const metadata = { title: "Work · Kamal Ahsan" };
 
@@ -24,16 +24,14 @@ export default function WorkIndex() {
           <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Work</p>
           <h1 className="font-serif text-5xl mt-3 text-neutral-900">Experience &amp; Case Studies</h1>
           <p className="text-lg text-neutral-600 mt-4 max-w-2xl">
-            Every internship, capstone, and course project — product design, systems/process
-            work, technical builds, and formal usability evaluation — most recent first.
+            Every internship, capstone, and course project - product design, systems/process
+            work, technical builds, and formal usability evaluation - most recent first.
           </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-6 grid sm:grid-cols-2 gap-6 mt-12">
-        {caseStudies.map((cs, i) => (
-          <CaseStudyCard key={cs.slug} cs={cs} delay={i * 60} />
-        ))}
+      <div className="mx-auto max-w-5xl px-6 mt-12">
+        <WorkTabs caseStudies={caseStudies} />
       </div>
     </div>
   );

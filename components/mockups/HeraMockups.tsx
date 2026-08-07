@@ -92,10 +92,10 @@ export function HeraDashboardMockup() {
         </div>
         <div className="space-y-2">
           <p className="text-neutral-400 text-[9px]">Upcoming payments</p>
-          {["Nov 1 — $118.00", "Dec 1 — $118.00"].map((row) => (
+          {["Nov 1 - $118.00", "Dec 1 - $118.00"].map((row) => (
             <div key={row} className="border border-neutral-200 rounded-lg px-3 py-2 flex justify-between">
-              <span className="text-neutral-700">{row.split(" — ")[0]}</span>
-              <span className="text-neutral-800 font-medium">{row.split(" — ")[1]}</span>
+              <span className="text-neutral-700">{row.split(" - ")[0]}</span>
+              <span className="text-neutral-800 font-medium">{row.split(" - ")[1]}</span>
             </div>
           ))}
         </div>

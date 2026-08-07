@@ -28,9 +28,9 @@ export interface CaseStudy {
   oneLiner: string;
   /** Also used as the 1-2 sentence synopsis shown on the card. */
   summary: string;
-  /** Responsibility/domain tags, e.g. "Product Operations", "Robotics" — card tag row 1. */
+  /** Responsibility/domain tags, e.g. "Product Operations", "Robotics" - card tag row 1. */
   tags: string[];
-  /** Software/tools used, e.g. "Confluence", "Python" — card tag row 2. */
+  /** Software/tools used, e.g. "Confluence", "Python" - card tag row 2. */
   toolTags: string[];
   /** Artifact chips, e.g. "Figma", "Workflow Map", "Internal Materials Omitted". */
   artifacts: string[];
@@ -42,7 +42,7 @@ export interface CaseStudy {
   team?: string;
   contribution?: string;
   links?: { label: string; href: string }[];
-  images?: { src: string; alt: string }[];
+  images?: { src: string; alt: string; channel?: string; channelSlug?: string; caption?: string }[];
   mockups?: "hera" | "pillpal";
   /** Confidentiality note or artifact-recreation disclaimer, shown as an italic aside. */
   note?: string;
@@ -84,11 +84,11 @@ const caseStudiesData: CaseStudy[] = [
       { value: "25%", label: "lower operational cost" },
     ],
     problem:
-      "Hera Fertility's financing product relied on a third-party loan servicer, which limited control over the user experience and added operational overhead. Leadership wanted to bring loan servicing in-house, but that meant designing an entirely new onboarding and payment experience from scratch — with no existing product to iterate from.",
+      "Hera Fertility's financing product relied on a third-party loan servicer, which limited control over the user experience and added operational overhead. Leadership wanted to bring loan servicing in-house, but that meant designing an entirely new onboarding and payment experience from scratch - with no existing product to iterate from.",
     process: [
       "Ran competitive analysis across fintech and healthcare financing products to establish a baseline for onboarding patterns, payment plan presentation, and trust signals specific to a sensitive, high-stakes purchase (fertility treatment financing).",
       "Defined MVP scope by prioritizing 5+ must-have features through user research, cutting anything that added friction to the core loan application and repayment flow.",
-      "Designed the onboarding flow and core user flows in Figma — application intake, plan selection, and account dashboard — iterating on wireframes based on internal stakeholder feedback.",
+      "Designed the onboarding flow and core user flows in Figma - application intake, plan selection, and account dashboard - iterating on wireframes based on internal stakeholder feedback.",
       "Built analytics dashboards in Google Analytics and Looker to track engagement and usage across 500+ users, feeding data back into iteration decisions rather than relying on assumptions.",
     ],
     outcome: [
@@ -96,7 +96,7 @@ const caseStudiesData: CaseStudy[] = [
       "Moving loan servicing in-house reduced operational costs by 25%.",
       "Analytics instrumentation gave the product team a live view into engagement across 500+ users for the first time.",
     ],
-    whatIdImprove: "I'd want to re-run these numbers post-launch with a longer observation window — the retention and drop-off figures were measured over a short internship timeframe.",
+    whatIdImprove: "I'd want to re-run these numbers post-launch with a longer observation window - the retention and drop-off figures were measured over a short internship timeframe.",
     mockups: "hera",
     note: "No final production screens were preserved from this internship. The screens below are recreated from the original wireframes and product roadmap to illustrate the shipped design direction.",
   },
@@ -123,10 +123,10 @@ const caseStudiesData: CaseStudy[] = [
       { value: "33% → 93%", label: "user satisfaction (usability testing)" },
     ],
     problem:
-      "Room booking across the partner organizations we studied was slow and error-prone: users needed up to 24 navigation steps and 8.5 minutes on average to book a room, with only a third of booking attempts completing successfully. There was no shared understanding of what a better system needed to do — that had to come from the ground up.",
+      "Room booking across the partner organizations we studied was slow and error-prone: users needed up to 24 navigation steps and 8.5 minutes on average to book a room, with only a third of booking attempts completing successfully. There was no shared understanding of what a better system needed to do - that had to come from the ground up.",
     process: [
       "Gathered requirements directly from 4+ organizations through stakeholder interviews, translating varied and sometimes conflicting workflows into a single set of functional requirements and allocation logic.",
-      "Designed the booking and recommendation workflow — from search, to room matching, to confirmation — reducing the flow to 9 navigation steps.",
+      "Designed the booking and recommendation workflow - from search, to room matching, to confirmation - reducing the flow to 9 navigation steps.",
       "Built the platform end-to-end (React/Node.js), using it as a working prototype for continued usability testing rather than a static mockup.",
       "Ran iterative user testing rounds, feeding usability scores and satisfaction data back into interface and logic changes each cycle.",
     ],
@@ -149,40 +149,29 @@ const caseStudiesData: CaseStudy[] = [
     entryType: "internship",
     caseStudyType: "visual-growth",
     tier: "featured",
-    title: "Design production across retail and digital channels",
+    title: "Designing the customer-facing experience and the systems behind it",
     company: "Greenhouse Juices",
     role: "Product Designer Intern",
     location: "Mississauga, ON",
     timeframe: "Jan 2025 – Apr 2025",
-    oneLiner: "A small team shipping campaigns across retail, Amazon, e-commerce, and U.S. distribution at once, without a consistent sprint cadence.",
+    oneLiner: "The same bottle of Fiery Ginger had to work as an Amazon listing, a Klaviyo email, and a printed trade sell sheet - three formats, three audiences, one brand.",
     summary:
-      "Designed and shipped campaign and storefront assets across every channel Greenhouse sold through, while helping the 8-person team establish a sprint cadence it hadn't had before.",
-    tags: ["Campaign Design", "Sprint Leadership", "Brand & E-commerce"],
-    toolTags: ["Figma", "Klaviyo", "Shopify"],
-    artifacts: ["Campaign Assets", "Storefront Assets", "Brand Design", "Sprint Board"],
-    metrics: [
-      { value: "20%", label: "engagement increase (campaign analytics)" },
-      { value: "12%", label: "conversion increase (campaign analytics)" },
-      { value: "25%", label: "delivery productivity gain" },
-      { value: "30%", label: "shipment accuracy gain" },
-    ],
+      "Designed and adapted retail, e-commerce, email, and internal brand creative across Amazon, trade/retail collateral, and Klaviyo campaigns, while helping keep the UID tracking and inventory routing behind them organized enough for a lean team to move in sync.",
+    tags: ["Retail & E-commerce Design", "Product Tracking", "Inventory Coordination"],
+    toolTags: ["Adobe Creative Suite", "Canva", "Microsoft Planner", "OneDrive"],
+    artifacts: ["Product Design", "Retail & E-commerce Assets", "UID Tracking Sheet", "Inventory Routing", "Sprint Board"],
+    metrics: [],
     problem:
-      "Greenhouse Juices was scaling across retail, Amazon, e-commerce, and U.S. distribution simultaneously, with a small 8-person team responsible for campaign design, sprint execution, and fulfillment tracking. Without consistent sprint structure or a design system feeding every channel, campaigns were shipping unevenly and inventory visibility was weak.",
+      "An Amazon listing earns attention in a thumbnail grid; a Klaviyo email earns it in an inbox; a printed trade sell sheet earns it in the ten seconds a retail buyer spends scanning a table. Greenhouse needed the same handful of product lines - Fiery Ginger, Green Ritual, Super Smoothies - to hold together as one recognizable brand across all of it, with a lean 8-person team and no shared system feeding those channels. Without one, the same bottle could look like a different product from one touchpoint to the next, and no one had a clear view of which product records and inventory were actually current behind the scenes.",
     process: [
-      "Designed user flows and supporting creative for 12+ digital campaigns across email, retail, and e-commerce channels.",
-      "Led sprint planning and execution for the 8-person team, establishing a consistent cadence that the team hadn't had before.",
-      "Built out inventory and fulfillment tracking across retail, Amazon, e-commerce, and U.S. distribution channels to close the visibility gap.",
+      "Designed and adapted creative for 12+ campaigns across Amazon listings, Klaviyo email, and retail sell sheets - treating each as its own format instead of resizing one master file, since an A+ content module and a printed trade sheet have to work completely differently.",
+      "Led sprint planning for the 8-person team, giving campaign work a consistent cadence it hadn't had before, so design, marketing, and fulfillment weren't pulling from different timelines.",
+      "Built out UID and inventory tracking in OneDrive connecting Amazon, retail, and e-commerce, so product status and stock were something the team could check in one place instead of chasing down channel by channel.",
     ],
     outcome: [
-      "Campaign engagement rose 20% and conversion rose 12%.",
-      "Delivery consistency and productivity improved 25% across the 8-person team.",
-      "Operational visibility and shipment accuracy improved 30% across all distribution channels.",
-    ],
-    images: [
-      { src: "/case-studies/greenhouse/klaviyo-welcome-top.png", alt: "Greenhouse Juices Klaviyo welcome campaign creative" },
-      { src: "/case-studies/greenhouse/ubereats-easy-greens.jpg", alt: "Greenhouse Juices UberEats smoothie packaging" },
-      { src: "/case-studies/greenhouse/amazon-12pack.png", alt: "Greenhouse Juices Amazon 12-pack asset" },
-      { src: "/case-studies/greenhouse/fiery-ginger-shot.png", alt: "Greenhouse Juices Fiery Ginger wellness shot packaging" },
+      "Amazon, email, and retail creative stayed visually consistent with the Greenhouse brand while still meeting each channel's own format and constraints.",
+      "The 8-person team worked off a shared sprint cadence instead of ad hoc requests, giving campaign output a predictable rhythm for the first time.",
+      "UID and inventory tracking gave the team one shared reference for product status and stock instead of re-checking with whoever last touched a given SKU.",
     ],
   },
   {
@@ -208,22 +197,22 @@ const caseStudiesData: CaseStudy[] = [
       { value: "5", label: "screens redesigned across iterations" },
     ],
     problem:
-      "Medication non-adherence is a serious risk for older adults, and most tracking apps aren't designed with that user in mind. Our team set out to design an Apple Watch pill tracker specifically for older users — small screens, potential vision and dexterity limits, and high stakes if a step is missed or a wrong action is taken.",
+      "Medication non-adherence is a serious risk for older adults, and most tracking apps aren't designed with that user in mind. Our team set out to design an Apple Watch pill tracker specifically for older users - small screens, potential vision and dexterity limits, and high stakes if a step is missed or a wrong action is taken.",
     process: [
-      "Ran cognitive walkthroughs for the two highest-stakes tasks — adding a new medication and responding to a reminder — simulated from the perspective of an elderly user, surfacing issues like unclear optional fields and unindicated swipe navigation before we tested with real people.",
+      "Ran cognitive walkthroughs for the two highest-stakes tasks - adding a new medication and responding to a reminder - simulated from the perspective of an elderly user, surfacing issues like unclear optional fields and unindicated swipe navigation before we tested with real people.",
       "Iterated the MyMeds and schedule screens through several low-fidelity rounds: adding a direct 'Add Medication' link from the main schedule, redesigning contacts and settings screens for clarity, and building a dedicated future-date schedule view.",
-      "Built medium-fidelity horizontal and vertical prototypes in Figma covering the full app — lock screen, home, medication list, add-medication flow, emergency contacts, and settings — to test both breadth of features and depth of one critical flow.",
-      "Designed and ran a heuristic evaluation script grounded in Nielsen's heuristics, recruiting 4 evaluators with deliberately different expertise: two HCI classmates, a caregiver with real medication-management experience, and a pharmacy industry professional — to get both expert and domain-grounded feedback.",
-      "Synthesized 20 distinct usability findings across all evaluators, ranked them by severity and frequency, and wrote a specific, actionable fix for each — from adding a confirmation step before emergency calls to replacing technical form language with plain phrasing.",
+      "Built medium-fidelity horizontal and vertical prototypes in Figma covering the full app - lock screen, home, medication list, add-medication flow, emergency contacts, and settings - to test both breadth of features and depth of one critical flow.",
+      "Designed and ran a heuristic evaluation script grounded in Nielsen's heuristics, recruiting 4 evaluators with deliberately different expertise: two HCI classmates, a caregiver with real medication-management experience, and a pharmacy industry professional - to get both expert and domain-grounded feedback.",
+      "Synthesized 20 distinct usability findings across all evaluators, ranked them by severity and frequency, and wrote a specific, actionable fix for each - from adding a confirmation step before emergency calls to replacing technical form language with plain phrasing.",
     ],
     outcome: [
-      "Identified and ranked 20 usability issues by severity, with the top-ranked finding — no confirmation before calling emergency services — feeding directly into a fix recommendation before this ever reached real users.",
+      "Identified and ranked 20 usability issues by severity, with the top-ranked finding - no confirmation before calling emergency services - feeding directly into a fix recommendation before this ever reached real users.",
       "All 4 evaluators completed every assigned task despite the issues found, validating that the core interaction model worked even as specific screens needed refinement.",
       "Produced a fix-mapped severity report (issue → heuristic violated → recommended fix) that could be handed directly to a development team.",
     ],
     team: "Omar Shokeh, Callum Gillies, Graydon Power, and Kamal Ahsan",
     contribution:
-      "Kamal contributed across the redesign rationale and cognitive walkthroughs, the medium-fidelity prototype iterations, and the heuristic evaluation synthesis — turning raw evaluator notes into the ranked, fix-mapped severity report above.",
+      "Kamal contributed across the redesign rationale and cognitive walkthroughs, the medium-fidelity prototype iterations, and the heuristic evaluation synthesis - turning raw evaluator notes into the ranked, fix-mapped severity report above.",
     links: [
       {
         label: "Figma Prototype",
@@ -238,25 +227,25 @@ const caseStudiesData: CaseStudy[] = [
     entryType: "internship",
     caseStudyType: "systems-operations",
     tier: "featured",
-    title: "Turning production handoffs into a trackable system",
+    title: "Building an inventory-backed production system for ForceN's Dev Systems",
     company: "ForceN",
     role: "Product Engineer Intern",
     location: "Toronto, ON",
     timeframe: "Sep 2025 – Dec 2025",
-    oneLiner: "A hardware dev-kit process spanning procurement, assembly, calibration, and shipment, with status living in people's heads instead of a system.",
+    oneLiner: "ForceN wanted standard Dev Systems built ahead of demand and shipped from finished inventory instead of starting from zero on every order.",
     summary:
-      "ForceN's dev kit workflow touched procurement, assembly, calibration, inventory, and shipment. I helped make that process easier to track by organizing unit status, clarifying handoffs, and coordinating across engineering and operations so fewer details lived only in people's heads.",
+      "Developed the end-to-end operating roadmap connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment, so ForceN's standard Dev Systems could become an inventory-backed product line.",
     tags: ["Product Operations", "Hardware Workflow", "Process Design"],
     toolTags: ["Confluence", "Onshape", "AI Agents", "Python"],
-    artifacts: ["Workflow Map", "Process Tracker", "Handoff Table", "Internal Materials Omitted"],
+    artifacts: ["Production Roadmap", "Inventory Logic", "Documentation System", "Internal Materials Omitted"],
     metrics: [
       { value: "14+", label: "hardware units coordinated" },
       { value: "6+", label: "stakeholders across eng, ops, inventory" },
     ],
     problem:
-      "ForceN's Dev System transfer process moved through procurement, assembly, calibration, and shipment, with 6+ stakeholders across engineering, operations, and inventory touching each unit along the way. There was no single place tracking where a unit actually was in that process — status lived in inboxes, verbal handoffs, and individual memory, which made it easy for details to fall through the cracks as volume increased.",
+      "ForceN's Dev System transfer process moved through procurement, assembly, calibration, and shipment, with 6+ stakeholders across engineering, operations, and inventory touching each unit along the way. There was no single place tracking where a unit actually was in that process - status lived in inboxes, verbal handoffs, and individual memory, which made it easy for details to fall through the cracks as volume increased.",
     process: [
-      "Mapped the existing handoff process end to end — procurement → assembly → calibration → shipment — to see where information actually broke down between teams.",
+      "Mapped the existing handoff process end to end - procurement → assembly → calibration → shipment - to see where information actually broke down between teams.",
       "Owned the transfer workflow for 14+ hardware units, organizing unit status and documentation so it didn't depend on asking the right person at the right time.",
       "Standardized tracking, documentation, and QA validation steps across hardware configurations so the same information was captured the same way every time.",
       "Coordinated execution directly with engineering, operations, and inventory (6+ stakeholders) to keep handoffs moving instead of stalling between teams.",
@@ -266,8 +255,15 @@ const caseStudiesData: CaseStudy[] = [
       "Improved on-time delivery by clarifying who owned each handoff and what was needed to move a unit to the next stage.",
       "Left behind a documented, repeatable process instead of one that depended on institutional memory.",
     ],
-    whatIdImprove: "The tracking system I built was internal to ForceN and specific to their tooling — the version here is a reconstructed, public-safe description of the same workflow logic rather than the actual interface.",
+    whatIdImprove: "The tracking system I built was internal to ForceN and specific to their tooling - the version here is a reconstructed, public-safe description of the same workflow logic rather than the actual interface.",
     note: "Internal tracking sheets, tools, and company-specific materials are omitted for confidentiality. This case study uses a reconstructed public-safe workflow to explain the product operations and systems thinking behind the work.",
+    figures: [
+      {
+        id: "forcen-workflow",
+        caption: "The Dev System production and fulfilment workflow, from planned stock build through customer shipment. Click a node for details.",
+        evidence: "reconstructed",
+      },
+    ],
   },
   {
     slug: "pathpeer",
@@ -300,7 +296,7 @@ const caseStudiesData: CaseStudy[] = [
       "Increased user engagement by 50%.",
       "Reduced inactive user drop-off by 40% through iterative design changes.",
     ],
-    note: "This case study is a placeholder — full write-up in progress.",
+    note: "This case study is a placeholder - full write-up in progress.",
   },
   {
     slug: "informatica",
@@ -325,7 +321,7 @@ const caseStudiesData: CaseStudy[] = [
       { value: "30%", label: "on-time delivery improvement (internal reporting)" },
     ],
     problem:
-      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and cross-team deliverables were slipping. As a Product Operations & UX Research Intern, the work was to close that gap — translate research into action and keep deliverables moving across teams.",
+      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and cross-team deliverables were slipping. As a Product Operations & UX Research Intern, the work was to close that gap - translate research into action and keep deliverables moving across teams.",
     process: [
       "Translated UX research findings into specific workflow improvements rather than leaving them as a research readout.",
       "Identified system friction points affecting internal task efficiency and addressed them directly.",
@@ -336,7 +332,7 @@ const caseStudiesData: CaseStudy[] = [
       "Internal task efficiency improved 20% by addressing identified friction points.",
       "Cross-team on-time delivery improved 30%.",
     ],
-    note: "This case study is a placeholder — full write-up in progress. Metrics are as reported internally during the internship; internal tools and materials are omitted for confidentiality.",
+    note: "This case study is a placeholder - full write-up in progress. Metrics are as reported internally during the internship; internal tools and materials are omitted for confidentiality.",
   },
 ];
 

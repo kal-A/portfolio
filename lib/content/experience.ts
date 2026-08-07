@@ -17,7 +17,7 @@ export const experience: ExperienceEntry[] = [
     synopsis:
       "Owned hardware transfer operations end-to-end, cutting turnaround time and assembly errors while coordinating engineering, ops, and inventory.",
     bullets: [
-      "Owned an end-to-end Dev System transfer workflow — procurement → assembly → calibration → shipment — for 14+ hardware units, reducing turnaround time by 35%.",
+      "Owned an end-to-end Dev System transfer workflow - procurement → assembly → calibration → shipment - for 14+ hardware units, reducing turnaround time by 35%.",
       "Coordinated execution across engineering, operations, and inventory (6+ stakeholders), improving delivery efficiency by 30%.",
       "Standardized tracking, documentation, and QA validation across hardware configurations, reducing assembly errors by 25% and improving on-time delivery by 30%.",
     ],
