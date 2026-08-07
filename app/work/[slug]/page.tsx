@@ -18,6 +18,7 @@ import {
 import Diagram from "@/components/case-study/Diagram";
 import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
 import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
+import PathPeerCaseStudy from "@/components/case-study/PathPeerCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -35,6 +36,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (!cs) notFound();
   if (cs.slug === "forcen") return <ForceNCaseStudy />;
   if (cs.slug === "greenhouse") return <GreenhouseCaseStudy />;
+  if (cs.slug === "pathpeer") return <PathPeerCaseStudy />;
   const theme = caseStudyTheme[cs.slug];
 
   return (
@@ -261,7 +263,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       {cs.whatIdImprove && (
         <section className="mt-10 border-t border-neutral-200 pt-6">
-          <h2 className="font-serif text-lg text-neutral-900 mb-2">What I'd improve next</h2>
+          <h2 className="font-serif text-lg text-neutral-900 mb-2">What I&apos;d improve next</h2>
           <p className="text-neutral-600 text-sm leading-relaxed">{cs.whatIdImprove}</p>
         </section>
       )}
