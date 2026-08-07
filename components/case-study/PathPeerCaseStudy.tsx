@@ -81,7 +81,7 @@ const FRICTION_STEPS: ProcessStep[] = [
   {
     title: "Observe",
     synopsis:
-      "Pulled usage patterns from Google Analytics to see where engagement dropped across the mentorship flow.",
+      "Reviewed how users interacted with search and which mentors they shortlisted, then used Google Analytics to see where engagement dropped across those flows.",
   },
   {
     title: "Identify friction",
@@ -90,19 +90,21 @@ const FRICTION_STEPS: ProcessStep[] = [
   },
   {
     title: "Form hypothesis",
-    synopsis: "Turned the observed behavior into a specific, testable explanation for why users were stalling.",
+    synopsis:
+      "Turned the observed search and shortlisting behavior into a specific explanation for why users were struggling to find or commit to a mentor match.",
   },
   {
     title: "Define feature",
-    synopsis: "Scoped the smallest change that addressed the hypothesis instead of a general redesign.",
+    synopsis:
+      "Translated the strongest patterns into a concrete product idea, like a discovery tag or a homepage flow for new mentors, instead of a general redesign.",
   },
   {
     title: "Prioritize",
-    synopsis: "Weighed each candidate change against how many users it touched and how much effort it would take.",
+    synopsis: "Weighed each candidate idea against how many users it touched and how much effort it would take to plan and build.",
   },
   {
     title: "Measure",
-    synopsis: "Shipped the change and went back to Analytics and Hotjar to check whether the behavior actually moved.",
+    synopsis: "Validated smaller ideas in Bubble.io, then went back to Analytics and Hotjar to check whether the behavior actually moved.",
   },
 ];
 
@@ -113,25 +115,44 @@ const PLAN_CHAIN = [
   { label: "Delivery plan", body: "What it would take to build and ship" },
 ];
 
+const PLAN_EXAMPLES = [
+  {
+    title: "Mentor discovery tags",
+    body: "Search and shortlist behavior pointed to users wanting to filter mentors by more than a job title, which became a tagging system for discovery.",
+  },
+  {
+    title: "Shortlisting improvements",
+    body: "How users built and abandoned shortlists shaped changes to how shortlisting worked.",
+  },
+  {
+    title: "New-mentor homepage discovery",
+    body: "Newly added mentors were easy to miss through search alone, which led to a homepage flow surfacing new mentors relevant to a user's career path.",
+  },
+  {
+    title: "Company-based discovery",
+    body: "Some users were exploring mentors by company rather than career title, which became its own discovery path.",
+  },
+];
+
 const NOCODE_REASONS = [
   {
     title: "Faster validation",
-    body: "Tested whether a fix worked before scoping full development.",
+    body: "Tested whether an idea like a new discovery tag or homepage flow actually helped before scoping full development.",
     icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
   },
   {
     title: "Lower overhead",
-    body: "No environment setup or deployment needed to try an idea.",
+    body: "No environment setup or deployment needed to try an idea in Bubble.io.",
     icon: <><rect x="4" y="4" width="16" height="16" rx="3" /><path d="M9 9h6v6H9z" /></>,
   },
   {
     title: "Quicker iteration",
-    body: "Adjusted the workflow directly instead of filing a new ticket for every tweak.",
+    body: "Adjusted a flow directly instead of filing a new ticket for every tweak.",
     icon: <path d="M4 12a8 8 0 1 1 2.5 5.8M4 12v5.5M4 12H9.5" />,
   },
   {
     title: "Evidence before investment",
-    body: "Development time went to changes that had already shown they worked.",
+    body: "Development time went to ideas that had already shown they worked.",
     icon: <><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></>,
   },
 ];
@@ -162,7 +183,7 @@ const REFLECTIONS = [
   {
     accent: ACCENT_ORANGE,
     title: "No-code is worth it when it buys a real answer",
-    body: "The value wasn't skipping development. It was finding out fast enough that the development, when it happened, was aimed at the right fix.",
+    body: "The value wasn't skipping development. It was using Bubble.io to find out fast enough that the development, when it happened, was aimed at the right fix.",
     icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
   },
 ];
@@ -210,15 +231,17 @@ export default function PathPeerCaseStudy() {
                 Remote (Waterloo, ON) · May 2022 – Aug 2022
               </p>
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
-                I designed and built PathPeer&apos;s mentorship platform solo, then went back into the
-                data. Google Analytics showed where engagement was dropping across the platform; Hotjar
-                recordings showed what was actually happening at those points. I used both to decide
-                what to fix first, turned the strongest patterns into scoped feature and requirement
-                plans, and validated smaller changes with no-code tooling before asking for more
-                development time.
+                PathPeer helped users explore career paths and find professionals they could connect
+                with as mentors, for networking, advice, and guidance on the career they wanted to
+                pursue. I designed and built the platform as PathPeer&apos;s solo product designer and
+                developer, working within a small team, then went back into the data. Google Analytics
+                showed where engagement was dropping in search and mentor discovery; Hotjar recordings
+                showed what was actually happening at those points. I used both to recommend what to
+                fix first, turned the strongest patterns into scoped feature and requirement plans, and
+                validated smaller ideas with Bubble.io before asking for more development time.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-7">
-                {["Google Analytics", "Hotjar", "Figma", "n8n"].map((chip) => (
+                {["Google Analytics", "Hotjar", "Figma", "Bubble.io"].map((chip) => (
                   <span key={chip} className="cs-pill highlight text-xs font-extrabold px-3.5 py-1.5 cursor-default">
                     {chip}
                   </span>
@@ -286,16 +309,16 @@ export default function PathPeerCaseStudy() {
                 accentGradient={ORANGE_GRADIENT}
                 icon={<><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.2v.1" /></>}
               >
-                A live platform generating real usage data, with no structured process for turning
-                that data into what to build next.
+                A live mentor-discovery platform generating real search and shortlisting data, with no
+                structured process for turning that data into what to build next.
               </SnapshotBox>
               <SnapshotBox
                 label="Contribution"
                 accentGradient={ORANGE_GRADIENT}
                 icon={<path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L4 17l3 3 5.1-5.1a4 4 0 0 0 5.6-5.6l-2.6 2.6-2-2z" />}
               >
-                The end-to-end loop from behavioral evidence to a scoped feature plan, plus the
-                original platform design and build.
+                The platform&apos;s original design and build, plus the loop from behavioral evidence
+                to scoped feature recommendations within the team.
               </SnapshotBox>
               <SnapshotBox
                 label="Outcome"
@@ -330,7 +353,7 @@ export default function PathPeerCaseStudy() {
                     ["Google Analytics", "usage patterns across the platform"],
                     ["Hotjar", "session recordings behind the numbers"],
                     ["Figma", "design iteration"],
-                    ["n8n", "no-code validation before development"],
+                    ["Bubble.io", "no-code validation before development"],
                   ].map(([tool, use]) => (
                     <li key={tool} className="text-[14.5px]" style={{ color: "#4c473e" }}>
                       <b className="font-extrabold" style={{ color: "var(--ink)" }}>
@@ -360,13 +383,37 @@ export default function PathPeerCaseStudy() {
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-3.5" style={{ color: "var(--ink)" }}>
               Once PathPeer was live, the open question wasn&apos;t whether people were using it. It
-              was where they were getting stuck. Analytics could show that a step was leaking users,
-              not why. That&apos;s where the recordings came in.
-            </p>
-            <p className="text-sm font-extrabold mb-8" style={{ color: ACCENT_ORANGE }}>
-              Select a stage to see what happened there.
+              was where they were getting stuck in search and mentor discovery. Analytics could show
+              that a step was leaking users, not why. That&apos;s where the recordings came in.
             </p>
           </Reveal>
+
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
+            Constraints
+          </p>
+          <div className="cs-box white px-6 py-6 mb-9">
+            <ul className="flex flex-col gap-3">
+              {[
+                "PathPeer was a small, resource-constrained team. I was the platform's solo designer and developer, so research, design, and no-code execution had to fit inside one person's time rather than dedicated roles.",
+                "There was no dedicated PM tooling. Findings, hypotheses, and plans lived in direct notes and conversations instead of a formal backlog.",
+                "Product direction and priorities were set within the broader team, not by me alone. My role was to bring recommendations, strategy, and feature plans grounded in behavioral evidence, not to unilaterally decide what PathPeer built next.",
+              ].map((c) => (
+                <li key={c} className="cs-box light flex gap-3 items-start text-[15px] leading-relaxed px-4 py-3" style={{ color: "#4c473e" }}>
+                  <span
+                    className="shrink-0 w-[22px] h-[22px] rounded-md border-2 flex items-center justify-center text-xs font-black mt-0.5"
+                    style={{ background: ORANGE_GRADIENT, borderColor: "var(--ink)", color: "var(--ink)" }}
+                  >
+                    ✕
+                  </span>
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="text-sm font-extrabold mb-8" style={{ color: ACCENT_ORANGE }}>
+            Select a stage to see what happened there.
+          </p>
           <ProcessFlow steps={FRICTION_STEPS} accent={ACCENT_ORANGE} />
         </div>
       </div>
@@ -376,10 +423,10 @@ export default function PathPeerCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Chapter num="02" title="From pattern to plan">
             <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
-              Spotting friction was only half the loop. Each pattern still had to become something
-              specific enough to build. I kept every candidate change moving through the same chain,
-              so a hunch from a recording couldn&apos;t skip straight into development without being
-              scoped first.
+              Spotting friction in search or shortlisting was only half the loop. Each pattern still
+              had to become something specific enough to build. I kept every candidate idea moving
+              through the same chain, so a hunch from a recording couldn&apos;t skip straight into
+              development without being scoped first.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3 my-9">
@@ -402,10 +449,26 @@ export default function PathPeerCaseStudy() {
               ))}
             </div>
 
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
+              Categories of change that moved through this chain
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4 mb-9">
+              {PLAN_EXAMPLES.map((ex) => (
+                <div key={ex.title} className="cs-box light px-5 py-4">
+                  <p className="text-sm font-extrabold mb-1.5" style={{ color: ACCENT_BLUE }}>
+                    {ex.title}
+                  </p>
+                  <p className="text-[13.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                    {ex.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+
             <p className="text-base leading-relaxed max-w-2xl" style={{ color: "#33302a" }}>
-              Not every pattern justified a new development cycle. Some resolved with a smaller
-              design change; others became scoped feature requests with enough definition to move
-              directly into a build.
+              Not every pattern justified a full development cycle. Some resolved with a smaller
+              design change validated in Bubble.io; others became scoped feature requests with enough
+              definition to move directly into a build.
             </p>
           </Chapter>
         </div>
@@ -422,10 +485,10 @@ export default function PathPeerCaseStudy() {
               Planning and no-code execution
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink)" }}>
-              Not every change needed a full development cycle to prove it was worth one. For
-              smaller workflow and notification changes, I used n8n to put a working version in
-              front of an idea before requesting engineering time on it, rather than writing a full
-              spec and waiting for a sprint to find out whether the fix actually worked.
+              Not every idea needed a full development cycle to prove it was worth one. For smaller
+              ideas like a new discovery tag or a homepage flow for new mentors, I used Bubble.io to
+              put a working version in front of an idea before requesting engineering time on it,
+              rather than writing a full spec and waiting to find out whether the fix actually worked.
             </p>
           </Reveal>
 
@@ -468,8 +531,11 @@ export default function PathPeerCaseStudy() {
               <h2 className="font-serif text-4xl text-white">Outcomes</h2>
             </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d6ddec" }}>
-              The engagement and drop-off changes below came from iterative design changes driven by
-              the analytics-and-recordings loop above, not a single redesign.
+              The figures below are the platform-level outcomes reported for the internship period.
+              They reflect PathPeer&apos;s overall growth during that time, with the analytics-and-
+              recordings loop above shaping which iterative changes, like new discovery tags and
+              homepage flows for new mentors, went into that period, rather than being the sole cause
+              of either number.
             </p>
           </Reveal>
 
@@ -477,16 +543,16 @@ export default function PathPeerCaseStudy() {
             <StatGrid
               valueColor={ACCENT_ORANGE}
               stats={[
-                { value: "50%", label: "increase in user engagement" },
-                { value: "40%", label: "reduction in inactive user drop-off" },
+                { value: "50%", label: "increase in user engagement (internship period)" },
+                { value: "40%", label: "reduction in inactive user drop-off (internship period)" },
               ]}
             />
           </div>
 
           <div className="flex flex-col gap-4">
             {[
-              "Feature changes were scoped from observed behavior instead of assumptions.",
-              "Smaller changes could be validated with no-code tooling before requesting development time, so engineering effort went to changes that had already shown they worked.",
+              "Feature ideas were grounded in observed search, shortlisting, and session behavior instead of assumptions.",
+              "Smaller ideas could be validated in Bubble.io before requesting development time, so engineering effort went to ideas that had already shown they worked.",
             ].map((row) => (
               <Reveal key={row}>
                 <div className="cs-box light flex items-center gap-4 px-5 py-4">
@@ -543,8 +609,9 @@ export default function PathPeerCaseStudy() {
 
           <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
             PathPeer&apos;s internal analytics dashboards and session recordings are not shown here
-            for confidentiality. The friction-loop and feature-plan diagrams above reconstruct the
-            workflow and reasoning behind the changes.
+            for confidentiality. The friction-loop, feature-plan diagrams, and discovery examples
+            above reconstruct the categories of workflow and reasoning behind the changes, not
+            verbatim session data.
           </p>
         </div>
       </div>
