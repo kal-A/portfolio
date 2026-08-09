@@ -373,36 +373,88 @@ const caseStudiesData: CaseStudy[] = [
     category: "systems",
     entryType: "internship",
     caseStudyType: "research-strategy",
-    tier: "compact",
-    title: "Turning UX research into workflow fixes",
+    tier: "standard",
+    title: "Breaking an ambiguous cybersecurity curriculum into work a six-person team could execute",
     company: "Informatica",
     role: "Product Operations & UX Research Intern",
     location: "Mississauga, ON",
     timeframe: "Sep 2023 – Dec 2023",
-    oneLiner: "Cross-team deliverables were slipping and system friction was going unaddressed because no one owned turning research into fixes.",
+    oneLiner: "Informatica needed a full set of cybersecurity educational web experiences built by a six-person co-op team, with no existing structure for what teaching the material well would actually require.",
     summary:
-      "Translated UX research findings into concrete workflow improvements and coordinated cross-team deliverables to reduce missed deadlines during a product operations internship.",
-    tags: ["Product Operations", "UX Research", "Cross-Team Coordination"],
-    toolTags: ["User Research", "Workflow Documentation"],
-    artifacts: ["Internal Materials Omitted"],
+      "Helped turn an open-ended cybersecurity education project, covering personal, school, and workplace security plus safe networking practices, into research, page structure, and build assignments a six-person co-op team could execute, then applied the same research-to-decision and planning approach to Informatica's other web and content requests.",
+    tags: ["Product Operations", "UX Research", "Educational Content Strategy"],
+    toolTags: ["Trello", "Microsoft Planner", "Microsoft Loop", "Java", "No-Code Tools"],
+    artifacts: ["Research Synthesis", "Curriculum Structure", "Workflow Documentation", "Internal Materials Omitted"],
     metrics: [
-      { value: "18%", label: "user engagement increase (internal reporting)" },
-      { value: "20%", label: "internal task efficiency gain (internal reporting)" },
-      { value: "30%", label: "on-time delivery improvement (internal reporting)" },
+      { value: "18%", label: "user engagement increase, internship-wide (internal reporting)" },
+      { value: "20%", label: "internal task efficiency gain, internship-wide (internal reporting)" },
+      { value: "30%", label: "on-time delivery improvement, internship-wide (internal reporting)" },
     ],
     problem:
-      "Informatica's internal teams were producing UX research but not consistently turning it into workflow changes, and cross-team deliverables were slipping. As a Product Operations & UX Research Intern, the work was to close that gap - translate research into action and keep deliverables moving across teams.",
+      "Informatica set out to build a new set of cybersecurity educational web experiences: personal cybersecurity, school-related cybersecurity, workplace cybersecurity, and correct networking and security practices, each with multiple levels and course-like pages. The real difficulty was never publishing the information. It was figuring out how to teach it effectively through page structure, diagrams, activities, sequencing, and interactive testing. Six co-op students, including me, were responsible for turning that open-ended educational goal into an executable set of pages, and I helped organize how that work was broken up, planned, and built. I later applied the same research-to-decision and implementation-path approach to other UX research and web or content requests that arrived from different teams during the internship.",
     process: [
-      "Translated UX research findings into specific workflow improvements rather than leaving them as a research readout.",
-      "Identified system friction points affecting internal task efficiency and addressed them directly.",
-      "Coordinated cross-team deliverables to reduce missed deadlines and improve on-time delivery.",
+      "Broke the four cybersecurity topic areas, personal, school, workplace, and networking and security practices, into independently buildable tracks with their own levels and pages, so six co-op students could work in parallel instead of waiting on one shared sequence.",
+      "Researched how to teach each topic effectively (structure, diagrams, activities, sequencing) rather than just drafting text, since the actual problem was communication, not content volume.",
+      "Matched implementation method to page type: no-code tools for general informational and knowledge pages, coded implementation through classic web development and Java-based frameworks for the specialized testing, activity, and interactive pages that needed logic no-code couldn't reliably support.",
+      "Used Trello, Microsoft Planner, and Microsoft Loop to keep six people's tasks, ownership, and decisions visible and consistent across topic tracks.",
+      "Applied the same research-to-decision approach, translating findings into specific requirements and routing them to the right build path, to other UX research and web or content requests arriving from different teams.",
+      "Supported an AI-assisted workflow for educational and blog-style content drafts, with mandatory human review before anything published.",
     ],
     outcome: [
-      "User engagement increased 18%, per internal reporting from the internship period.",
-      "Internal task efficiency improved 20% by addressing identified friction points.",
-      "Cross-team on-time delivery improved 30%.",
+      "Turned an open-ended educational objective, teaching cybersecurity across four different audiences, into a structured set of pages and build assignments a six-person co-op team could actually execute without duplicated effort or gaps between tracks.",
+      "Matching no-code and coded implementation to page type let the team ship general knowledge pages quickly while concentrating development effort on the testing and activity pages that genuinely needed custom logic.",
+      "User engagement increased 18%, internal task efficiency improved 20%, and cross-team on-time delivery improved 30%, per internal reporting across the internship. These reflect the full scope of the role, not the cybersecurity project alone.",
+      "UX research findings moved into tracked requirements instead of ending as a readout no one acted on.",
     ],
-    note: "This case study is a placeholder - full write-up in progress. Metrics are as reported internally during the internship; internal tools and materials are omitted for confidentiality.",
+    whatIdImprove:
+      "I don't have a reliable time-saved figure for the AI-assisted content workflow, so I've kept that part of the case study scoped to what it did rather than estimating an impact number I can't verify.",
+    team: "Five other co-op students alongside me, six total, working across research, design, and development on the cybersecurity education project.",
+    contribution:
+      "I helped organize the team's work: breaking the educational objective into research, planning, diagrams, activities, page design, and development tasks, sequencing them across the four topic tracks, and keeping documentation and coordination visible across all six of us. I also applied the same research-to-decision and implementation-path approach to other UX research and web or content requests during the internship.",
+    snapshot: {
+      challenge:
+        "A new set of cybersecurity educational web experiences, personal, school, workplace, and networking and security practices, needed to be built by six co-op students, with no existing structure for how to teach the material effectively or divide the work.",
+      contribution:
+        "Helped break the curriculum into independently buildable topic tracks, matched no-code and coded implementation to what each page actually needed, and kept the six-person team's work and decisions organized end to end.",
+      outcome:
+        "A structured, executable path from an ambiguous educational goal to shipped content, with implementation effort concentrated where it was actually needed.",
+      tools: ["Trello", "Microsoft Planner", "Microsoft Loop", "Java", "No-code tools", "AI-assisted drafting"],
+    },
+    constraints: [
+      "Internal trackers, boards, and company-specific materials are confidential. This write-up reconstructs the same planning and research logic in a public-safe form.",
+      "Six co-op students needed clearly separable work, since overlapping ownership on the same content risked duplicated effort or gaps between topic tracks.",
+      "Personal, school, and workplace cybersecurity are different audiences with different depth needs, so one shared template or tone wouldn't fit all four topic areas.",
+      "General informational pages and specialized testing or activity pages had very different technical needs, so no single implementation approach fit every page in the curriculum.",
+    ],
+    decisions: [
+      {
+        decision: "Split the curriculum into four independent topic tracks instead of one continuous course.",
+        rationale:
+          "Personal, school, workplace, and networking and security practices are different audiences with different depth needs. Treating them as one continuous course would have forced six people to build sequentially instead of in parallel.",
+        alternatives: "A single linear course structure covering all four areas in one sequence.",
+        result: "Each topic track could be researched, structured, and built independently, so the six-person team could work at the same time instead of waiting on a shared sequence.",
+      },
+      {
+        decision: "Match implementation method to page type instead of picking one build approach for the whole project.",
+        rationale:
+          "General knowledge pages needed to be quick to produce and easy to edit, but testing, activity, and interactive pages needed logic such as scoring, state, or custom interaction that no-code tools couldn't reliably support.",
+        alternatives: "Building the entire curriculum in one approach, either fully no-code or fully custom-coded.",
+        result: "No-code tools covered the general informational pages, while classic web development and Java-based frameworks covered the testing, activity, and interactive pages that actually needed the flexibility.",
+      },
+      {
+        decision: "Keep AI-assisted content drafting paired with a mandatory human review step.",
+        rationale:
+          "AI tools could speed up the repetitive part of turning research or notes into a first-pass draft, but accuracy and tone still needed a human check before anything reached a reader.",
+        result: "Draft turnaround got faster without removing the review step that caught accuracy and tone issues before publishing.",
+      },
+    ],
+    reflection: [
+      "An ambiguous educational goal gets built once it's broken into independently ownable pieces. Splitting the curriculum into four topic tracks, instead of one shared course, was what actually let six people work at the same time.",
+      "The right implementation method depends on what a page actually needs to do, not on a company-wide default. Knowledge pages and testing or activity pages needed genuinely different approaches, and treating them the same would have wasted effort either way.",
+      "Planning tools are only as good as the ownership they make visible. Trello, Planner, and Loop helped because every page and task had a clear owner across a six-person team, not because of the tools themselves.",
+      "Automation should remove repetition, not judgment. AI-assisted drafting saved time on the repetitive part of content work, but it never replaced the review step, since that's where the real quality control happened.",
+    ],
+    note: "Internal trackers, boards, and company-specific materials are omitted for confidentiality. This case study uses reconstructed, public-safe diagrams to explain the research and planning logic behind the work. Metrics are as reported internally during the internship.",
   },
 ];
 

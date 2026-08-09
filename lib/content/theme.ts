@@ -75,12 +75,12 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     image: "/case-studies/pathpeer/pathpeer-hero-home.png",
   },
   informatica: {
-    bg: "#fbeaf0",
-    accent: "#b53a63",
-    accentSoft: "#f7dbe4",
-    fillFrom: "#fbeaf0",
-    fillTo: "#d97a9c",
-    iconBg: "linear-gradient(135deg, #e08aa8, #7a2846)",
+    bg: "#eaf3fb",
+    accent: "#4a7fab",
+    accentSoft: "#dbe9f5",
+    fillFrom: "#eaf3fb",
+    fillTo: "#7fb0dd",
+    iconBg: "linear-gradient(135deg, #7fb0dd, #b23a3a)",
     mark: "IN",
   },
 };
