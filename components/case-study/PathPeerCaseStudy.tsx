@@ -116,22 +116,33 @@ const PLAN_CHAIN = [
   { label: "Delivery plan", body: "What it would take to build and ship" },
 ];
 
-const PLAN_EXAMPLES = [
+const KEY_DECISIONS = [
   {
+    letter: "A",
     title: "Mentor discovery tags",
-    body: "Search and shortlist behavior pointed to users wanting to filter mentors by more than a job title, which became a tagging system for discovery.",
+    situation:
+      "Search behavior kept showing the same pattern: users refining queries around a single signal, mostly job title, with no way to narrow the list further.",
+    decision:
+      "Define a tag-based discovery layer so mentors could be filtered beyond a title match, even though it meant keeping tags current on every profile.",
+    result: "Added to the same feature-plan chain as every other candidate, prioritized before being scoped.",
   },
   {
+    letter: "B",
+    title: "Homepage flow to new mentors",
+    situation:
+      "Recordings showed newly added mentors relevant to a user's career path rarely surfaced through search alone.",
+    decision:
+      "Build a direct homepage flow surfacing newly added mentors matched to a user's career path, giving that space to newer, less-proven profiles over ones already performing well in search.",
+    result: "Addressed a visibility problem a search fix on its own would not have solved.",
+  },
+  {
+    letter: "C",
     title: "Shortlisting improvements",
-    body: "How users built and abandoned shortlists shaped changes to how shortlisting worked.",
-  },
-  {
-    title: "New-mentor homepage discovery",
-    body: "Newly added mentors were easy to miss through search alone, which led to a homepage flow surfacing new mentors relevant to a user's career path.",
-  },
-  {
-    title: "Company-based discovery",
-    body: "Some users were exploring mentors by company rather than career title, which became its own discovery path.",
+    situation:
+      "The same recordings showed a shortlisting pattern: users adding mentors to compare, then abandoning the list.",
+    decision:
+      "Treated shortlisting as its own friction point rather than an extension of the search problem, worth a separate round of scoping.",
+    result: "Folded into the same plan and chain, refined alongside the discovery changes above.",
   },
 ];
 
@@ -467,20 +478,45 @@ export default function PathPeerCaseStudy() {
             </div>
 
             <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
-              Categories of change that moved through this chain
+              Key decisions
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 mb-9">
-              {PLAN_EXAMPLES.map((ex) => (
-                <div key={ex.title} className="cs-box light px-5 py-4">
-                  <p className="text-sm font-extrabold mb-1.5" style={{ color: ACCENT_BLUE }}>
-                    {ex.title}
-                  </p>
-                  <p className="text-[13.5px] leading-relaxed" style={{ color: "#4c473e" }}>
-                    {ex.body}
-                  </p>
-                </div>
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              {KEY_DECISIONS.map((d, i) => (
+                <Reveal key={d.letter} delay={i * 90}>
+                  <div className="cs-box light px-5 py-6 h-full">
+                    <div
+                      className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base mb-3.5"
+                      style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                    >
+                      {d.letter}
+                    </div>
+                    <h3 className="font-serif font-bold text-base mb-2.5" style={{ color: "var(--ink)" }}>
+                      {d.title}
+                    </h3>
+                    <p className="text-[13px] leading-relaxed mb-2.5" style={{ color: "#4c473e" }}>
+                      {d.situation}
+                    </p>
+                    <p className="text-[13px] leading-relaxed mb-2" style={{ color: "#4c473e" }}>
+                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
+                        Decision:{" "}
+                      </span>
+                      {d.decision}
+                    </p>
+                    <p className="text-[13px] leading-relaxed" style={{ color: "#4c473e" }}>
+                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
+                        Result:{" "}
+                      </span>
+                      {d.result}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
+
+            <p className="text-base leading-relaxed max-w-2xl mb-3.5" style={{ color: "#33302a" }}>
+              A related pattern, users browsing by company of interest rather than career title,
+              became a smaller company-based discovery path alongside these three.
+            </p>
 
             <p className="text-base leading-relaxed max-w-2xl" style={{ color: "#33302a" }}>
               Not every pattern justified a full development cycle. Some resolved with a smaller
