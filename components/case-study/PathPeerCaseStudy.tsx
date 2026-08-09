@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProjectIcon from "@/components/ProjectIcon";
+import { getCaseStudy } from "@/lib/content/case-studies";
 import Chapter from "@/components/case-study/blocks/Chapter";
 import Icon from "@/components/case-study/blocks/Icon";
 import SnapshotGrid, { SnapshotBox } from "@/components/case-study/blocks/SnapshotGrid";
@@ -186,9 +187,21 @@ const REFLECTIONS = [
     body: "The value wasn't skipping development. It was using Bubble.io to find out fast enough that the development, when it happened, was aimed at the right fix.",
     icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
   },
+  {
+    accent: ACCENT_BLUE,
+    title: "Growth and impact aren't the same measurement",
+    body: "The 50% and 40% figures describe the internship period, not the loop in isolation. The write-up says what that work likely drove, not more than it can claim.",
+    icon: (
+      <>
+        <path d="M4 20V10M11 20V4M18 20v-7" />
+        <path d="M2 20h20" />
+      </>
+    ),
+  },
 ];
 
 export default function PathPeerCaseStudy() {
+  const cs = getCaseStudy("pathpeer")!;
   return (
     <div
       style={
@@ -580,15 +593,15 @@ export default function PathPeerCaseStudy() {
       <div id="s-reflection" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-[70px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               05
             </p>
-            <h2 className="font-serif text-[40px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
+            <h2 className="font-serif text-[32px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
               Reflection
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-3 gap-6 mt-10">
+          <div className="grid sm:grid-cols-2 gap-6 mt-10">
             {REFLECTIONS.map((r, i) => (
               <Reveal key={r.title} delay={i * 90}>
                 <div className="cs-box white px-6 py-7 h-full">
@@ -600,16 +613,27 @@ export default function PathPeerCaseStudy() {
                       <Icon>{r.icon}</Icon>
                     </span>
                   </div>
-                  <h3 className="font-serif font-bold text-lg mb-3" style={{ color: "var(--ink)" }}>
+                  <h3 className="font-serif font-bold text-xl mb-3" style={{ color: "var(--ink)" }}>
                     {r.title}
                   </h3>
-                  <p className="text-[14.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                  <p className="text-[15.5px] leading-relaxed" style={{ color: "#4c473e" }}>
                     {r.body}
                   </p>
                 </div>
               </Reveal>
             ))}
           </div>
+
+          {cs.whatIdImprove && (
+            <div className="cs-box light px-6 py-6 mt-8">
+              <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: ACCENT_ORANGE }}>
+                What I&apos;d improve
+              </p>
+              <p className="text-[15px] leading-relaxed" style={{ color: "#4c473e" }}>
+                {cs.whatIdImprove}
+              </p>
+            </div>
+          )}
 
           <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
             PathPeer&apos;s internal analytics dashboards and session recordings are not shown here

@@ -299,6 +299,7 @@ const caseStudiesData: CaseStudy[] = [
       "These reflect the platform's overall growth during the internship, with the analytics-and-recordings loop shaping which iterative changes, like new discovery tags and homepage flows for new mentors, went into that period rather than being the sole driver of the numbers.",
     ],
     note: "This case study reconstructs the categories of analysis and feature work from the internship, not verbatim session data; the platform's internal analytics dashboards and session recordings are not shown for confidentiality.",
+    whatIdImprove: "The 50% engagement and 40% drop-off numbers are the platform's overall internship-period results, not isolated to the analytics-and-recordings loop. I'd want to track changes at the feature level next time, so a given fix's impact could be measured on its own instead of folded into total growth.",
   },
   {
     slug: "informatica",
