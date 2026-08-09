@@ -16,6 +16,16 @@ export interface ProjectTheme {
 }
 
 export const caseStudyTheme: Record<string, ProjectTheme> = {
+  chronicle: {
+    bg: "#eef1e9",
+    accent: "#2e4a6b",
+    accentSoft: "#dbe3ee",
+    fillFrom: "#eef2f8",
+    fillTo: "#5c7ea3",
+    iconBg: "linear-gradient(135deg, #5c7ea3, #1f3a52)",
+    mark: "CH",
+    image: "/case-studies/chronicle/map-concert-of-europe-1815.jpg",
+  },
   roomease: {
     bg: "#f5f1e6",
     accent: "#c9941a",

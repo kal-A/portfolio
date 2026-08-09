@@ -7,7 +7,7 @@ export interface CaseStudy {
   slug: string;
   /** Which card/page treatment this project gets. See docs/redesign/06-project-card-types.md */
   category: "visual" | "systems" | "archive";
-  entryType: "internship" | "capstone" | "course-project";
+  entryType: "internship" | "capstone" | "course-project" | "independent-project";
   /** Narrative type, drives which detail-page sections get emphasis. See PORTFOLIO_CASE_STUDY_SYSTEM.md §5. */
   caseStudyType:
     | "product-ux"
@@ -456,11 +456,118 @@ const caseStudiesData: CaseStudy[] = [
     ],
     note: "Internal trackers, boards, and company-specific materials are omitted for confidentiality. This case study uses reconstructed, public-safe diagrams to explain the research and planning logic behind the work. Metrics are as reported internally during the internship.",
   },
+  {
+    slug: "chronicle",
+    category: "systems",
+    entryType: "independent-project",
+    caseStudyType: "technical",
+    tier: "featured",
+    title: "Building an AI-first historical investigation workspace",
+    company: "Chronicle · Independent Product",
+    role: "Solo builder - product, architecture, and AI systems",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "Historical claims need evidence, provenance, and uncertainty attached to them, not a confident chatbot answer or a static timeline.",
+    summary:
+      "An ongoing, independent AI-systems project: a bounded, auditable investigation-generation pipeline and a map-first workspace, being built toward a four-role agent system that has to argue from cited evidence instead of inventing history.",
+    tags: ["AI Systems", "Agent Architecture", "Product Architecture"],
+    toolTags: ["Python", "Pydantic", "TypeScript", "React", "Ollama", "MapLibre GL JS"],
+    artifacts: ["Architecture Docs", "Deterministic Pipeline", "Typed Tool Registry", "Test Suite"],
+    metrics: [
+      { value: "8-stage", label: "resumable generation pipeline (Python)" },
+      { value: "10", label: "typed, corpus-bound agent tools built" },
+      { value: "2", label: "independently-sourced investigations on one generic renderer" },
+      { value: "500+", label: "backend and frontend automated tests passing (snapshot, see Verification)" },
+    ],
+    problem:
+      "Ordinary historical explanations compress disagreement, uncertain timing, and disputed causation into confident prose. Chronicle's problem was to build a system, not just an interface, where a claim about the past could never appear without the evidence, timing, and uncertainty that produced it, and where an eventual AI agent layer would be bounded and auditable enough to be trusted with that responsibility.",
+    process: [
+      "Defined a versioned GeneratedInvestigation contract (Zod on the frontend, a field-for-field Pydantic mirror on the backend) before writing any generation logic, so every package a pipeline could ever produce was schema-valid and cross-reference-checked by construction.",
+      "Built a resumable, file-persisted, 8-stage Python generation pipeline and proved it mechanically with deterministic mock providers on arbitrary topics before curating any real historical content.",
+      "Hand-curated a second, real investigation (the Concert of Europe, 1814-1822) through that same pipeline, sourced from primary documents, and rendered it through the identical generic frontend renderer as the original hand-authored investigation, with no topic-specific branching.",
+      "Replaced the article-first renderer with a map-first workspace: a persistent map canvas, historical lenses, a docked assistant panel, and an Inspector mode that preserves the original detailed view rather than deleting it.",
+      "Reoriented the whole roadmap around a documented product-framing correction: the domain-specialized four-agent LLM system is the actual product core, and the historical content is its proving ground, not the reverse.",
+      "Built a provider-agnostic model layer (a deterministic test provider plus a real local Ollama/Qwen2.5 provider), chosen after an explicit hardware audit, with a named failure taxonomy and bounded retry-with-feedback on malformed structured output.",
+      "Built a read-only corpus service and 10 typed, bounded tools over the validated investigation packages for a future agent to call, with historical-integrity rules (evidence roles, temporal-role separation, precision tagging) enforced in the tool layer itself.",
+      "Kept a running, dated learning log of real defects caught before shipping, instead of only recording what went right.",
+    ],
+    outcome: [
+      "Two independently-sourced investigations render through one unmodified generic package renderer, with an automated check confirming no topic-specific constants leak into shared code.",
+      "A local, open-weight model (Qwen2.5:7b-instruct via Ollama) was installed and produced a real, schema-valid structured output on a genuine end-to-end smoke test, at zero inference cost.",
+      "A 10-tool, corpus-bound registry exists for a future agent to call, with bounded result sizes so an oversized tool result fails before it ever reaches a model.",
+      "The four-agent system itself (Investigation Planner, Evidence Analyst, Historical Critic, Investigation Guide) is architected and specified, but not yet built - deliberately kept out of this outcome list until real, called by an agent.",
+    ],
+    constraints: [
+      "No paid infrastructure: the model layer had to run on a local, open-weight model under real consumer hardware (13.69 GB RAM, integrated GPU, CPU-only inference) rather than a hosted frontier API.",
+      "Solo build: every architectural boundary, contract, and historical-integrity rule had to be self-enforced through tests and validators rather than caught by a second reviewer.",
+      "No live retrieval yet: with no web search, embeddings, or database layer built, every claim in the two investigations had to be hand-sourced and hand-verified against real primary or secondary documents.",
+      "A moving target: the roadmap has already been corrected twice at the product-framing level (map-first, then agent-system-as-core), so the page you're reading is a snapshot, not a finished product.",
+    ],
+    snapshot: {
+      challenge:
+        "Build an AI system that can reason over historical evidence without losing provenance, uncertainty, or temporal meaning, on zero paid infrastructure.",
+      contribution:
+        "Solo-designed and built the contract, deterministic pipeline, map-first workspace, and the model-provider and typed-tool foundation the agent layer will run on.",
+      outcome:
+        "Two real investigations proven on one generic contract; a local model wired end-to-end; the four-agent system architected and next in line to be built.",
+      tools: ["Python", "Pydantic", "TypeScript", "React", "Ollama", "MapLibre GL JS", "Claude Code"],
+    },
+    decisions: [
+      {
+        decision: "Map-first workspace instead of an article-first renderer.",
+        rationale:
+          "The original renderer presented an investigation as a single scrollable article. A historical investigation is fundamentally spatial and relational, so the map became the primary canvas, with a docked assistant panel beside it.",
+        alternatives: "Keep the article-first view as the only experience and add a map as a secondary tab.",
+        result:
+          "Both experiences exist: the map-first workspace as default, and the original article-first view preserved as an accessible 'Inspector' mode rather than deleted.",
+      },
+      {
+        decision: "The four-agent LLM system is the product core, not the historical content around it.",
+        rationale:
+          "A documented mid-project correction: the domain-specialized agent system (Investigation Planner, Evidence Analyst, Historical Critic, Investigation Guide) is what Chronicle is actually about. The existing curated investigations are its benchmark corpora, not the point.",
+        alternatives: "Keep expanding hand-curated historical content and treat AI as an add-on feature.",
+        result:
+          "The roadmap was rewritten around this correction. No new hand-authored investigation content ships until the agent layer exists to be evaluated against it.",
+      },
+      {
+        decision: "Local, open-weight model over a paid hosted API.",
+        rationale:
+          "A real hardware audit (13.69 GB RAM, integrated GPU, no realistic acceleration path) was run before any model comparison, to keep the project inside a genuine zero-paid-infrastructure constraint rather than an aspirational one.",
+        alternatives: "A frontier hosted API for stronger structured-output reliability.",
+        result:
+          "Qwen2.5:7b-instruct via Ollama, with a documented, accepted tradeoff: weaker structured-output reliability on a small local model, which is why a bounded retry-with-feedback path exists in the provider layer.",
+      },
+      {
+        decision: "Deterministic contracts and a mock pipeline before any model call.",
+        rationale:
+          "It's possible to start an 'AI-first' project by calling a model immediately. Instead, the versioned package contract, resumable pipeline, and generic renderer were proven end-to-end with deterministic mock providers on arbitrary topics first.",
+        alternatives: "Wire a model call early and let the contract shape emerge from what the model returned.",
+        result:
+          "When the real model-provider and tool layer landed, they had a stable, already-tested contract and 10 typed tools to call into, instead of needing to invent structure under model-output pressure.",
+      },
+      {
+        decision: "Historical-integrity rules enforced as structural constraints, not writing guidance.",
+        rationale:
+          "Rules like 'chronological adjacency never implies causation' or 'city-level evidence can never render as building-level' are easy to state and easy to quietly violate. They're enforced as schema and validator rules, checked at write time, in both the TypeScript and Python contracts.",
+        alternatives: "Document the rules as authoring guidance and rely on manual review to catch violations.",
+        result:
+          "Real bugs were caught by this discipline before shipping, including a serialization mismatch between the Python and TypeScript contracts that would have silently broken frontend validation.",
+      },
+    ],
+    reflection: [
+      "The roadmap has genuinely changed direction twice at the product-framing level (map-first, then agent-as-core), and writing both corrections down as dated decisions, instead of quietly absorbing them, made the second correction faster to reason about than the first.",
+      "Proving the deterministic pipeline mechanically, on synthetic topics, before curating real historical content, felt slow at the time. It meant the eventual model-provider and tool layer had a stable, already-tested contract to build against instead of inventing structure under model-output pressure.",
+      "A local 7B model is a real constraint, not a footnote. The retry-with-feedback path in the provider layer exists specifically because a small local model is measurably less reliable at structured output than a hosted frontier model, and that tradeoff is designed around, not hidden.",
+    ],
+    whatIdImprove:
+      "The map-first workspace has automated keyboard, accessibility, and mechanical test coverage, but no real human comprehension study has been run yet. That's the next validation gap I'd close before trusting the workspace design, and it's written down as an open test plan rather than skipped.",
+    note: "Chronicle is an active, independent project. This page reflects the state of the project's own documentation at the time it was written, and is explicit about what's built versus what's still architected only.",
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
 // projects (pill-pal) sort last.
-const displayOrder = ["roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal"];
+const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

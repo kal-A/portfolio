@@ -23,9 +23,9 @@ export const projects: ProjectEntry[] = [
   },
   {
     name: "Chronicle",
-    timeframe: "In development",
+    timeframe: "2026 - ongoing",
     synopsis:
-      "A new project currently in progress. Details and a full case study are coming soon.",
-    inDevelopment: true,
+      "An ongoing, independent AI-systems project: a bounded generation pipeline and map-first workspace being built toward a four-role historical-investigation agent system.",
+    caseStudySlug: "chronicle",
   },
 ];
