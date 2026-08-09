@@ -13,7 +13,6 @@ import { useMemo, useState } from "react";
 const INK = "#201c17";
 const INK_SOFT = "#5c564c";
 const GOLD_FILL = "#fdf3d9";
-const GOLD_LINE = "#8a5a0a";
 const DECISION_FILL = "#2b2419";
 const DECISION_TEXT = "#eab848";
 const PAPER = "#fffdf8";
