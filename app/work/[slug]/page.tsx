@@ -20,6 +20,7 @@ import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
 import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
 import PillPalCaseStudy from "@/components/case-study/PillPalCaseStudy";
 import PathPeerCaseStudy from "@/components/case-study/PathPeerCaseStudy";
+import RoomEaseCaseStudy from "@/components/case-study/RoomEaseCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -39,6 +40,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (cs.slug === "greenhouse") return <GreenhouseCaseStudy />;
   if (cs.slug === "pill-pal") return <PillPalCaseStudy />;
   if (cs.slug === "pathpeer") return <PathPeerCaseStudy />;
+  if (cs.slug === "roomease") return <RoomEaseCaseStudy />;
   const theme = caseStudyTheme[cs.slug];
 
   return (
