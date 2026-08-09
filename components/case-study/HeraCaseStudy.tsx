@@ -41,6 +41,16 @@ const BLUE_GRADIENT = "linear-gradient(135deg, #6fa0c4, #1f3a52)";
 const NAVY = "#1f3a52";
 const INK_SOFT_BODY = "#4c473e";
 
+/** Splits a two-sentence reflection string into a title (first sentence) and body (remainder). */
+function splitReflection(text: string): { title: string; body: string } {
+  const splitAt = text.indexOf(". ");
+  if (splitAt === -1) return { title: text, body: "" };
+  return {
+    title: text.slice(0, splitAt + 1).trim(),
+    body: text.slice(splitAt + 2).trim(),
+  };
+}
+
 const HERO_BG =
   "radial-gradient(circle at 12% 8%, rgba(58,107,147,0.16) 0%, transparent 48%), radial-gradient(circle at 88% 15%, rgba(111,160,196,0.2) 0%, transparent 52%), radial-gradient(circle at 14% 10%, rgba(31,58,82,0.1) 0%, transparent 42%), radial-gradient(circle at 88% 85%, rgba(43,46,51,0.05) 0%, transparent 46%), #f2eee2";
 const TONE_CREAM =
@@ -993,10 +1003,10 @@ export default function HeraCaseStudy() {
       <div id="s-reflection" className="cs-seam" style={{ background: TONE_SKY }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-[70px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               04
             </p>
-            <h2 className="font-serif text-[40px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
+            <h2 className="font-serif text-[32px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
               Reflection
             </h2>
           </Reveal>
@@ -1030,19 +1040,29 @@ export default function HeraCaseStudy() {
                       <Icon>{r.icon}</Icon>
                     </span>
                   </div>
-                  <p className="text-[15.5px] leading-relaxed font-medium" style={{ color: "var(--ink)" }}>
-                    {r.title}
-                  </p>
+                  {(() => {
+                    const { title, body } = splitReflection(r.title);
+                    return (
+                      <>
+                        <h3 className="font-serif font-bold text-xl mb-3" style={{ color: "var(--ink)" }}>
+                          {title}
+                        </h3>
+                        <p className="text-[15.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                          {body}
+                        </p>
+                      </>
+                    );
+                  })()}
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <div className="cs-box white px-6 py-6 mt-10 max-w-2xl">
-            <p className="text-[11px] font-extrabold uppercase tracking-wide mb-2" style={{ color: NAVY }}>
-              What I&apos;d improve next
+          <div className="cs-box light px-6 py-6 mt-10">
+            <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: NAVY }}>
+              What I&apos;d improve
             </p>
-            <p className="text-sm leading-relaxed" style={{ color: "#4c473e" }}>
+            <p className="text-[15px] leading-relaxed" style={{ color: "#4c473e" }}>
               {cs.whatIdImprove}
             </p>
           </div>
