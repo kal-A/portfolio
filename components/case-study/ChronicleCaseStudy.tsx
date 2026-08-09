@@ -401,7 +401,7 @@ export default function ChronicleCaseStudy() {
                   className="object-cover"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm leading-relaxed" style={{ color: "#4c473e" }}>
                   The real, rights-cleared period map behind the Vienna scene: William R.
                   Shepherd, <em>Historical Atlas</em> (1911), &quot;Treaty Adjustments, 1814,
@@ -470,7 +470,7 @@ export default function ChronicleCaseStudy() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="cs-box dark px-5 py-5">
-                  <div className="flex items-center justify-between gap-2 mb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <p className="font-bold text-sm" style={{ color: "#fdfaf5" }}>Model-provider layer</p>
                     <StatusPill tone="built">Built &amp; smoke-tested</StatusPill>
                   </div>
@@ -484,7 +484,7 @@ export default function ChronicleCaseStudy() {
                   </p>
                 </div>
                 <div className="cs-box dark px-5 py-5">
-                  <div className="flex items-center justify-between gap-2 mb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <p className="font-bold text-sm" style={{ color: "#fdfaf5" }}>Corpus and typed tools</p>
                     <StatusPill tone="foundation">Implemented, not yet merged</StatusPill>
                   </div>
@@ -532,7 +532,7 @@ export default function ChronicleCaseStudy() {
                   className="object-cover"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm leading-relaxed" style={{ color: "#4c473e" }}>
                   A period map (Shepherd, 1911) from the same public-domain atlas tradition
                   Chronicle&apos;s map-sourcing discipline is built around, showing the

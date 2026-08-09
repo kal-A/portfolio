@@ -54,7 +54,7 @@ const nodes: DNode[] = [
     h: 82,
     zone: "input",
     synopsis:
-      "Removes rooms with time conflicts, rooms below the required capacity, and rooms missing required features (AV, accessibility). Anything that fails a hard constraint is out, full stop — this is the feasibility layer, not the preference layer.",
+      "Removes rooms with time conflicts, rooms below the required capacity, and rooms missing required features (AV, accessibility). Anything that fails a hard constraint is out, full stop - this is the feasibility layer, not the preference layer.",
   },
   {
     id: "scoring",
@@ -95,7 +95,7 @@ const nodes: DNode[] = [
   {
     id: "override",
     type: "process",
-    title: "Manual override — reason required",
+    title: "Manual override - reason required",
     x: 24,
     y: 592,
     w: 200,
@@ -138,7 +138,7 @@ const nodes: DNode[] = [
     h: 84,
     zone: "validation",
     synopsis:
-      "If the admin finds a conflict or policy problem, the request is sent back with a reason instead of being silently rejected — the same transparency principle as the user-side override.",
+      "If the admin finds a conflict or policy problem, the request is sent back with a reason instead of being silently rejected - the same transparency principle as the user-side override.",
   },
   {
     id: "confirmed",
@@ -150,7 +150,7 @@ const nodes: DNode[] = [
     h: 60,
     zone: "validation",
     synopsis:
-      "The confirmation screen shows the event summary and room summary and logs the booking to prevent it from conflicting with any later request — closing the loop that a manual, email-based process couldn't reliably close.",
+      "The confirmation screen shows the event summary and room summary and logs the booking to prevent it from conflicting with any later request - closing the loop that a manual, email-based process couldn't reliably close.",
   },
 ];
 

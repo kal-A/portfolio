@@ -368,11 +368,6 @@ export default function RoomEaseCaseStudy() {
             </p>
 
             <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
-              The current process
-            </p>
-            <ProcessFlow steps={CURRENT_PROCESS_STEPS} accent="#c9941a" />
-
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
               Who we heard from
             </p>
             <div className="cs-box white px-6 py-6">
@@ -400,6 +395,13 @@ export default function RoomEaseCaseStudy() {
               </div>
             </div>
           </Chapter>
+
+          <Reveal>
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
+              The current process
+            </p>
+            <ProcessFlow steps={CURRENT_PROCESS_STEPS} accent="#c9941a" />
+          </Reveal>
         </div>
       </div>
 

@@ -167,7 +167,7 @@ const caseStudiesData: CaseStudy[] = [
     tier: "featured",
     title: "Making club room booking less scattered",
     company: "RoomEase · University of Waterloo Capstone (MSE 401/402)",
-    role: "Team Member — User Prototype, Testing & Presentation",
+    role: "Team Member - User Prototype, Testing & Presentation",
     timeframe: "Fall 2025 – Winter 2026",
     oneLiner: "University clubs and departments were booking rooms across 34+ different websites, each with its own process, with no shared way to check what a room actually offered.",
     summary:

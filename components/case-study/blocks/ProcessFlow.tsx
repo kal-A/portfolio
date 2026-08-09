@@ -70,7 +70,7 @@ export default function ProcessFlow({
   );
 
   return (
-    <div className="grid md:grid-cols-[1fr_340px] gap-8 items-start">
+    <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
       <div className="flex flex-col gap-4">
         {renderRow(row1, 0)}
         <div className="flex items-center gap-3 pl-1">
@@ -85,7 +85,7 @@ export default function ProcessFlow({
       </div>
 
       <div
-        className="cs-box white px-8 py-8 md:h-[280px] md:-translate-y-10 flex flex-col justify-center overflow-hidden"
+        className="cs-box white px-8 py-8 lg:h-[280px] lg:-translate-y-10 flex flex-col justify-center overflow-hidden"
         style={{ background: "#fffdf8" }}
       >
         <p className="text-xs font-extrabold uppercase tracking-wide mb-2" style={{ color: accent }}>
