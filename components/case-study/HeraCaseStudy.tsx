@@ -8,6 +8,12 @@
 // from that material, with the original sketches kept only where a rough
 // thinking -> polished concept comparison genuinely adds value.
 //
+// All 7 exported sketch PNGs in public/case-studies/hera-fertility/ are now
+// referenced on the page (financing flow, near-me search/filter, payment
+// concept, near-me clinic-detail layout iterations, the roadmap notes, and
+// the GA/marketing-metrics planning notes), so every real artifact pulled
+// from the source PDFs has a visible home here rather than sitting unused.
+//
 // NEEDS_INPUT (kept off the public page, for Kamal to confirm later):
 // - Baseline/period/definition for the resume's "2x retention" and "50% less
 //   onboarding drop-off" claims. No source artifact documents them, so they
@@ -22,8 +28,15 @@
 // - The roadmap's Phase 2 label ("Upgrade to Missouri") is not used publicly
 //   since Kamal doesn't remember what it referred to; the phase is described
 //   functionally instead (QA, production keys, production API).
+// - No Hera screen recordings or video files were found in this worktree or
+//   the gitignored `Herafertility work/` source folder (checked 2026-08-09;
+//   that folder only contains the 6 PDFs already audited, plus the 7 sketch
+//   PNGs now all in use on this page). If Kamal has recordings elsewhere,
+//   the financing, segmentation, and clinic-discovery sections are the
+//   places to add them per the video-media rules.
 
 import Link from "next/link";
+import Image from "next/image";
 import { getCaseStudy } from "@/lib/content/case-studies";
 import Chapter from "@/components/case-study/blocks/Chapter";
 import Icon from "@/components/case-study/blocks/Icon";
@@ -33,6 +46,7 @@ import SketchPanel from "@/components/case-study/blocks/SketchPanel";
 import Reveal from "@/components/Reveal";
 import {
   HeraFinancingFlowMockup,
+  HeraPaymentPlanMockup,
   HeraClinicSearchMockup,
   HeraClinicDetailMockup,
 } from "@/components/mockups/HeraMockups";
@@ -259,6 +273,38 @@ const ANALYTICS_INSIGHTS = [
     measurement: "Revisit once acquisition, not conversion, becomes the active product question.",
   },
 ];
+
+/** Small evidence panel pairing a real source-note thumbnail with a caption explaining what it shows and what it fed. */
+function SourceNoteCard({
+  src,
+  alt,
+  aspect,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  aspect: string;
+  caption: React.ReactNode;
+}) {
+  return (
+    <div className="cs-box white flex flex-col sm:flex-row gap-5 items-start px-6 py-6">
+      <div
+        className="relative w-full sm:w-[160px] shrink-0 rounded-lg overflow-hidden border"
+        style={{ borderColor: "#e5e1d4", aspectRatio: aspect }}
+      >
+        <Image src={src} alt={alt} fill className="object-contain" />
+      </div>
+      <div>
+        <p className="text-[11px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+          Source notes
+        </p>
+        <p className="text-sm leading-relaxed" style={{ color: INK_SOFT_BODY }}>
+          {caption}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function DashedRow({ children, i }: { children: React.ReactNode; i: number }) {
   return (
@@ -771,7 +817,19 @@ export default function HeraCaseStudy() {
             </p>
           </Reveal>
 
-          <PaymentDecisionMatrix />
+          <SketchPanel
+            sketchSrc="/case-studies/hera-fertility/sketch-payment-concept.png"
+            sketchAlt="Handwritten wireframes of treatment homepage cards annotated as inspired by Boston IVF, an account-creation modal with a treatment-selection dropdown, and three payment-plan option cards showing price, term, and inclusions"
+            sketchCaption="The full payment-plan concept sketch: treatment cards (IVF, egg freezing, IUI) annotated as inspired by Boston IVF's layout, each linking to a payment-plans page; an account-creation modal with a treatment-selection dropdown mirroring the one built into the shipped segmentation flow; and three payment-plan option cards with price, term, and what's included."
+            accent={NAVY}
+            reconstructedCaption="Reconstructed payment-plan pages: treatment overview cards leading into the three-option IVF payment-plan comparison, following the sketch's structure and the Bitly-modeled tiered layout."
+          >
+            <HeraPaymentPlanMockup />
+          </SketchPanel>
+
+          <div className="mt-12">
+            <PaymentDecisionMatrix />
+          </div>
 
           <div className="mt-10">
             {cs.decisions!.slice(2, 3).map((d) => (
@@ -836,7 +894,40 @@ export default function HeraCaseStudy() {
             functional but wasn&apos;t. It was never user-tested.
           </p>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-12 mb-4">
+          <Reveal>
+            <p className="text-xs font-extrabold uppercase tracking-wide mt-14 mb-1.5" style={{ color: NAVY }}>
+              Original layout iterations
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="cs-box white overflow-hidden">
+                <div className="relative w-full bg-white" style={{ aspectRatio: "1422 / 1728" }}>
+                  <Image
+                    src="/case-studies/hera-fertility/sketch-nearme-iterations-1-2.png"
+                    alt="Clinic-detail layout passes 1 and 2: a large square map beside a short hours list, then hours moved up beside the clinic title with a wider map band beneath"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="cs-box white overflow-hidden">
+                <div className="relative w-full bg-white" style={{ aspectRatio: "998 / 1682" }}>
+                  <Image
+                    src="/case-studies/hera-fertility/sketch-nearme-iterations-3-4.png"
+                    alt="Clinic-detail layout passes 3 and 4: a narrower map with tighter surrounding whitespace, then the settled single-column layout with a full-width map beneath the header"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed mt-3 max-w-2xl" style={{ color: "#4c473e" }}>
+              All four clinic-detail layout passes, labeled Design 1 through Design 4 in the original
+              file. Each moved the map, hours, and related-listings block until pass four&apos;s compact
+              single-column version, carried into the settled design below.
+            </p>
+          </Reveal>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8 mb-4">
             {NEARME_PASSES.map((pass, i) => (
               <Reveal key={pass.n} delay={i * 70}>
                 <div className="cs-box white h-full px-5 py-6">
@@ -857,7 +948,7 @@ export default function HeraCaseStudy() {
             ))}
           </div>
           <p className="text-[11px] font-extrabold uppercase tracking-wide mb-10" style={{ color: NAVY }}>
-            Reconstructed summary of four layout passes for the clinic-detail page
+            What each pass changed, labeled against the original iterations above
           </p>
 
           <Reveal>
@@ -925,7 +1016,21 @@ export default function HeraCaseStudy() {
 
           <div className="mt-14">
             <Reveal>
-              <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: NAVY }}>
+              <SourceNoteCard
+                src="/case-studies/hera-fertility/sketch-ga-metrics.png"
+                alt="Original marketing-metrics planning notes: acquisition, audience, traffic, and behaviour-and-engagement metric groups, with CAC and LTV marked as a 'maybe' addition"
+                aspect="1435 / 1509"
+                caption={
+                  <>
+                    The original metrics-planning notes, grouped into acquisition, audience, traffic,
+                    and behaviour &amp; engagement, with CAC and LTV marked &ldquo;maybe&rdquo; rather than
+                    core. The scoped plan and insight table below are both built directly from this list.
+                  </>
+                }
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <p className="text-xs font-extrabold uppercase tracking-wide mt-8 mb-1.5" style={{ color: NAVY }}>
                 Reconstructed insight table
               </p>
               <h3 className="font-serif text-2xl mb-6" style={{ color: "var(--ink)" }}>
@@ -948,7 +1053,24 @@ export default function HeraCaseStudy() {
             </p>
           </Chapter>
 
-          <div className="mt-12">
+          <Reveal delay={80}>
+            <div className="mt-10">
+              <SourceNoteCard
+                src="/case-studies/hera-fertility/sketch-roadmap.png"
+                alt="Original handwritten roadmap notes: a six-week timeline, project owner and co-op resources, the end goal, and a three-phase execution roadmap with tasks and owners"
+                aspect="1435 / 1636"
+                caption={
+                  <>
+                    The original planning notes: a six-week timeline (Feb 21 &ndash; Mar 27), Thiv as
+                    project owner, Faiq and Kamal as co-ops, and the three-phase execution roadmap the
+                    table below is translated from directly, task by task.
+                  </>
+                }
+              />
+            </div>
+          </Reveal>
+
+          <div className="mt-10">
             <Reveal>
               <p className="text-xs font-extrabold uppercase tracking-wide mb-3" style={{ color: NAVY }}>
                 Reconstructed roadmap
