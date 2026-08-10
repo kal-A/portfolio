@@ -84,62 +84,111 @@ export function HeraFinancingFlowMockup() {
   );
 }
 
+const TREATMENT_SUMMARIES = [
+  {
+    name: "IVF Treatment",
+    synopsis: "Eggs are retrieved, fertilized with sperm in a lab, and a resulting embryo is transferred back to the uterus.",
+  },
+  {
+    name: "Egg Freezing",
+    synopsis: "Eggs are retrieved and frozen for future use, preserving fertility on your own timeline.",
+  },
+  {
+    name: "IUI Treatment",
+    synopsis: "Prepared sperm is placed directly into the uterus around ovulation to improve the chance of fertilization.",
+  },
+];
+
+const IVF_BASICS = ["Ovarian stimulation and monitoring", "Egg retrieval procedure", "Lab fertilization and embryo culture", "Embryo transfer"];
+
+const PAYMENT_OPTIONS = [
+  { name: "Option 1", term: "Pay in full", price: "$ Price / one-time", contains: ["Full treatment cycle", "No financing fees"] },
+  { name: "Option 2", term: "12-month plan", price: "$ Price / mo", contains: ["Full treatment cycle", "Fixed monthly payment", "Dedicated care coordinator"] },
+  { name: "Option 3", term: "24-month plan", price: "$ Price / mo", contains: ["Full treatment cycle", "Lower monthly payment", "Dedicated care coordinator"] },
+];
+
+/** Reconstructs the full payment-plan flow shown across the source wireframes: treatment
+ * selection, a concise treatment explanation, the treatment-specific payment-plan page, and
+ * the three-option comparison. Dollar amounts are illustrative placeholders, matching the
+ * "$Price / time" placeholder text in the original wireframe, which never specified numbers. */
 export function HeraPaymentPlanMockup() {
-  const treatments = [
-    { name: "IVF Treatment", rows: ["Synopsis", "Basic procedure"] },
-    { name: "Egg Freezing", rows: ["Synopsis"] },
-    { name: "IUI Freezing", rows: ["Basics", "Goal"] },
-  ];
   return (
     <BrowserFrame url="herafertility.co/payment-plans">
       <div className="p-6">
-        <p className="font-serif text-base text-neutral-800 mb-3">Payment plans by treatment</p>
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mb-1.5">
+          1. Treatment selection
+        </p>
         <div className="grid grid-cols-3 gap-3">
-          {treatments.map((t) => (
+          {TREATMENT_SUMMARIES.map((t) => (
             <div key={t.name} className="rounded-lg text-white p-3" style={{ background: NAVY }}>
-              <p className="font-medium text-[10.5px] mb-2">{t.name}</p>
-              {t.rows.map((r) => (
-                <div key={r} className="mb-2">
-                  <p className="text-[8px] opacity-70 mb-1">{r}</p>
-                  <div className="h-1 bg-white/25 rounded-full w-full mb-1" />
-                  <div className="h-1 bg-white/25 rounded-full w-4/5" />
-                </div>
-              ))}
-              <div className="text-center rounded-md py-1.5 mt-2 text-[8.5px] font-semibold" style={{ background: SKY, color: NAVY }}>
+              <p className="font-medium text-[10.5px] mb-1.5">{t.name}</p>
+              <p className="text-[8px] leading-snug opacity-80 mb-2">{t.synopsis}</p>
+              <div className="text-center rounded-md py-1.5 mt-1 text-[8.5px] font-semibold" style={{ background: SKY, color: NAVY }}>
                 Payment plans
               </div>
             </div>
           ))}
         </div>
 
-        <p className="text-[9px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-2">
-          IVF payment plans
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
+          2. IVF payment plans page &middot; about the treatment
+        </p>
+        <div className="rounded-lg border p-3.5" style={{ borderColor: "#e5e1d4" }}>
+          <div className="grid grid-cols-[1fr_1fr] gap-4">
+            <div>
+              <p className="text-[8px] text-neutral-400 mb-1">Synopsis</p>
+              <p className="text-[9px] text-neutral-700 leading-snug">{TREATMENT_SUMMARIES[0].synopsis}</p>
+            </div>
+            <div className="rounded-md border px-2.5 py-2" style={{ borderColor: BLUE }}>
+              <p className="text-[8px] mb-1" style={{ color: BLUE }}>Basics</p>
+              <ul className="flex flex-col gap-0.5">
+                {IVF_BASICS.slice(0, 3).map((b) => (
+                  <li key={b} className="text-[7.5px] text-neutral-600 leading-snug">&#8226; {b}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
+          3. Three-option comparison &middot; price, term, and what&apos;s included
         </p>
         <div className="grid grid-cols-3 gap-3">
-          {["Option 1", "Option 2", "Option 3"].map((opt) => (
-            <div key={opt} className="rounded-lg border px-3 py-3" style={{ borderColor: BLUE }}>
-              <p className="font-medium text-[10px] text-neutral-800">{opt}</p>
-              <p className="text-[9px] text-neutral-400 mt-0.5">$Price / time</p>
+          {PAYMENT_OPTIONS.map((opt) => (
+            <div key={opt.name} className="rounded-lg border px-3 py-3" style={{ borderColor: BLUE }}>
+              <p className="font-medium text-[10px] text-neutral-800">{opt.name}</p>
+              <p className="text-[8px] text-neutral-400">{opt.term}</p>
+              <p className="text-[9.5px] font-semibold mt-1" style={{ color: NAVY }}>{opt.price}</p>
               <div className="text-white text-center rounded-md py-1.5 mt-2 text-[8.5px] font-semibold" style={{ background: BLUE }}>
                 Get started
               </div>
               <p className="text-[8px] text-neutral-400 mt-2">Contains</p>
-              <div className="h-1 bg-neutral-100 rounded-full w-full mt-1" />
-              <div className="h-1 bg-neutral-100 rounded-full w-3/4 mt-1" />
+              <ul className="flex flex-col gap-0.5 mt-1">
+                {opt.contains.map((c) => (
+                  <li key={c} className="text-[7.5px] text-neutral-600 leading-snug">&#8226; {c}</li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
+        <p className="text-[7.5px] text-neutral-400 mt-2 italic">
+          Prices shown are illustrative placeholders; the source wireframe never specified dollar amounts.
+        </p>
       </div>
     </BrowserFrame>
   );
 }
 
+/** Representative demo clinic data spanning multiple U.S. regions, illustrating nationwide
+ * coverage. Only Kofinas Fertility Group (New York) and the "Metropolitan Reproductive
+ * Medicine, PC" name appear in the original wireframes; the rest are clearly-generic
+ * placeholder entries, not real clinics, standing in for a broader results list. */
 export function HeraClinicSearchMockup() {
   const results = [
-    { tag: "IVF", name: "Metropolitan Reproductive Medicine, PC" },
-    { tag: "Egg Freezing", name: "Metropolitan Reproductive Medicine, PC" },
-    { tag: "Mind-Body", name: "Metropolitan Reproductive Medicine, PC" },
-    { tag: "IVF", name: "Metropolitan Reproductive Medicine, PC" },
+    { tag: "IVF", name: "Kofinas Fertility Group", place: "New York, NY" },
+    { tag: "Egg Freezing", name: "Lakeside Fertility Center", place: "Chicago, IL" },
+    { tag: "IUI", name: "Sunridge Reproductive Medicine", place: "Austin, TX" },
+    { tag: "Mind-Body", name: "Cascade Fertility Partners", place: "Seattle, WA" },
   ];
   return (
     <BrowserFrame url="herafertility.co/clinics/near-me">
@@ -179,7 +228,7 @@ export function HeraClinicSearchMockup() {
                     Fertility &middot; {r.tag}
                   </span>
                   <p className="text-[9.5px] font-medium text-neutral-800 leading-tight">{r.name}</p>
-                  <p className="text-[8px] text-neutral-400 mt-1">422 West End Ave, New York</p>
+                  <p className="text-[8px] text-neutral-400 mt-1">{r.place}</p>
                   <p className="text-[8px] text-neutral-400">Clinic score &#9733; &middot; sort: distance</p>
                 </div>
               ))}
@@ -203,7 +252,7 @@ export function HeraClinicDetailMockup() {
         </span>
         <p className="font-serif text-base text-neutral-800">Kofinas Fertility Group</p>
         <p className="text-[9px] text-neutral-400 mt-1">65 Broadway, 4th Floor, New York, NY 10006</p>
-        <p className="text-[9px] text-neutral-400">+1 (212) 345-4000</p>
+        <p className="text-[9px] text-neutral-400">+1 (212) 348-4000</p>
 
         <div className="grid grid-cols-[1fr_150px] gap-4 mt-3">
           <div className="rounded-md h-20 flex items-center justify-center text-[8.5px] text-neutral-400" style={{ background: "#eef1f5" }}>
@@ -233,8 +282,12 @@ export function HeraClinicDetailMockup() {
           Related listings
         </p>
         <div className="grid grid-cols-3 gap-2">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="rounded-md border px-2 py-1.5" style={{ borderColor: "#e5e1d4" }}>
+          {[
+            { name: "Metropolitan Reproductive Medicine, PC", place: "422 West End Ave, New York, NY" },
+            { name: "Peachtree Fertility Institute", place: "Atlanta, GA" },
+            { name: "Rocky Mountain Reproductive Medicine", place: "Denver, CO" },
+          ].map((c) => (
+            <div key={c.name} className="rounded-md border px-2 py-1.5" style={{ borderColor: "#e5e1d4" }}>
               <span
                 className="inline-block rounded-full px-1.5 py-0.5 text-[7px] font-semibold mb-1"
                 style={{ background: "#eaf1f7", color: BLUE }}
@@ -242,9 +295,9 @@ export function HeraClinicDetailMockup() {
                 Fertility clinic
               </span>
               <p className="text-[8.5px] font-medium text-neutral-800 leading-tight">
-                Metropolitan Reproductive Medicine, PC
+                {c.name}
               </p>
-              <p className="text-[7.5px] text-neutral-400 mt-1">422 West End Ave, New York</p>
+              <p className="text-[7.5px] text-neutral-400 mt-1">{c.place}</p>
             </div>
           ))}
         </div>
