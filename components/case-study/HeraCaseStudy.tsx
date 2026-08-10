@@ -8,11 +8,16 @@
 // from that material, with the original sketches kept only where a rough
 // thinking -> polished concept comparison genuinely adds value.
 //
-// All 7 exported sketch PNGs in public/case-studies/hera-fertility/ are now
-// referenced on the page (financing flow, near-me search/filter, payment
-// concept, near-me clinic-detail layout iterations, the roadmap notes, and
-// the GA/marketing-metrics planning notes), so every real artifact pulled
-// from the source PDFs has a visible home here rather than sitting unused.
+// All 8 real-source images in public/case-studies/hera-fertility/ are
+// referenced on the page (financing flow, near-me search/filter, near-me
+// clinic-detail layout iterations, the roadmap notes, the GA/marketing-
+// metrics planning notes, and two tightly cropped pages from the payment
+// plans wireframe file: the homepage treatment-selection cards and the
+// full treatment-specific IVF Payment Plans page), so every real artifact
+// pulled from the source PDFs has a visible home here rather than sitting
+// unused. The payment-plan crops replaced an earlier composite sketch
+// export that bundled the same two pages at illegible scale plus
+// unrelated inspiration-source annotations.
 //
 // NEEDS_INPUT (kept off the public page, for Kamal to confirm later):
 // - Baseline/period/definition for the resume's "2x retention" and "50% less
@@ -43,6 +48,7 @@ import Icon from "@/components/case-study/blocks/Icon";
 import SnapshotGrid, { SnapshotBox } from "@/components/case-study/blocks/SnapshotGrid";
 import ProcessFlow, { ProcessStep } from "@/components/case-study/blocks/ProcessFlow";
 import SketchPanel from "@/components/case-study/blocks/SketchPanel";
+import StatGrid from "@/components/case-study/blocks/StatGrid";
 import Reveal from "@/components/Reveal";
 import {
   HeraFinancingFlowMockup,
@@ -530,9 +536,10 @@ export default function HeraCaseStudy() {
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
                 Hera&apos;s financing application ran through a third-party loan processor, and there
                 was no in-house product to design the sign-up, payment, or clinic-discovery experience
-                around. I designed and shipped the financing flow and account-segmentation, built a
-                payment-plan concept grounded in competitive research, and designed the clinic-discovery
-                experience, then used Hotjar and Google Analytics to decide what came next.
+                around. I designed the financing flow, a payment-plan concept grounded in competitive
+                research, and the clinic-discovery experience, and shipped the account-segmentation
+                flow that routes new users into them, then used Hotjar and Google Analytics to decide
+                what came next.
               </p>
               <div className="flex flex-wrap gap-2.5 mt-7">
                 {cs.artifacts.map((chip) => (
@@ -817,15 +824,38 @@ export default function HeraCaseStudy() {
             </p>
           </Reveal>
 
-          <SketchPanel
-            sketchSrc="/case-studies/hera-fertility/sketch-payment-concept.png"
-            sketchAlt="Handwritten wireframes of treatment homepage cards annotated as inspired by Boston IVF, an account-creation modal with a treatment-selection dropdown, and three payment-plan option cards showing price, term, and inclusions"
-            sketchCaption="The full payment-plan concept sketch: treatment cards (IVF, egg freezing, IUI) annotated as inspired by Boston IVF's layout, each linking to a payment-plans page; an account-creation modal with a treatment-selection dropdown mirroring the one built into the shipped segmentation flow; and three payment-plan option cards with price, term, and what's included."
-            accent={NAVY}
-            reconstructedCaption="Reconstructed payment-plan pages: treatment overview cards leading into the three-option IVF payment-plan comparison, following the sketch's structure and the Bitly-modeled tiered layout."
-          >
-            <HeraPaymentPlanMockup />
-          </SketchPanel>
+          <Reveal>
+            <div className="cs-box white overflow-hidden">
+              <div className="relative w-full bg-white" style={{ aspectRatio: "1320 / 600" }}>
+                <Image
+                  src="/case-studies/hera-fertility/source-payment-homepage-cards.png"
+                  alt="Real wireframe: homepage treatment-selection cards for IVF, egg freezing, and IUI, each showing a synopsis and a payment-plans link, annotated as inspired by Boston IVF's layout"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            <p className="text-[11px] font-extrabold uppercase tracking-wide mt-3" style={{ color: NAVY }}>
+              Real wireframe &middot; homepage treatment selection
+            </p>
+            <p className="text-sm leading-relaxed mt-1 max-w-2xl" style={{ color: "#4c473e" }}>
+              Cropped directly from the source wireframe file: three treatment entry points (IVF, egg
+              freezing, IUI), each with a synopsis and a link into its own payment-plans page,
+              annotated in the original as inspired by Boston IVF&apos;s layout.
+            </p>
+          </Reveal>
+
+          <div className="mt-10">
+            <SketchPanel
+              sketchSrc="/case-studies/hera-fertility/source-payment-plan-full-page.png"
+              sketchAlt="Real wireframe of the treatment-specific IVF Payment Plans page: header navigation, an About IVF Treatment section with synopsis, basics, and procedure, a testimonial band, a How It Works section, and three payment-plan option cards"
+              sketchCaption="The real, treatment-specific IVF Payment Plans page from the source wireframe file: an About IVF Treatment section (synopsis, basics, picture, procedure), a testimonial band, a three-step How It Works section, and the three payment-plan option cards this section reconstructs in more detail."
+              accent={NAVY}
+              reconstructedCaption="Reconstructed as a working page: treatment selection, a concise treatment explanation pulled from the About section's structure, and the three-option comparison with price, term, and what's included filled in. Dollar amounts are illustrative; the source wireframe never specified numbers."
+            >
+              <HeraPaymentPlanMockup />
+            </SketchPanel>
+          </div>
 
           <div className="mt-12">
             <PaymentDecisionMatrix />
@@ -876,7 +906,7 @@ export default function HeraCaseStudy() {
             sketchAlt="Handwritten wireframes of the clinic search, filter panel, and clinic detail page for Near Me clinic discovery"
             sketchCaption="The search and filter sketch: search by clinic or location, a category dropdown, a filter panel for services, price range, distance, and hours, and a results list sorted by distance. Doctor name and a percentage rating were crossed out of the detail-field list."
             accent={NAVY}
-            reconstructedCaption="Reconstructed search results: category tags, distance sort, and clinic cards pulled straight from the filter logic in the sketch."
+            reconstructedCaption="Reconstructed search results: category tags, distance sort, and clinic cards pulled straight from the filter logic in the sketch. Only Kofinas Fertility Group, New York, appears by name in the source file; the other clinic names, cities, and states shown here are clearly-generic representative data illustrating nationwide coverage, not real partner clinics."
           >
             <HeraClinicSearchMockup />
           </SketchPanel>
@@ -959,8 +989,10 @@ export default function HeraCaseStudy() {
               <HeraClinicDetailMockup />
             </div>
             <p className="text-sm leading-relaxed mt-3 max-w-2xl" style={{ color: "#4c473e" }}>
-              The settled single-column layout (pass 04), applied to a real clinic listing used as the
-              working example in the original files.
+              The settled single-column layout (pass 04), applied to Kofinas Fertility Group, the real
+              New York clinic used as the working example in the original files. The related-listings
+              row mixes that same source name with clearly-generic representative clinics in other U.S.
+              cities, standing in for a broader nationwide result set rather than one repeated address.
             </p>
           </Reveal>
 
@@ -1098,8 +1130,13 @@ export default function HeraCaseStudy() {
               This internship&apos;s usability-test results and post-launch analytics were not
               preserved, so most of the outcomes below describe what was designed, decided, and handed
               off, rather than measured percentages. The segmentation flow is the exception: it shipped.
+              The numbers below describe the scope of that work, not a claimed platform-wide result.
             </p>
           </Reveal>
+
+          <div className="mb-10">
+            <StatGrid valueColor="#8fb8dc" stats={cs.metrics.map((m) => ({ value: m.value, label: m.label }))} />
+          </div>
 
           <div className="flex flex-col gap-4">
             {cs.outcome.map((row, i) => (

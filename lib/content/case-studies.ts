@@ -73,11 +73,16 @@ const caseStudiesData: CaseStudy[] = [
     timeframe: "Jan 2023 – Apr 2023",
     oneLiner: "Fertility treatment financing is confusing and high-stakes, and Hera had no existing product to design from.",
     summary:
-      "Designed and shipped the financing application, account segmentation, payment-plan comparison, and clinic-discovery flows for a 0-to-1 fertility financing platform, using Hotjar and Google Analytics to decide what to build next.",
+      "Designed the financing application's prequalification flow, payment-plan comparison, and clinic-discovery experience for a 0-to-1 fertility platform, and shipped the account-segmentation flow that routes new users into them, using Hotjar and Google Analytics to decide what to build next.",
     tags: ["Fintech UX", "Product Strategy", "UX Research"],
     toolTags: ["Figma", "Balsamiq", "Google Analytics", "Hotjar", "Looker Studio", "WordPress", "Umso", "HubSpot", "Excel"],
     artifacts: ["Wireframes", "Payment Plan Research", "Clinic Discovery Design", "Product Roadmap", "Analytics Planning"],
-    metrics: [],
+    metrics: [
+      { value: "4 → 1", label: "address-entry fields collapsed in the financing prequalification flow" },
+      { value: "3", label: "treatment paths shipped in account segmentation (IVF, egg freezing, IUI)" },
+      { value: "9", label: "competitor products and platforms audited for the payment-plan research" },
+      { value: "4", label: "clinic-detail layout passes iterated for Near Me discovery" },
+    ],
     problem:
       "Choosing how to pay for fertility treatment is not a decision most people are practiced at making: a requested loan amount, a repayment plan, and clinic pricing, all worked out while already navigating a stressful medical process. Hera Fertility's financing application ran entirely through Loanglide, a third-party loan processor, which limited how much of that sign-up, payment, and clinic-discovery experience the team could actually design or control. There was no existing in-house product to iterate from. The goal was to design Hera's own financing flow, payment-plan presentation, and clinic-discovery experience, then stand up an in-house build to replace the third-party dependency and use behavioral research to decide what to build next.",
     process: [
@@ -106,7 +111,7 @@ const caseStudiesData: CaseStudy[] = [
     note: "No final production screens were preserved from this internship, aside from what's noted as shipped below. The wireframes, roadmap, and research notes underlying this case study are real source material; most of the diagrams, tables, and screens on this page are professional reconstructions built from that material rather than scans of the original working notes.",
     snapshot: {
       challenge: "Fertility financing was routed through a third-party loan processor, with no in-house product to design the sign-up, payment, or clinic-discovery experience around.",
-      contribution: "Designed and shipped the financing flow, account segmentation, payment-plan concept, and clinic-discovery experience, then used Hotjar and Google Analytics to decide what came next.",
+      contribution: "Designed the financing flow, payment-plan concept, and clinic-discovery experience, and shipped the account-segmentation flow that routes new users into them, then used Hotjar and Google Analytics to decide what came next.",
       outcome: "A shipped segmentation flow, a reconstructed but faithful financing, payment-plan, and clinic-discovery design system, plus a scoped analytics plan and phased launch roadmap.",
       tools: ["Figma", "Balsamiq", "Google Analytics", "Hotjar", "Looker Studio", "WordPress", "Umso", "HubSpot", "Excel"],
     },
