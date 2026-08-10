@@ -57,6 +57,16 @@ const NAV_LINKS: { href: string; label: string; icon: React.ReactNode }[] = [
     ),
   },
   {
+    href: "#s-improvements",
+    label: "Product improvements",
+    icon: (
+      <>
+        <path d="M12 3l9 5-9 5-9-5 9-5z" />
+        <path d="M3 13l9 5 9-5" />
+      </>
+    ),
+  },
+  {
     href: "#s-nocode",
     label: "No-code execution",
     icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
@@ -116,35 +126,42 @@ const PLAN_CHAIN = [
   { label: "Delivery plan", body: "What it would take to build and ship" },
 ];
 
-const KEY_DECISIONS = [
-  {
-    letter: "A",
-    title: "Mentor discovery tags",
-    situation:
-      "Search behavior kept showing the same pattern: users refining queries around a single signal, mostly job title, with no way to narrow the list further.",
-    decision:
-      "Define a tag-based discovery layer so mentors could be filtered beyond a title match, even though it meant keeping tags current on every profile.",
-    result: "Added to the same feature-plan chain as every other candidate, prioritized before being scoped.",
-  },
-  {
-    letter: "B",
-    title: "Homepage flow to new mentors",
-    situation:
-      "Recordings showed newly added mentors relevant to a user's career path rarely surfaced through search alone.",
-    decision:
-      "Build a direct homepage flow surfacing newly added mentors matched to a user's career path, giving that space to newer, less-proven profiles over ones already performing well in search.",
-    result: "Addressed a visibility problem a search fix on its own would not have solved.",
-  },
-  {
-    letter: "C",
-    title: "Shortlisting improvements",
-    situation:
-      "The same recordings showed a shortlisting pattern: users adding mentors to compare, then abandoning the list.",
-    decision:
-      "Treated shortlisting as its own friction point rather than an extension of the search problem, worth a separate round of scoping.",
-    result: "Folded into the same plan and chain, refined alongside the discovery changes above.",
-  },
-];
+function splitReflection(text: string): { title: string; body: string } {
+  const splitAt = text.indexOf(". ");
+  if (splitAt === -1) return { title: text, body: "" };
+  return {
+    title: text.slice(0, splitAt + 1).trim(),
+    body: text.slice(splitAt + 2).trim(),
+  };
+}
+
+function reflectionIcon(i: number): React.ReactNode {
+  switch (i % 4) {
+    case 0:
+      return (
+        <>
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="M20 20l-4.35-4.35" />
+        </>
+      );
+    case 1:
+      return (
+        <>
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </>
+      );
+    case 2:
+      return <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />;
+    default:
+      return (
+        <>
+          <path d="M4 20V10M11 20V4M18 20v-7" />
+          <path d="M2 20h20" />
+        </>
+      );
+  }
+}
 
 const NOCODE_REASONS = [
   {
@@ -166,48 +183,6 @@ const NOCODE_REASONS = [
     title: "Evidence before investment",
     body: "Development time went to ideas that had already shown they worked.",
     icon: <><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></>,
-  },
-];
-
-const REFLECTIONS = [
-  {
-    accent: ACCENT_ORANGE,
-    title: "Recordings explain what dashboards can only flag",
-    body: "Analytics told me where. Hotjar told me why. I stopped trusting a drop-off number until I'd watched a few of the sessions behind it.",
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="6.5" />
-        <path d="M20 20l-4.35-4.35" />
-      </>
-    ),
-  },
-  {
-    accent: ACCENT_BLUE,
-    title: "A feature plan is a filter, not a formality",
-    body: "Turning a pattern into a defined feature and delivery plan before building it caught changes that would not have actually addressed the friction.",
-    icon: (
-      <>
-        <path d="M9 11l3 3L22 4" />
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-      </>
-    ),
-  },
-  {
-    accent: ACCENT_ORANGE,
-    title: "No-code is worth it when it buys a real answer",
-    body: "The value wasn't skipping development. It was using Bubble.io to find out fast enough that the development, when it happened, was aimed at the right fix.",
-    icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
-  },
-  {
-    accent: ACCENT_BLUE,
-    title: "Growth and impact aren't the same measurement",
-    body: "The 50% and 40% figures describe the internship period, not the loop in isolation. The write-up says what that work likely drove, not more than it can claim.",
-    icon: (
-      <>
-        <path d="M4 20V10M11 20V4M18 20v-7" />
-        <path d="M2 20h20" />
-      </>
-    ),
   },
 ];
 
@@ -279,7 +254,7 @@ export default function PathPeerCaseStudy() {
                   On this page
                 </p>
                 <p className="text-[13px] leading-relaxed mb-5" style={{ color: "var(--ink-soft)" }}>
-                  Six short sections, from the friction loop through to reflection.
+                  Seven sections, from the friction loop through to reflection.
                 </p>
                 {NAV_LINKS.map((link, i) => (
                   <a
@@ -333,27 +308,21 @@ export default function PathPeerCaseStudy() {
                 accentGradient={ORANGE_GRADIENT}
                 icon={<><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.2v.1" /></>}
               >
-                A live mentor-discovery platform generating real search and shortlisting data, with no
-                structured process for turning that data into what to build next.
+                {cs.snapshot?.challenge}
               </SnapshotBox>
               <SnapshotBox
                 label="Contribution"
                 accentGradient={ORANGE_GRADIENT}
                 icon={<path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L4 17l3 3 5.1-5.1a4 4 0 0 0 5.6-5.6l-2.6 2.6-2-2z" />}
               >
-                The platform&apos;s original design and build, plus the loop from behavioral evidence
-                to scoped feature recommendations within the team.
+                {cs.snapshot?.contribution}
               </SnapshotBox>
               <SnapshotBox
                 label="Outcome"
                 accentGradient={ORANGE_GRADIENT}
                 icon={<path d="M4 18l5-6 4 3 7-9" />}
               >
-                Iterative changes driven by that loop:{" "}
-                <em className="not-italic font-extrabold" style={{ color: ACCENT_ORANGE }}>
-                  50% higher engagement
-                </em>
-                , 40% less inactive-user drop-off.
+                {cs.snapshot?.outcome}
               </SnapshotBox>
               <div className="cs-box white h-full px-6 py-6">
                 <div
@@ -417,11 +386,7 @@ export default function PathPeerCaseStudy() {
           </p>
           <div className="cs-box white px-6 py-6 mb-9">
             <ul className="flex flex-col gap-3">
-              {[
-                "PathPeer was a small, resource-constrained team. I was the platform's solo designer and developer, so research, design, and no-code execution had to fit inside one person's time rather than dedicated roles.",
-                "There was no dedicated PM tooling. Findings, hypotheses, and plans lived in direct notes and conversations instead of a formal backlog.",
-                "Product direction and priorities were set within the broader team, not by me alone. My role was to bring recommendations, strategy, and feature plans grounded in behavioral evidence, not to unilaterally decide what PathPeer built next.",
-              ].map((c) => (
+              {(cs.constraints ?? []).map((c) => (
                 <li key={c} className="cs-box light flex gap-3 items-start text-[15px] leading-relaxed px-4 py-3" style={{ color: "#4c473e" }}>
                   <span
                     className="shrink-0 w-[22px] h-[22px] rounded-md border-2 flex items-center justify-center text-xs font-black mt-0.5"
@@ -477,62 +442,78 @@ export default function PathPeerCaseStudy() {
               ))}
             </div>
 
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
-              Key decisions
-            </p>
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              {KEY_DECISIONS.map((d, i) => (
-                <Reveal key={d.letter} delay={i * 90}>
-                  <div className="cs-box light px-5 py-6 h-full">
-                    <div
-                      className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base mb-3.5"
-                      style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
-                    >
-                      {d.letter}
-                    </div>
-                    <h3 className="font-serif font-bold text-base mb-2.5" style={{ color: "var(--ink)" }}>
-                      {d.title}
-                    </h3>
-                    <p className="text-[13px] leading-relaxed mb-2.5" style={{ color: "#4c473e" }}>
-                      {d.situation}
-                    </p>
-                    <p className="text-[13px] leading-relaxed mb-2" style={{ color: "#4c473e" }}>
-                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
-                        Decision:{" "}
-                      </span>
-                      {d.decision}
-                    </p>
-                    <p className="text-[13px] leading-relaxed" style={{ color: "#4c473e" }}>
-                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
-                        Result:{" "}
-                      </span>
-                      {d.result}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-
-            <p className="text-base leading-relaxed max-w-2xl mb-3.5" style={{ color: "#33302a" }}>
-              A related pattern, users browsing by company of interest rather than career title,
-              became a smaller company-based discovery path alongside these three.
-            </p>
-
             <p className="text-base leading-relaxed max-w-2xl" style={{ color: "#33302a" }}>
               Not every pattern justified a full development cycle. Some resolved with a smaller
-              design change validated in Bubble.io; others became scoped feature requests with enough
-              definition to move directly into a build.
+              design change validated directly in Bubble.io; others became scoped feature requests
+              with enough definition to move directly into a build. The five changes that came out of
+              this loop, and what each one actually involved, are below.
             </p>
           </Chapter>
         </div>
       </div>
 
-      {/* ---------- 03: No-code execution ---------- */}
-      <div id="s-nocode" className="cs-seam" style={{ background: TONE_BLUE }}>
+      {/* ---------- 03: Product improvements ---------- */}
+      <div id="s-improvements" className="cs-seam" style={{ background: TONE_BLUE }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
               03
+            </p>
+            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
+              What changed: five product improvements
+            </h2>
+            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink)" }}>
+              Each of these started as a specific behavior pattern in Analytics or Hotjar, not a
+              general redesign idea. Every one moved through the same observed-behavior-to-plan chain
+              above before it became a shipped change or a scoped request.
+            </p>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {(cs.decisions ?? []).map((d, i) => (
+              <Reveal key={d.decision} delay={i * 90}>
+                <div className="cs-box light px-6 py-6 h-full min-w-0">
+                  <div
+                    className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base mb-3.5"
+                    style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                  >
+                    {String.fromCharCode(65 + i)}
+                  </div>
+                  <h3 className="font-serif font-bold text-lg mb-2.5" style={{ color: "var(--ink)" }}>
+                    {d.decision}
+                  </h3>
+                  <p className="text-[13.5px] leading-relaxed mb-2.5" style={{ color: "#4c473e" }}>
+                    {d.rationale}
+                  </p>
+                  {d.alternatives && (
+                    <p className="text-[13.5px] leading-relaxed mb-2.5" style={{ color: "#4c473e" }}>
+                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
+                        Considered:{" "}
+                      </span>
+                      {d.alternatives}
+                    </p>
+                  )}
+                  {d.result && (
+                    <p className="text-[13.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                      <span className="font-extrabold" style={{ color: ACCENT_BLUE }}>
+                        Result:{" "}
+                      </span>
+                      {d.result}
+                    </p>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ---------- 04: No-code execution ---------- */}
+      <div id="s-nocode" className="cs-seam" style={{ background: TONE_CREAM }}>
+        <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal>
+            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
+              04
             </p>
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
               Planning and no-code execution
@@ -570,7 +551,7 @@ export default function PathPeerCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- 04: Outcomes ---------- */}
+      {/* ---------- 05: Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
@@ -579,7 +560,7 @@ export default function PathPeerCaseStudy() {
                 className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
                 style={{ background: ORANGE_GRADIENT, color: "#fff9ee", border: "3px solid #fff9ee", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
               >
-                04
+                05
               </div>
               <h2 className="font-serif text-4xl text-white">Outcomes</h2>
             </div>
@@ -593,20 +574,11 @@ export default function PathPeerCaseStudy() {
           </Reveal>
 
           <div className="mb-10 max-w-xl">
-            <StatGrid
-              valueColor={ACCENT_ORANGE}
-              stats={[
-                { value: "50%", label: "increase in user engagement (internship period)" },
-                { value: "40%", label: "reduction in inactive user drop-off (internship period)" },
-              ]}
-            />
+            <StatGrid valueColor={ACCENT_ORANGE} stats={cs.metrics.map((m) => ({ value: m.value, label: m.label }))} />
           </div>
 
           <div className="flex flex-col gap-4">
-            {[
-              "Feature ideas were grounded in observed search, shortlisting, and session behavior instead of assumptions.",
-              "Smaller ideas could be validated in Bubble.io before requesting development time, so engineering effort went to ideas that had already shown they worked.",
-            ].map((row) => (
+            {cs.outcome.slice(2).map((row) => (
               <Reveal key={row}>
                 <div className="cs-box light flex items-center gap-4 px-5 py-4">
                   <span
@@ -625,12 +597,12 @@ export default function PathPeerCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- 05: Reflection ---------- */}
+      {/* ---------- 06: Reflection ---------- */}
       <div id="s-reflection" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
             <p className="font-serif text-[70px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
-              05
+              06
             </p>
             <h2 className="font-serif text-[32px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
               Reflection
@@ -638,26 +610,29 @@ export default function PathPeerCaseStudy() {
           </Reveal>
 
           <div className="grid sm:grid-cols-2 gap-6 mt-10">
-            {REFLECTIONS.map((r, i) => (
-              <Reveal key={r.title} delay={i * 90}>
-                <div className="cs-box white px-6 py-7 h-full">
-                  <div
-                    className="w-10 h-10 rounded-[11px] flex items-center justify-center mb-4 border-2"
-                    style={{ background: r.accent, borderColor: "var(--ink)" }}
-                  >
-                    <span className="w-5 h-5 text-[#fff9ee]">
-                      <Icon>{r.icon}</Icon>
-                    </span>
+            {(cs.reflection ?? []).map((entry, i) => {
+              const { title, body } = splitReflection(entry);
+              return (
+                <Reveal key={title} delay={i * 90}>
+                  <div className="cs-box white px-6 py-7 h-full min-w-0">
+                    <div
+                      className="w-10 h-10 rounded-[11px] flex items-center justify-center mb-4 border-2"
+                      style={{ background: i % 2 === 0 ? ACCENT_ORANGE : ACCENT_BLUE, borderColor: "var(--ink)" }}
+                    >
+                      <span className="w-5 h-5 text-[#fff9ee]">
+                        <Icon>{reflectionIcon(i)}</Icon>
+                      </span>
+                    </div>
+                    <h3 className="font-serif font-bold text-xl mb-3" style={{ color: "var(--ink)" }}>
+                      {title}
+                    </h3>
+                    <p className="text-[15.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                      {body}
+                    </p>
                   </div>
-                  <h3 className="font-serif font-bold text-xl mb-3" style={{ color: "var(--ink)" }}>
-                    {r.title}
-                  </h3>
-                  <p className="text-[15.5px] leading-relaxed" style={{ color: "#4c473e" }}>
-                    {r.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
 
           {cs.whatIdImprove && (
@@ -671,12 +646,14 @@ export default function PathPeerCaseStudy() {
             </div>
           )}
 
-          <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
-            PathPeer&apos;s internal analytics dashboards and session recordings are not shown here
-            for confidentiality. The friction-loop, feature-plan diagrams, and discovery examples
-            above reconstruct the categories of workflow and reasoning behind the changes, not
-            verbatim session data.
-          </p>
+          {cs.note && (
+            <p
+              className="text-sm italic leading-relaxed mt-14 mx-auto max-w-[85%] sm:max-w-[70%] text-center"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              {cs.note}
+            </p>
+          )}
         </div>
       </div>
     </div>

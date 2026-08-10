@@ -336,37 +336,95 @@ const caseStudiesData: CaseStudy[] = [
     slug: "pathpeer",
     category: "systems",
     entryType: "internship",
-    caseStudyType: "compact",
-    tier: "compact",
+    caseStudyType: "research-strategy",
+    tier: "standard",
     title: "Turning session recordings into a feature plan",
     company: "PathPeer",
     role: "Product Designer & Developer Intern",
     location: "Remote (Waterloo, ON)",
     timeframe: "May 2022 – Aug 2022",
-    oneLiner: "Built a career-mentorship discovery platform solo, then used analytics and session recordings to recommend what to fix next.",
+    oneLiner: "Built a career-mentorship discovery platform solo, then used analytics, session recordings, and no-code prototyping to decide what to fix and build next.",
     summary:
-      "Designed and built PathPeer's mentorship-discovery platform solo within a small team, then used Google Analytics and Hotjar recordings on search and shortlisting behavior to find where users were getting stuck, turned those patterns into prioritized feature plans such as new discovery tags and homepage flows for new mentors, and validated smaller ideas with Bubble.io before requesting further development time.",
-    tags: ["Product Management", "UX Research", "Behavioural Analytics"],
+      "Designed and built PathPeer's mentorship-discovery platform solo within a small team, covering mentor search, discovery, and shortlisting end to end. Used Google Analytics and Hotjar recordings to analyze search and shortlisting behavior, then turned that evidence into a mentor tagging and discovery taxonomy, a homepage discovery flow for newly added mentors matched to a user's career path, and a company-of-interest discovery path. Prototyped and validated the smaller changes directly in Bubble.io before requesting further development time, and worked as the platform's de facto product manager on feature planning and prioritization.",
+    tags: ["Product Management", "UX Research", "Behavioural Analytics", "No-Code Development"],
     toolTags: ["Google Analytics", "Hotjar", "Figma", "Bubble.io"],
-    artifacts: [],
+    artifacts: ["Feature Plan Reconstruction", "Search & Shortlisting Research", "Internal Analytics Omitted"],
     metrics: [
       { value: "50%", label: "increase in user engagement (internship period)" },
       { value: "40%", label: "reduction in inactive user drop-off (internship period)" },
     ],
     problem:
-      "PathPeer helped users explore career paths and find professionals they could connect with as mentors, for networking, advice, and guidance. Once the platform was live, the open question was no longer whether people were using it, but where they were getting stuck in search and mentor discovery, and what to fix first. As the platform's solo designer and developer, working within a small team, I used behavioral evidence to recommend and plan what came next.",
+      "PathPeer helped users explore career paths and find professionals they could connect with as mentors, for networking, advice, and guidance. Once the platform was live, the open question was no longer whether people were using it, but where they were getting stuck across search, mentor discovery, shortlisting, and tagging, and what to fix or build first. As the platform's solo designer and developer, working within a small team and acting as its de facto product manager, I used behavioral evidence from Google Analytics and Hotjar to recommend, plan, and validate what came next.",
     process: [
-      "Designed and built PathPeer's mentorship-discovery platform end-to-end, handling design and development solo within a small team.",
-      "Used Google Analytics to find where engagement dropped in search and mentor discovery, then reviewed the matching Hotjar recordings to see what was actually happening at each point.",
-      "Turned the strongest patterns, including opportunities like mentor discovery tags, shortlisting improvements, and new-mentor homepage discovery, into scoped feature and requirement plans, and validated smaller ideas with Bubble.io before requesting further development time.",
-      "Iterated on the design based on that evidence rather than assumptions.",
+      "Designed and built PathPeer's mentorship-discovery platform end-to-end, handling design and development solo within a small team, across search, mentor discovery, shortlisting, and the mentor tagging taxonomy.",
+      "Used Google Analytics to find where engagement dropped in search and mentor discovery, then reviewed the matching Hotjar session recordings to see what was actually happening at each point, rather than treating the numbers alone as an answer.",
+      "Analyzed search behavior specifically, tracking how users refined queries and where they abandoned a search, to separate a genuine mentor-fit gap from a discoverability problem.",
+      "Built out a mentor tagging and discovery taxonomy so mentors could be filtered on more than a single job-title match, then reviewed shortlisting behavior to see where users added mentors to compare but never followed through.",
+      "Designed a homepage discovery flow surfacing newly added mentors relevant to a user's stated career path, and a separate discovery path for users browsing by company of interest, both aimed at mentors that search alone wasn't surfacing.",
+      "Turned the strongest patterns into scoped feature and requirement plans, then prioritized them against how many users a fix touched and how much effort it would take to plan and build.",
+      "Prototyped and validated smaller ideas directly in Bubble.io before requesting further development time, then went back to Analytics and Hotjar to check whether behavior actually moved, where the change and timeline supported that follow-up.",
+      "Iterated on the design based on that evidence rather than assumptions, feeding findings back into PM planning and the next round of feature recommendations.",
     ],
     outcome: [
       "User engagement increased 50% and inactive user drop-off dropped 40% over the internship period, the platform's reported results for that time.",
       "These reflect the platform's overall growth during the internship, with the analytics-and-recordings loop shaping which iterative changes, like new discovery tags and homepage flows for new mentors, went into that period rather than being the sole driver of the numbers.",
+      "Search, shortlisting, and discovery all changed as a direct result of that loop: a mentor tagging taxonomy, a homepage flow for newly added mentors, and a company-of-interest discovery path were all shipped or scoped from it.",
+      "Validating smaller ideas directly in Bubble.io before requesting development time kept engineering effort pointed at changes that had already shown they addressed real friction, instead of speculative builds.",
+      "Feature planning and prioritization ran on observed search and shortlisting behavior rather than internal assumptions about what mentors or users needed next.",
     ],
     note: "This case study reconstructs the categories of analysis and feature work from the internship, not verbatim session data; the platform's internal analytics dashboards and session recordings are not shown for confidentiality.",
     whatIdImprove: "The 50% engagement and 40% drop-off numbers are the platform's overall internship-period results, not isolated to the analytics-and-recordings loop. I'd want to track changes at the feature level next time, so a given fix's impact could be measured on its own instead of folded into total growth.",
+    snapshot: {
+      challenge: "A live mentor-discovery platform generating real search, shortlisting, and tagging data, with no structured process for turning that data into what to build next.",
+      contribution: "Designed and built the platform's search, discovery, shortlisting, and tagging experience solo, then used Hotjar and Google Analytics to turn behavioral evidence into prioritized, Bubble.io-validated feature plans.",
+      outcome: "Iterative changes driven by that loop: 50% higher engagement, 40% less inactive-user drop-off, platform-wide over the internship.",
+      tools: ["Google Analytics", "Hotjar", "Figma", "Bubble.io"],
+    },
+    constraints: [
+      "PathPeer was a small, resource-constrained team. I was the platform's solo designer and developer, so search, discovery, shortlisting, tagging, and no-code execution all had to fit inside one person's time rather than dedicated roles.",
+      "There was no dedicated PM tooling. Findings, hypotheses, and feature plans lived in direct notes and conversations instead of a formal backlog.",
+      "Product direction and priorities were set within the broader team, not by me alone. My role was to bring recommendations, strategy, and feature plans grounded in behavioral evidence and Bubble.io validation, not to unilaterally decide what PathPeer built next.",
+    ],
+    decisions: [
+      {
+        decision: "Built a mentor discovery tagging taxonomy so mentors could be filtered on more than a single job-title match.",
+        rationale:
+          "Search behavior kept showing the same pattern in Analytics and the matching Hotjar recordings: users refining a query around one signal, almost always job title, with no way to narrow the list further once that single match came up empty or too broad.",
+        alternatives: "Left search matching on title and keyword alone, or added a general free-text filter instead of a structured tag layer.",
+        result: "Scoped and prioritized as a discovery-layer change, then kept as an ongoing tagging effort since it depended on tags staying current on every mentor profile.",
+      },
+      {
+        decision: "Treated shortlisting as its own friction point, worth a separate round of scoping, instead of folding it into the search fix.",
+        rationale:
+          "The same recordings showed a shortlisting pattern distinct from search: users adding mentors to a shortlist to compare, then abandoning the list without reaching out to any of them.",
+        result: "Refined shortlisting alongside the discovery changes, aimed specifically at what stalled users between shortlisting a mentor and actually contacting one.",
+      },
+      {
+        decision: "Built a direct homepage flow surfacing newly added mentors relevant to a user's stated career path.",
+        rationale:
+          "Recordings showed newly added mentors relevant to a user's career path rarely surfaced through search alone, since new profiles hadn't yet accumulated the engagement or match signals that made an existing mentor easy to find.",
+        alternatives: "Relied on search ranking or manual featuring to eventually surface new mentors.",
+        result: "Gave homepage space to newer, less-proven profiles over ones already performing well in search, addressing a visibility problem a search fix alone would not have solved.",
+      },
+      {
+        decision: "Added a discovery path letting users browse mentors by the companies they were interested in, alongside career-path and title-based discovery.",
+        rationale:
+          "A related pattern in the same behavioral review showed users browsing by company of interest rather than career title, a different mental model than the title-first search flow was built around.",
+        result: "Shipped as a smaller, company-based discovery path alongside the tagging and homepage changes, validated first in Bubble.io before development time was requested.",
+      },
+      {
+        decision: "Refined search matching and result presentation at the specific steps losing users, instead of a general search redesign.",
+        rationale:
+          "Google Analytics flagged specific steps in search where engagement dropped; the Hotjar recordings behind those drop-offs showed users repeating near-identical queries, which pointed to a matching or presentation problem rather than a lack of relevant mentors.",
+        result: "Directed fixes at the step actually losing users, then checked Analytics afterward to see whether the same drop-off persisted, where the timeline supported that follow-up.",
+      },
+    ],
+    reflection: [
+      "Recordings explain what dashboards can only flag. Analytics told me where. Hotjar told me why. I stopped trusting a drop-off number until I'd watched a few of the sessions behind it.",
+      "A feature plan is a filter, not a formality. Turning a pattern into a defined feature and delivery plan before building it caught changes that would not have actually addressed the friction, across search, shortlisting, tagging, and discovery alike.",
+      "No-code is worth it when it buys a real answer. The value wasn't skipping development. It was using Bubble.io to find out fast enough that the development, when it happened, was aimed at the right fix.",
+      "Growth and impact aren't the same measurement. The 50% and 40% figures describe the internship period, not the loop in isolation. The write-up says what that work likely drove, not more than it can claim.",
+    ],
   },
   {
     slug: "informatica",
