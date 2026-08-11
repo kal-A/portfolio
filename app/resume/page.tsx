@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = { title: "Resume · Kamal Ahsan" };
 
 export default function ResumePage() {
@@ -57,7 +59,7 @@ export default function ResumePage() {
           </div>
 
           <p className="text-sm text-neutral-600">
-            See <a href="/work" className="text-rose-600 hover:text-rose-700 font-medium">Work</a>{" "}
+            See <Link href="/work" className="text-rose-600 hover:text-rose-700 font-medium">Work</Link>{" "}
             for full case-study write-ups on each role and project.
           </p>
         </div>

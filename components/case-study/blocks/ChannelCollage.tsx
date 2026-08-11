@@ -111,9 +111,11 @@ export default function ChannelCollage({ assets, accent }: { assets: ChannelAsse
             style={{ borderColor: accent }}
             onClick={(e) => e.stopPropagation()}
           >
-            <img
+            <Image
               src={active.src}
               alt={active.alt}
+              width={active.width}
+              height={active.height}
               className="block w-full h-full max-h-[70vh] object-contain bg-white"
             />
             {active.caption && (
