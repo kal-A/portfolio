@@ -53,7 +53,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#4bc192",
     iconBg: "linear-gradient(135deg, #3fb37f, #1c5c3f)",
     mark: "GH",
-    image: "/case-studies/greenhouse/greenhouse-home-hero.png",
+    image: "/case-studies/greenhouse/greenhouse-hero-collage.jpg",
   },
   forcen: {
     bg: "#f5f1ea",

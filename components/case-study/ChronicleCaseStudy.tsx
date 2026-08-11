@@ -429,17 +429,20 @@ export default function ChronicleCaseStudy() {
               end to end. Each stage reruns only when its own input hash actually changed, so a
               failed run resumes without redoing finished work.
             </p>
+          </Chapter>
+        </div>
 
-            <div className="mt-9">
-              <ProcessFlow
-                steps={PIPELINE_STEPS}
-                accent="#2e4a6b"
-                rowLength={4}
-                middleLabel="Assessed sources become the corpus the investigation is built from"
-              />
-            </div>
+        {/* Full-width band: escapes the Chapter's title column so the 8-stage flow gets real width */}
+        <div className="mx-auto max-w-5xl px-6 pb-24">
+          <ProcessFlow
+            steps={PIPELINE_STEPS}
+            accent="#2e4a6b"
+            rowLength={4}
+            middleLabel="Assessed sources become the corpus the investigation is built from"
+          />
 
-            <p className="text-lg leading-[1.8] max-w-2xl mt-10" style={{ color: "var(--ink)" }}>
+          <div className="max-w-2xl mt-14">
+            <p className="text-lg leading-[1.8]" style={{ color: "var(--ink)" }}>
               A second, real investigation, &quot;The Concert of Europe and Revolutionary
               Intervention, 1814-1822,&quot; was then hand-curated through that exact same
               pipeline: real Sources (the Congress of Vienna&apos;s General Treaty, the Troppau
@@ -451,7 +454,7 @@ export default function ChronicleCaseStudy() {
               constants leak into shared code.
             </p>
 
-            <div className="grid lg:grid-cols-[220px_1fr] gap-6 items-start mt-9 max-w-2xl">
+            <div className="grid lg:grid-cols-[220px_1fr] gap-6 items-start mt-9">
               <div className="relative w-full aspect-[961/1537] rounded-lg overflow-hidden border-[3px]" style={{ borderColor: "var(--ink)" }}>
                 <Image
                   src="/case-studies/chronicle/map-concert-of-europe-1815.jpg"
@@ -475,7 +478,7 @@ export default function ChronicleCaseStudy() {
                 </p>
               </div>
             </div>
-          </Chapter>
+          </div>
         </div>
       </div>
 
