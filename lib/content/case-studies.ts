@@ -43,7 +43,7 @@ export interface CaseStudy {
   contribution?: string;
   links?: { label: string; href: string }[];
   images?: { src: string; alt: string; channel?: string; channelSlug?: string; caption?: string }[];
-  mockups?: "hera" | "pillpal";
+  mockups?: "hera";
   /** Confidentiality note or artifact-recreation disclaimer, shown as an italic aside. */
   note?: string;
   whatIdImprove?: string;
@@ -291,7 +291,6 @@ const caseStudiesData: CaseStudy[] = [
         href: "https://www.figma.com/design/IH9NZpw2oQg4HfNMloHrwp/Apple-watch-pill-tracker?node-id=573-611&node-type=canvas",
       },
     ],
-    mockups: "pillpal",
   },
   {
     slug: "forcen",

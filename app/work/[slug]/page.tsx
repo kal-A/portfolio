@@ -4,12 +4,6 @@ import Link from "next/link";
 import { caseStudies, getCaseStudy } from "@/lib/content/case-studies";
 import { caseStudyTheme } from "@/lib/content/theme";
 import Metric from "@/components/Metric";
-import {
-  PillPalMyMedsMockup,
-  PillPalAddMedicationMockup,
-  PillPalReminderMockup,
-  PillPalEmergencyMockup,
-} from "@/components/mockups/PillPalMockups";
 import Diagram from "@/components/case-study/Diagram";
 import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
 import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
@@ -201,17 +195,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <p className="mt-8 text-sm text-neutral-500 italic border-l-2 border-neutral-200 pl-4">
           {cs.note}
         </p>
-      )}
-
-      {cs.mockups === "pillpal" && (
-        <section className="mt-10 overflow-x-auto">
-          <div className="flex gap-6 pb-4 min-w-max">
-            <PillPalMyMedsMockup />
-            <PillPalAddMedicationMockup />
-            <PillPalReminderMockup />
-            <PillPalEmergencyMockup />
-          </div>
-        </section>
       )}
 
       {cs.images && cs.images.length > 0 && (
