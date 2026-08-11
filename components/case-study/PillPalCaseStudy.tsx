@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import ProjectIcon from "@/components/ProjectIcon";
 import { getCaseStudy } from "@/lib/content/case-studies";
 import Chapter from "@/components/case-study/blocks/Chapter";
@@ -6,12 +7,6 @@ import Icon from "@/components/case-study/blocks/Icon";
 import SnapshotGrid, { SnapshotBox } from "@/components/case-study/blocks/SnapshotGrid";
 import ProcessFlow, { ProcessStep } from "@/components/case-study/blocks/ProcessFlow";
 import ExpandableIssueList, { RankedIssue } from "@/components/case-study/blocks/ExpandableIssueList";
-import {
-  PillPalMyMedsMockup,
-  PillPalAddMedicationMockup,
-  PillPalReminderMockup,
-  PillPalEmergencyMockup,
-} from "@/components/mockups/PillPalMockups";
 import Reveal from "@/components/Reveal";
 
 const PURPLE_GRADIENT = "linear-gradient(135deg, #9b7bc4, #4a2f73)";
@@ -63,26 +58,46 @@ const TASK1_STEPS: ProcessStep[] = [
     title: "Navigate to MyMeds",
     synopsis:
       "The Add New button sits right next to My Meds and is easy to spot, but reaching it means leaving the main schedule screen first, a step the walkthrough flagged as unintuitive for older users.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task1-navigate-mymeds.jpg",
+      alt: "Paper prototype sketch of the watch schedule screen with the Add New button next to My Meds, from the team's Task 1 cognitive walkthrough",
+    },
   },
   {
     title: "Tap Add New",
     synopsis:
       "Clearly labeled and easy to find. Increasing its size would help further for users with limited vision.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task1-tap-addnew.jpg",
+      alt: "Paper prototype sketch of the MyMeds list screen with the Add New button being tapped",
+    },
   },
   {
     title: "Fill in the fields",
     synopsis:
       "Dropdowns for Type and Days/Week simplify entry, but the number of required fields and their small size were flagged as a barrier for older users.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task1-fill-fields.jpg",
+      alt: "Paper prototype sketch of the Add New Medication form filled in for Tylenol, with Type, Frequency, Dosage, and Time fields",
+    },
   },
   {
     title: "Add special notes",
     synopsis:
       "Nothing on screen marks this field as optional, which could read as a required step it isn't.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task1-special-notes.jpg",
+      alt: "Paper prototype sketch of the Add New Medication form with the optional Special Notes field at the bottom",
+    },
   },
   {
     title: "Confirm and return",
     synopsis:
       "Tapping Add Meds returns the user to MyMeds with the new medication listed, a clear success signal.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task1-confirm-return.jpg",
+      alt: "Paper prototype sketch of the MyMeds screen after tapping Add Meds, showing the new medication listed",
+    },
   },
 ];
 
@@ -91,16 +106,28 @@ const TASK2_STEPS: ProcessStep[] = [
     title: "Notice the reminder",
     synopsis:
       "“Upcoming: Advil 2pc 19:00” appears bold and centered, paired with a vibration and sound, so it's hard to miss.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task2-notice-reminder.jpg",
+      alt: "Paper prototype sketch of the Pill Reminder screen showing Advil 2pc at 19:00, from the team's Task 2 cognitive walkthrough",
+    },
   },
   {
     title: "Tap Taken or Remind Later",
     synopsis:
       "Both labels are clear on their own, but snoozing gives no confirmation of how long the reminder was delayed for.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task2-remind-later.jpg",
+      alt: "Paper prototype sketch of the Pill Reminder screen with Taken and Remind Later buttons",
+    },
   },
   {
     title: "See it marked complete",
     synopsis:
       "A checkmark under Completed confirms the dose was logged: a clean, unambiguous end state.",
+    image: {
+      src: "/case-studies/pill-pal/paper-task2-completed.jpg",
+      alt: "Paper prototype sketch of the schedule screen with Advil marked Completed",
+    },
   },
 ];
 
@@ -123,6 +150,10 @@ const TOP_ISSUES = [
     heuristic: "Help Recognize, Diagnose, and Recover from Errors",
     severity: "Rated severity 3, the highest severity any evaluator recorded in this evaluation.",
     fix: "Add a confirmation dialog (“Call Emergency Services?” with Confirm and Cancel) before any emergency or pharmacy call goes through.",
+    image: {
+      src: "/case-studies/pill-pal/figma-emergency-call-911.png",
+      alt: "Real Figma screen showing the 911 emergency call going straight to Call Emergency Services with no confirmation step",
+    },
   },
   {
     rank: 2,
@@ -130,6 +161,10 @@ const TOP_ISSUES = [
     heuristic: "Error Prevention",
     severity: "Rated severity 3.",
     fix: "Require frequency and timing before the form can submit, with a clear visual indicator on incomplete fields.",
+    image: {
+      src: "/case-studies/pill-pal/figma-add-medication-form.png",
+      alt: "Real Figma screen of the Add New Medication form with Type, Days/Week, Frequency/Day, and Time fields, none marked as required",
+    },
   },
   {
     rank: 3,
@@ -137,6 +172,10 @@ const TOP_ISSUES = [
     heuristic: "User Control and Freedom",
     severity: "Rated severity 3.",
     fix: "Add a persistent back button to every screen in the flow, with a warning if unsaved changes would be lost.",
+    image: {
+      src: "/case-studies/pill-pal/figma-add-medication-form.png",
+      alt: "Real Figma screen of the Add New Medication form with no back or exit control visible",
+    },
   },
   {
     rank: 4,
@@ -144,6 +183,10 @@ const TOP_ISSUES = [
     heuristic: "Visibility of System Status",
     severity: "Rated severity 3.",
     fix: "Add a color-coded supply indicator (sufficient, reorder soon, low) with an automatic refill alert.",
+    image: {
+      src: "/case-studies/pill-pal/wireframe-mymeds-list.png",
+      alt: "Real wireframe of the MyMeds list with no supply level or refill indicator next to each medication",
+    },
   },
   {
     rank: 5,
@@ -151,6 +194,10 @@ const TOP_ISSUES = [
     heuristic: "Recognition Rather Than Recall",
     severity: "Rated severity 2, but flagged independently by two of the four evaluators.",
     fix: "Add dedicated Purpose and Prescribing Doctor fields to each medication entry.",
+    image: {
+      src: "/case-studies/pill-pal/wireframe-mymeds-list.png",
+      alt: "Real wireframe of the MyMeds list showing only medication name and dose, with no purpose or prescriber field",
+    },
   },
   {
     rank: 6,
@@ -158,6 +205,10 @@ const TOP_ISSUES = [
     heuristic: "Recognition Rather Than Recall",
     severity: "Rated severity 2, also flagged independently by two evaluators.",
     fix: "Add a brief “swipe for more” overlay the first time the app opens.",
+    image: {
+      src: "/case-studies/pill-pal/wireframe-schedule-direct-add.png",
+      alt: "Real wireframe of the main schedule screen with swipe-page dots at the bottom but no on-screen swipe hint",
+    },
   },
 ];
 
@@ -506,7 +557,8 @@ export default function PillPalCaseStudy() {
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
               We chose the two interactions with the highest stakes if they went wrong, and walked
               through each step&apos;s action, visibility, and feedback from the perspective of an older
-              user before testing with anyone outside the team. Select a step to see what we found.
+              user before testing with anyone outside the team. Select a step to see what we found,
+              paired with the team&apos;s actual paper prototype sketch for that step.
             </p>
           </Reveal>
 
@@ -585,30 +637,135 @@ export default function PillPalCaseStudy() {
                 vertical
               </b>{" "}
               prototype that went deep on the single riskiest flow: adding a new medication, from
-              keyboard entry through type selection, dosage, image upload, and confirmation. Recreated
-              below from that prototype.
+              keyboard entry through type selection, dosage, image upload, and confirmation. Both are
+              shown below, direct from the source files, not recreated.
             </p>
           </Chapter>
 
           <Reveal delay={100}>
-            <div className="mt-12 overflow-x-auto">
-              <div className="flex gap-6 pb-4 min-w-max">
-                <PillPalMyMedsMockup />
-                <PillPalAddMedicationMockup />
-                <PillPalReminderMockup />
-                <PillPalEmergencyMockup />
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-14 mb-4" style={{ color: "var(--ink)" }}>
+              Low-fidelity wireframes, drawn from the walkthrough findings
+            </p>
+            <div className="mt-2 overflow-x-auto">
+              <div className="flex gap-4 pb-4 min-w-max">
+                {[
+                  {
+                    src: "wireframe-mymeds-list.png",
+                    alt: "Real wireframe of the updated MyMeds list screen with radio selection",
+                    label: "MyMeds list",
+                  },
+                  {
+                    src: "wireframe-add-medication-form.png",
+                    alt: "Real wireframe of the Add New Medication form",
+                    label: "Add Medication",
+                  },
+                  {
+                    src: "wireframe-schedule-direct-add.png",
+                    alt: "Real wireframe of the main schedule screen with a direct Add Medication link",
+                    label: "Direct add link",
+                  },
+                  {
+                    src: "wireframe-contacts.png",
+                    alt: "Real wireframe of the new Contacts screen",
+                    label: "Contacts",
+                  },
+                  {
+                    src: "wireframe-settings.png",
+                    alt: "Real wireframe of the new Settings screen",
+                    label: "Settings",
+                  },
+                  {
+                    src: "wireframe-future-schedule.png",
+                    alt: "Real wireframe of the new future-date schedule screen",
+                    label: "Future-date schedule",
+                  },
+                ].map((w) => (
+                  <div key={w.src} className="cs-box white shrink-0 w-[150px] overflow-hidden">
+                    <div className="relative w-full bg-white" style={{ aspectRatio: "1 / 1" }}>
+                      <Image
+                        src={`/case-studies/pill-pal/${w.src}`}
+                        alt={w.alt}
+                        fill
+                        sizes="150px"
+                        className="object-contain p-2"
+                      />
+                    </div>
+                    <p
+                      className="text-[10.5px] font-extrabold uppercase tracking-wide text-center py-2 border-t"
+                      style={{ color: "var(--ink-soft)", borderColor: "rgba(32,28,23,0.1)" }}
+                    >
+                      {w.label}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-            <p className="mt-4 text-sm flex items-center gap-3 flex-wrap leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+            <p className="mt-3 text-sm flex items-center gap-3 flex-wrap leading-relaxed" style={{ color: "var(--ink-soft)" }}>
               <span
                 className="text-[11px] font-extrabold uppercase tracking-wide rounded-full px-3 py-1 border-2 shrink-0"
                 style={{ color: "var(--ink)", borderColor: "var(--ink)", background: PURPLE_GRADIENT }}
               >
-                Reconstructed screens
+                Real wireframes
               </span>
-              Recreated from the team&apos;s medium-fidelity Figma prototype to show the interaction
-              pattern; not exported production assets.
+              Six screens the team redrew after the walkthroughs, before moving into Figma.
             </p>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-14 mb-4" style={{ color: "var(--ink)" }}>
+              Medium-fidelity Figma prototypes
+            </p>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                {
+                  src: "figma-horizontal-prototype.png",
+                  alt: "Real Figma canvas of the horizontal prototype: lock screen, home, loading, home/MyMeds/reminder states, add medication, emergency contacts, and settings",
+                  ratio: "1124 / 1554",
+                  label: "Horizontal · full app breadth",
+                  caption:
+                    "Lock screen through settings, including the delayed-reminder and emergency-call states used in the heuristic evaluation.",
+                  href: "https://www.figma.com/design/IH9NZpw2oQg4HfNMloHrwp/Apple-watch-pill-tracker?node-id=502-94&node-type=canvas",
+                },
+                {
+                  src: "figma-vertical-prototype.png",
+                  alt: "Real Figma canvas of the vertical prototype: the full Add New Medication flow from keyboard entry through type selection, dosage, image upload, and confirmation",
+                  ratio: "798 / 1406",
+                  label: "Vertical · add-medication flow",
+                  caption:
+                    "Every state of adding a medication: name entry with keyboard, type dropdown, dosage and frequency, image upload, and the confirmed MyMeds entry.",
+                  href: "https://www.figma.com/design/IH9NZpw2oQg4HfNMloHrwp/Apple-watch-pill-tracker?node-id=573-611&node-type=canvas",
+                },
+              ].map((p) => (
+                <div key={p.src}>
+                  <div className="cs-box white overflow-hidden">
+                    <div className="relative w-full bg-[#e9e9e9]" style={{ aspectRatio: p.ratio, maxHeight: 480 }}>
+                      <Image
+                        src={`/case-studies/pill-pal/${p.src}`}
+                        alt={p.alt}
+                        fill
+                        sizes="(min-width: 768px) 480px, 100vw"
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mt-3" style={{ color: "#4a2f73" }}>
+                    {p.label}
+                  </p>
+                  <p className="text-sm leading-relaxed mt-1" style={{ color: "#4c473e" }}>
+                    {p.caption}
+                  </p>
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-extrabold mt-1.5 inline-block"
+                    style={{ color: "#4a2f73" }}
+                  >
+                    Open in Figma ↗
+                  </a>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </div>
       </div>
@@ -715,8 +872,12 @@ export default function PillPalCaseStudy() {
           </div>
 
           <Reveal>
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mb-5" style={{ color: "#fff9ee" }}>
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mb-2" style={{ color: "#fff9ee" }}>
               The top 6 of 20 ranked issues
+            </p>
+            <p className="text-sm leading-relaxed mb-5 max-w-2xl" style={{ color: "#d9d2e6" }}>
+              Each finding below is shown against the real prototype screen it was found on, from the
+              team&apos;s Figma files and wireframes.
             </p>
           </Reveal>
           <div className="flex flex-col gap-4">
@@ -730,6 +891,14 @@ export default function PillPalCaseStudy() {
                     >
                       {it.rank}
                     </span>
+                    {it.image && (
+                      <div
+                        className="relative shrink-0 w-14 h-[86px] rounded-lg border-2 overflow-hidden hidden sm:block"
+                        style={{ borderColor: "var(--ink)", background: "#fff" }}
+                      >
+                        <Image src={it.image.src} alt={it.image.alt} fill sizes="56px" className="object-cover object-top" />
+                      </div>
+                    )}
                     <div className="flex-1 min-w-0">
                       <p className="text-base font-bold leading-snug" style={{ color: "var(--ink)" }}>
                         {it.issue}

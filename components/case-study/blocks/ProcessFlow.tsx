@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export interface ProcessStep {
   title: string;
   synopsis: string;
+  image?: { src: string; alt: string };
 }
 
 const ROW_1_LEN = 3;
@@ -85,9 +87,17 @@ export default function ProcessFlow({
       </div>
 
       <div
-        className="cs-box white px-8 py-8 lg:h-[280px] lg:-translate-y-10 flex flex-col justify-center overflow-hidden"
+        className={`cs-box white px-8 py-8 ${active.image ? "lg:min-h-[280px]" : "lg:h-[280px] lg:-translate-y-10"} flex flex-col justify-center`}
         style={{ background: "#fffdf8" }}
       >
+        {active.image && (
+          <div
+            className="relative w-full h-28 rounded-md border mb-4 overflow-hidden"
+            style={{ borderColor: "rgba(32,28,23,0.14)", background: "#fff" }}
+          >
+            <Image src={active.image.src} alt={active.image.alt} fill sizes="320px" className="object-contain" />
+          </div>
+        )}
         <p className="text-xs font-extrabold uppercase tracking-wide mb-2" style={{ color: accent }}>
           Step {activeIndex + 1} of {steps.length}
         </p>
