@@ -9,8 +9,6 @@ export interface ProcessStep {
   image?: { src: string; alt: string };
 }
 
-const ROW_1_LEN = 3;
-
 function StepBox({
   step,
   active,
@@ -44,15 +42,18 @@ export default function ProcessFlow({
   accent,
   activeGradient,
   middleLabel = "Review clears the way to tracking",
+  rowLength = 3,
 }: {
   steps: ProcessStep[];
   accent: string;
   activeGradient?: string;
   middleLabel?: string;
+  /** How many steps to place in the first row before wrapping to the next; defaults to 3. */
+  rowLength?: number;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const row1 = steps.slice(0, ROW_1_LEN);
-  const row2 = steps.slice(ROW_1_LEN);
+  const row1 = steps.slice(0, rowLength);
+  const row2 = steps.slice(rowLength);
   const active = steps[activeIndex];
   const activeBg = activeGradient ?? accent;
 
@@ -91,7 +92,7 @@ export default function ProcessFlow({
             {middleLabel}
           </span>
         </div>
-        {renderRow(row2, ROW_1_LEN)}
+        {renderRow(row2, rowLength)}
       </div>
 
       <div

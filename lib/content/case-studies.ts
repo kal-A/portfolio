@@ -347,9 +347,9 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Designer & Developer Intern",
     location: "Remote (Waterloo, ON)",
     timeframe: "May 2022 – Aug 2022",
-    oneLiner: "Built a career-mentorship discovery platform solo, then used analytics, session recordings, and no-code prototyping to decide what to fix and build next.",
+    oneLiner: "Built a career-mentorship discovery platform as one of two developers/designers, then used analytics, session recordings, and no-code prototyping to decide what to fix and build next.",
     summary:
-      "Designed and built PathPeer's mentorship-discovery platform solo within a small team, covering mentor search, discovery, and shortlisting end to end. Used Google Analytics and Hotjar recordings to analyze search and shortlisting behavior, then turned that evidence into a mentor tagging and discovery taxonomy, a homepage discovery flow for newly added mentors matched to a user's career path, and a company-of-interest discovery path. Prototyped and validated the smaller changes directly in Bubble.io before requesting further development time, and worked as the platform's de facto product manager on feature planning and prioritization.",
+      "Designed and built PathPeer's mentorship-discovery platform as one of two developers/designers on a small team, covering mentor search, discovery, and shortlisting end to end on the Bubble.io no-code platform. Used Google Analytics and Hotjar recordings to analyze search and shortlisting behavior, then turned that evidence into a mentor tagging and discovery taxonomy, a homepage discovery flow for newly added mentors matched to a user's career path, and a company-of-interest discovery path. Prototyped and validated the smaller changes directly in Bubble.io before requesting further development time, and worked as the platform's de facto product manager on feature planning and prioritization.",
     tags: ["Product Management", "UX Research", "Behavioural Analytics", "No-Code Development"],
     toolTags: ["Google Analytics", "Hotjar", "Figma", "Bubble.io"],
     artifacts: ["Feature Plan Reconstruction", "Search & Shortlisting Research", "Internal Analytics Omitted"],
@@ -358,9 +358,9 @@ const caseStudiesData: CaseStudy[] = [
       { value: "40%", label: "reduction in inactive user drop-off (internship period)" },
     ],
     problem:
-      "PathPeer helped users explore career paths and find professionals they could connect with as mentors, for networking, advice, and guidance. Once the platform was live, the open question was no longer whether people were using it, but where they were getting stuck across search, mentor discovery, shortlisting, and tagging, and what to fix or build first. As the platform's solo designer and developer, working within a small team and acting as its de facto product manager, I used behavioral evidence from Google Analytics and Hotjar to recommend, plan, and validate what came next.",
+      "PathPeer helped users explore career paths and find professionals they could connect with as mentors, for networking, advice, and guidance. Once the platform was live, the open question was no longer whether people were using it, but where they were getting stuck across search, mentor discovery, shortlisting, and tagging, and what to fix or build first. As one of PathPeer's two developers/designers, working within a small team and acting as its de facto product manager, I used behavioral evidence from Google Analytics and Hotjar to recommend, plan, and validate what came next.",
     process: [
-      "Designed and built PathPeer's mentorship-discovery platform end-to-end, handling design and development solo within a small team, across search, mentor discovery, shortlisting, and the mentor tagging taxonomy.",
+      "Designed and built PathPeer's mentorship-discovery platform end-to-end on Bubble.io, as one of two developers/designers on a small team, across search, mentor discovery, shortlisting, and the mentor tagging taxonomy.",
       "Used Google Analytics to find where engagement dropped in search and mentor discovery, then reviewed the matching Hotjar session recordings to see what was actually happening at each point, rather than treating the numbers alone as an answer.",
       "Analyzed search behavior specifically, tracking how users refined queries and where they abandoned a search, to separate a genuine mentor-fit gap from a discoverability problem.",
       "Built out a mentor tagging and discovery taxonomy so mentors could be filtered on more than a single job-title match, then reviewed shortlisting behavior to see where users added mentors to compare but never followed through.",
@@ -380,12 +380,12 @@ const caseStudiesData: CaseStudy[] = [
     whatIdImprove: "The 50% engagement and 40% drop-off numbers are the platform's overall internship-period results, not isolated to the analytics-and-recordings loop. I'd want to track changes at the feature level next time, so a given fix's impact could be measured on its own instead of folded into total growth.",
     snapshot: {
       challenge: "A live mentor-discovery platform generating real search, shortlisting, and tagging data, with no structured process for turning that data into what to build next.",
-      contribution: "Designed and built the platform's search, discovery, shortlisting, and tagging experience solo, then used Hotjar and Google Analytics to turn behavioral evidence into prioritized, Bubble.io-validated feature plans.",
+      contribution: "Designed and built the platform's search, discovery, shortlisting, and tagging experience as one of two developers/designers, then used Hotjar and Google Analytics to turn behavioral evidence into prioritized, Bubble.io-validated feature plans.",
       outcome: "Iterative changes driven by that loop: 50% higher engagement, 40% less inactive-user drop-off, platform-wide over the internship.",
       tools: ["Google Analytics", "Hotjar", "Figma", "Bubble.io"],
     },
     constraints: [
-      "PathPeer was a small, resource-constrained team. I was the platform's solo designer and developer, so search, discovery, shortlisting, tagging, and no-code execution all had to fit inside one person's time rather than dedicated roles.",
+      "PathPeer was a small, resource-constrained team. I was one of two developers/designers on the platform, so search, discovery, shortlisting, tagging, and no-code execution all had to fit inside two people's time rather than dedicated roles.",
       "There was no dedicated PM tooling. Findings, hypotheses, and feature plans lived in direct notes and conversations instead of a formal backlog.",
       "Product direction and priorities were set within the broader team, not by me alone. My role was to bring recommendations, strategy, and feature plans grounded in behavioral evidence and Bubble.io validation, not to unilaterally decide what PathPeer built next.",
     ],

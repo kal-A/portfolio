@@ -604,66 +604,69 @@ export default function RoomEaseCaseStudy() {
                 </Reveal>
               ))}
             </div>
-
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
-              How each role actually experiences a request
-            </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              <VideoBlock
-                title="Member flow"
-                context="A member checks live room availability, sets a priority level, and sends the request to their club executive instead of the flow dead-ending on a single decision-maker."
-                src={`${VID}/member-flow.mp4`}
-                poster={`${VID}/poster/member-flow.jpg`}
-                caption="Availability updates against real bookings, so a member is choosing from rooms that are actually free, not a static list that might already be taken."
-                accent="#f0b429"
-              />
-              <VideoBlock
-                title="Executive flow"
-                context="An executive reviewing club member requests can approve and book directly, or send a request onward, without every booking needing to reach an admin first."
-                src={`${VID}/exec-flow.mp4`}
-                poster={`${VID}/poster/exec-flow.jpg`}
-                caption="Approve & book is a one-click action here. That's the speed requirement (R2/usability) staying intact even with a second role in the approval path."
-                accent="#c9941a"
-              />
-              <VideoBlock
-                title="Admin flow"
-                context="Switching into the Admin Portal surfaces exactly the requests that couldn't resolve on their own: pending approvals and flagged scheduling conflicts."
-                src={`${VID}/admin-flow.mp4`}
-                poster={`${VID}/poster/admin-flow.jpg`}
-                caption="Conflicts are labeled, not hidden inside a normal-looking request. That's where the manual override with a stated reason (below) actually gets used."
-                accent="#8a5a0a"
-              />
-            </div>
-
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
-              Design decisions that came out of testing
-            </p>
-            <div className="flex flex-col gap-3.5">
-              {[
-                {
-                  title: "Justification tags on every suggestion, not just a ranked list",
-                  body: "A bare ranked list would have looked like a black box. Showing why a room was suggested (capacity fit, feature match) is what let club executives trust the matching in testing.",
-                },
-                {
-                  title: "Override requires a reason before it re-scores",
-                  body: "An unexplained override would have made the ranking meaningless the first time someone bypassed it. Requiring a stated reason kept manual control connected to the transparency requirement instead of undermining it.",
-                },
-                {
-                  title: "Executives can approve directly; anything with an issue escalates",
-                  body: "Routing every request through a central admin would have recreated the same bottleneck we were trying to remove. Letting executives approve within their own club's requests, while conflicts and exceptions still escalate, kept both speed and oversight.",
-                },
-              ].map((d) => (
-                <div key={d.title} className="cs-box light px-5 py-4">
-                  <p className="font-bold text-[15px]" style={{ color: "var(--ink)" }}>
-                    {d.title}
-                  </p>
-                  <p className="mt-1.5 text-sm leading-relaxed" style={{ color: "#4c473e" }}>
-                    {d.body}
-                  </p>
-                </div>
-              ))}
-            </div>
           </Chapter>
+        </div>
+
+        {/* Full-width band: escapes the Chapter's title column so the three videos get real width */}
+        <div className="mx-auto max-w-5xl px-6 pb-24">
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
+            How each role actually experiences a request
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+            <VideoBlock
+              title="Member flow"
+              context="A member checks live room availability, sets a priority level, and sends the request to their club executive instead of the flow dead-ending on a single decision-maker."
+              src={`${VID}/member-flow.mp4`}
+              poster={`${VID}/poster/member-flow.jpg`}
+              caption="Availability updates against real bookings, so a member is choosing from rooms that are actually free, not a static list that might already be taken."
+              accent="#f0b429"
+            />
+            <VideoBlock
+              title="Executive flow"
+              context="An executive reviewing club member requests can approve and book directly, or send a request onward, without every booking needing to reach an admin first."
+              src={`${VID}/exec-flow.mp4`}
+              poster={`${VID}/poster/exec-flow.jpg`}
+              caption="Approve & book is a one-click action here. That's the speed requirement (R2/usability) staying intact even with a second role in the approval path."
+              accent="#c9941a"
+            />
+            <VideoBlock
+              title="Admin flow"
+              context="Switching into the Admin Portal surfaces exactly the requests that couldn't resolve on their own: pending approvals and flagged scheduling conflicts."
+              src={`${VID}/admin-flow.mp4`}
+              poster={`${VID}/poster/admin-flow.jpg`}
+              caption="Conflicts are labeled, not hidden inside a normal-looking request. That's where the manual override with a stated reason (below) actually gets used."
+              accent="#8a5a0a"
+            />
+          </div>
+
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
+            Design decisions that came out of testing
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3.5 items-stretch">
+            {[
+              {
+                title: "Justification tags on every suggestion, not just a ranked list",
+                body: "A bare ranked list would have looked like a black box. Showing why a room was suggested (capacity fit, feature match) is what let club executives trust the matching in testing.",
+              },
+              {
+                title: "Override requires a reason before it re-scores",
+                body: "An unexplained override would have made the ranking meaningless the first time someone bypassed it. Requiring a stated reason kept manual control connected to the transparency requirement instead of undermining it.",
+              },
+              {
+                title: "Executives can approve directly; anything with an issue escalates",
+                body: "Routing every request through a central admin would have recreated the same bottleneck we were trying to remove. Letting executives approve within their own club's requests, while conflicts and exceptions still escalate, kept both speed and oversight.",
+              },
+            ].map((d) => (
+              <div key={d.title} className="cs-box light px-5 py-4 h-full">
+                <p className="font-bold text-[15px]" style={{ color: "var(--ink)" }}>
+                  {d.title}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed" style={{ color: "#4c473e" }}>
+                  {d.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

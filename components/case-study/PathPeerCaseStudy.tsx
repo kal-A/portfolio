@@ -97,7 +97,7 @@ const FRICTION_STEPS: ProcessStep[] = [
   {
     title: "Identify friction",
     synopsis:
-      "Watched the matching Hotjar recordings for those drop-off points to see the behavior behind the numbers, not just the number itself.",
+      "Reviewed hundreds of Hotjar session recordings on a recurring, weekly basis, watching the ones matching those drop-off points to see the behavior behind the numbers, not just the number itself.",
   },
   {
     title: "Form hypothesis",
@@ -186,6 +186,31 @@ const NOCODE_REASONS = [
   },
 ];
 
+const ADDITIONAL_CONTRIBUTIONS = [
+  {
+    title: "Student profile timeline page",
+    body: "Designed and built a timeline view of a student's profile in Figma and Bubble.io, as part of improving the profile experience around mentor discovery.",
+    icon: <><path d="M4 6h16M4 12h16M4 18h10" /></>,
+  },
+  {
+    title: "Admin dashboard expansion",
+    body: "Added useful user information to the admin dashboard to improve visibility and day-to-day workflow for the team managing the platform.",
+    icon: <><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M4 10h16M10 10v10" /></>,
+  },
+  {
+    title: "Mentor-search filtering",
+    body: "Improved mentor-search filtering, including how the remaining, still-available mentors were surfaced once a filter had narrowed the list.",
+    icon: <><path d="M4 6h16M7 12h10M10 18h4" /></>,
+  },
+];
+
+const LEGACY_METRICS = [
+  { value: "20%", label: "increase in user engagement, reported alongside the discovery and profile work above" },
+  { value: "25%", label: "decrease in bounce rate, reported for the same period of work" },
+  { value: "30%", label: "increase in usability / overall efficiency, for the expanded admin dashboard" },
+  { value: "50%", label: "improvement in search functionality, reported alongside the search-matching and filtering work" },
+];
+
 export default function PathPeerCaseStudy() {
   const cs = getCaseStudy("pathpeer")!;
   return (
@@ -232,8 +257,8 @@ export default function PathPeerCaseStudy() {
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
                 PathPeer helped users explore career paths and find professionals they could connect
                 with as mentors, for networking, advice, and guidance on the career they wanted to
-                pursue. I designed and built the platform as PathPeer&apos;s solo product designer and
-                developer, working within a small team, then went back into the data. Google Analytics
+                pursue. I designed and built the platform as one of PathPeer&apos;s two developers and
+                designers, building on Bubble.io, then went back into the data. Google Analytics
                 showed where engagement was dropping in search and mentor discovery; Hotjar recordings
                 showed what was actually happening at those points. I used both to recommend what to
                 fix first, turned the strongest patterns into scoped feature and requirement plans, and
@@ -379,6 +404,11 @@ export default function PathPeerCaseStudy() {
               was where they were getting stuck in search and mentor discovery. Analytics could show
               that a step was leaking users, not why. That&apos;s where the recordings came in.
             </p>
+            <p className="text-base leading-relaxed max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+              I worked as one of PathPeer&apos;s two developers/designers on the Bubble.io no-code
+              platform, splitting product, design, and build work across search, discovery,
+              shortlisting, and the profile experience.
+            </p>
           </Reveal>
 
           <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
@@ -457,10 +487,10 @@ export default function PathPeerCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
-              03
+              03 · What changed
             </p>
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
-              What changed: five product improvements
+              Five product improvements from the loop
             </h2>
             <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink)" }}>
               Each of these started as a specific behavior pattern in Analytics or Hotjar, not a
@@ -505,6 +535,60 @@ export default function PathPeerCaseStudy() {
               </Reveal>
             ))}
           </div>
+
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mt-14 mb-4" style={{ color: "var(--ink)" }}>
+            Earlier contributions from the same role
+          </p>
+          <p className="text-base leading-relaxed max-w-2xl mb-6" style={{ color: "#33302a" }}>
+            Alongside the analytics-and-recordings loop above, I also carried these contributions
+            during the internship, drawn from the original role summary rather than from a specific
+            Analytics or Hotjar finding.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-5 mb-10">
+            {ADDITIONAL_CONTRIBUTIONS.map((item, i) => (
+              <Reveal key={item.title} delay={i * 90}>
+                <div className="cs-box white px-5 py-6 h-full min-w-0">
+                  <div
+                    className="w-9 h-9 rounded-[10px] border-2 flex items-center justify-center mb-3.5"
+                    style={{ background: BLUE_GRADIENT, borderColor: "var(--ink)" }}
+                  >
+                    <span className="w-[18px] h-[18px] text-[#fff9ee]">
+                      <Icon>{item.icon}</Icon>
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-base mb-2" style={{ color: "var(--ink)" }}>
+                    {item.title}
+                  </h3>
+                  <p className="text-[13.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                    {item.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="cs-box light px-6 py-6">
+            <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-2" style={{ color: ACCENT_BLUE }}>
+              From the original internship performance summary
+            </p>
+            <p className="text-[13.5px] leading-relaxed mb-5 max-w-2xl" style={{ color: "#4c473e" }}>
+              These four figures come from an earlier, separate performance summary, not the
+              Analytics-and-Hotjar loop above. Each is reported alongside, not claimed as solely
+              caused by, the contribution it&apos;s paired with.
+            </p>
+            <div className="grid grid-cols-2 gap-5">
+              {LEGACY_METRICS.map((m) => (
+                <div key={m.label}>
+                  <p className="font-serif text-3xl font-bold" style={{ color: ACCENT_BLUE }}>
+                    {m.value}
+                  </p>
+                  <p className="text-[12.5px] leading-snug mt-1.5" style={{ color: "var(--ink)" }}>
+                    {m.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -513,7 +597,7 @@ export default function PathPeerCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
-              04
+              04 · No-code execution
             </p>
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
               Planning and no-code execution
@@ -554,16 +638,13 @@ export default function PathPeerCaseStudy() {
       {/* ---------- 05: Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              05
+            </p>
+            <h2 className="font-serif text-[32px] leading-tight mt-2 text-white">Outcomes</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: ORANGE_GRADIENT, color: "#fff9ee", border: "3px solid #fff9ee", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                05
-              </div>
-              <h2 className="font-serif text-4xl text-white">Outcomes</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d6ddec" }}>
               The figures below are the platform-level outcomes reported for the internship period.
               They reflect PathPeer&apos;s overall growth during that time, with the analytics-and-

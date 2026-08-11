@@ -112,6 +112,41 @@ const AGENT_ROLES = [
   },
 ];
 
+const REFLECTION_CARDS = [
+  {
+    category: "Product learning",
+    title: "Corrections belong on the record, not absorbed quietly",
+    body: "The roadmap changed direction twice at the product-framing level: map-first, then agent-as-core. Writing both corrections down as dated decisions made the second one faster to reason about than the first.",
+    gradient: INK_GRADIENT,
+    open: false,
+    icon: <><path d="M4 18l5-6 4 3 7-9" /><path d="M14 6h6v6" /></>,
+  },
+  {
+    category: "AI / system learning",
+    title: "Structure before intelligence",
+    body: "Proving the deterministic pipeline on synthetic topics, before wiring a real model, felt slow at the time. It meant the model-provider and tool layer had a stable, already-tested contract to build against instead of inventing structure under model-output pressure, and a local 7B model's weaker structured-output reliability is designed around with a retry-with-feedback path, not hidden.",
+    gradient: "linear-gradient(135deg, #f0c98a, #a9791f)",
+    open: false,
+    icon: <><circle cx="12" cy="12" r="3" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></>,
+  },
+  {
+    category: "Historical-integrity learning",
+    title: "Integrity rules have to be structural, not stylistic",
+    body: 'Rules like "chronological adjacency never implies causation" are easy to write down and easy to quietly violate under deadline pressure. Only enforcing them as schema and validator rules, checked at write time, actually holds, and that discipline is what caught real defects, like a serialization mismatch, before they shipped.',
+    gradient: INK_GRADIENT,
+    open: false,
+    icon: <><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" /><path d="M9 12l2 2 4-4" /></>,
+  },
+  {
+    category: "Next validation step",
+    title: "What's still unproven: real human comprehension",
+    body: "The map-first workspace has automated keyboard, accessibility, and mechanical test coverage, but no real human comprehension study has been run yet. That's the next validation gap to close before trusting the workspace design, written down as an open test plan, not skipped.",
+    gradient: "linear-gradient(135deg, #f0c98a, #a9791f)",
+    open: true,
+    icon: <><circle cx="12" cy="12" r="8" /><path d="M12 8v5l3 2" /></>,
+  },
+];
+
 export default function ChronicleCaseStudy() {
   return (
     <div>
@@ -231,15 +266,15 @@ export default function ChronicleCaseStudy() {
       </div>
 
       {/* ---------- 01: Product thesis ---------- */}
-      <div id="s1" className="cs-seam" style={{ background: TONE_SLATE }}>
+      <div id="s1" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Chapter num="01" title="Why historical investigation needs structure">
-            <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
+          <Chapter num="01" title="Why historical investigation needs structure" dark>
+            <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "#f3efe6" }}>
               An ordinary historical summary compresses disagreement, uncertain timing, and
               disputed causation into confident prose. Chronicle&apos;s working assumption is that
               this compression is the actual problem, not a stylistic choice: events are
               interconnected, causal claims need evidence, sources disagree with each other, and{" "}
-              <em className="not-italic font-extrabold" style={{ color: "#2e4a6b" }}>
+              <em className="not-italic font-extrabold" style={{ color: "#f0c98a" }}>
                 when
               </em>{" "}
               someone knew something is a separate fact from when the event itself happened. A
@@ -247,7 +282,7 @@ export default function ChronicleCaseStudy() {
               the answer, not smooth it away.
             </p>
 
-            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "#f0c98a" }}>
               Rules the data model enforces, not just style guidance
             </p>
             <div className="cs-box white px-6 py-6">
@@ -338,10 +373,10 @@ export default function ChronicleCaseStudy() {
       </div>
 
       {/* ---------- 03: Evidence model ---------- */}
-      <div id="s3" className="cs-seam" style={{ background: TONE_SLATE }}>
+      <div id="s3" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Chapter num="03" title="An evidence model built to be interrogated">
-            <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
+          <Chapter num="03" title="An evidence model built to be interrogated" dark>
+            <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "#f3efe6" }}>
               Every claim has to trace back through a chain: a Source (with a recorded type and
               rights status) produces Documents, which are broken into cited Passages, which
               support Claims and Relationships. A Claim with no traceable supporting passage is
@@ -350,11 +385,11 @@ export default function ChronicleCaseStudy() {
 
             <div className="flex items-center gap-3 flex-wrap my-9">
               <ChainNode title="Source" sub="Type + rights status recorded" />
-              <span className="text-2xl font-black shrink-0" style={{ color: "var(--ink)" }}>→</span>
+              <span className="text-2xl font-black shrink-0" style={{ color: "#f0c98a" }}>→</span>
               <ChainNode title="Document" sub="Derived from a specific Source" />
-              <span className="text-2xl font-black shrink-0" style={{ color: "var(--ink)" }}>→</span>
+              <span className="text-2xl font-black shrink-0" style={{ color: "#f0c98a" }}>→</span>
               <ChainNode title="Passage" sub="The cited unit of text" />
-              <span className="text-2xl font-black shrink-0" style={{ color: "var(--ink)" }}>→</span>
+              <span className="text-2xl font-black shrink-0" style={{ color: "#f0c98a" }}>→</span>
               <ChainNode title="Claim / Relationship" sub="Supported, never asserted alone" />
             </div>
 
@@ -369,7 +404,7 @@ export default function ChronicleCaseStudy() {
               </p>
             </div>
 
-            <p className="text-lg leading-[1.8] max-w-2xl mt-9" style={{ color: "var(--ink)" }}>
+            <p className="text-lg leading-[1.8] max-w-2xl mt-9" style={{ color: "#f3efe6" }}>
               Review status is modelled as a real state machine (proposed → reviewed / disputed /
               rejected, with disputed shown honestly as disputed rather than hidden), and every
               AI-touched field is required to carry a prompt version, model version, and
@@ -396,7 +431,12 @@ export default function ChronicleCaseStudy() {
             </p>
 
             <div className="mt-9">
-              <ProcessFlow steps={PIPELINE_STEPS} accent="#2e4a6b" />
+              <ProcessFlow
+                steps={PIPELINE_STEPS}
+                accent="#2e4a6b"
+                rowLength={4}
+                middleLabel="Assessed sources become the corpus the investigation is built from"
+              />
             </div>
 
             <p className="text-lg leading-[1.8] max-w-2xl mt-10" style={{ color: "var(--ink)" }}>
@@ -736,29 +776,41 @@ export default function ChronicleCaseStudy() {
             </div>
           </Chapter>
 
-          <div className="mt-16 border-t-[3px] pt-8" style={{ borderColor: "var(--ink)" }}>
-            <h2 className="font-serif text-lg mb-3" style={{ color: "var(--ink)" }}>Reflection</h2>
-            <ul className="flex flex-col gap-2.5 max-w-2xl">
-              {[
-                "The roadmap has genuinely changed direction twice at the product-framing level (map-first, then agent-as-core), and writing both corrections down as dated decisions, instead of quietly absorbing them, made the second correction faster to reason about than the first.",
-                "Proving the deterministic pipeline mechanically, on synthetic topics, before curating real historical content, felt slow at the time. It meant the eventual model-provider and tool layer had a stable, already-tested contract to build against instead of inventing structure under model-output pressure.",
-                "A local 7B model is a real constraint, not a footnote. The retry-with-feedback path in the provider layer exists specifically because a small local model is measurably less reliable at structured output than a hosted frontier model, and that tradeoff is designed around, not hidden.",
-              ].map((r) => (
-                <li key={r} className="text-sm leading-relaxed flex gap-2" style={{ color: "#4c473e" }}>
-                  <span style={{ color: "var(--ink-soft)" }}>-</span>
-                  {r}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-8 text-sm italic border-l-2 pl-4 max-w-2xl" style={{ color: "var(--ink-soft)", borderColor: "rgba(32,28,23,0.2)" }}>
-              The map-first workspace has automated keyboard, accessibility, and mechanical test
-              coverage, but no real human comprehension study has been run yet. That is the next
-              validation gap I would close before trusting the workspace design, and it is written
-              down as an open test plan rather than skipped.
+          <div className="mt-16 border-t-[3px] pt-10" style={{ borderColor: "var(--ink)" }}>
+            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: "#2e4a6b" }}>
+              Reflection
             </p>
+            <h2 className="font-serif text-[32px] mb-8" style={{ color: "var(--ink)" }}>
+              What building this actually taught me
+            </h2>
 
-            <p className="mt-8 text-sm italic" style={{ color: "var(--ink-soft)" }}>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {REFLECTION_CARDS.map((r, i) => (
+                <Reveal key={r.title} delay={i * 90}>
+                  <div className={`cs-box ${r.open ? "light" : "white"} px-6 py-6 h-full min-w-0`}>
+                    <p className="text-[11px] font-extrabold uppercase tracking-wide mb-3" style={{ color: "#2e4a6b" }}>
+                      {r.category}
+                    </p>
+                    <div
+                      className="w-9 h-9 rounded-[10px] border-2 flex items-center justify-center mb-3.5"
+                      style={{ background: r.gradient, borderColor: "var(--ink)" }}
+                    >
+                      <span className="w-[18px] h-[18px] text-[#fdfaf5]">
+                        <Icon>{r.icon}</Icon>
+                      </span>
+                    </div>
+                    <h3 className="font-serif font-bold text-lg mb-2" style={{ color: "var(--ink)" }}>
+                      {r.title}
+                    </h3>
+                    <p className="text-[13.5px] leading-relaxed" style={{ color: "#4c473e" }}>
+                      {r.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            <p className="mt-10 text-sm italic" style={{ color: "var(--ink-soft)" }}>
               Chronicle is an active, independent project. This page reflects the state of the
               project&apos;s own documentation at the time it was written, and is explicit about
               what&apos;s built versus what&apos;s still architected only.
