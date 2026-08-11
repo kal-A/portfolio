@@ -41,13 +41,15 @@ const PIPELINE_STEPS: ProcessStep[] = [
   { title: "Verified", synopsis: "The composed package is run back through the same schema and cross-reference validator every hand-authored package must also pass, before it's treated as output." },
 ];
 
-function StatusPill({ tone, children }: { tone: "built" | "foundation" | "future"; children: React.ReactNode }) {
+function StatusPill({ tone, children }: { tone: "built" | "foundation" | "progress" | "future"; children: React.ReactNode }) {
   const styles =
     tone === "built"
       ? { background: "var(--ink)", color: "#fdfaf5", borderColor: "var(--ink)" }
       : tone === "foundation"
         ? { background: "#dbe3ee", color: "#1f3a52", borderColor: "#1f3a52" }
-        : { background: "transparent", color: "#e4ecf5", borderColor: "#e4ecf5" };
+        : tone === "progress"
+          ? { background: "#f0c98a", color: "#3a2a12", borderColor: "#a9791f" }
+          : { background: "transparent", color: "#e4ecf5", borderColor: "#e4ecf5" };
   return (
     <span
       className="inline-block text-[11px] font-extrabold uppercase tracking-wide rounded-full px-3 py-1 border-2"
@@ -75,21 +77,37 @@ const AGENT_ROLES = [
   {
     role: "Investigation Planner",
     job: "Converts a question plus workspace context into a typed InvestigationPlan.",
-    exists: ["generate_structured() call shape (E1)", "10 typed tools to plan calls against (E2)"],
+    statusTone: "progress" as const,
+    statusLabel: "In active development, uncommitted",
+    exists: [
+      "generate_structured() call shape (E1)",
+      "10 typed tools to plan calls against (E2)",
+      "A working implementation with deterministic post-generation gates, written but not yet committed or passing its own test suite",
+    ],
   },
   {
     role: "Evidence Analyst",
     job: "Builds a structured AnalysisDraft from retrieved evidence.",
-    exists: ["Same structured-output call shape", "Real retrieved evidence via search_passages / get_claim_evidence / get_relationship_evidence (E2)"],
+    statusTone: "progress" as const,
+    statusLabel: "In active development, uncommitted",
+    exists: [
+      "Same structured-output call shape",
+      "Real retrieved evidence via search_passages / get_claim_evidence / get_relationship_evidence (E2)",
+      "A working implementation plus a deterministic grounding validator that checks every draft statement traces to the retrieved evidence bundle, not yet committed or passing its own test suite",
+    ],
   },
   {
     role: "Historical Critic",
     job: "Produces an approve / downgrade / reject / abstain decision challenging the Analyst's draft.",
+    statusTone: "future" as const,
+    statusLabel: "Architected, not built",
     exists: ["find_counterevidence / trace_relationships (E2) give it something concrete to check a draft against"],
   },
   {
     role: "Investigation Guide",
     job: "Turns critic-approved material into a cited, user-facing answer with typed map actions.",
+    statusTone: "future" as const,
+    statusLabel: "Architected, not built",
     exists: ["Typed AssistantAction contract already specified", "get_map_context (E2) resolves a map action's referenced IDs"],
   },
 ];
@@ -198,7 +216,8 @@ export default function ChronicleCaseStudy() {
               icon={<><circle cx="12" cy="12" r="8" /><path d="M12 8v5l3 2" /></>}
             >
               Two real investigations proven on one generic contract; a local model wired
-              end-to-end; the four-agent system architected and next in line to be built.
+              end-to-end; a corpus/tool layer committed; the first two of four agent roles
+              (Planner, Evidence Analyst) now actively in development.
             </SnapshotBox>
             <SnapshotBox
               label="Tools"
@@ -448,7 +467,7 @@ export default function ChronicleCaseStudy() {
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <p className="font-serif text-xl" style={{ color: "#fdfaf5" }}>{r.role}</p>
                     </div>
-                    <StatusPill tone="future">Architected, not built</StatusPill>
+                    <StatusPill tone={r.statusTone}>{r.statusLabel}</StatusPill>
                     <p className="text-sm leading-relaxed mt-3" style={{ color: "#d8d3c6" }}>{r.job}</p>
                     <p className="text-[11px] font-extrabold uppercase tracking-wide mt-3 mb-1.5" style={{ color: "#f0c98a" }}>
                       What already exists for it
@@ -486,26 +505,41 @@ export default function ChronicleCaseStudy() {
                 <div className="cs-box dark px-5 py-5">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <p className="font-bold text-sm" style={{ color: "#fdfaf5" }}>Corpus and typed tools</p>
-                    <StatusPill tone="foundation">Implemented, not yet merged</StatusPill>
+                    <StatusPill tone="built">Committed &amp; pushed, not yet merged to master</StatusPill>
                   </div>
                   <p className="text-sm leading-relaxed" style={{ color: "#d8d3c6" }}>
                     A read-only corpus service over the validated investigation packages, and 10
                     deterministic tools (search_passages, get_claim_evidence,
-                    find_counterevidence, trace_relationships, get_map_context, and others) a
-                    future agent will call. Historical-integrity rules are enforced in the tool
-                    layer itself: evidence roles stay attached to their target, time roles stay
-                    separate, and map output preserves precision instead of implying false
-                    accuracy.
+                    find_counterevidence, trace_relationships, get_map_context, and others) an
+                    agent calls. Historical-integrity rules are enforced in the tool layer itself:
+                    evidence roles stay attached to their target, time roles stay separate, and
+                    map output preserves precision instead of implying false accuracy.
+                  </p>
+                </div>
+                <div className="cs-box dark px-5 py-5 sm:col-span-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <p className="font-bold text-sm" style={{ color: "#fdfaf5" }}>Planner, Analyst, and the agent runner</p>
+                    <StatusPill tone="progress">In active development, uncommitted</StatusPill>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "#d8d3c6" }}>
+                    A working Investigation Planner and Evidence Analyst, a deterministic
+                    grounding validator that checks every Analyst statement traces back to the
+                    retrieved evidence bundle rather than trusting a model&apos;s own claim, and a
+                    bounded tool-calling runner that executes a Planner&apos;s plan over the ten typed
+                    tools above, all now exist in the codebase, alongside early scaffolding for an
+                    evaluation/benchmark harness. None of this is committed yet, and it is not
+                    currently passing its own verification suite, so it is tracked here as work in
+                    progress, not claimed as built.
                   </p>
                 </div>
               </div>
 
               <p className="text-lg leading-[1.8] max-w-2xl mt-9" style={{ color: "#f3efe6" }}>
                 What does <span className="font-extrabold">not</span> exist yet, stated plainly:
-                the four agents themselves and the bounded tool-calling loop that would drive
-                them, an API layer, real assistant answers in the workspace (the Ask panel stays
-                an honestly disclosed placeholder), an evaluation harness, and any database or
-                live web retrieval.
+                the Historical Critic and Investigation Guide roles, a passing test suite for the
+                Planner/Analyst/runner code above, an API layer, real assistant answers in the
+                workspace (the Ask panel stays an honestly disclosed placeholder), an evaluation
+                harness that produces verified results, and any database or live web retrieval.
               </p>
             </div>
           </Reveal>
@@ -527,21 +561,26 @@ export default function ChronicleCaseStudy() {
               <div className="relative w-full aspect-[2243/1840] rounded-lg overflow-hidden border-[3px]" style={{ borderColor: "var(--ink)" }}>
                 <Image
                   src="/case-studies/chronicle/map-july-crisis-europe.jpg"
-                  alt="Europe at the Present Time - William R. Shepherd, Historical Atlas (1911), showing the alliance-bloc political geography around the 1914 period"
+                  alt="Europe at the Present Time - William R. Shepherd, Historical Atlas (1911), the actual map asset wired into Chronicle's July Crisis investigation"
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="min-w-0">
                 <p className="text-sm leading-relaxed" style={{ color: "#4c473e" }}>
-                  A period map (Shepherd, 1911) from the same public-domain atlas tradition
-                  Chronicle&apos;s map-sourcing discipline is built around, showing the
-                  alliance-bloc geography relevant to the project&apos;s July Crisis investigation.
-                  Shown here as reference material illustrating that discipline, not confirmed as
-                  the exact production asset currently wired into the app.
+                  The real map wired into Chronicle&apos;s own July Crisis investigation:
+                  William R. Shepherd, <em>Historical Atlas</em> (1911), &quot;Europe at the
+                  Present Time,&quot; pp. 166-167, public domain, digitized by the Perry-Castañeda
+                  Library. Its own sourcing doc discloses a genuine gap: the plate&apos;s
+                  Balkan/Ottoman boundaries predate the 1912-13 Balkan Wars and do not match
+                  July 1914&apos;s real borders. Germany&apos;s and Austria-Hungary&apos;s
+                  boundaries, the only ones this scene&apos;s events (Berlin, Vienna) actually
+                  need, are unaffected, so the default map view centers there rather than hiding
+                  the outdated region.
                 </p>
                 <p className="text-xs mt-2 italic" style={{ color: "var(--ink-soft)" }}>
-                  Reconstructed / illustrative, not verified as the live in-app asset.
+                  Verified: matches the mapAsset record in the project&apos;s own production
+                  investigation fixture and its map-source documentation.
                 </p>
               </div>
             </div>
@@ -648,7 +687,9 @@ export default function ChronicleCaseStudy() {
               only runs when Ollama is actually installed), and the frontend passed typecheck,
               lint, a production build, 103 unit tests, and 14 Playwright browser journeys
               covering keyboard operability and accessibility. This is a fast-moving branch, so
-              treat these as a dated snapshot, not a permanent number.
+              treat these as a dated snapshot, not a permanent number: they cover everything
+              through the committed corpus/tool layer, not the Planner/Analyst/runner code
+              written since, which is not yet included in a passing run.
             </p>
 
             <div className="mt-9">
@@ -676,7 +717,7 @@ export default function ChronicleCaseStudy() {
                   <li>Map-first workspace, lenses, docked panel, and preserved Inspector mode</li>
                   <li>Ask entry surface (keyword-matched against real investigations, not generative)</li>
                   <li>Model-provider foundation, smoke-tested against a real local model</li>
-                  <li>Corpus service and 10 typed tools (implemented and independently verified)</li>
+                  <li>Corpus service and 10 typed tools, implemented, independently verified, committed and pushed</li>
                 </ul>
               </div>
               <div className="cs-box dark px-6 py-5">
@@ -684,9 +725,10 @@ export default function ChronicleCaseStudy() {
                   Next / in progress
                 </p>
                 <ul className="flex flex-col gap-2 text-sm leading-relaxed" style={{ color: "#d8d3c6" }}>
-                  <li>The four agents themselves (Planner, Analyst, Critic, Guide) and their bounded tool-calling loop</li>
+                  <li>Stabilizing the Investigation Planner, Evidence Analyst, grounding validator, and tool-calling runner already written, but uncommitted and not yet passing their own test suite</li>
+                  <li>The Historical Critic and Investigation Guide roles, not yet started</li>
                   <li>An API layer and real assistant answers in the workspace&apos;s Ask panel</li>
-                  <li>An evaluation harness comparing the four-agent workflow against simpler baselines</li>
+                  <li>A working evaluation harness with real, verified results (early scaffolding exists, no numbers yet)</li>
                   <li>A real human comprehension study for the map-first workspace (test plan written, not yet run)</li>
                   <li>Live web retrieval, embeddings, and a database-backed review service (currently schema-only)</li>
                 </ul>
