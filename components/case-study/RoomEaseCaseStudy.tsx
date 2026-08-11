@@ -8,7 +8,10 @@ import Icon from "@/components/case-study/blocks/Icon";
 import SnapshotGrid, { SnapshotBox } from "@/components/case-study/blocks/SnapshotGrid";
 import StatGrid from "@/components/case-study/blocks/StatGrid";
 import ProcessFlow, { ProcessStep } from "@/components/case-study/blocks/ProcessFlow";
+import VideoBlock from "@/components/case-study/blocks/VideoBlock";
 import Reveal from "@/components/Reveal";
+
+const VID = "/case-studies/roomease/video";
 
 const GOLD_GRADIENT = "linear-gradient(135deg, #f0b429, #8a5a0a)";
 
@@ -553,6 +556,17 @@ export default function RoomEaseCaseStudy() {
             governed multi-role workflow. Every node is clickable, and details open in a side
             panel.
           </p>
+
+          <div className="mt-10">
+            <VideoBlock
+              title="The booking form, live"
+              context="The diagram above is reconstructed from the report; this is the actual step 1 it describes, a member entering event requirements that feed straight into the hard-constraint filter before anything gets ranked."
+              src={`${VID}/booking-form.mp4`}
+              poster={`${VID}/poster/booking-form.jpg`}
+              caption="Group size, event type, AV/accessibility needs, priority level, and preferred building are structured fields, not free text, which is what lets the matching engine treat capacity and features as hard constraints instead of guessing at intent."
+              accent={GOLD_GRADIENT}
+            />
+          </div>
         </div>
       </div>
 
@@ -589,6 +603,36 @@ export default function RoomEaseCaseStudy() {
                   </div>
                 </Reveal>
               ))}
+            </div>
+
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
+              How each role actually experiences a request
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <VideoBlock
+                title="Member flow"
+                context="A member checks live room availability, sets a priority level, and sends the request to their club executive instead of the flow dead-ending on a single decision-maker."
+                src={`${VID}/member-flow.mp4`}
+                poster={`${VID}/poster/member-flow.jpg`}
+                caption="Availability updates against real bookings, so a member is choosing from rooms that are actually free, not a static list that might already be taken."
+                accent="#f0b429"
+              />
+              <VideoBlock
+                title="Executive flow"
+                context="An executive reviewing club member requests can approve and book directly, or send a request onward, without every booking needing to reach an admin first."
+                src={`${VID}/exec-flow.mp4`}
+                poster={`${VID}/poster/exec-flow.jpg`}
+                caption="Approve & book is a one-click action here. That's the speed requirement (R2/usability) staying intact even with a second role in the approval path."
+                accent="#c9941a"
+              />
+              <VideoBlock
+                title="Admin flow"
+                context="Switching into the Admin Portal surfaces exactly the requests that couldn't resolve on their own: pending approvals and flagged scheduling conflicts."
+                src={`${VID}/admin-flow.mp4`}
+                poster={`${VID}/poster/admin-flow.jpg`}
+                caption="Conflicts are labeled, not hidden inside a normal-looking request. That's where the manual override with a stated reason (below) actually gets used."
+                accent="#8a5a0a"
+              />
             </div>
 
             <p className="text-[15px] font-extrabold uppercase tracking-wide mt-11 mb-4" style={{ color: "var(--ink)" }}>
@@ -663,11 +707,30 @@ export default function RoomEaseCaseStudy() {
             ))}
           </div>
 
-          <p className="mt-6 text-sm leading-relaxed max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+          <p className="mt-6 text-sm leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink-soft)" }}>
             Frontend: React with Tailwind CSS. Backend: Supabase (PostgreSQL) with Microsoft Entra
             authentication integrated via NextAuth and Node.js for data handling and access
             control.
           </p>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            <VideoBlock
+              title="Full prototype walkthrough"
+              context="An end-to-end pass through the built prototype: landing page, structured booking form, room comparison, and the admin and analytics views, run against the real Supabase-backed system rather than a click-through mockup."
+              src={`${VID}/product-demo.mp4`}
+              poster={`${VID}/poster/product-demo.jpg`}
+              caption="Sign-in, role switching, and every screen here is live application state. That's the difference Peer Critique 1 forced: a frontend-only prototype could look like this and still not stop a double booking."
+              accent="#c9941a"
+            />
+            <VideoBlock
+              title="Admin analytics and conflict queue"
+              context="The Admin Portal's analytics view, which is what lets an admin work from operational patterns instead of reacting to one booking request at a time."
+              src={`${VID}/admin-analytics.mp4`}
+              poster={`${VID}/poster/admin-analytics.jpg`}
+              caption="Pending requests, same-day approvals and denials, and flagged conflicts sit together on one screen, which is what makes an override accountable to a record instead of a private decision."
+              accent="#8a5a0a"
+            />
+          </div>
         </div>
       </div>
 
@@ -690,6 +753,17 @@ export default function RoomEaseCaseStudy() {
               process and once on the RoomEase prototype, with students and club executives.
             </p>
           </Reveal>
+
+          <div className="mb-10 max-w-2xl">
+            <VideoBlock
+              title="One of the end-to-end scenarios used in testing"
+              context="This is one of the structured booking scenarios run during verification, the same kind of task compared against the current UW process in the controlled user-testing sessions behind the numbers below."
+              src={`${VID}/validation-walkthrough.mp4`}
+              poster={`${VID}/poster/validation-walkthrough.jpg`}
+              caption="Priority level and AV/accessibility needs are collected as structured fields here, the same inputs that feed the hard-constraint filter and ranking shown in section 04."
+              accent="#eab848"
+            />
+          </div>
 
           <div className="mb-10">
             <StatGrid
