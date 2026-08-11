@@ -92,7 +92,7 @@ const RESEARCH_STEPS: ProcessStep[] = [
   {
     title: "Question",
     synopsis:
-      "For the cybersecurity curriculum: what does a reader actually need to understand about personal, school, workplace, or network security, and at what depth for that audience? For other requests: was a page confusing, was a workflow slower than it needed to be, was a feature worth building at all.",
+      "For the curriculum: what does a reader need to understand about a security topic, and at what depth? For other requests: was a page confusing, a workflow slow, or a feature worth building at all.",
   },
   {
     title: "Research",
@@ -179,16 +179,33 @@ function DecisionCallout({
   title,
   situation,
   result,
+  connectorLabel,
+  tight,
 }: {
   accent: string;
   accentDeep: string;
   title: string;
   situation: string;
   result: string;
+  connectorLabel?: string;
+  tight?: boolean;
 }) {
   return (
     <Reveal>
-      <div className="cs-box white px-6 py-6 mt-8" style={{ background: "#fffdf8" }}>
+      {connectorLabel && (
+        <div className={`flex items-center gap-3 pl-1 mb-3 ${tight ? "mt-5" : "mt-8"}`}>
+          <span className="text-2xl font-black" style={{ color: accentDeep }}>
+            ↓
+          </span>
+          <span className="text-xs font-extrabold uppercase tracking-wide" style={{ color: "var(--ink-soft)" }}>
+            {connectorLabel}
+          </span>
+        </div>
+      )}
+      <div
+        className={`cs-box white px-6 py-6 ${connectorLabel ? "" : tight ? "mt-5" : "mt-8"}`}
+        style={{ background: "#fffdf8" }}
+      >
         <div className="flex items-center gap-2.5 mb-3">
           <span
             className="w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0"
@@ -466,13 +483,20 @@ export default function InformaticaCaseStudy() {
               there.
             </p>
           </Reveal>
-          <ProcessFlow steps={RESEARCH_STEPS} accent="#3a6b93" middleLabel="Synthesis turns findings into a recommendation" />
+          <ProcessFlow
+            steps={RESEARCH_STEPS}
+            accent="#3a6b93"
+            activeGradient={BLUE_GRADIENT}
+            middleLabel="Synthesis turns findings into a recommendation"
+          />
 
           <DecisionCallout
             accent={BLUE_GRADIENT}
             accentDeep="#3a6b93"
-            title="Split the curriculum into four independent topic tracks instead of one continuous course"
-            situation="Personal, school, workplace, and networking and security practices are different audiences with different depth needs. Treating them as one continuous course would have forced six people to build sequentially instead of in parallel."
+            connectorLabel="Resulting execution / curriculum decision"
+            tight
+            title="Organize the curriculum as four independent topic tracks instead of one continuous course"
+            situation="Personal, school, workplace, and networking and security practices are different audiences with different depth needs. As part of planning how the six-person team would divide the work, treating them as one continuous course would have forced everyone to build sequentially instead of in parallel."
             result="Each topic track could be researched, structured, and built independently, so the six-person team could work at the same time instead of waiting on a shared sequence."
           />
         </div>
@@ -647,7 +671,12 @@ export default function InformaticaCaseStudy() {
               mattered.
             </p>
           </Reveal>
-          <ProcessFlow steps={AUTOMATION_STEPS} accent="#a12f2f" middleLabel="Human review gates everything before it publishes" />
+          <ProcessFlow
+            steps={AUTOMATION_STEPS}
+            accent="#a12f2f"
+            activeGradient={RED_GRADIENT}
+            middleLabel="Human review gates everything before it publishes"
+          />
           <p className="mt-5 text-sm flex items-center gap-3 flex-wrap leading-relaxed" style={{ color: "var(--ink-soft)" }}>
             <span
               className="text-[11px] font-extrabold uppercase tracking-wide rounded-full px-3 py-1 border-2 shrink-0"
