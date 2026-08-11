@@ -12,7 +12,7 @@ export default function Chapter({
   return (
     <Reveal className="flex flex-col md:flex-row gap-11">
       <div className="md:w-[280px] shrink-0">
-        <p className="font-serif text-6xl md:text-[88px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+        <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
           {num}
         </p>
         <h2 className="font-serif text-3xl md:text-[36px] leading-tight text-balance" style={{ color: "var(--ink)" }}>

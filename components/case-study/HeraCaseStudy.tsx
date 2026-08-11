@@ -1162,7 +1162,7 @@ export default function HeraCaseStudy() {
       <div id="s-reflection" className="cs-seam" style={{ background: TONE_SKY }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[70px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               04
             </p>
             <h2 className="font-serif text-[32px] leading-tight mt-2" style={{ color: "var(--ink)" }}>

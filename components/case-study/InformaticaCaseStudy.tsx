@@ -506,7 +506,7 @@ export default function InformaticaCaseStudy() {
       <div id="s-implementation" className="cs-seam" style={{ background: TONE_BLUE }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[70px] leading-[0.78] opacity-[0.16]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               02
             </p>
             <div className="mt-2">
@@ -527,7 +527,7 @@ export default function InformaticaCaseStudy() {
           </p>
           <div className="cs-box white overflow-hidden mt-10">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[640px]">
+              <table className="cs-table w-full text-left border-collapse min-w-[640px]">
                 <thead>
                   <tr style={{ background: "linear-gradient(135deg, #7fb0dd, #3a6b93)" }}>
                     {["Build method", "Used for", "Why", "Tradeoff"].map((h) => (
@@ -746,7 +746,7 @@ export default function InformaticaCaseStudy() {
       <div id="s-reflection" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[70px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               05
             </p>
             <h2 className="font-serif text-[32px] leading-tight mt-2" style={{ color: "var(--ink)" }}>

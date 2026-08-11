@@ -15,12 +15,22 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-neutral-200 bg-[#fdfaf5]/90 backdrop-blur sticky top-0 z-50">
+    <header
+      className="sticky top-0 z-50 backdrop-blur"
+      style={{
+        background: "linear-gradient(180deg, rgba(253,250,245,0.96) 0%, rgba(253,250,245,0.88) 100%)",
+        borderBottom: "1px solid rgba(23,20,15,0.1)",
+        boxShadow: "0 1px 0 rgba(200,69,44,0.14), 0 8px 20px -16px rgba(23,20,15,0.35)",
+      }}
+    >
       <nav className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="font-serif text-xl tracking-tight text-neutral-900">
+        <Link
+          href="/"
+          className="font-serif text-xl tracking-tight text-neutral-900 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5]"
+        >
           Kamal Ahsan
         </Link>
-        <ul className="flex gap-6 text-[15px]">
+        <ul className="flex gap-1 sm:gap-2 text-[15px]">
           {links.map((link) => {
             const active =
               link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -29,12 +39,19 @@ export default function Nav() {
                 <Link
                   href={link.href}
                   className={
-                    active
-                      ? "text-neutral-900 font-medium"
-                      : "text-neutral-500 hover:text-neutral-900 transition-colors"
+                    "relative px-3 py-1.5 rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5] " +
+                    (active
+                      ? "text-neutral-900 font-semibold bg-neutral-900/[0.06]"
+                      : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-900/[0.04]")
                   }
                 >
                   {link.label}
+                  {active && (
+                    <span
+                      className="absolute left-3 right-3 -bottom-[5px] h-[2.5px] rounded-full"
+                      style={{ background: "linear-gradient(90deg, #c8452c, #eaa64a)" }}
+                    />
+                  )}
                 </Link>
               </li>
             );

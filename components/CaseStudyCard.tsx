@@ -41,9 +41,16 @@ export default function CaseStudyCard({ cs, delay = 0 }: { cs: CaseStudy; delay?
               />
             ) : (
               <div
-                className="w-full h-full"
+                className="w-full h-full flex items-center justify-center overflow-hidden"
                 style={{ background: `linear-gradient(135deg, ${theme?.fillFrom ?? "#e4ded0"}, ${theme?.fillTo ?? "#181614"})` }}
-              />
+              >
+                <span
+                  className="font-serif font-bold leading-none select-none"
+                  style={{ fontSize: "7.5rem", color: "rgba(255,255,255,0.35)" }}
+                >
+                  {theme?.mark ?? cs.company.slice(0, 2).toUpperCase()}
+                </span>
+              </div>
             )}
             <div
               className="pointer-events-none absolute inset-0"

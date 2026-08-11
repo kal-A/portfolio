@@ -154,7 +154,7 @@ export default function ChronicleCaseStudy() {
               <div className="flex flex-wrap gap-2.5 mt-7">
                 {["Agent Architecture", "Local/Open-Weight LLM", "Historical Provenance", "Not Yet Publicly Deployed"].map(
                   (chip) => (
-                    <span key={chip} className="cs-pill text-xs font-extrabold px-3.5 py-1.5">
+                    <span key={chip} className="cs-pill highlight text-xs font-extrabold px-3.5 py-1.5 cursor-default">
                       {chip}
                     </span>
                   )
@@ -444,7 +444,7 @@ export default function ChronicleCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex flex-col md:flex-row gap-11">
             <div className="md:w-[280px] shrink-0">
-              <p className="font-serif text-6xl md:text-[88px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>05</p>
+              <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>05</p>
               <h2 className="font-serif text-3xl md:text-[36px] leading-tight text-balance" style={{ color: "#fdfaf5" }}>
                 The AI-agent system: what&apos;s built, what&apos;s next
               </h2>

@@ -413,7 +413,7 @@ export default function RoomEaseCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <div className="flex items-start gap-5">
-              <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+              <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
                 02
               </p>
               <h2 className="font-serif text-[40px] leading-tight text-balance mt-2" style={{ color: "var(--ink)" }}>
@@ -481,7 +481,7 @@ export default function RoomEaseCaseStudy() {
             </p>
             <div className="cs-box white overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="cs-table w-full text-sm">
                   <thead>
                     <tr style={{ background: "linear-gradient(160deg, #fdf3d9, #f6dfb2)" }}>
                       <th className="text-left font-extrabold uppercase tracking-wide text-[12px] px-5 py-3" style={{ color: "var(--ink)" }}>
@@ -493,8 +493,8 @@ export default function RoomEaseCaseStudy() {
                     </tr>
                   </thead>
                   <tbody>
-                    {BOOKING_INPUT_FIELDS.map((row, i) => (
-                      <tr key={row.field} style={{ borderTop: "1.5px dashed rgba(32,28,23,0.14)", background: i % 2 === 0 ? "transparent" : "rgba(234,184,72,0.06)" }}>
+                    {BOOKING_INPUT_FIELDS.map((row) => (
+                      <tr key={row.field} style={{ borderTop: "1.5px dashed rgba(32,28,23,0.14)" }}>
                         <td className="px-5 py-3 font-bold" style={{ color: "var(--ink)" }}>
                           {row.field}
                         </td>
@@ -671,7 +671,7 @@ export default function RoomEaseCaseStudy() {
       <div id="s6" className="cs-seam" style={{ background: TONE_AMBER }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               06
             </p>
             <h2 className="font-serif text-[40px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
@@ -820,7 +820,7 @@ export default function RoomEaseCaseStudy() {
       <div id="s8" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               08
             </p>
             <h2 className="font-serif text-[40px] leading-tight mt-2" style={{ color: "var(--ink)" }}>

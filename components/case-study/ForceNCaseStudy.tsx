@@ -132,7 +132,7 @@ export default function ForceNCaseStudy() {
               <div className="flex flex-wrap gap-2.5 mt-7">
                 {["Production Roadmap", "Inventory Logic", "Documentation System", "Internal Materials Omitted"].map(
                   (chip) => (
-                    <span key={chip} className="cs-pill text-xs font-extrabold px-3.5 py-1.5">
+                    <span key={chip} className="cs-pill highlight text-xs font-extrabold px-3.5 py-1.5 cursor-default">
                       {chip}
                     </span>
                   )
@@ -346,7 +346,7 @@ export default function ForceNCaseStudy() {
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal>
             <div className="flex items-start gap-5">
-              <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+              <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
                 02
               </p>
               <h2 className="font-serif text-[40px] leading-tight text-balance mt-2" style={{ color: "var(--ink)" }}>
@@ -625,7 +625,7 @@ export default function ForceNCaseStudy() {
       <div id="s7" className="cs-seam" style={{ background: TONE_AMBER }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5">
-            <p className="font-serif text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
               05
             </p>
             <h2 className="font-serif text-[40px] leading-tight mt-2" style={{ color: "var(--ink)" }}>
