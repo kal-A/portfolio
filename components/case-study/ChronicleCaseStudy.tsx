@@ -411,7 +411,7 @@ export default function ChronicleCaseStudy() {
               constants leak into shared code.
             </p>
 
-            <div className="grid sm:grid-cols-[220px_1fr] gap-6 items-start mt-9 max-w-2xl">
+            <div className="grid lg:grid-cols-[220px_1fr] gap-6 items-start mt-9 max-w-2xl">
               <div className="relative w-full aspect-[961/1537] rounded-lg overflow-hidden border-[3px]" style={{ borderColor: "var(--ink)" }}>
                 <Image
                   src="/case-studies/chronicle/map-concert-of-europe-1815.jpg"
@@ -557,7 +557,7 @@ export default function ChronicleCaseStudy() {
               and Python contracts, not as documentation someone has to remember to follow.
             </p>
 
-            <div className="grid sm:grid-cols-[220px_1fr] gap-6 items-start mt-9 max-w-2xl">
+            <div className="grid lg:grid-cols-[220px_1fr] gap-6 items-start mt-9 max-w-2xl">
               <div className="relative w-full aspect-[2243/1840] rounded-lg overflow-hidden border-[3px]" style={{ borderColor: "var(--ink)" }}>
                 <Image
                   src="/case-studies/chronicle/map-july-crisis-europe.jpg"
