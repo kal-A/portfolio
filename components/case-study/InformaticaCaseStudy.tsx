@@ -708,7 +708,7 @@ export default function InformaticaCaseStudy() {
             <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
           </Reveal>
           <Reveal>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d5dfe8" }}>
+            <p className="text-lg leading-relaxed max-w-3xl mb-9" style={{ color: "#d5dfe8" }}>
               The clearest result was turning one ambiguous educational goal into work six people
               could actually execute. The metrics below describe the internship more broadly, not
               the curriculum project in isolation.
