@@ -274,7 +274,7 @@ export default function PathPeerCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-24 w-full md:w-[300px] shrink-0">
-              <nav className="cs-box white px-6 py-7" style={{ background: "#fffdf8" }}>
+              <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
                 <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: ACCENT_ORANGE }}>
                   On this page
                 </p>

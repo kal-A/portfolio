@@ -30,19 +30,19 @@ const SIDE_PATH_IDS = new Set([
 ]);
 
 const NODE_SIZE: Record<WorkflowNodeType, { width: number; height: number }> = {
-  event: { width: 208, height: 60 },
-  endpoint: { width: 208, height: 60 },
-  process: { width: 216, height: 66 },
-  decision: { width: 264, height: 132 },
-  "data-store": { width: 196, height: 78 },
-  document: { width: 216, height: 68 },
-  "automated-subprocess": { width: 216, height: 68 },
+  event: { width: 244, height: 70 },
+  endpoint: { width: 244, height: 70 },
+  process: { width: 254, height: 78 },
+  decision: { width: 306, height: 152 },
+  "data-store": { width: 228, height: 90 },
+  document: { width: 254, height: 80 },
+  "automated-subprocess": { width: 254, height: 80 },
 };
 
 function estimateLabelWidth(text: string) {
-  return Math.round(text.length * 6.2 + 12);
+  return Math.round(text.length * 7 + 14);
 }
-const LABEL_HEIGHT = 16;
+const LABEL_HEIGHT = 18;
 
 const TYPE_LABEL: Record<WorkflowNodeType, string> = {
   event: "Event",
@@ -84,14 +84,14 @@ async function computeLayout() {
     layoutOptions: {
       "elk.algorithm": "layered",
       "elk.direction": "DOWN",
-      "elk.layered.spacing.nodeNodeBetweenLayers": "120",
-      "elk.spacing.nodeNode": "56",
-      "elk.spacing.edgeNode": "40",
-      "elk.spacing.edgeEdge": "28",
-      "elk.spacing.labelLabel": "14",
-      "elk.spacing.labelNode": "14",
-      "elk.layered.spacing.edgeNodeBetweenLayers": "50",
-      "elk.layered.spacing.edgeEdgeBetweenLayers": "28",
+      "elk.layered.spacing.nodeNodeBetweenLayers": "140",
+      "elk.spacing.nodeNode": "68",
+      "elk.spacing.edgeNode": "46",
+      "elk.spacing.edgeEdge": "32",
+      "elk.spacing.labelLabel": "16",
+      "elk.spacing.labelNode": "16",
+      "elk.layered.spacing.edgeNodeBetweenLayers": "58",
+      "elk.layered.spacing.edgeEdgeBetweenLayers": "32",
       "elk.edgeRouting": "ORTHOGONAL",
       "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
       "elk.layered.cycleBreaking.strategy": "GREEDY",
@@ -308,14 +308,14 @@ export default function ForceNWorkflowDiagram() {
               <defs>
                 <marker
                   id="fn-arrowhead"
-                  markerWidth="10"
-                  markerHeight="10"
-                  refX="8"
-                  refY="3"
+                  markerWidth="12"
+                  markerHeight="12"
+                  refX="9.5"
+                  refY="3.5"
                   orient="auto"
                   markerUnits="strokeWidth"
                 >
-                  <path d="M0,0 L8,3 L0,6 Z" fill={INK} />
+                  <path d="M0,0 L9.5,3.5 L0,7 Z" fill={INK} />
                 </marker>
               </defs>
 
@@ -332,7 +332,7 @@ export default function ForceNWorkflowDiagram() {
                       d={d}
                       fill="none"
                       stroke={stroke}
-                      strokeWidth={2}
+                      strokeWidth={2.75}
                       strokeDasharray={strokeDasharray}
                       markerEnd="url(#fn-arrowhead)"
                     />
@@ -340,8 +340,8 @@ export default function ForceNWorkflowDiagram() {
                       <text
                         x={labelPos.x}
                         y={labelPos.y}
-                        fontSize={10.5}
-                        fontWeight={600}
+                        fontSize={12}
+                        fontWeight={700}
                         fill={INK_SOFT}
                         textAnchor="middle"
                         style={{ paintOrder: "stroke", stroke: PAPER, strokeWidth: 5 }}
@@ -373,7 +373,7 @@ export default function ForceNWorkflowDiagram() {
                         height={n.height * 0.44}
                       >
                         <div className="w-full h-full flex items-center justify-center text-center">
-                          <span className="text-[11px] leading-tight font-bold" style={{ color: DECISION_TEXT }}>
+                          <span className="text-[13px] leading-tight font-bold" style={{ color: DECISION_TEXT }}>
                             {n.title}
                           </span>
                         </div>
@@ -381,7 +381,7 @@ export default function ForceNWorkflowDiagram() {
                     ) : (
                       <foreignObject x={6} y={4} width={n.width - 12} height={n.height - 8}>
                         <div className="w-full h-full flex items-center justify-center text-center px-1">
-                          <span className="text-[11px] leading-tight font-bold" style={{ color: INK }}>
+                          <span className="text-[13px] leading-tight font-bold" style={{ color: INK }}>
                             {n.title}
                           </span>
                         </div>
@@ -398,13 +398,13 @@ export default function ForceNWorkflowDiagram() {
           <div className="fixed inset-0 z-40" onClick={() => setActiveId(null)}>
             <div className="absolute inset-0 bg-black/20" />
             <div
-              className="absolute right-0 top-0 h-full w-full max-w-sm bg-white p-6 overflow-y-auto"
+              className="absolute right-0 top-0 h-full w-full max-w-md bg-white p-8 overflow-y-auto"
               style={{ borderLeft: `3px solid ${INK}` }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
                 <span
-                  className="text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full"
+                  className="text-[13px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-full"
                   style={{
                     background: fillFor(activeNode),
                     color: activeNode.type === "decision" ? DECISION_TEXT : INK,
@@ -415,28 +415,28 @@ export default function ForceNWorkflowDiagram() {
                 </span>
                 <button
                   onClick={() => setActiveId(null)}
-                  className="text-neutral-400 hover:text-neutral-900 text-sm"
+                  className="text-neutral-400 hover:text-neutral-900 text-base"
                   aria-label="Close"
                 >
                   ✕
                 </button>
               </div>
-              <h3 className="font-serif text-2xl mt-4" style={{ color: INK }}>
+              <h3 className="font-serif text-[28px] leading-tight mt-5" style={{ color: INK }}>
                 {activeNode.title}
               </h3>
-              <p className="text-sm leading-relaxed mt-3" style={{ color: INK_SOFT }}>
+              <p className="text-base leading-relaxed mt-3.5" style={{ color: INK_SOFT }}>
                 {activeNode.description}
               </p>
               <div className="flex gap-3 mt-8">
                 <button
                   onClick={() => stepActive(-1)}
-                  className="cs-box flex-1 py-2 text-sm font-bold"
+                  className="cs-box flex-1 py-2.5 text-base font-bold"
                 >
                   ← Prev
                 </button>
                 <button
                   onClick={() => stepActive(1)}
-                  className="cs-box flex-1 py-2 text-sm font-bold"
+                  className="cs-box flex-1 py-2.5 text-base font-bold"
                 >
                   Next →
                 </button>
@@ -445,11 +445,11 @@ export default function ForceNWorkflowDiagram() {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-xs font-semibold" style={{ color: INK_SOFT }}>
+        <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-[13px] font-semibold" style={{ color: INK_SOFT }}>
           {(Object.keys(TYPE_LABEL) as WorkflowNodeType[]).map((t) => (
             <span key={t} className="flex items-center gap-1.5">
               <span
-                className="inline-block w-3 h-3 rounded-sm"
+                className="inline-block w-3.5 h-3.5 rounded-sm"
                 style={{
                   background: t === "decision" ? DECISION_FILL : t === "process" ? AMBER_FILL : "#fff",
                   border: `1.5px solid ${INK}`,

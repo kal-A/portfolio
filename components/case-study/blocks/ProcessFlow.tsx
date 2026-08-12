@@ -25,7 +25,7 @@ function StepBox({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className="cs-box text-[15px] font-bold px-7 py-4.5 transition-colors"
+      className="cs-box flex-1 min-w-0 text-center text-[14.5px] leading-snug font-bold px-4 py-4 transition-colors"
       style={
         active
           ? { background: activeBg, color: "#fff9ee", borderColor: "var(--ink)" }
@@ -58,11 +58,11 @@ export default function ProcessFlow({
   const activeBg = activeGradient ?? accent;
 
   const renderRow = (row: ProcessStep[], offset: number) => (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
       {row.map((step, i) => {
         const index = offset + i;
         return (
-          <div key={step.title} className="flex items-center gap-3">
+          <div key={step.title} className="flex flex-col sm:flex-row items-center gap-3 flex-1 min-w-0 w-full sm:w-auto">
             <StepBox
               step={step}
               active={index === activeIndex}
@@ -70,7 +70,7 @@ export default function ProcessFlow({
               activeBg={activeBg}
             />
             {i < row.length - 1 && (
-              <span className="text-2xl font-black" style={{ color: "var(--ink)" }}>
+              <span className="text-xl sm:text-2xl font-black shrink-0 rotate-90 sm:rotate-0" style={{ color: "var(--ink)" }}>
                 →
               </span>
             )}
@@ -81,17 +81,19 @@ export default function ProcessFlow({
   );
 
   return (
-    <div className="grid lg:grid-cols-[1fr_380px] gap-6 items-start">
+    <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
       <div className="flex flex-col gap-4">
         {renderRow(row1, 0)}
-        <div className="flex items-center gap-3 pl-1">
-          <span className="text-2xl font-black" style={{ color: accent }}>
-            ↓
-          </span>
-          <span className="text-xs font-extrabold uppercase tracking-wide" style={{ color: "var(--ink-soft)" }}>
-            {middleLabel}
-          </span>
-        </div>
+        {row2.length > 0 && (
+          <div className="flex items-center gap-3 pl-1">
+            <span className="text-2xl font-black" style={{ color: accent }}>
+              ↓
+            </span>
+            <span className="text-xs font-extrabold uppercase tracking-wide" style={{ color: "var(--ink-soft)" }}>
+              {middleLabel}
+            </span>
+          </div>
+        )}
         {renderRow(row2, rowLength)}
       </div>
 

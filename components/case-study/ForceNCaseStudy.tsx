@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ProjectIcon from "@/components/ProjectIcon";
+import Image from "next/image";
 import ForceNWorkflowDiagram from "@/components/case-study/ForceNWorkflowDiagram";
 import Chapter from "@/components/case-study/blocks/Chapter";
 import Icon from "@/components/case-study/blocks/Icon";
@@ -101,13 +101,16 @@ export default function ForceNCaseStudy() {
               </Link>
 
               <div
-                className="w-[76px] h-[76px] rounded-[20px] mt-3.5 flex items-center justify-center border-[3px] border-white/90"
-                style={{
-                  background: "linear-gradient(135deg, #c9ccd0, #2b2e33)",
-                  boxShadow: "0 10px 26px -8px rgba(43,46,51,0.45)",
-                }}
+                className="w-[76px] h-[76px] rounded-[20px] mt-3.5 overflow-hidden border-[3px] border-white/90"
+                style={{ boxShadow: "0 10px 26px -8px rgba(43,46,51,0.45)" }}
               >
-                <ProjectIcon slug="forcen" className="w-[38px] h-[38px]" style={{ color: "#fdfaf5" }} />
+                <Image
+                  src="/case-studies/forceN/forcen-logo.jpg"
+                  alt="ForceN logo"
+                  width={76}
+                  height={76}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               <p className="text-sm font-extrabold uppercase tracking-wide mt-6" style={{ color: "var(--accent-deep, #a15a10)" }}>
@@ -141,7 +144,7 @@ export default function ForceNCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-40 w-full md:w-[300px] shrink-0">
-            <nav className="cs-box white px-6 py-7" style={{ background: "#fffdf8" }}>
+            <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
               <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--accent-deep, #a15a10)" }}>
                 On this page
               </p>
@@ -344,19 +347,8 @@ export default function ForceNCaseStudy() {
       {/* ---------- 02: Decisions ---------- */}
       <div id="s3" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <div className="flex items-start gap-5">
-              <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
-                02
-              </p>
-              <h2 className="font-serif text-[40px] leading-tight text-balance mt-2" style={{ color: "var(--ink)" }}>
-                Designing the production and replenishment logic
-              </h2>
-            </div>
-            <p
-              className="font-serif italic text-2xl leading-snug max-w-xl my-9"
-              style={{ color: "var(--ink)" }}
-            >
+          <Chapter num="02" title="Designing the production and replenishment logic">
+            <p className="font-serif italic text-2xl leading-snug max-w-xl" style={{ color: "var(--ink)" }}>
               Three decisions turned the roadmap from a diagram into{" "}
               <b className="not-italic font-bold" style={{ color: "#a15a10" }}>
                 an operating model
@@ -364,9 +356,9 @@ export default function ForceNCaseStudy() {
               that could absorb a failed calibration or a low part count without stalling the whole
               line.
             </p>
-          </Reveal>
+          </Chapter>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 mt-9">
             {[
               {
                 letter: "A",
@@ -532,7 +524,7 @@ export default function ForceNCaseStudy() {
                   <div className="relative px-5 py-6">
                     <span
                       className="absolute top-4 right-4 font-serif font-bold text-[34px]"
-                      style={{ color: "#f0e6d5" }}
+                      style={{ color: "var(--ink)", opacity: 0.18 }}
                     >
                       {r.index}
                     </span>
@@ -633,7 +625,7 @@ export default function ForceNCaseStudy() {
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 gap-6 mt-10">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
             {[
               {
                 accent: "#d9871f",
@@ -678,6 +670,30 @@ export default function ForceNCaseStudy() {
                 title: "The roadmap survived because it was allowed to fail first",
                 body: "The calibration rework loop exists because failure was designed into the model as a normal path, not treated as an exception to route around later.",
                 icon: <path d="M4 12a8 8 0 1 1 2.5 5.8M4 12v5.5M4 12H9.5" />,
+              },
+              {
+                accent: "#d9871f",
+                title: "You don't need a mechanical background to fix a mechanical process",
+                body: "I came into ForceN's hardware and calibration workflow without a mechanical engineering background. The roadmap didn't need me to redesign the sensors, it needed the handoffs between people, parts, and steps to be traceable. That was a systems problem I could learn fast.",
+                icon: (
+                  <>
+                    <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
+                    <circle cx="12" cy="12" r="4.5" />
+                  </>
+                ),
+              },
+              {
+                accent: "#2b2e33",
+                title: "Traceability only pays off if it outlives you",
+                body: "A UID tied to a calibration record is only useful if the next person inherits it correctly. Writing the documentation so a future co-op could pick up the process without me was part of the actual deliverable, not an afterthought once the roadmap worked.",
+                icon: (
+                  <>
+                    <rect x="4" y="4" width="7" height="7" rx="1.5" />
+                    <rect x="13" y="4" width="7" height="7" rx="1.5" />
+                    <rect x="4" y="13" width="7" height="7" rx="1.5" />
+                    <path d="M17.5 15v3M17.5 21v.1" />
+                  </>
+                ),
               },
             ].map((r, i) => (
               <Reveal key={r.title} delay={i * 90}>

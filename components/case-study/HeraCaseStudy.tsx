@@ -315,7 +315,7 @@ function SourceNoteCard({
 function DashedRow({ children, i }: { children: React.ReactNode; i: number }) {
   return (
     <div
-      className="grid sm:grid-cols-[1fr_1.6fr_140px_1.4fr] gap-3 sm:gap-5 px-5 py-5 items-start"
+      className="cs-hover-row grid sm:grid-cols-[1fr_1.6fr_140px_1.4fr] gap-3 sm:gap-5 px-5 py-5 items-start"
       style={{ borderTop: i === 0 ? "none" : "1.5px dashed rgba(32,28,23,0.16)" }}
     >
       {children}
@@ -551,7 +551,7 @@ export default function HeraCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-24 w-full md:w-[300px] shrink-0">
-              <nav className="cs-box white px-6 py-7" style={{ background: "#fffdf8" }}>
+              <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
                 <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: NAVY }}>
                   On this page
                 </p>

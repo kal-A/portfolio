@@ -135,7 +135,7 @@ export default function GreenhouseCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-24 w-full md:w-[300px] shrink-0">
-            <nav className="cs-box white px-6 py-7" style={{ background: "#fffdf8" }}>
+            <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
               <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "#1c5c3f" }}>
                 On this page
               </p>
@@ -327,16 +327,13 @@ export default function GreenhouseCaseStudy() {
       {/* ---------- Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              02
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: GREEN_GRADIENT, color: "#fff9ee", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                02
-              </div>
-              <h2 className="font-serif text-4xl text-white">Outcomes</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d3e6da" }}>
               The work connected consistent brand presentation with the operational visibility needed
               to deliver it accurately across Amazon, email, retail, and internal review.

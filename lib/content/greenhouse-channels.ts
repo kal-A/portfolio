@@ -30,9 +30,9 @@ export const greenhouseChannels: ChannelGallery[] = [
     label: "Amazon & E-commerce",
     intro:
       "Storefront and A+ content built to Amazon's listing format - hero shots, ingredient breakdowns, and comparison graphics designed to hold up in a thumbnail grid, not just at full zoom.",
-    accent: "#d9731f",
-    tintFrom: "#fdece0",
-    tintTo: "#f0a15c",
+    accent: "#6b7a3a",
+    tintFrom: "#eef1de",
+    tintTo: "#b9c98a",
     assets: [
       {
         src: "/case-studies/greenhouse/amazon-12pack-hero.jpg",
@@ -107,9 +107,9 @@ export const greenhouseChannels: ChannelGallery[] = [
     label: "Email Campaigns",
     intro:
       "Campaign creative built for Klaviyo sends - sitewide promos, product lineups, and lifestyle banners across the shot and smoothie lines.",
-    accent: "#c1443f",
-    tintFrom: "#fbe4e2",
-    tintTo: "#e58f86",
+    accent: "#2c6e5e",
+    tintFrom: "#e5f2ec",
+    tintTo: "#8fc4ae",
     assets: [
       {
         src: "/case-studies/greenhouse/email-fiery-ginger-promo.webp",
