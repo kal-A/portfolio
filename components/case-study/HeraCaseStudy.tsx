@@ -1223,7 +1223,7 @@ export default function HeraCaseStudy() {
             </p>
           </div>
 
-          <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+          <p className="text-sm italic leading-relaxed mt-8" style={{ color: "var(--ink-soft)" }}>
             {cs.contribution} Team: {cs.team}
           </p>
         </div>

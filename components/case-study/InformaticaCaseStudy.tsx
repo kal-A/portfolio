@@ -568,7 +568,7 @@ export default function InformaticaCaseStudy() {
             Describes the general split used across the curriculum, not a literal internal document.
           </p>
 
-          <p className="text-lg leading-relaxed max-w-2xl mt-8" style={{ color: "var(--ink)" }}>
+          <p className="text-lg leading-relaxed mt-8" style={{ color: "var(--ink)" }}>
             General informational and knowledge pages, the bulk of the curriculum, went through
             no-code tools, so content could be produced and edited quickly. Specialized testing,
             activity, and interactive pages needed logic no-code couldn&apos;t reliably support, so
