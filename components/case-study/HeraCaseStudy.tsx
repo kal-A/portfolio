@@ -1116,16 +1116,13 @@ export default function HeraCaseStudy() {
       {/* ---------- 07: Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              03
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: BLUE_GRADIENT, color: "#fff9ee", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                03
-              </div>
-              <h2 className="font-serif text-4xl text-white">Outcomes</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#cbd8e3" }}>
               This internship&apos;s usability-test results and post-launch analytics were not
               preserved, so most of the outcomes below describe what was designed, decided, and handed

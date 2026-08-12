@@ -701,16 +701,13 @@ export default function InformaticaCaseStudy() {
       {/* ---------- 06: Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              04
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: RED_GRADIENT, color: "#fff9ee", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                04
-              </div>
-              <h2 className="font-serif text-4xl text-white">Outcomes</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d5dfe8" }}>
               The clearest result was turning one ambiguous educational goal into work six people
               could actually execute. The metrics below describe the internship more broadly, not

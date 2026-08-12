@@ -556,16 +556,13 @@ export default function ForceNCaseStudy() {
       {/* ---------- Results ---------- */}
       <div id="s6" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              04
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Results</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: "linear-gradient(135deg, #eaa64a, #a15a10)", color: "var(--ink)", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                04
-              </div>
-              <h2 className="font-serif text-4xl text-white">Results</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d9d5cb" }}>
               The roadmap connected product configuration, component availability, production,
               quality, and finished inventory into one repeatable operating model.

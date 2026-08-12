@@ -119,11 +119,51 @@ const FRICTION_STEPS: ProcessStep[] = [
   },
 ];
 
-const PLAN_CHAIN = [
-  { label: "Behavior pattern", body: "What Analytics and Hotjar showed at a specific step" },
-  { label: "Product problem", body: "Why that behavior mattered to the platform's goals" },
-  { label: "Feature definition", body: "The smallest change that would address it" },
-  { label: "Delivery plan", body: "What it would take to build and ship" },
+const STORY_STEPS = [
+  {
+    label: "Observed behavior",
+    body: "Once PathPeer was live, Google Analytics showed engagement dropping at specific steps in search and mentor discovery.",
+    icon: <><path d="M4 18l5-6 4 3 7-9" /><path d="M14 6h6v6" /></>,
+  },
+  {
+    label: "Friction",
+    body: "Analytics could show that a step was leaking users, but not why. People were getting stuck before they could shortlist or reach out to a mentor match.",
+    icon: <><circle cx="11" cy="11" r="6.5" /><path d="M20 20l-4.35-4.35" /></>,
+  },
+  {
+    label: "Evidence source",
+    body: "I reviewed hundreds of Hotjar session recordings on a recurring, weekly basis, watching the sessions matching those drop-off points to see the behavior behind the numbers.",
+    icon: <><rect x="3" y="4" width="18" height="14" rx="2" /><path d="M3 9h18M8 4v5" /></>,
+  },
+  {
+    label: "Hypothesis",
+    body: "Turned that observed behavior into a specific explanation for why users were struggling to find or commit to a mentor match, not just where they dropped off.",
+    icon: <><circle cx="12" cy="12" r="8" /><path d="M12 8v5l3 2" /></>,
+  },
+  {
+    label: "Product response",
+    body: "Translated the strongest patterns into a concrete product idea, like a discovery tag or a homepage flow for new mentors, then validated smaller ideas in Bubble.io before asking for development time.",
+    icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
+  },
+];
+
+const PLAN_STEPS: ProcessStep[] = [
+  {
+    title: "Behavior pattern",
+    synopsis: "What Analytics and Hotjar showed at a specific step, before any interpretation was applied to it.",
+  },
+  {
+    title: "Product problem",
+    synopsis: "Why that behavior mattered to the platform's goals, not just that it happened.",
+  },
+  {
+    title: "Feature definition",
+    synopsis: "The smallest change that would address the problem, scoped tightly enough to actually build.",
+  },
+  {
+    title: "Delivery plan",
+    synopsis: "What it would take to build and ship: Bubble.io validation first, then development time if it held up.",
+  },
 ];
 
 function splitReflection(text: string): { title: string; body: string } {
@@ -228,7 +268,7 @@ export default function PathPeerCaseStudy() {
     >
       {/* ---------- Hero ---------- */}
       <div style={{ background: HERO_BG }}>
-        <div className="mx-auto max-w-5xl px-6 pt-8 pb-20">
+        <div className="mx-auto max-w-5xl px-6 pt-8 pb-10">
           <div className="flex flex-col md:flex-row justify-between items-start gap-10">
             <Reveal className="flex-1 min-w-0">
               <Link href="/work" className="text-sm font-semibold" style={{ color: "var(--ink-soft)" }}>
@@ -391,27 +431,51 @@ export default function PathPeerCaseStudy() {
 
       {/* ---------- 01: Finding friction ---------- */}
       <div id="s-friction" className="cs-seam" style={{ background: TONE_ORANGE }}>
-        <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_ORANGE }}>
-              01 · Reconstructed workflow
-            </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
-              Finding friction in real behaviour
-            </h2>
-            <p className="text-lg leading-relaxed max-w-2xl mb-3.5" style={{ color: "var(--ink)" }}>
-              Once PathPeer was live, the open question wasn&apos;t whether people were using it. It
-              was where they were getting stuck in search and mentor discovery. Analytics could show
-              that a step was leaking users, not why. That&apos;s where the recordings came in.
-            </p>
+        <div className="mx-auto max-w-5xl px-6 pt-14 pb-24">
+          <Chapter num="01" title="Finding friction in real behaviour">
+            <span
+              className="cs-pill inline-block text-[11px] font-extrabold uppercase tracking-wide px-3 py-1 mb-4"
+              style={{ color: ACCENT_ORANGE }}
+            >
+              Reconstructed workflow
+            </span>
             <p className="text-base leading-relaxed max-w-2xl" style={{ color: "var(--ink-soft)" }}>
               I worked as one of PathPeer&apos;s two developers/designers on the Bubble.io no-code
               platform, splitting product, design, and build work across search, discovery,
-              shortlisting, and the profile experience.
+              shortlisting, and the profile experience. Here&apos;s how a drop in the numbers turned
+              into a shipped or scoped change.
             </p>
-          </Reveal>
+          </Chapter>
 
-          <p className="text-[15px] font-extrabold uppercase tracking-wide mt-9 mb-4" style={{ color: "var(--ink)" }}>
+          <div className="mt-9 mb-9">
+            {STORY_STEPS.map((step, i) => (
+              <Reveal key={step.label} delay={i * 80} className="flex gap-5">
+                <div className="flex flex-col items-center shrink-0">
+                  <div
+                    className="w-11 h-11 rounded-full border-[2.5px] flex items-center justify-center shrink-0"
+                    style={{ background: ORANGE_GRADIENT, borderColor: "var(--ink)" }}
+                  >
+                    <span className="w-5 h-5 text-[#fff9ee]">
+                      <Icon>{step.icon}</Icon>
+                    </span>
+                  </div>
+                  {i < STORY_STEPS.length - 1 && (
+                    <div className="w-[3px] flex-1 my-1" style={{ background: ACCENT_ORANGE, opacity: 0.25, minHeight: 24 }} />
+                  )}
+                </div>
+                <div className={i < STORY_STEPS.length - 1 ? "pb-7 flex-1 min-w-0" : "flex-1 min-w-0"}>
+                  <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_ORANGE }}>
+                    {step.label}
+                  </p>
+                  <p className="text-base leading-relaxed max-w-2xl" style={{ color: "var(--ink)" }}>
+                    {step.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
             Constraints
           </p>
           <div className="cs-box white px-6 py-6 mb-9">
@@ -451,55 +515,45 @@ export default function PathPeerCaseStudy() {
               through the same chain, so a hunch from a recording couldn&apos;t skip straight into
               development without being scoped first.
             </p>
-
-            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3 my-9">
-              {PLAN_CHAIN.map((step, i) => (
-                <div key={step.label} className="flex flex-col sm:flex-row items-center gap-3">
-                  <div className="cs-box white px-5 py-4 w-full sm:w-[210px]">
-                    <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
-                      {step.label}
-                    </p>
-                    <p className="text-sm leading-snug font-semibold" style={{ color: "var(--ink)" }}>
-                      {step.body}
-                    </p>
-                  </div>
-                  {i < PLAN_CHAIN.length - 1 && (
-                    <span className="text-2xl font-black shrink-0 rotate-90 sm:rotate-0" style={{ color: "var(--ink)" }}>
-                      →
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <p className="text-base leading-relaxed max-w-2xl" style={{ color: "#33302a" }}>
-              Not every pattern justified a full development cycle. Some resolved with a smaller
-              design change validated directly in Bubble.io; others became scoped feature requests
-              with enough definition to move directly into a build. The five changes that came out of
-              this loop, and what each one actually involved, are below.
-            </p>
           </Chapter>
+
+          <div className="mt-9">
+            <ProcessFlow
+              steps={PLAN_STEPS}
+              accent={ACCENT_BLUE}
+              activeGradient={BLUE_GRADIENT}
+              rowLength={4}
+              middleLabel="Feature definition only happens once the problem is confirmed"
+            />
+          </div>
+
+          <p className="text-base leading-relaxed max-w-2xl mt-9" style={{ color: "#33302a" }}>
+            Not every pattern justified a full development cycle. Some resolved with a smaller
+            design change validated directly in Bubble.io; others became scoped feature requests
+            with enough definition to move directly into a build. The five changes that came out of
+            this loop, and what each one actually involved, are below.
+          </p>
         </div>
       </div>
 
       {/* ---------- 03: Product improvements ---------- */}
       <div id="s-improvements" className="cs-seam" style={{ background: TONE_BLUE }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
-              03 · What changed
-            </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
-              Five product improvements from the loop
-            </h2>
-            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink)" }}>
+          <Chapter num="03" title="Five product improvements from the loop">
+            <span
+              className="cs-pill inline-block text-[11px] font-extrabold uppercase tracking-wide px-3 py-1 mb-4"
+              style={{ color: ACCENT_BLUE }}
+            >
+              What changed
+            </span>
+            <p className="text-lg leading-relaxed max-w-2xl" style={{ color: "var(--ink)" }}>
               Each of these started as a specific behavior pattern in Analytics or Hotjar, not a
               general redesign idea. Every one moved through the same observed-behavior-to-plan chain
               above before it became a shipped change or a scoped request.
             </p>
-          </Reveal>
+          </Chapter>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-5 mt-9">
             {(cs.decisions ?? []).map((d, i) => (
               <Reveal key={d.decision} delay={i * 90}>
                 <div className="cs-box light px-6 py-6 h-full min-w-0">
@@ -595,22 +649,22 @@ export default function PathPeerCaseStudy() {
       {/* ---------- 04: No-code execution ---------- */}
       <div id="s-nocode" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_BLUE }}>
-              04 · No-code execution
-            </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
-              Planning and no-code execution
-            </h2>
-            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "var(--ink)" }}>
+          <Chapter num="04" title="Planning and no-code execution">
+            <span
+              className="cs-pill inline-block text-[11px] font-extrabold uppercase tracking-wide px-3 py-1 mb-4"
+              style={{ color: ACCENT_BLUE }}
+            >
+              No-code execution
+            </span>
+            <p className="text-lg leading-relaxed max-w-2xl" style={{ color: "var(--ink)" }}>
               Not every idea needed a full development cycle to prove it was worth one. For smaller
               ideas like a new discovery tag or a homepage flow for new mentors, I used Bubble.io to
               put a working version in front of an idea before requesting engineering time on it,
               rather than writing a full spec and waiting to find out whether the fix actually worked.
             </p>
-          </Reveal>
+          </Chapter>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 mt-9">
             {NOCODE_REASONS.map((r, i) => (
               <Reveal key={r.title} delay={i * 80}>
                 <div className="cs-box white px-5 py-6 h-full">
@@ -658,6 +712,30 @@ export default function PathPeerCaseStudy() {
             <StatGrid valueColor={ACCENT_ORANGE} stats={cs.metrics.map((m) => ({ value: m.value, label: m.label }))} />
           </div>
 
+          <Reveal>
+            <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4 text-white">
+              Shipped or scoped from this loop
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3.5 mb-10">
+              {(cs.decisions ?? []).map((d, i) => (
+                <div key={d.decision} className="cs-box light flex items-start gap-3.5 px-5 py-4">
+                  <div
+                    className="w-8 h-8 rounded-[9px] border-2 shrink-0 flex items-center justify-center font-serif font-bold text-sm mt-0.5"
+                    style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                  >
+                    {String.fromCharCode(65 + i)}
+                  </div>
+                  <p className="text-[14.5px] font-semibold leading-relaxed" style={{ color: "var(--ink)" }}>
+                    {d.decision}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4 text-white">
+            Why the loop held up
+          </p>
           <div className="flex flex-col gap-4">
             {cs.outcome.slice(2).map((row) => (
               <Reveal key={row}>
