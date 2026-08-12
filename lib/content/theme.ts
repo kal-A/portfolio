@@ -13,6 +13,14 @@ export interface ProjectTheme {
   /** Fallback initials (used as alt text / non-visual fallback). */
   mark: string;
   image?: string;
+  /** CSS object-position for the hero `image`; defaults to "left top". */
+  imagePosition?: string;
+  /** How the hero `image` should fill its frame; defaults to "cover". */
+  imageFit?: "cover" | "contain";
+  /** Real project/company logo. Used as the corner badge, and as the
+   * centered card hero (on the fillFrom/fillTo gradient) for projects
+   * with no photo `image` to show. */
+  logo?: string;
 }
 
 export const caseStudyTheme: Record<string, ProjectTheme> = {
@@ -35,6 +43,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #f0b429, #8a5a0a)",
     mark: "RE",
     image: "/case-studies/roomease/hero.png",
+    imagePosition: "center 30%",
   },
   "hera-fertility": {
     bg: "#e9edf2",
@@ -44,6 +53,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#6fa0c4",
     iconBg: "linear-gradient(135deg, #5a92bf, #1f3a52)",
     mark: "HF",
+    logo: "/case-studies/hera/hera-logo.png",
   },
   greenhouse: {
     bg: "#eef2e2",
@@ -64,6 +74,8 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #c9ccd0, #2b2e33)",
     mark: "FN",
     image: "/case-studies/forceN/homepage-hero.png",
+    imagePosition: "center 40%",
+    logo: "/case-studies/forceN/forcen-logo.jpg",
   },
   "pill-pal": {
     bg: "#efe9f6",
@@ -73,6 +85,8 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#a983d1",
     iconBg: "linear-gradient(135deg, #9b7bc4, #4a2f73)",
     mark: "PP",
+    image: "/case-studies/pill-pal/wireframe-mymeds-list.png",
+    imageFit: "contain",
   },
   pathpeer: {
     bg: "#fdece0",
@@ -92,5 +106,6 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#7fb0dd",
     iconBg: "linear-gradient(135deg, #7fb0dd, #b23a3a)",
     mark: "IN",
+    logo: "/case-studies/informatica/informatica-logo.png",
   },
 };

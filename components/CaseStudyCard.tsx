@@ -30,15 +30,28 @@ export default function CaseStudyCard({ cs, delay = 0 }: { cs: CaseStudy; delay?
         />
 
         <div className="relative z-[1] flex h-full flex-col">
-          <div className="relative w-full aspect-[16/11] overflow-hidden">
+          <div className="relative w-full aspect-[16/12] overflow-hidden">
             {theme?.image ? (
               <Image
                 src={theme.image}
                 alt=""
                 width={640}
-                height={440}
-                className="w-full h-full object-cover object-left-top"
+                height={480}
+                className={`w-full h-full ${theme.imageFit === "contain" ? "object-contain" : "object-cover"}`}
+                style={{
+                  objectPosition: theme.imagePosition ?? "left top",
+                  background: theme.imageFit === "contain" ? theme?.bg ?? "#f5f1e6" : undefined,
+                }}
               />
+            ) : theme?.logo ? (
+              <div
+                className="w-full h-full flex items-center justify-center overflow-hidden p-10"
+                style={{ background: `linear-gradient(135deg, ${theme?.fillFrom ?? "#e4ded0"}, ${theme?.fillTo ?? "#181614"})` }}
+              >
+                <div className="relative w-[55%] max-w-[220px] aspect-square">
+                  <Image src={theme.logo} alt="" fill className="object-contain rounded-2xl" />
+                </div>
+              </div>
             ) : (
               <div
                 className="w-full h-full flex items-center justify-center overflow-hidden"
@@ -52,16 +65,24 @@ export default function CaseStudyCard({ cs, delay = 0 }: { cs: CaseStudy; delay?
                 </span>
               </div>
             )}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{ background: "linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.35) 100%)" }}
-            />
-            <div
-              className="absolute left-4 top-4 z-[2] w-14 h-14 rounded-[15px] flex items-center justify-center"
-              style={{ background: theme?.iconBg ?? accent, boxShadow: "0 6px 16px rgba(0,0,0,0.35)", border: "2.5px solid rgba(255,255,255,0.9)" }}
-            >
-              <ProjectIcon slug={cs.slug} className="w-7 h-7 text-white" />
-            </div>
+            {!(theme?.logo && !theme?.image) && (
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{ background: "linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.35) 100%)" }}
+              />
+            )}
+            {theme?.image && (
+              <div
+                className="absolute left-4 top-4 z-[2] w-14 h-14 rounded-[15px] flex items-center justify-center overflow-hidden"
+                style={{ background: theme?.iconBg ?? accent, boxShadow: "0 6px 16px rgba(0,0,0,0.35)", border: "2.5px solid rgba(255,255,255,0.9)" }}
+              >
+                {theme?.logo ? (
+                  <Image src={theme.logo} alt="" width={56} height={56} className="w-full h-full object-cover" />
+                ) : (
+                  <ProjectIcon slug={cs.slug} className="w-7 h-7 text-white" />
+                )}
+              </div>
+            )}
           </div>
 
           <div className="p-6 pt-6 flex flex-col flex-1">

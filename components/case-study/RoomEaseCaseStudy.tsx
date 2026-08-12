@@ -225,7 +225,7 @@ export default function RoomEaseCaseStudy() {
                 Designing a fairer, more transparent room-booking system for student clubs
               </h1>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
-                Waterloo, ON · Fall 2025 – Winter 2026
+                Waterloo, ON · Spring 2025 – Winter 2026
               </p>
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
                 University clubs and departments were booking rooms across 34+ different UW

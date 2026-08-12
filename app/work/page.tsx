@@ -20,7 +20,12 @@ export default function WorkIndex() {
             "radial-gradient(circle at 12% 8%, rgba(200,69,44,0.22) 0%, transparent 48%), radial-gradient(circle at 88% 15%, rgba(44,110,94,0.2) 0%, transparent 52%), linear-gradient(160deg, #fbe9dd 0%, #f3e3cc 55%, #e2ecd8 100%)",
         }}
       >
-        <div className="mx-auto max-w-5xl px-6">
+        {/* Soft blend into the grid's own background instead of a hard edge. */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 sm:h-36"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(226,236,216,0.9))" }}
+        />
+        <div className="relative mx-auto max-w-5xl px-6">
           <p className="text-sm text-rose-500 font-medium tracking-wide uppercase">Work</p>
           <h1 className="font-serif text-5xl mt-3 text-neutral-900">Experience &amp; Case Studies</h1>
           <p className="text-lg text-neutral-600 mt-4 max-w-2xl">

@@ -213,25 +213,25 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function PhotoStack() {
   return (
-    <div className="relative w-[280px] h-[330px]">
-      <div className="absolute w-[245px] h-[290px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-9 -left-3 rotate-[-9deg] z-10">
+    <div className="relative w-[250px] h-[295px] sm:w-[360px] sm:h-[420px] lg:w-[400px] lg:h-[465px]">
+      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-8 sm:top-12 -left-2.5 sm:-left-3.5 rotate-[-9deg] z-10">
         <div
           className="w-full h-full rounded-lg"
           style={{ background: "linear-gradient(160deg,#d8e4dc,#b7c8bd)" }}
         />
       </div>
-      <div className="absolute w-[245px] h-[290px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-4 left-5 rotate-[6deg] z-20">
+      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-3.5 sm:top-5 left-4 sm:left-6 rotate-[6deg] z-20">
         <div
           className="w-full h-full rounded-lg"
           style={{ background: "linear-gradient(160deg,#e3dccb,#cdbfa1)" }}
         />
       </div>
-      <div className="absolute w-[245px] h-[290px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-0 left-2 rotate-[-2deg] z-30">
+      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-0 left-1.5 sm:left-2.5 rotate-[-2deg] z-30">
         <div
           className="w-full h-full rounded-lg relative"
           style={{ background: "linear-gradient(160deg,#e8e3d6,#c9d6cd 55%,#a9b8ae)" }}
         >
-          <span className="absolute bottom-3 left-3 bg-[#fdfaf5] text-[10px] font-bold px-2.5 py-1 rounded text-neutral-900">
+          <span className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-[#fdfaf5] text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded text-neutral-900">
             KAMAL_01.JPG
           </span>
         </div>
