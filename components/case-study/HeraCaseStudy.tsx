@@ -1123,7 +1123,7 @@ export default function HeraCaseStudy() {
             <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
           </Reveal>
           <Reveal>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#cbd8e3" }}>
+            <p className="text-lg leading-relaxed max-w-3xl mb-9" style={{ color: "#cbd8e3" }}>
               This internship&apos;s usability-test results and post-launch analytics were not
               preserved, so most of the outcomes below describe what was designed, decided, and handed
               off, rather than measured percentages. The segmentation flow is the exception: it shipped.
