@@ -109,22 +109,23 @@ html {
   overflow-x: hidden;
 }
 
-/* On-page section nav: icon swap + row highlight on hover.
-   Hover hierarchy (see PORTFOLIO_CASE_STUDY_SYSTEM.md): base surface, then a
-   light whole-container wash on .cs-box.nav-toc:hover, then a darker, more
-   saturated wash on the exact .opn-link row under the pointer. The container
+/* Any .cs-box that hosts its own internally-hoverable rows (on-page nav,
+   data tables, decision matrices). Hover hierarchy (see
+   PORTFOLIO_CASE_STUDY_SYSTEM.md): base surface, then a light whole-container
+   wash on .cs-box.quiet-hover:hover, then a darker, more saturated wash on
+   the exact row under the pointer (.opn-link / .cs-hover-row). The container
    wash must stay subtle -- it should never outweigh the row directly hovered. */
-.cs-box.nav-toc {
+.cs-box.quiet-hover {
   transition: box-shadow 0.16s ease-out;
 }
-.cs-box.nav-toc:hover {
+.cs-box.quiet-hover:hover {
   transform: none;
   box-shadow: 5px 5px 0 var(--ink);
 }
-.cs-box.nav-toc::before {
+.cs-box.quiet-hover::before {
   transform: none;
 }
-.cs-box.nav-toc:hover::before {
+.cs-box.quiet-hover:hover::before {
   opacity: 0.4;
   transform: none;
 }

@@ -23,14 +23,14 @@ export default function Nav() {
         boxShadow: "0 1px 0 rgba(200,69,44,0.14), 0 8px 20px -16px rgba(23,20,15,0.35)",
       }}
     >
-      <nav className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
+      <nav className="mx-auto max-w-5xl px-3 sm:px-6 py-4 flex items-center justify-between gap-2">
         <Link
           href="/"
-          className="font-serif text-xl tracking-tight text-neutral-900 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5]"
+          className="shrink-0 font-serif text-base sm:text-xl tracking-tight text-neutral-900 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5]"
         >
           Kamal Ahsan
         </Link>
-        <ul className="flex gap-1 sm:gap-2 text-[15px]">
+        <ul className="flex gap-0.5 sm:gap-2 text-[12.5px] sm:text-[15px]">
           {links.map((link) => {
             const active =
               link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -39,7 +39,7 @@ export default function Nav() {
                 <Link
                   href={link.href}
                   className={
-                    "relative px-3 py-1.5 rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5] " +
+                    "relative px-1.5 sm:px-3 py-1.5 rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfaf5] " +
                     (active
                       ? "text-neutral-900 font-semibold bg-neutral-900/[0.06]"
                       : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-900/[0.04]")
@@ -48,7 +48,7 @@ export default function Nav() {
                   {link.label}
                   {active && (
                     <span
-                      className="absolute left-3 right-3 -bottom-[5px] h-[2.5px] rounded-full"
+                      className="absolute left-1.5 right-1.5 sm:left-3 sm:right-3 -bottom-[5px] h-[2.5px] rounded-full"
                       style={{ background: "linear-gradient(90deg, #c8452c, #eaa64a)" }}
                     />
                   )}

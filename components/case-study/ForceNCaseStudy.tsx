@@ -144,7 +144,7 @@ export default function ForceNCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-40 w-full md:w-[300px] shrink-0">
-            <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
+            <nav className="cs-box white quiet-hover px-6 py-7" style={{ background: "#fffdf8" }}>
               <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--accent-deep, #a15a10)" }}>
                 On this page
               </p>

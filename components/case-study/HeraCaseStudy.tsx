@@ -333,7 +333,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
 
 function PaymentDecisionMatrix() {
   return (
-    <div className="cs-box white overflow-hidden">
+    <div className="cs-box white quiet-hover overflow-hidden">
       <div
         className="hidden sm:grid grid-cols-[1fr_1.6fr_140px_1.4fr] gap-5 px-5 py-3 text-[11px] font-extrabold uppercase tracking-wide"
         style={{ color: NAVY, background: "rgba(58,107,147,0.08)" }}
@@ -551,7 +551,7 @@ export default function HeraCaseStudy() {
             </Reveal>
 
             <Reveal delay={150} className="mt-10 md:mt-24 w-full md:w-[300px] shrink-0">
-              <nav className="cs-box white nav-toc px-6 py-7" style={{ background: "#fffdf8" }}>
+              <nav className="cs-box white quiet-hover px-6 py-7" style={{ background: "#fffdf8" }}>
                 <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: NAVY }}>
                   On this page
                 </p>

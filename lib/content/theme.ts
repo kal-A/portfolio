@@ -87,6 +87,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     mark: "PP",
     image: "/case-studies/pill-pal/wireframe-mymeds-list.png",
     imageFit: "contain",
+    imagePosition: "center",
   },
   pathpeer: {
     bg: "#fdece0",
