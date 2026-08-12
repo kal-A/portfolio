@@ -531,7 +531,7 @@ export default function RoomEaseCaseStudy() {
             <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
               How a request becomes a ranked, approved room
             </h2>
-            <p className="text-lg leading-relaxed max-w-3xl mb-3.5" style={{ color: "#33302a" }}>
+            <p className="text-lg leading-relaxed max-w-4xl mb-3.5" style={{ color: "#33302a" }}>
               Hard constraints (time conflicts, capacity, required features) are checked first and
               are non-negotiable. What&apos;s left is scored on fit and preference, with priority
               rating moderated so one loud request can&apos;t always win. A user can accept a
@@ -681,7 +681,7 @@ export default function RoomEaseCaseStudy() {
               Technical feasibility
             </h2>
           </Reveal>
-          <p className="text-lg leading-relaxed max-w-2xl my-8" style={{ color: "#33302a" }}>
+          <p className="text-lg leading-relaxed max-w-4xl my-8" style={{ color: "#33302a" }}>
             RoomEase is a feasibility demonstration, not a fully deployed UW system. After Peer
             Critique 1 showed that a frontend-only version couldn&apos;t actually prevent double
             bookings, we added Supabase persistence and role-based auth so the prototype could be
@@ -750,14 +750,14 @@ export default function RoomEaseCaseStudy() {
               </div>
               <h2 className="font-serif text-4xl text-white">Validation and outcomes</h2>
             </div>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#e3d9c2" }}>
+            <p className="text-lg leading-relaxed max-w-4xl mb-9" style={{ color: "#e3d9c2" }}>
               After meeting with club executives and students to establish a baseline, we ran a
               controlled comparison: the same end-to-end booking scenario, once on the current UW
               process and once on the RoomEase prototype, with students and club executives.
             </p>
           </Reveal>
 
-          <div className="mb-10 max-w-2xl">
+          <div className="mb-10">
             <VideoBlock
               title="One of the end-to-end scenarios used in testing"
               context="This is one of the structured booking scenarios run during verification, the same kind of task compared against the current UW process in the controlled user-testing sessions behind the numbers below."
@@ -880,16 +880,16 @@ export default function RoomEaseCaseStudy() {
           </div>
 
           {cs.whatIdImprove && (
-            <div className="cs-box dark px-6 py-6 mt-8 max-w-2xl">
+            <div className="cs-box dark px-6 py-6 mt-8">
               <p className="text-[12px] font-extrabold uppercase tracking-wide mb-2.5" style={{ color: "#eab848" }}>
                 What I&apos;d improve next
               </p>
-              <p className="text-sm leading-relaxed">{cs.whatIdImprove}</p>
+              <p className="text-sm leading-relaxed max-w-3xl">{cs.whatIdImprove}</p>
             </div>
           )}
 
           {cs.note && (
-            <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+            <p className="text-sm italic leading-relaxed mt-8 max-w-3xl" style={{ color: "var(--ink-soft)" }}>
               {cs.note}
             </p>
           )}

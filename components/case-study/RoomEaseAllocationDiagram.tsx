@@ -161,6 +161,10 @@ interface DEdge {
   from: string;
   points: [number, number][];
   label?: string;
+  /** Explicit label position, for edges where the derived midpoint collides
+   * with a node (e.g. right at a decision diamond's tip). */
+  labelPos?: [number, number];
+  labelAnchor?: "start" | "middle" | "end";
   style: "solid" | "decision" | "rework";
 }
 
@@ -174,6 +178,8 @@ const edges: DEdge[] = [
     from: "accept-decision",
     points: [[385, 716], [385, 760]],
     label: "Accepts",
+    labelPos: [400, 742],
+    labelAnchor: "start",
     style: "decision",
   },
   {
@@ -196,6 +202,8 @@ const edges: DEdge[] = [
     from: "admin-decision",
     points: [[385, 1008], [385, 1046]],
     label: "Clear",
+    labelPos: [400, 1030],
+    labelAnchor: "start",
     style: "decision",
   },
   {
@@ -210,6 +218,8 @@ const edges: DEdge[] = [
     from: "changes",
     points: [[546, 742], [505, 742], [505, 490]],
     label: "Back to suggestions",
+    labelPos: [513, 556],
+    labelAnchor: "start",
     style: "rework",
   },
 ];
@@ -328,17 +338,19 @@ export default function RoomEaseAllocationDiagram() {
             const d = e.points.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
             const { stroke, strokeDasharray } = edgeStrokeProps(e.style);
             const mid = e.points[Math.floor((e.points.length - 1) / 2)];
+            const [labelX, labelY] = e.labelPos ?? [mid[0] + (e.points.length > 2 ? 8 : 34), mid[1] - 8];
+            const labelAnchor = e.labelAnchor ?? (e.points.length > 2 ? "start" : "middle");
             return (
               <g key={e.id}>
                 <path d={d} fill="none" stroke={stroke} strokeWidth={2} strokeDasharray={strokeDasharray} markerEnd="url(#re-arrowhead)" />
                 {e.label && (
                   <text
-                    x={mid[0] + (e.points.length > 2 ? 8 : 34)}
-                    y={mid[1] - 8}
+                    x={labelX}
+                    y={labelY}
                     fontSize={11}
                     fontWeight={700}
                     fill={INK_SOFT}
-                    textAnchor={e.points.length > 2 ? "start" : "middle"}
+                    textAnchor={labelAnchor}
                     style={{ paintOrder: "stroke", stroke: PAPER, strokeWidth: 5 }}
                   >
                     {e.label}
