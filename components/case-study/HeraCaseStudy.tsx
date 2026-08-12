@@ -930,7 +930,7 @@ export default function HeraCaseStudy() {
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="cs-box white overflow-hidden">
-                <div className="relative w-full bg-white" style={{ aspectRatio: "1422 / 1728" }}>
+                <div className="relative w-full bg-white" style={{ aspectRatio: "1005 / 1728" }}>
                   <Image
                     src="/case-studies/hera-fertility/sketch-nearme-iterations-1-2.png"
                     alt="Clinic-detail layout passes 1 and 2: a large square map beside a short hours list, then hours moved up beside the clinic title with a wider map band beneath"
