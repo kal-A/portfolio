@@ -26,7 +26,10 @@ export default function Chapter({
           {title}
         </h2>
       </div>
-      <div className="flex-1 min-w-0 border-l-[3px] pl-9" style={{ borderColor: dark ? "#f0c98a" : "var(--ink)" }}>
+      <div
+        className="flex-1 min-w-0 border-l-[3px] pl-9 flex flex-col justify-center"
+        style={{ borderColor: dark ? "#f0c98a" : "var(--ink)" }}
+      >
         {children}
       </div>
     </Reveal>

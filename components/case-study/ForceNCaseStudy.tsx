@@ -348,7 +348,7 @@ export default function ForceNCaseStudy() {
       <div id="s3" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Chapter num="02" title="Designing the production and replenishment logic">
-            <p className="font-serif italic text-2xl leading-snug max-w-xl" style={{ color: "var(--ink)" }}>
+            <p className="font-serif italic text-[28px] leading-snug max-w-2xl" style={{ color: "var(--ink)" }}>
               Three decisions turned the roadmap from a diagram into{" "}
               <b className="not-italic font-bold" style={{ color: "#a15a10" }}>
                 an operating model
@@ -563,7 +563,7 @@ export default function ForceNCaseStudy() {
             <h2 className="font-serif text-4xl text-white mt-2">Results</h2>
           </Reveal>
           <Reveal>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d9d5cb" }}>
+            <p className="text-lg leading-relaxed max-w-3xl mb-9" style={{ color: "#d9d5cb" }}>
               The roadmap connected product configuration, component availability, production,
               quality, and finished inventory into one repeatable operating model.
             </p>
@@ -714,7 +714,7 @@ export default function ForceNCaseStudy() {
             ))}
           </div>
 
-          <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+          <p className="text-sm italic leading-relaxed mt-8 max-w-3xl" style={{ color: "var(--ink-soft)" }}>
             Internal trackers, calibration materials, scripts, and company-specific documentation
             are omitted for confidentiality. The visuals on this page reconstruct the same process
             logic in a public-safe form.
