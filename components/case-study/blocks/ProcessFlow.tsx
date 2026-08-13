@@ -105,7 +105,13 @@ export default function ProcessFlow({
           <div
             key={step.title}
             className="flex flex-col justify-start"
-            style={{ gridArea: "1 / 1", visibility: i === activeIndex ? "visible" : "hidden" }}
+            style={{
+              gridArea: "1 / 1",
+              opacity: i === activeIndex ? 1 : 0,
+              visibility: i === activeIndex ? "visible" : "hidden",
+              transition: `opacity 0.22s ease${i === activeIndex ? "" : ", visibility 0s linear 0.22s"}`,
+              pointerEvents: i === activeIndex ? "auto" : "none",
+            }}
             aria-hidden={i !== activeIndex}
           >
             {step.image && (
