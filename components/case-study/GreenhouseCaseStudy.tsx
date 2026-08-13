@@ -334,7 +334,7 @@ export default function GreenhouseCaseStudy() {
             <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
           </Reveal>
           <Reveal>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d3e6da" }}>
+            <p className="text-lg leading-relaxed max-w-3xl mb-9" style={{ color: "#d3e6da" }}>
               The work connected consistent brand presentation with the operational visibility needed
               to deliver it accurately across Amazon, email, retail, and internal review.
             </p>

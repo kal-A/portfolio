@@ -724,7 +724,7 @@ export default function ChronicleCaseStudy() {
       <div id="s8" className="cs-seam" style={{ background: TONE_PARCHMENT }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Chapter num="08" title="Verification, current status, and what's next">
-            <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
+            <p className="text-lg leading-[1.8] max-w-3xl" style={{ color: "var(--ink)" }}>
               As most recently recorded in the project&apos;s own delivery log: the Python backend
               passed 514 automated tests (4 skipped, plus a local-Ollama integration test that
               only runs when Ollama is actually installed), and the frontend passed typecheck,
