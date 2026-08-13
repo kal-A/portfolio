@@ -81,7 +81,7 @@ export default function ProcessFlow({
 
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
-      <div className="flex flex-col justify-start gap-5">
+      <div className="flex flex-col justify-center gap-5">
         {renderRow(row1, 0)}
         {row2.length > 0 && (
           <div className="flex items-center gap-3 pl-1">

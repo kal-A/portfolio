@@ -343,35 +343,9 @@ export default function PathPeerCaseStudy() {
                 fix first, turned the strongest patterns into scoped feature and requirement plans, and
                 validated smaller ideas with Bubble.io before asking for more development time.
               </p>
-
-              <p className="text-[11px] font-extrabold uppercase tracking-wide mt-7 mb-2.5" style={{ color: "var(--ink-soft)" }}>
-                Core skills
-              </p>
-              <div className="flex flex-wrap gap-2.5">
-                {cs.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="cs-pill inline-flex items-center text-xs font-extrabold uppercase tracking-wide px-3.5 py-1.5 cursor-default"
-                    style={{ background: ORANGE_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <p className="text-[11px] font-extrabold uppercase tracking-wide mt-5 mb-2.5" style={{ color: "var(--ink-soft)" }}>
-                Tools
-              </p>
-              <div className="flex flex-wrap gap-2.5">
-                {["Google Analytics", "Hotjar", "Figma", "Bubble.io"].map((chip) => (
-                  <span key={chip} className="cs-pill highlight text-xs font-extrabold px-3.5 py-1.5 cursor-default">
-                    {chip}
-                  </span>
-                ))}
-              </div>
             </Reveal>
 
-            <Reveal delay={150} className="mt-10 md:mt-24 w-full md:w-[300px] shrink-0">
+            <Reveal delay={150} className="mt-10 md:mt-9 w-full md:w-[300px] shrink-0">
               <nav className="cs-box white quiet-hover px-6 py-7" style={{ background: "#fffdf8" }}>
                 <p className="text-[13px] font-extrabold uppercase tracking-wide mb-4" style={{ color: ACCENT_ORANGE }}>
                   On this page
@@ -400,6 +374,34 @@ export default function PathPeerCaseStudy() {
                     {link.label}
                   </a>
                 ))}
+
+                <div className="mt-6 pt-5" style={{ borderTop: "1.5px dashed rgba(32,28,23,0.16)" }}>
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Core skills
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {cs.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="cs-pill inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-wide px-3 py-1.5 cursor-default"
+                        style={{ background: ORANGE_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mt-4 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Tools
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Google Analytics", "Hotjar", "Figma", "Bubble.io"].map((chip) => (
+                      <span key={chip} className="cs-pill highlight text-[10.5px] font-extrabold px-3 py-1.5 cursor-default">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </nav>
             </Reveal>
           </div>
@@ -505,7 +507,7 @@ export default function PathPeerCaseStudy() {
             </p>
           </Chapter>
 
-          <div className="relative mt-9 mb-9 flex flex-col gap-3">
+          <div className="relative mt-9 mb-9 flex flex-col gap-3 xl:-mx-20">
             <div
               className="hidden lg:block absolute left-1/2 top-2 bottom-2 w-[3px] -translate-x-1/2 rounded-full"
               style={{ background: ACCENT_ORANGE, opacity: 0.18 }}
@@ -515,8 +517,8 @@ export default function PathPeerCaseStudy() {
               const isLeft = i % 2 === 0;
               return (
                 <div key={step.label}>
-                  <Reveal delay={i * 90} className="lg:grid lg:grid-cols-2 lg:gap-x-10 lg:items-start">
-                    <div className={isLeft ? "lg:col-start-1" : "lg:col-start-2"}>
+                  <Reveal delay={i * 90} className={`lg:flex ${isLeft ? "lg:justify-start" : "lg:justify-end"}`}>
+                    <div className="lg:w-[74%]">
                       <StoryStepCard step={step} reverse={isLeft} />
                     </div>
                   </Reveal>
@@ -604,12 +606,14 @@ export default function PathPeerCaseStudy() {
             />
           </div>
 
-          <p className="text-base leading-relaxed max-w-2xl mx-auto text-center mt-10" style={{ color: "#33302a" }}>
-            Not every pattern justified a full development cycle. Some resolved with a smaller
-            design change validated directly in Bubble.io; others became scoped feature requests
-            with enough definition to move directly into a build. The five changes that came out of
-            this loop, and what each one actually involved, are below.
-          </p>
+          <div className="cs-box light w-full mt-6 px-6 py-5">
+            <p className="text-base leading-relaxed" style={{ color: "#33302a" }}>
+              Not every pattern justified a full development cycle. Some resolved with a smaller
+              design change validated directly in Bubble.io; others became scoped feature requests
+              with enough definition to move directly into a build. The five changes that came out
+              of this loop, and what each one actually involved, are below.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -631,18 +635,18 @@ export default function PathPeerCaseStudy() {
           </Chapter>
 
           <div className="grid md:grid-cols-2 gap-5 mt-9">
-            {(cs.decisions ?? []).map((d, i) => (
-              <Reveal key={d.decision} delay={i * 90}>
-                <div className="cs-box light subtle-fill px-6 py-6 h-full min-w-0">
-                  <div
-                    className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base mb-3.5"
-                    style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
-                  >
-                    {String.fromCharCode(65 + i)}
-                  </div>
-                  <h3 className="font-serif font-bold text-lg mb-2.5" style={{ color: "var(--ink)" }}>
-                    {d.decision}
-                  </h3>
+            {(cs.decisions ?? []).map((d, i, arr) => {
+              const isConcludingOdd = arr.length % 2 === 1 && i === arr.length - 1;
+              const badge = (
+                <div
+                  className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base"
+                  style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                >
+                  {String.fromCharCode(65 + i)}
+                </div>
+              );
+              const body = (
+                <>
                   <p className="text-[13.5px] leading-relaxed mb-2.5" style={{ color: "#4c473e" }}>
                     {d.rationale}
                   </p>
@@ -662,14 +666,45 @@ export default function PathPeerCaseStudy() {
                       {d.result}
                     </p>
                   )}
-                </div>
-              </Reveal>
-            ))}
+                </>
+              );
+
+              if (isConcludingOdd) {
+                return (
+                  <Reveal key={d.decision} delay={i * 90} className="md:col-span-2">
+                    <div className="cs-box light subtle-fill h-full min-w-0 px-7 py-6 md:flex md:items-start md:gap-9">
+                      <div className="md:w-[230px] md:shrink-0 mb-3.5 md:mb-0">
+                        <div className="mb-3.5">{badge}</div>
+                        <h3 className="font-serif font-bold text-lg" style={{ color: "var(--ink)" }}>
+                          {d.decision}
+                        </h3>
+                      </div>
+                      <div className="md:flex-1 md:min-w-0">{body}</div>
+                    </div>
+                  </Reveal>
+                );
+              }
+
+              return (
+                <Reveal key={d.decision} delay={i * 90}>
+                  <div className="cs-box light subtle-fill px-6 py-6 h-full min-w-0">
+                    <div className="mb-3.5">{badge}</div>
+                    <h3 className="font-serif font-bold text-lg mb-2.5" style={{ color: "var(--ink)" }}>
+                      {d.decision}
+                    </h3>
+                    {body}
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
 
-          <p className="text-[15px] font-extrabold uppercase tracking-wide mt-14 mb-4" style={{ color: "var(--ink)" }}>
+          <span
+            className="cs-pill inline-block text-[11px] font-extrabold uppercase tracking-wide px-3 py-1 mt-9 mb-4"
+            style={{ color: ACCENT_BLUE }}
+          >
             Earlier contributions from the same role
-          </p>
+          </span>
           <p className="text-base leading-relaxed max-w-2xl mb-6" style={{ color: "#33302a" }}>
             Alongside the analytics-and-recordings loop above, I also carried these contributions
             during the internship, drawn from the original role summary rather than from a specific
@@ -678,7 +713,10 @@ export default function PathPeerCaseStudy() {
           <div className="grid sm:grid-cols-3 gap-5 mb-10">
             {ADDITIONAL_CONTRIBUTIONS.map((item, i) => (
               <Reveal key={item.title} delay={i * 90}>
-                <div className="cs-box white subtle-fill px-5 py-6 h-full min-w-0">
+                <div
+                  className="cs-box subtle-fill px-5 py-6 h-full min-w-0"
+                  style={{ background: "linear-gradient(160deg, #f4f7fc 0%, #e1e8f5 100%)" }}
+                >
                   <div
                     className="w-9 h-9 rounded-[10px] border-2 flex items-center justify-center mb-3.5"
                     style={{ background: BLUE_GRADIENT, borderColor: "var(--ink)" }}
