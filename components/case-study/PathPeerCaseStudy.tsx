@@ -333,14 +333,36 @@ export default function PathPeerCaseStudy() {
               <p className="text-lg leading-relaxed mt-4 max-w-2xl" style={{ color: "#33302a" }}>
                 PathPeer helped users explore career paths and find professionals they could connect
                 with as mentors, for networking, advice, and guidance on the career they wanted to
-                pursue. I designed and built the platform as one of PathPeer&apos;s two developers and
-                designers, building on Bubble.io, then went back into the data. Google Analytics
+                pursue. I designed and built the platform as{" "}
+                <span className="font-extrabold" style={{ color: "var(--ink)" }}>
+                  one of PathPeer&apos;s two developers and designers
+                </span>
+                , building on Bubble.io, then went back into the data. Google Analytics
                 showed where engagement was dropping in search and mentor discovery; Hotjar recordings
                 showed what was actually happening at those points. I used both to recommend what to
                 fix first, turned the strongest patterns into scoped feature and requirement plans, and
                 validated smaller ideas with Bubble.io before asking for more development time.
               </p>
-              <div className="flex flex-wrap gap-2.5 mt-7">
+
+              <p className="text-[11px] font-extrabold uppercase tracking-wide mt-7 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                Core skills
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                {cs.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="cs-pill inline-flex items-center text-xs font-extrabold uppercase tracking-wide px-3.5 py-1.5 cursor-default"
+                    style={{ background: ORANGE_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <p className="text-[11px] font-extrabold uppercase tracking-wide mt-5 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                Tools
+              </p>
+              <div className="flex flex-wrap gap-2.5">
                 {["Google Analytics", "Hotjar", "Figma", "Bubble.io"].map((chip) => (
                   <span key={chip} className="cs-pill highlight text-xs font-extrabold px-3.5 py-1.5 cursor-default">
                     {chip}
