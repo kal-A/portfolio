@@ -246,17 +246,19 @@ export default function GreenhouseCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- Visual design (gallery) ---------- */}
+      {/* ---------- 01: Visual design (gallery) ---------- */}
       <div id="s-gallery" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: "#1c5c3f" }}>
-              Visual design
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+              01
             </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
+            <h2 className="font-serif text-[32px] mt-2" style={{ color: "var(--ink)" }}>
               One brand, four completely different formats
             </h2>
-            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
+          </Reveal>
+          <Reveal>
+            <p className="text-lg leading-relaxed max-w-3xl mb-10" style={{ color: "#33302a" }}>
               An Amazon listing, an email send, a printed sell sheet, and an internal concept deck
               each earn attention differently. Every asset below adapted to that format instead of
               resizing the same file - while staying recognizably Greenhouse.
@@ -266,10 +268,10 @@ export default function GreenhouseCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- Behind the visuals ---------- */}
+      {/* ---------- 02: Behind the visuals ---------- */}
       <div id="s-systems" className="cs-seam" style={{ background: TONE_GREEN }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Chapter num="01" title="The system behind the storefront">
+          <Chapter num="02" title="The system behind the storefront">
             <p className="text-lg leading-[1.8] max-w-2xl" style={{ color: "var(--ink)" }}>
               Alongside the customer-facing work, I helped maintain the systems behind it. Structured
               trackers in OneDrive and sprint boards in Microsoft Planner connected product identifiers,
@@ -304,17 +306,19 @@ export default function GreenhouseCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- Process ---------- */}
+      {/* ---------- 03: Process ---------- */}
       <div id="s-process" className="cs-seam" style={{ background: TONE_CREAM }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: "#1c5c3f" }}>
-              Process
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+              03
             </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
+            <h2 className="font-serif text-[32px] mt-2" style={{ color: "var(--ink)" }}>
               From requirement to final delivery
             </h2>
-            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#33302a" }}>
+          </Reveal>
+          <Reveal>
+            <p className="text-lg leading-relaxed max-w-3xl mb-10" style={{ color: "#33302a" }}>
               Select a stage to see what happened there and what I contributed.
             </p>
           </Reveal>
@@ -324,12 +328,12 @@ export default function GreenhouseCaseStudy() {
         </div>
       </div>
 
-      {/* ---------- Outcomes ---------- */}
+      {/* ---------- 04: Outcomes ---------- */}
       <div id="s-outcomes" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
           <Reveal className="flex items-start gap-5 mb-8">
             <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
-              02
+              04
             </p>
             <h2 className="font-serif text-4xl text-white mt-2">Outcomes</h2>
           </Reveal>

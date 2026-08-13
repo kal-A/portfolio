@@ -773,17 +773,14 @@ export default function PillPalCaseStudy() {
       {/* ---------- 04: Breaking the design on purpose ---------- */}
       <div id="s4" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-6">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              03
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Breaking the design on purpose</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-6">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: PURPLE_GRADIENT, color: "#fff9ee", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                03
-              </div>
-              <h2 className="font-serif text-4xl text-white">Breaking the design on purpose</h2>
-            </div>
-            <p className="text-lg leading-relaxed max-w-2xl mb-10" style={{ color: "#d9d2e6" }}>
+            <p className="text-lg leading-relaxed max-w-3xl mb-10" style={{ color: "#d9d2e6" }}>
               We ran a structured heuristic evaluation: five predefined tasks, a 45-minute session, and
               the course&apos;s revised Nielsen heuristics, with four evaluators chosen deliberately for
               different expertise rather than convenience.

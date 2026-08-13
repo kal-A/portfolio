@@ -524,13 +524,15 @@ export default function RoomEaseCaseStudy() {
       {/* ---------- 04: Ranking and allocation logic ---------- */}
       <div id="s4" className="cs-seam" style={{ background: TONE_AMBER }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <Reveal>
-            <p className="text-xs font-extrabold uppercase tracking-wide mb-1.5" style={{ color: "var(--cs-accent-deep)" }}>
-              04 · Reconstructed workflow
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.14]" style={{ color: "var(--ink)" }}>
+              04
             </p>
-            <h2 className="font-serif text-[32px] mb-3" style={{ color: "var(--ink)" }}>
+            <h2 className="font-serif text-[32px] mt-2" style={{ color: "var(--ink)" }}>
               How a request becomes a ranked, approved room
             </h2>
+          </Reveal>
+          <Reveal>
             <p className="text-lg leading-relaxed max-w-4xl mb-3.5" style={{ color: "#33302a" }}>
               Hard constraints (time conflicts, capacity, required features) are checked first and
               are non-negotiable. What&apos;s left is scored on fit and preference, with priority
@@ -740,16 +742,13 @@ export default function RoomEaseCaseStudy() {
       {/* ---------- 07: Validation and outcomes ---------- */}
       <div id="s7" className="cs-seam" style={{ background: TONE_DARK }}>
         <div className="mx-auto max-w-5xl px-6 py-24">
+          <Reveal className="flex items-start gap-5 mb-8">
+            <p className="font-serif text-6xl md:text-[80px] leading-[0.78] opacity-[0.2]" style={{ color: "#fdfaf5" }}>
+              07
+            </p>
+            <h2 className="font-serif text-4xl text-white mt-2">Validation and outcomes</h2>
+          </Reveal>
           <Reveal>
-            <div className="flex items-center gap-4.5 mb-8">
-              <div
-                className="w-[58px] h-[58px] shrink-0 rounded-2xl flex items-center justify-center font-serif font-bold text-2xl"
-                style={{ background: GOLD_GRADIENT, color: "var(--ink)", border: "3px solid var(--ink)", boxShadow: "5px 5px 0 rgba(0,0,0,0.4)" }}
-              >
-                07
-              </div>
-              <h2 className="font-serif text-4xl text-white">Validation and outcomes</h2>
-            </div>
             <p className="text-lg leading-relaxed max-w-4xl mb-9" style={{ color: "#e3d9c2" }}>
               After meeting with club executives and students to establish a baseline, we ran a
               controlled comparison: the same end-to-end booking scenario, once on the current UW
