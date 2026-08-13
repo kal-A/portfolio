@@ -14,18 +14,20 @@ function StepBox({
   active,
   onClick,
   activeBg,
+  roomy,
 }: {
   step: ProcessStep;
   active: boolean;
   onClick: () => void;
   activeBg: string;
+  roomy?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className="cs-box flex-1 min-w-0 text-center text-[14.5px] leading-snug font-bold px-4 py-4 transition-colors"
+      className={`cs-box flex-1 min-w-0 text-center text-[14.5px] leading-snug font-bold px-4 transition-colors ${roomy ? "py-6" : "py-4"}`}
       style={
         active
           ? { background: activeBg, color: "#fff9ee", borderColor: "var(--ink)" }
@@ -72,6 +74,7 @@ export default function ProcessFlow({
               active={index === activeIndex}
               onClick={() => setActiveIndex(index)}
               activeBg={activeBg}
+              roomy={distributeRows}
             />
             {i < row.length - 1 && (
               <span className="text-xl sm:text-2xl font-black shrink-0 rotate-90 sm:rotate-0" style={{ color: "var(--ink)" }}>
@@ -86,7 +89,11 @@ export default function ProcessFlow({
 
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
-      <div className={`flex flex-col ${distributeRows && row2.length > 0 ? "justify-start" : "justify-center"} gap-5`}>
+      <div
+        className={`flex flex-col ${distributeRows && row2.length > 0 ? "justify-start" : "justify-center"} ${
+          distributeRows ? "gap-7" : "gap-5"
+        }`}
+      >
         {renderRow(row1, 0)}
         {row2.length > 0 && (
           <div className={`flex items-center gap-3 pl-1 ${distributeRows ? "flex-1" : ""}`}>
