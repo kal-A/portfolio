@@ -314,6 +314,19 @@ export default function PathPeerCaseStudy() {
               >
                 Turning session recordings into a prioritized feature plan
               </h1>
+              <div className="flex flex-wrap gap-2.5 mt-5">
+                {cs.metrics.map((m) => (
+                  <span
+                    key={m.label}
+                    className="cs-pill inline-flex items-baseline gap-1.5 text-xs font-bold px-3.5 py-1.5"
+                  >
+                    <span className="font-serif text-base font-bold" style={{ color: ACCENT_ORANGE }}>
+                      {m.value}
+                    </span>
+                    <span style={{ color: "var(--ink-soft)" }}>{m.label.split("(")[0].trim()}</span>
+                  </span>
+                ))}
+              </div>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
                 Remote (Waterloo, ON) · May 2022 – Aug 2022
               </p>
@@ -470,7 +483,12 @@ export default function PathPeerCaseStudy() {
             </p>
           </Chapter>
 
-          <div className="mt-9 mb-9 flex flex-col gap-3">
+          <div className="relative mt-9 mb-9 flex flex-col gap-3">
+            <div
+              className="hidden lg:block absolute left-1/2 top-2 bottom-2 w-[3px] -translate-x-1/2 rounded-full"
+              style={{ background: ACCENT_ORANGE, opacity: 0.18 }}
+              aria-hidden="true"
+            />
             {STORY_STEPS.slice(0, 4).map((step, i) => {
               const isLeft = i % 2 === 0;
               return (
