@@ -807,7 +807,7 @@ export default function PathPeerCaseStudy() {
 
           {cs.note && (
             <p
-              className="text-sm italic leading-relaxed mt-14 mx-auto max-w-[85%] sm:max-w-[70%] text-center"
+              className="text-sm italic leading-relaxed mt-8 max-w-3xl"
               style={{ color: "var(--ink-soft)" }}
             >
               {cs.note}
