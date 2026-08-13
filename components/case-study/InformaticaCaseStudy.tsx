@@ -821,7 +821,7 @@ export default function InformaticaCaseStudy() {
             </div>
           )}
 
-          <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+          <p className="text-sm italic leading-relaxed mt-8 max-w-3xl" style={{ color: "var(--ink-soft)" }}>
             Internal trackers, boards, and company-specific documentation are omitted for
             confidentiality. The diagrams on this page reconstruct the same planning and research
             logic in a public-safe form.

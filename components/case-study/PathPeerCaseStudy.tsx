@@ -708,7 +708,7 @@ export default function PathPeerCaseStudy() {
             </p>
           </Reveal>
 
-          <div className="mb-10 max-w-xl">
+          <div className="mb-10">
             <StatGrid valueColor={ACCENT_ORANGE} stats={cs.metrics.map((m) => ({ value: m.value, label: m.label }))} />
           </div>
 

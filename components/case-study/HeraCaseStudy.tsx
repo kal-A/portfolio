@@ -650,7 +650,7 @@ export default function HeraCaseStudy() {
             </div>
           </SnapshotGrid>
 
-          <p className="text-sm italic leading-relaxed mt-8 max-w-2xl" style={{ color: "var(--ink-soft)" }}>
+          <p className="text-sm italic leading-relaxed mt-8 max-w-3xl" style={{ color: "var(--ink-soft)" }}>
             {cs.note}
           </p>
         </div>

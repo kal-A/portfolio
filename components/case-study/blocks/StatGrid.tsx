@@ -7,7 +7,8 @@ export default function StatGrid({
   stats: { value: string; label: string }[];
   valueColor: string;
 }) {
-  const gridCols = stats.length === 4 ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3";
+  const gridCols =
+    stats.length === 4 || stats.length === 2 ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3";
 
   return (
     <div className={`grid ${gridCols} gap-5`}>
