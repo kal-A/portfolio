@@ -580,7 +580,6 @@ export default function PathPeerCaseStudy() {
             steps={FRICTION_STEPS}
             accent={ACCENT_ORANGE}
             middleLabel="A hypothesis only matters once it is scoped into something buildable"
-            distributeRows
           />
         </div>
       </div>
