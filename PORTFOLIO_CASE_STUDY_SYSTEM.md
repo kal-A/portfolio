@@ -2944,4 +2944,18 @@ The two right-side loops (calibration rework vs. the two fulfilment replenishmen
 3. The precise disposition of a post-lamination failure (same open question as §24.12.9 item 7, restated here since it directly determines whether the "Fail" edge from `secondary-quality-decision` truly targets `diagnose-and-rework` or a different node).
 4. Whether `deduct-finished-inventory` should render as a plain process or the automated-subprocess shape — confirm implementation before publishing either way.
 
+# 27. Spatial Composition Rules (candidate, from PathPeer reference-standard pass — added 2026-08-13)
+
+PathPeer was used as the reference standard for a spacing/alignment/interaction-panel correction pass. These are **candidate** rules distilled from that pass. **Not yet applied site-wide** — pending approval, then propagation to the other seven case studies.
+
+1. **Semantic spacing.** Elements that belong together sit closer together than unrelated sections. Watch for two spacing mechanisms stacking unintentionally (e.g. a wrapper's `pt-*` plus a child component's own `mt-*`) — that's the usual source of "excessive dead space" bugs, not a single oversized value.
+2. **Subheading attachment.** A subheading/instruction sits close to the visual/component it introduces (small gap, not a section-sized gap).
+3. **Deliberate width.** Readable text width is valid, but unused remaining width must feel intentional: center it, align it to a clear grid (e.g. match a stat-grid's width below it), or use the adjacent space on purpose. Never leave prose stopping at an arbitrary measure beside a visually empty remainder.
+4. **Staggered storytelling.** For sequential narrative sections with substantial empty lateral space, consider an alternating left/right (or staggered) composition instead of defaulting every item to the same edge. Collapse to single-column on tablet/mobile. An odd concluding item can take a deliberate full-width/centered "resolution" treatment instead of forcing strict alternation to the end.
+5. **Stable interactive panels.** Selectable flowchart/detail panels use a stable container size based on the longest possible content (e.g. stack all options in the same CSS grid cell so the container's height is driven by the tallest one, and toggle visibility) so switching selection never resizes the panel or shifts surrounding content. Prefer intrinsic sizing over guessed pixel/min-height values.
+6. **Flow + panel alignment.** Interactive explanation panels align vertically (top-aligned, not centered within a taller stretched cell) and compositionally with their corresponding flow, so the pair reads as one interactive component.
+7. **Subtle card hover.** Light informational cards may use a very subtle palette-relevant hover tint while preserving text contrast — reuse the site's existing "subtle" opacity token (0.14) rather than the full-strength site-wide `.cs-box` wash, which reads as too strong (dramatic saturation change) on static content cards. Implemented behind an opt-in `.cs-box.subtle-fill` modifier in `globals.css` (not yet applied to the default `.cs-box` hover).
+8. **Odd grid counts.** Do not leave an accidental empty grid cell. For a 2-column five-item group, prefer 2×2 + a full-width concluding fifth item (`sm:col-span-2` on the last item when the count is odd) over 3+2, an orphaned single card, or an invisible empty sixth cell.
+9. **No excessive dead space.** Do not use oversized padding/min-height as decoration when it disconnects related content.
+
 Do not expose this list publicly.

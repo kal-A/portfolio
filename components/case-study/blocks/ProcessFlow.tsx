@@ -54,7 +54,6 @@ export default function ProcessFlow({
   const [activeIndex, setActiveIndex] = useState(0);
   const row1 = steps.slice(0, rowLength);
   const row2 = steps.slice(rowLength);
-  const active = steps[activeIndex];
   const activeBg = activeGradient ?? accent;
 
   const renderRow = (row: ProcessStep[], offset: number) => (
@@ -82,7 +81,7 @@ export default function ProcessFlow({
 
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
-      <div className="flex flex-col justify-center gap-5">
+      <div className="flex flex-col justify-start gap-5">
         {renderRow(row1, 0)}
         {row2.length > 0 && (
           <div className="flex items-center gap-3 pl-1">
@@ -97,27 +96,37 @@ export default function ProcessFlow({
         {renderRow(row2, rowLength)}
       </div>
 
-      <div
-        className={`cs-box white px-8 py-7 ${active.image ? "lg:min-h-[300px]" : "lg:min-h-[220px]"} flex flex-col justify-center`}
-        style={{ background: "#fffdf8" }}
-      >
-        {active.image && (
+      {/* All steps render in the same grid cell (stacked); the container's
+          height is driven by the tallest one, so switching the active step
+          never resizes the panel or shifts anything below it. Only the
+          active step is visible. */}
+      <div className="cs-box white grid lg:min-h-[200px] px-8 py-7" style={{ background: "#fffdf8" }}>
+        {steps.map((step, i) => (
           <div
-            className="relative w-full h-28 rounded-md border mb-4 overflow-hidden"
-            style={{ borderColor: "rgba(32,28,23,0.14)", background: "#fff" }}
+            key={step.title}
+            className="flex flex-col justify-start"
+            style={{ gridArea: "1 / 1", visibility: i === activeIndex ? "visible" : "hidden" }}
+            aria-hidden={i !== activeIndex}
           >
-            <Image src={active.image.src} alt={active.image.alt} fill sizes="320px" className="object-contain" />
+            {step.image && (
+              <div
+                className="relative w-full h-28 rounded-md border mb-4 overflow-hidden"
+                style={{ borderColor: "rgba(32,28,23,0.14)", background: "#fff" }}
+              >
+                <Image src={step.image.src} alt={step.image.alt} fill sizes="320px" className="object-contain" />
+              </div>
+            )}
+            <p className="text-xs font-extrabold uppercase tracking-wide mb-2" style={{ color: accent }}>
+              Step {i + 1} of {steps.length}
+            </p>
+            <h3 className="font-serif text-2xl mb-3" style={{ color: "var(--ink)" }}>
+              {step.title}
+            </h3>
+            <p className="text-base leading-relaxed" style={{ color: "#4c473e" }}>
+              {step.synopsis}
+            </p>
           </div>
-        )}
-        <p className="text-xs font-extrabold uppercase tracking-wide mb-2" style={{ color: accent }}>
-          Step {activeIndex + 1} of {steps.length}
-        </p>
-        <h3 className="font-serif text-2xl mb-3" style={{ color: "var(--ink)" }}>
-          {active.title}
-        </h3>
-        <p className="text-base leading-relaxed" style={{ color: "#4c473e" }}>
-          {active.synopsis}
-        </p>
+        ))}
       </div>
     </div>
   );

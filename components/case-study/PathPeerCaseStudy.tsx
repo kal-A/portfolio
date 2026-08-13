@@ -244,6 +244,29 @@ const ADDITIONAL_CONTRIBUTIONS = [
   },
 ];
 
+function StoryStepCard({ step, reverse }: { step: (typeof STORY_STEPS)[number]; reverse?: boolean }) {
+  return (
+    <div className={`flex gap-4 items-start ${reverse ? "lg:flex-row-reverse" : ""}`}>
+      <div
+        className="w-11 h-11 rounded-full border-[2.5px] flex items-center justify-center shrink-0"
+        style={{ background: ORANGE_GRADIENT, borderColor: "var(--ink)" }}
+      >
+        <span className="w-5 h-5 text-[#fff9ee]">
+          <Icon>{step.icon}</Icon>
+        </span>
+      </div>
+      <div className="cs-box white flex-1 min-w-0 px-5 py-4">
+        <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_ORANGE }}>
+          {step.label}
+        </p>
+        <p className="text-base leading-relaxed" style={{ color: "var(--ink)" }}>
+          {step.body}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const LEGACY_METRICS = [
   { value: "20%", label: "increase in user engagement, reported alongside the discovery and profile work above" },
   { value: "25%", label: "decrease in bounce rate, reported for the same period of work" },
@@ -366,7 +389,7 @@ export default function PathPeerCaseStudy() {
           </Reveal>
 
           {/* Snapshot */}
-          <div id="s-glance" className="pt-16">
+          <div id="s-glance">
             <SnapshotGrid>
               <SnapshotBox
                 label="Challenge"
@@ -447,32 +470,46 @@ export default function PathPeerCaseStudy() {
             </p>
           </Chapter>
 
-          <div className="mt-9 mb-9">
-            {STORY_STEPS.map((step, i) => (
-              <Reveal key={step.label} delay={i * 80} className="flex gap-5">
-                <div className="flex flex-col items-center shrink-0">
-                  <div
-                    className="w-11 h-11 rounded-full border-[2.5px] flex items-center justify-center shrink-0"
-                    style={{ background: ORANGE_GRADIENT, borderColor: "var(--ink)" }}
-                  >
-                    <span className="w-5 h-5 text-[#fff9ee]">
-                      <Icon>{step.icon}</Icon>
+          <div className="mt-9 mb-9 flex flex-col gap-3">
+            {STORY_STEPS.slice(0, 4).map((step, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <div key={step.label}>
+                  <Reveal delay={i * 90} className="lg:grid lg:grid-cols-2 lg:gap-x-10 lg:items-start">
+                    <div className={isLeft ? "lg:col-start-1" : "lg:col-start-2"}>
+                      <StoryStepCard step={step} reverse={isLeft} />
+                    </div>
+                  </Reveal>
+                  <div className="flex justify-center py-1" aria-hidden="true">
+                    <span className="text-lg font-black" style={{ color: ACCENT_ORANGE, opacity: 0.45 }}>
+                      ↓
                     </span>
                   </div>
-                  {i < STORY_STEPS.length - 1 && (
-                    <div className="w-[3px] flex-1 my-1" style={{ background: ACCENT_ORANGE, opacity: 0.25, minHeight: 24 }} />
-                  )}
                 </div>
-                <div className={i < STORY_STEPS.length - 1 ? "pb-7 flex-1 min-w-0" : "flex-1 min-w-0"}>
-                  <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: ACCENT_ORANGE }}>
-                    {step.label}
-                  </p>
-                  <p className="text-base leading-relaxed max-w-2xl" style={{ color: "var(--ink)" }}>
-                    {step.body}
-                  </p>
+              );
+            })}
+            <Reveal delay={4 * 90} className="flex justify-center">
+              <div className="w-full lg:max-w-xl cs-box px-6 py-5" style={{ background: ORANGE_GRADIENT }}>
+                <div className="flex gap-4 items-start">
+                  <div
+                    className="w-11 h-11 rounded-full border-[2.5px] flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(255,255,255,0.16)", borderColor: "#fff9ee" }}
+                  >
+                    <span className="w-5 h-5 text-[#fff9ee]">
+                      <Icon>{STORY_STEPS[4].icon}</Icon>
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[11.5px] font-extrabold uppercase tracking-wide mb-1.5" style={{ color: "#fff9ee" }}>
+                      {STORY_STEPS[4].label}
+                    </p>
+                    <p className="text-base leading-relaxed" style={{ color: "#fff9ee", opacity: 0.96 }}>
+                      {STORY_STEPS[4].body}
+                    </p>
+                  </div>
                 </div>
-              </Reveal>
-            ))}
+              </div>
+            </Reveal>
           </div>
 
           <p className="text-[15px] font-extrabold uppercase tracking-wide mb-4" style={{ color: "var(--ink)" }}>
@@ -494,7 +531,7 @@ export default function PathPeerCaseStudy() {
             </ul>
           </div>
 
-          <p className="text-sm font-extrabold mb-8" style={{ color: ACCENT_ORANGE }}>
+          <p className="text-sm font-extrabold mb-4" style={{ color: ACCENT_ORANGE }}>
             Select a stage to see what happened there.
           </p>
           <ProcessFlow
@@ -527,7 +564,7 @@ export default function PathPeerCaseStudy() {
             />
           </div>
 
-          <p className="text-base leading-relaxed max-w-2xl mt-9" style={{ color: "#33302a" }}>
+          <p className="text-base leading-relaxed max-w-2xl mx-auto text-center mt-10" style={{ color: "#33302a" }}>
             Not every pattern justified a full development cycle. Some resolved with a smaller
             design change validated directly in Bubble.io; others became scoped feature requests
             with enough definition to move directly into a build. The five changes that came out of
@@ -556,7 +593,7 @@ export default function PathPeerCaseStudy() {
           <div className="grid md:grid-cols-2 gap-5 mt-9">
             {(cs.decisions ?? []).map((d, i) => (
               <Reveal key={d.decision} delay={i * 90}>
-                <div className="cs-box light px-6 py-6 h-full min-w-0">
+                <div className="cs-box light subtle-fill px-6 py-6 h-full min-w-0">
                   <div
                     className="w-9 h-9 rounded-[10px] border-[2.5px] flex items-center justify-center font-serif font-bold text-base mb-3.5"
                     style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
@@ -601,7 +638,7 @@ export default function PathPeerCaseStudy() {
           <div className="grid sm:grid-cols-3 gap-5 mb-10">
             {ADDITIONAL_CONTRIBUTIONS.map((item, i) => (
               <Reveal key={item.title} delay={i * 90}>
-                <div className="cs-box white px-5 py-6 h-full min-w-0">
+                <div className="cs-box white subtle-fill px-5 py-6 h-full min-w-0">
                   <div
                     className="w-9 h-9 rounded-[10px] border-2 flex items-center justify-center mb-3.5"
                     style={{ background: BLUE_GRADIENT, borderColor: "var(--ink)" }}
@@ -699,7 +736,7 @@ export default function PathPeerCaseStudy() {
             <h2 className="font-serif text-[32px] leading-tight mt-2 text-white">Outcomes</h2>
           </Reveal>
           <Reveal>
-            <p className="text-lg leading-relaxed max-w-2xl mb-9" style={{ color: "#d6ddec" }}>
+            <p className="text-lg leading-relaxed mb-9" style={{ color: "#d6ddec" }}>
               The figures below are the platform-level outcomes reported for the internship period.
               They reflect PathPeer&apos;s overall growth during that time, with the analytics-and-
               recordings loop above shaping which iterative changes, like new discovery tags and
@@ -717,19 +754,25 @@ export default function PathPeerCaseStudy() {
               Shipped or scoped from this loop
             </p>
             <div className="grid sm:grid-cols-2 gap-3.5 mb-10">
-              {(cs.decisions ?? []).map((d, i) => (
-                <div key={d.decision} className="cs-box light flex items-start gap-3.5 px-5 py-4">
+              {(cs.decisions ?? []).map((d, i, arr) => {
+                const isConcludingOdd = arr.length % 2 === 1 && i === arr.length - 1;
+                return (
                   <div
-                    className="w-8 h-8 rounded-[9px] border-2 shrink-0 flex items-center justify-center font-serif font-bold text-sm mt-0.5"
-                    style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                    key={d.decision}
+                    className={`cs-box light flex items-start gap-3.5 px-5 py-4 ${isConcludingOdd ? "sm:col-span-2" : ""}`}
                   >
-                    {String.fromCharCode(65 + i)}
+                    <div
+                      className="w-8 h-8 rounded-[9px] border-2 shrink-0 flex items-center justify-center font-serif font-bold text-sm mt-0.5"
+                      style={{ borderColor: "var(--ink)", background: BLUE_GRADIENT, color: "var(--ink)" }}
+                    >
+                      {String.fromCharCode(65 + i)}
+                    </div>
+                    <p className="text-[14.5px] font-semibold leading-relaxed" style={{ color: "var(--ink)" }}>
+                      {d.decision}
+                    </p>
                   </div>
-                  <p className="text-[14.5px] font-semibold leading-relaxed" style={{ color: "var(--ink)" }}>
-                    {d.decision}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </Reveal>
 

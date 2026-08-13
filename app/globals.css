@@ -129,6 +129,15 @@ html {
   opacity: 0.4;
   transform: none;
 }
+/* Extremely subtle fill-wash for light content cards where the full-strength
+   .cs-box wash (opacity 1, page-accent color) would overwhelm the card's own
+   identity. Reuses the site's established "subtle" opacity token (0.14, see
+   Chapter.tsx's section numerals) instead of an arbitrary value. Candidate
+   for the reusable "subtle card hover" rule -- see
+   PORTFOLIO_SPATIAL_COMPOSITION_RULES.md. Not yet applied site-wide. */
+.cs-box.subtle-fill:hover::before {
+  opacity: 0.14;
+}
 .opn-link {
   transition: color 0.12s ease, background 0.12s ease;
   border-radius: 10px;
