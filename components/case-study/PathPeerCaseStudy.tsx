@@ -291,7 +291,7 @@ export default function PathPeerCaseStudy() {
     >
       {/* ---------- Hero ---------- */}
       <div style={{ background: HERO_BG }}>
-        <div className="mx-auto max-w-5xl px-6 pt-8 pb-10">
+        <div className="mx-auto max-w-5xl px-6 pt-6 pb-10">
           <div className="flex flex-col md:flex-row justify-between items-start gap-10">
             <Reveal className="flex-1 min-w-0">
               <Link href="/work" className="text-sm font-semibold" style={{ color: "var(--ink-soft)" }}>
@@ -299,13 +299,13 @@ export default function PathPeerCaseStudy() {
               </Link>
 
               <div
-                className="w-[76px] h-[76px] rounded-[20px] mt-3.5 flex items-center justify-center border-[3px] border-white/90"
+                className="w-[76px] h-[76px] rounded-[20px] mt-3 flex items-center justify-center border-[3px] border-white/90"
                 style={{ background: ORANGE_GRADIENT, boxShadow: "0 10px 26px -8px rgba(163,67,15,0.45)" }}
               >
                 <ProjectIcon slug="pathpeer" className="w-[38px] h-[38px]" style={{ color: "#fff9ee" }} />
               </div>
 
-              <p className="text-sm font-extrabold uppercase tracking-wide mt-6" style={{ color: ACCENT_ORANGE }}>
+              <p className="text-sm font-extrabold uppercase tracking-wide mt-4" style={{ color: ACCENT_ORANGE }}>
                 PathPeer · Product Designer &amp; Developer Intern
               </p>
               <h1
@@ -580,6 +580,7 @@ export default function PathPeerCaseStudy() {
             steps={FRICTION_STEPS}
             accent={ACCENT_ORANGE}
             middleLabel="A hypothesis only matters once it is scoped into something buildable"
+            distributeRows
           />
         </div>
       </div>
