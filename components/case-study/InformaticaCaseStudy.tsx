@@ -488,6 +488,7 @@ export default function InformaticaCaseStudy() {
             accent="#3a6b93"
             activeGradient={BLUE_GRADIENT}
             middleLabel="Synthesis turns findings into a recommendation"
+            topAlignRows
           />
 
           <DecisionCallout
@@ -676,6 +677,7 @@ export default function InformaticaCaseStudy() {
             accent="#a12f2f"
             activeGradient={RED_GRADIENT}
             middleLabel="Human review gates everything before it publishes"
+            topAlignRows
           />
           <p className="mt-5 text-sm flex items-center gap-3 flex-wrap leading-relaxed" style={{ color: "var(--ink-soft)" }}>
             <span

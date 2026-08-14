@@ -567,7 +567,7 @@ export default function PillPalCaseStudy() {
               Task 1 · Adding new medication
             </p>
             <Reveal>
-              <ProcessFlow steps={TASK1_STEPS} accent="#4a2f73" />
+              <ProcessFlow steps={TASK1_STEPS} accent="#4a2f73" topAlignRows />
             </Reveal>
           </div>
 

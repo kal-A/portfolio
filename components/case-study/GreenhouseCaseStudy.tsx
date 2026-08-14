@@ -323,7 +323,7 @@ export default function GreenhouseCaseStudy() {
             </p>
           </Reveal>
           <Reveal>
-            <ProcessFlow steps={PROCESS_STEPS} accent="#1c5c3f" />
+            <ProcessFlow steps={PROCESS_STEPS} accent="#1c5c3f" topAlignRows />
           </Reveal>
         </div>
       </div>

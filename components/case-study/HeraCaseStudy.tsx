@@ -1043,6 +1043,7 @@ export default function HeraCaseStudy() {
               steps={ANALYTICS_STEPS}
               accent={NAVY}
               middleLabel="Investigation turns a pattern into something worth proposing"
+              topAlignRows
             />
           </Reveal>
 
