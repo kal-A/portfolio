@@ -537,7 +537,7 @@ export default function HeraCaseStudy() {
                     key={m.label}
                     className="cs-pill inline-flex items-baseline gap-1.5 text-xs font-bold px-3.5 py-1.5"
                   >
-                    <span className="font-serif text-base font-bold" style={{ color: NAVY }}>
+                    <span className="font-serif text-base font-bold whitespace-nowrap" style={{ color: NAVY }}>
                       {m.value}
                     </span>
                     <span style={{ color: "var(--ink-soft)" }}>{m.label.split("(")[0].trim()}</span>
