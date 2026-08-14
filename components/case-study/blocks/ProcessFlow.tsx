@@ -43,6 +43,7 @@ export default function ProcessFlow({
   activeGradient,
   middleLabel = "Review clears the way to tracking",
   rowLength = 3,
+  topAlignRows = false,
 }: {
   steps: ProcessStep[];
   accent: string;
@@ -50,6 +51,11 @@ export default function ProcessFlow({
   middleLabel?: string;
   /** How many steps to place in the first row before wrapping to the next; defaults to 3. */
   rowLength?: number;
+  /** Top-align the row1/connector/row2 group instead of centering it in the
+   *  stretched column, so a label placed directly above the flow sits close
+   *  to the visible first row instead of behind an invisible centering gap.
+   *  Off by default -- opt in per call site. */
+  topAlignRows?: boolean;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const row1 = steps.slice(0, rowLength);
@@ -81,7 +87,7 @@ export default function ProcessFlow({
 
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
-      <div className="flex flex-col justify-center gap-5">
+      <div className={`flex flex-col ${topAlignRows ? "justify-start" : "justify-center"} gap-5`}>
         {renderRow(row1, 0)}
         {row2.length > 0 && (
           <div className="flex items-center gap-3 pl-1">
