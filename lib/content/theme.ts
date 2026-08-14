@@ -98,6 +98,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #f0954a, #a3430f)",
     mark: "PA",
     image: "/case-studies/pathpeer/pathpeer-hero-home.png",
+    logo: "/case-studies/pathpeer/pathpeer-logo.jpg",
   },
   informatica: {
     bg: "#eaf3fb",
