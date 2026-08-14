@@ -122,6 +122,22 @@ export default function ForceNCaseStudy() {
               >
                 Building an inventory-backed production system for ForceN&apos;s Dev Systems
               </h1>
+              <div className="flex flex-wrap gap-2.5 mt-5">
+                {[
+                  { value: "14+", label: "hardware units coordinated" },
+                  { value: "6+", label: "stakeholders across eng, ops, inventory" },
+                ].map((m) => (
+                  <span
+                    key={m.label}
+                    className="cs-pill inline-flex items-baseline gap-1.5 text-xs font-bold px-3.5 py-1.5"
+                  >
+                    <span className="font-serif text-base font-bold" style={{ color: "#a15a10" }}>
+                      {m.value}
+                    </span>
+                    <span style={{ color: "var(--ink-soft)" }}>{m.label}</span>
+                  </span>
+                ))}
+              </div>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
                 Toronto, ON · Sep 2025 – Dec 2025
               </p>
@@ -172,6 +188,34 @@ export default function ForceNCaseStudy() {
                   {link.label}
                 </a>
               ))}
+
+              <div className="mt-6 pt-5" style={{ borderTop: "1.5px dashed rgba(32,28,23,0.16)" }}>
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                  Core skills
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Product Operations", "Hardware Workflow", "Process Design"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="cs-pill inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-wide px-3 py-1.5 cursor-default"
+                      style={{ background: AMBER_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-[11px] font-extrabold uppercase tracking-wide mt-4 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                  Tools
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Confluence", "Onshape", "AI Agents", "Python"].map((chip) => (
+                    <span key={chip} className="cs-pill highlight text-[10.5px] font-extrabold px-3 py-1.5 cursor-default">
+                      {chip}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </nav>
             </Reveal>
           </div>

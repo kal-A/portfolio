@@ -107,9 +107,18 @@ const PAYMENT_OPTIONS = [
   { name: "Option 3", term: "24-month plan", price: "$ Price / mo", contains: ["Full treatment cycle", "Lower monthly payment", "Dedicated care coordinator"] },
 ];
 
-/** Reconstructs the full payment-plan flow shown across the source wireframes: treatment
- * selection, a concise treatment explanation, the treatment-specific payment-plan page, and
- * the three-option comparison. Dollar amounts are illustrative placeholders, matching the
+const HOW_IT_WORKS_STEPS = [
+  { n: 1, title: "Tell us about your treatment", body: "Select IVF, egg freezing, or IUI so the page and pricing shown match your path." },
+  { n: 2, title: "Compare payment plans", body: "See pay-in-full and monthly options side by side, with what each one includes." },
+  { n: 3, title: "Get started", body: "Create an account to lock in a plan and move to clinic matching." },
+];
+
+/** Reconstructs the full treatment-specific IVF Payment Plans page shown across the source
+ * wireframe (payment plans designs-7.png): treatment selection, the About IVF Treatment
+ * section (synopsis, basics, procedure, picture placeholder), a testimonial band, the
+ * three-step How It Works section, a "Get started" treatment-routing step (the source shows
+ * this as a connected account-creation panel with an "I am looking for..." selector), and the
+ * three-option payment comparison. Dollar amounts are illustrative placeholders, matching the
  * "$Price / time" placeholder text in the original wireframe, which never specified numbers. */
 export function HeraPaymentPlanMockup() {
   return (
@@ -131,10 +140,10 @@ export function HeraPaymentPlanMockup() {
         </div>
 
         <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
-          2. IVF payment plans page &middot; about the treatment
+          2. About IVF treatment
         </p>
         <div className="rounded-lg border p-3.5" style={{ borderColor: "#e5e1d4" }}>
-          <div className="grid grid-cols-[1fr_1fr] gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-[8px] text-neutral-400 mb-1">Synopsis</p>
               <p className="text-[9px] text-neutral-700 leading-snug">{TREATMENT_SUMMARIES[0].synopsis}</p>
@@ -147,11 +156,72 @@ export function HeraPaymentPlanMockup() {
                 ))}
               </ul>
             </div>
+            <div
+              className="rounded-md border flex items-center justify-center py-6 text-[8px] font-semibold uppercase tracking-wide text-neutral-400"
+              style={{ borderColor: BLUE }}
+            >
+              IVF picture
+            </div>
+            <div>
+              <p className="text-[8px] text-neutral-400 mb-1">Procedure</p>
+              <ul className="flex flex-col gap-0.5">
+                {IVF_BASICS.slice(1).map((b) => (
+                  <li key={b} className="text-[7.5px] text-neutral-600 leading-snug">&#8226; {b}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
-          3. Three-option comparison &middot; price, term, and what&apos;s included
+          3. Hear what people have to say
+        </p>
+        <div className="rounded-lg text-white px-4 py-4 flex items-center gap-3" style={{ background: BLUE }}>
+          <span className="text-[13px] leading-none opacity-70">&#8592;</span>
+          <div className="flex-1 rounded-md bg-white/10 px-3 py-2.5">
+            <p className="text-[9px] leading-snug italic">&ldquo;IVF was hard, but&#8230;&rdquo;</p>
+            <p className="text-[7.5px] opacity-70 mt-1.5">&#8212; Client &middot; Date</p>
+          </div>
+          <span className="text-[13px] leading-none opacity-70">&#8594;</span>
+        </div>
+
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
+          4. How it works
+        </p>
+        <div className="grid grid-cols-3 gap-3">
+          {HOW_IT_WORKS_STEPS.map((s) => (
+            <div key={s.n} className="rounded-lg border px-3 py-3" style={{ borderColor: "#e5e1d4" }}>
+              <span
+                className="inline-flex items-center justify-center w-4 h-4 rounded-full text-white text-[8px] font-bold mb-1.5"
+                style={{ background: NAVY }}
+              >
+                {s.n}
+              </span>
+              <p className="font-medium text-[9.5px] text-neutral-800 leading-snug">{s.title}</p>
+              <p className="text-[7.5px] text-neutral-500 leading-snug mt-1">{s.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
+          5. Get started &middot; routes by treatment interest
+        </p>
+        <div className="rounded-lg border flex items-center justify-between gap-3 px-3.5 py-3" style={{ borderColor: BLUE }}>
+          <div>
+            <p className="text-[9px] font-medium text-neutral-800">Create an account</p>
+            <p className="text-[7.5px] text-neutral-400 mt-0.5">Email, password &middot; &ldquo;I am looking for&#8230;&rdquo;</p>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {["IVF", "IUI", "Egg freezing"].map((t) => (
+              <span key={t} className="rounded-full px-2 py-1 text-[7px] font-semibold" style={{ background: SKY, color: NAVY }}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <p className="text-[8.5px] text-neutral-400 uppercase tracking-wide font-semibold mt-6 mb-1.5">
+          6. Three-option comparison &middot; price, term, and what&apos;s included
         </p>
         <div className="grid grid-cols-3 gap-3">
           {PAYMENT_OPTIONS.map((opt) => (
@@ -176,6 +246,41 @@ export function HeraPaymentPlanMockup() {
         </p>
       </div>
     </BrowserFrame>
+  );
+}
+
+const PAYMENT_FLOW_STEPS = [
+  "Payment plans entry",
+  "Treatment context",
+  "Understand IVF treatment",
+  "How it works",
+  "Route by treatment",
+  "Compare plan options",
+  "Get started",
+];
+
+/** Compact user-flow diagram for the reconstructed IVF Payment Plans page above: the sequence
+ * a new visitor moves through, read directly off the source wireframe's section order and its
+ * "Get started" arrow into the treatment-interest selector. */
+export function HeraPaymentFlowDiagram() {
+  return (
+    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-3">
+      {PAYMENT_FLOW_STEPS.map((step, i) => (
+        <div key={step} className="flex items-center gap-1.5">
+          <span
+            className="rounded-full px-3 py-1.5 text-[11px] font-semibold text-center"
+            style={i === PAYMENT_FLOW_STEPS.length - 1 ? { background: NAVY, color: "#fff" } : { background: "#eaf2f8", color: NAVY }}
+          >
+            {step}
+          </span>
+          {i < PAYMENT_FLOW_STEPS.length - 1 && (
+            <span className="text-sm font-black" style={{ color: BLUE }}>
+              &#8594;
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 

@@ -8,6 +8,8 @@ export default function SketchPanel({
   accent,
   reconstructedLabel = "Reconstructed concept",
   reconstructedCaption,
+  sketchAspect = "4 / 5",
+  sketchMaxHeight = 340,
   children,
 }: {
   sketchSrc: string;
@@ -16,6 +18,12 @@ export default function SketchPanel({
   accent: string;
   reconstructedLabel?: string;
   reconstructedCaption?: string;
+  /** CSS aspect-ratio for the sketch image's frame; defaults to 4/5. Override for
+   *  sketches with a very different natural aspect (e.g. a tall full-page capture) so
+   *  object-contain doesn't shrink the image down to an illegible sliver. */
+  sketchAspect?: string;
+  /** Max height (px) for the sketch frame; defaults to 340. Raise for tall sketches. */
+  sketchMaxHeight?: number;
   children: React.ReactNode;
 }) {
   return (
@@ -33,7 +41,7 @@ export default function SketchPanel({
       </Reveal>
       <Reveal delay={120} className="min-w-0">
         <div className="cs-box white overflow-hidden opacity-90">
-          <div className="relative w-full bg-white mx-auto" style={{ aspectRatio: "4 / 5", maxHeight: 340 }}>
+          <div className="relative w-full bg-white mx-auto" style={{ aspectRatio: sketchAspect, maxHeight: sketchMaxHeight }}>
             <Image src={sketchSrc} alt={sketchAlt} fill className="object-contain" />
           </div>
         </div>

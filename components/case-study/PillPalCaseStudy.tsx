@@ -358,6 +358,19 @@ export default function PillPalCaseStudy() {
               >
                 Designing a medication tracker for older adults, then breaking it on purpose
               </h1>
+              <div className="flex flex-wrap gap-2.5 mt-5">
+                {cs.metrics.slice(1, 3).map((m) => (
+                  <span
+                    key={m.label}
+                    className="cs-pill inline-flex items-baseline gap-1.5 text-xs font-bold px-3.5 py-1.5"
+                  >
+                    <span className="font-serif text-base font-bold" style={{ color: "#4a2f73" }}>
+                      {m.value}
+                    </span>
+                    <span style={{ color: "var(--ink-soft)" }}>{m.label.split("(")[0].trim()}</span>
+                  </span>
+                ))}
+              </div>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
                 Team course project · Waterloo, ON
               </p>
@@ -404,6 +417,34 @@ export default function PillPalCaseStudy() {
                     {link.label}
                   </a>
                 ))}
+
+                <div className="mt-6 pt-5" style={{ borderTop: "1.5px dashed rgba(32,28,23,0.16)" }}>
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Core skills
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {cs.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="cs-pill inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-wide px-3 py-1.5 cursor-default"
+                        style={{ background: PURPLE_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mt-4 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Tools
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {cs.toolTags.map((chip) => (
+                      <span key={chip} className="cs-pill highlight text-[10.5px] font-extrabold px-3 py-1.5 cursor-default">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </nav>
             </Reveal>
           </div>

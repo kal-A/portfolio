@@ -53,6 +53,7 @@ import Reveal from "@/components/Reveal";
 import {
   HeraFinancingFlowMockup,
   HeraPaymentPlanMockup,
+  HeraPaymentFlowDiagram,
   HeraClinicSearchMockup,
   HeraClinicDetailMockup,
 } from "@/components/mockups/HeraMockups";
@@ -530,6 +531,19 @@ export default function HeraCaseStudy() {
               >
                 Designing financing and care-discovery flows for a 0-to-1 fertility platform
               </h1>
+              <div className="flex flex-wrap gap-2.5 mt-5">
+                {cs.metrics.slice(0, 2).map((m) => (
+                  <span
+                    key={m.label}
+                    className="cs-pill inline-flex items-baseline gap-1.5 text-xs font-bold px-3.5 py-1.5"
+                  >
+                    <span className="font-serif text-base font-bold" style={{ color: NAVY }}>
+                      {m.value}
+                    </span>
+                    <span style={{ color: "var(--ink-soft)" }}>{m.label.split("(")[0].trim()}</span>
+                  </span>
+                ))}
+              </div>
               <p className="text-base font-bold mt-5" style={{ color: "var(--ink-soft)" }}>
                 Remote (New York, NY) · Jan 2023 – Apr 2023
               </p>
@@ -579,6 +593,34 @@ export default function HeraCaseStudy() {
                     {link.label}
                   </a>
                 ))}
+
+                <div className="mt-6 pt-5" style={{ borderTop: "1.5px dashed rgba(32,28,23,0.16)" }}>
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Core skills
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {cs.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="cs-pill inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-wide px-3 py-1.5 cursor-default"
+                        style={{ background: BLUE_GRADIENT, color: "#fff9ee", borderColor: "var(--ink)" }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-[11px] font-extrabold uppercase tracking-wide mt-4 mb-2.5" style={{ color: "var(--ink-soft)" }}>
+                    Tools
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Figma", "Balsamiq", "Google Analytics", "Hotjar", "Looker Studio"].map((chip) => (
+                      <span key={chip} className="cs-pill highlight text-[10.5px] font-extrabold px-3 py-1.5 cursor-default">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </nav>
             </Reveal>
           </div>
@@ -851,10 +893,21 @@ export default function HeraCaseStudy() {
               sketchAlt="Real wireframe of the treatment-specific IVF Payment Plans page: header navigation, an About IVF Treatment section with synopsis, basics, and procedure, a testimonial band, a How It Works section, and three payment-plan option cards"
               sketchCaption="The real, treatment-specific IVF Payment Plans page from the source wireframe file: an About IVF Treatment section (synopsis, basics, picture, procedure), a testimonial band, a three-step How It Works section, and the three payment-plan option cards this section reconstructs in more detail."
               accent={NAVY}
-              reconstructedCaption="Reconstructed as a working page: treatment selection, a concise treatment explanation pulled from the About section's structure, and the three-option comparison with price, term, and what's included filled in. Dollar amounts are illustrative; the source wireframe never specified numbers."
+              sketchAspect="445 / 1520"
+              sketchMaxHeight={900}
+              reconstructedCaption="Reconstructed as a full working page, following the source's own section order: treatment selection, the About IVF Treatment section (synopsis, basics, procedure, picture placeholder), a testimonial band, the three-step How It Works section, a Get Started step that routes by treatment interest (the source shows this connecting into an account-creation panel), and the three-option comparison with price, term, and what's included filled in. Dollar amounts are illustrative; the source wireframe never specified numbers."
             >
               <HeraPaymentPlanMockup />
             </SketchPanel>
+          </div>
+
+          <div className="mt-10">
+            <p className="text-[11px] font-extrabold uppercase tracking-wide mb-3 inline-block rounded-md px-2.5 py-1" style={{ color: NAVY, background: TONE_SKY }}>
+              Reconstructed user flow
+            </p>
+            <div className="cs-box white px-5 py-5" style={{ background: "#fffdf8" }}>
+              <HeraPaymentFlowDiagram />
+            </div>
           </div>
 
           <div className="mt-12">
