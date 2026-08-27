@@ -412,8 +412,12 @@ export default function RoomEaseAllocationDiagramV2() {
         </svg>
       </div>
 
-      {/* Docked detail panel — compact, dark, in the column beside the tall chart */}
-      <div className="lg:sticky lg:top-24">
+      {/* Docked detail panel — compact, dark, in the column beside the tall
+          chart. Stuck to the viewport's vertical centre (not the top) so a
+          node clicked low in the flow keeps its explanation within ~half a
+          screen, and the panel fills the middle of the tall column instead of
+          stranding empty space beneath it. */}
+      <div className="lg:sticky lg:top-[calc(50vh-9.5rem)]">
         {activeNode ? (
           <div
             className="rounded-[var(--radius-default)] border p-5"
@@ -445,7 +449,7 @@ export default function RoomEaseAllocationDiagramV2() {
             <h3 className="mt-3" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", lineHeight: "var(--leading-h3)", color: "var(--color-text)" }}>
               {activeNode.title}
             </h3>
-            <p className="mt-2.5 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+            <p className="mt-3" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
               {activeNode.synopsis}
             </p>
             <div className="flex gap-2.5 mt-5">
