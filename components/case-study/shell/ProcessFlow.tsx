@@ -61,6 +61,7 @@ export default function ProcessFlow({
   middleLabel = "Review clears the way to tracking",
   rowLength = 3,
   topAlignRows = false,
+  detailBelow = false,
 }: {
   steps: ProcessStep[];
   middleLabel?: string;
@@ -71,6 +72,12 @@ export default function ProcessFlow({
    *  to the visible first row instead of behind an invisible centering gap.
    *  Off by default -- opt in per call site. */
   topAlignRows?: boolean;
+  /** Stack the step-detail panel *below* the flow (full width) instead of in
+   *  a 320px column beside it. A single short row of steps beside a tall detail
+   *  panel strands a large empty area under the steps; stacking fills the band
+   *  economically and lets both the boxes and the panel grow to full width.
+   *  Opt-in so existing side-by-side call sites (e.g. Chronicle) are unchanged. */
+  detailBelow?: boolean;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const row1 = steps.slice(0, rowLength);
@@ -97,80 +104,125 @@ export default function ProcessFlow({
     </div>
   );
 
+  const stepsBlock = (
+    <div className={`flex flex-col ${topAlignRows ? "justify-start" : "justify-center"} gap-5`}>
+      {renderRow(row1, 0)}
+      {row2.length > 0 && (
+        <div className="flex items-center gap-3 pl-1">
+          <span className="text-2xl font-black" style={{ color: "var(--color-project-accent)" }}>
+            ↓
+          </span>
+          <span
+            style={{
+              fontSize: "var(--text-label)",
+              letterSpacing: "var(--tracking-label)",
+              textTransform: "uppercase",
+              color: "var(--color-text-subtle)",
+            }}
+          >
+            {middleLabel}
+          </span>
+        </div>
+      )}
+      {row2.length > 0 && renderRow(row2, rowLength)}
+    </div>
+  );
+
+  // All steps render in the same grid cell (stacked); the container's height is
+  // driven by the tallest one, so switching the active step never resizes the
+  // panel or shifts anything below it. Only the active step is visible.
+  const detailPanel = (
+    <div
+      className={`grid ${detailBelow ? "min-h-[180px] px-8 py-8" : "lg:min-h-[200px] px-8 py-7"} rounded-[var(--radius-default)] border`}
+      style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+    >
+      {steps.map((step, i) => (
+        <div
+          key={step.title}
+          className="flex flex-col justify-start"
+          style={{
+            gridArea: "1 / 1",
+            opacity: i === activeIndex ? 1 : 0,
+            visibility: i === activeIndex ? "visible" : "hidden",
+            transition: `opacity 0.22s ease${i === activeIndex ? "" : ", visibility 0s linear 0.22s"}`,
+            pointerEvents: i === activeIndex ? "auto" : "none",
+          }}
+          aria-hidden={i !== activeIndex}
+        >
+          {detailBelow ? (
+            // Full-width panel: a two-column split (label + title | synopsis)
+            // uses the width economically instead of a single narrow text run.
+            <div className="grid md:grid-cols-[minmax(0,300px)_1fr] gap-6 md:gap-12 items-start">
+              <div>
+                {step.image && (
+                  <div className="relative w-full h-28 rounded-[var(--radius-button)] border mb-4 overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
+                    <Image src={step.image.src} alt={step.image.alt} fill sizes="300px" className="object-contain" />
+                  </div>
+                )}
+                <p
+                  style={{
+                    fontSize: "var(--text-label)",
+                    letterSpacing: "var(--tracking-label)",
+                    textTransform: "uppercase",
+                    color: "var(--color-project-accent)",
+                    marginBottom: "var(--space-2)",
+                  }}
+                >
+                  Step {i + 1} of {steps.length}
+                </p>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+                  {step.title}
+                </h3>
+              </div>
+              <p className="md:pt-1" style={{ fontSize: "var(--text-lead)", color: "var(--color-text-muted)", lineHeight: "var(--leading-lead)" }}>
+                {step.synopsis}
+              </p>
+            </div>
+          ) : (
+            <>
+              {step.image && (
+                <div className="relative w-full h-28 rounded-[var(--radius-button)] border mb-4 overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
+                  <Image src={step.image.src} alt={step.image.alt} fill sizes="320px" className="object-contain" />
+                </div>
+              )}
+              <p
+                style={{
+                  fontSize: "var(--text-label)",
+                  letterSpacing: "var(--tracking-label)",
+                  textTransform: "uppercase",
+                  color: "var(--color-project-accent)",
+                  marginBottom: "var(--space-2)",
+                }}
+              >
+                Step {i + 1} of {steps.length}
+              </p>
+              <h3
+                className="mb-3"
+                style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", color: "var(--color-text)" }}
+              >
+                {step.title}
+              </h3>
+              <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{step.synopsis}</p>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
+  if (detailBelow) {
+    return (
+      <div className="flex flex-col gap-6">
+        {stepsBlock}
+        {detailPanel}
+      </div>
+    );
+  }
+
   return (
     <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
-      <div className={`flex flex-col ${topAlignRows ? "justify-start" : "justify-center"} gap-5`}>
-        {renderRow(row1, 0)}
-        {row2.length > 0 && (
-          <div className="flex items-center gap-3 pl-1">
-            <span className="text-2xl font-black" style={{ color: "var(--color-project-accent)" }}>
-              ↓
-            </span>
-            <span
-              style={{
-                fontSize: "var(--text-label)",
-                letterSpacing: "var(--tracking-label)",
-                textTransform: "uppercase",
-                color: "var(--color-text-subtle)",
-              }}
-            >
-              {middleLabel}
-            </span>
-          </div>
-        )}
-        {renderRow(row2, rowLength)}
-      </div>
-
-      {/* All steps render in the same grid cell (stacked); the container's
-          height is driven by the tallest one, so switching the active step
-          never resizes the panel or shifts anything below it. Only the
-          active step is visible. */}
-      <div
-        className="grid lg:min-h-[200px] px-8 py-7 rounded-[var(--radius-default)] border"
-        style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
-      >
-        {steps.map((step, i) => (
-          <div
-            key={step.title}
-            className="flex flex-col justify-start"
-            style={{
-              gridArea: "1 / 1",
-              opacity: i === activeIndex ? 1 : 0,
-              visibility: i === activeIndex ? "visible" : "hidden",
-              transition: `opacity 0.22s ease${i === activeIndex ? "" : ", visibility 0s linear 0.22s"}`,
-              pointerEvents: i === activeIndex ? "auto" : "none",
-            }}
-            aria-hidden={i !== activeIndex}
-          >
-            {step.image && (
-              <div
-                className="relative w-full h-28 rounded-[var(--radius-button)] border mb-4 overflow-hidden"
-                style={{ borderColor: "var(--color-line)" }}
-              >
-                <Image src={step.image.src} alt={step.image.alt} fill sizes="320px" className="object-contain" />
-              </div>
-            )}
-            <p
-              style={{
-                fontSize: "var(--text-label)",
-                letterSpacing: "var(--tracking-label)",
-                textTransform: "uppercase",
-                color: "var(--color-project-accent)",
-                marginBottom: "var(--space-2)",
-              }}
-            >
-              Step {i + 1} of {steps.length}
-            </p>
-            <h3
-              className="mb-3"
-              style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", color: "var(--color-text)" }}
-            >
-              {step.title}
-            </h3>
-            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{step.synopsis}</p>
-          </div>
-        ))}
-      </div>
+      {stepsBlock}
+      {detailPanel}
     </div>
   );
 }
