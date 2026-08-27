@@ -1,241 +1,171 @@
-import Link from "next/link";
 import { caseStudies } from "@/lib/content/case-studies";
-import { experience } from "@/lib/content/experience";
 import Reveal from "@/components/Reveal";
-import Marquee from "@/components/Marquee";
-import Signature from "@/components/Signature";
-import RotatingWord from "@/components/RotatingWord";
-import CaseStudyCard from "@/components/CaseStudyCard";
+import Hero from "@/components/Hero";
+import Container from "@/components/layout/Container";
+import ProjectIndexItem, { ProjectIndexItemPrimitive } from "@/components/ui/ProjectIndexItem";
+import AdditionalExperience from "@/components/AdditionalExperience";
+import Action from "@/components/ui/Action";
 
-const featuredOrder = ["roomease", "forcen", "greenhouse", "pathpeer"];
-const featured = featuredOrder
-  .map((slug) => caseStudies.find((cs) => cs.slug === slug))
-  .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
-
-const manifestoWords = [
-  "systems people actually use.",
-  "products people trust.",
-  "flows that make sense.",
-  "tools that cut the busywork.",
+/**
+ * Featured set and ordering, decision of record 2026-08-19 (visual +
+ * narrative architecture pass, superseding the 2026-08-19 proof-map
+ * confirmation above it). Deliberate narrative progression, not a quality
+ * ranking:
+ *
+ *   1. ForceN — professional credibility first. Paid, most recent, systems/
+ *      ops ownership. Leads specifically so the homepage doesn't open on a
+ *      university capstone and risk implying that's the most significant
+ *      work here.
+ *   2. RoomEase — product methodology/evidence. The only fully measured
+ *      UX outcome in the set (50% -> 88% usability, controlled testing).
+ *   3. Greenhouse — visual/commercial range. The only shipped visual-craft
+ *      evidence; shows breadth beyond systems and research.
+ *   4. Chronicle — technical curiosity. The only independent AI/systems
+ *      build; closes the list on initiative rather than a resume line.
+ *
+ * PathPeer moved to AdditionalExperience — real, paid work, but the most
+ * conceptually adjacent to RoomEase (both are "behavioral evidence ->
+ * fixes") of anything cut, and the oldest (2022) of the five internships.
+ * Still fully present on /work and via AdditionalExperience's link.
+ *
+ * Each row's `primitive` and evidence prop follow
+ * docs/redesign/06-component-system.md via ProjectIndexItem's doc comment:
+ * composition matches what kind of evidence each project actually has,
+ * rather than every row getting the same treatment.
+ */
+const featuredOrder: {
+  slug: string;
+  primitive: ProjectIndexItemPrimitive;
+}[] = [
+  { slug: "forcen", primitive: "narrative" },
+  { slug: "roomease", primitive: "balanced" },
+  { slug: "greenhouse", primitive: "artifact" },
+  { slug: "chronicle", primitive: "narrative" },
 ];
+
+const featured = featuredOrder
+  .map(({ slug, primitive }) => {
+    const cs = caseStudies.find((c) => c.slug === slug);
+    return cs ? { cs, primitive } : undefined;
+  })
+  .filter((entry): entry is { cs: NonNullable<typeof entry>["cs"]; primitive: ProjectIndexItemPrimitive } =>
+    Boolean(entry)
+  );
+
+function yearOf(timeframe: string) {
+  const matches = timeframe.match(/\d{4}/g);
+  return matches ? matches[matches.length - 1] : timeframe;
+}
 
 export default function Home() {
   return (
     <div>
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(circle at 12% 8%, rgba(200,69,44,0.22) 0%, transparent 48%), radial-gradient(circle at 88% 15%, rgba(44,110,94,0.2) 0%, transparent 52%), linear-gradient(160deg, #fbe9dd 0%, #f3e3cc 55%, #e2ecd8 100%)",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-6 pt-14 pb-20 sm:pt-16 sm:pb-24">
-          <Reveal className="flex flex-wrap gap-2.5">
-            <Tag color="#c8452c" label="Product Management" />
-            <Tag color="#2c6e5e" label="Product Design" />
-            <Tag color="#3a6b93" label="Systems" />
-            <Tag color="#c2900a" label="UX / UI" />
-            <span className="text-sm font-bold rounded-full px-3.5 py-2 flex items-center gap-2 bg-neutral-900 text-white">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Open to full-time roles
-            </span>
-          </Reveal>
+      <Hero />
 
-          <div className="flex flex-col md:flex-row gap-12 md:gap-10 items-center mt-10">
-            <Reveal delay={120} className="flex-1">
-              <h1 className="font-serif text-5xl sm:text-6xl leading-[1.08] text-neutral-900 max-w-xl">
-                I design products for{" "}
-                <em className="italic text-rose-500">messy real-world workflows.</em>
-              </h1>
-              <p className="text-neutral-600 mt-6 max-w-md text-xl leading-relaxed">
-                Over the past four years I&apos;ve shipped a fintech onboarding flow, run
-                sprints for an 8-person team, owned a hardware operations system, and built a
-                capstone platform real student clubs used to book rooms.
-              </p>
-              <Signature />
-              <div className="flex gap-4 mt-7">
-                <Link
-                  href="/work"
-                  className="bg-neutral-900 text-white rounded-lg px-6 py-3.5 text-base font-medium hover:bg-neutral-700 transition-colors"
-                >
-                  View case studies
-                </Link>
-                <Link
-                  href="/resume"
-                  className="border-2 border-neutral-900 text-neutral-900 rounded-lg px-6 py-3.5 text-base font-medium hover:bg-neutral-900 hover:text-white transition-colors"
-                >
-                  See resume
-                </Link>
-              </div>
-            </Reveal>
-
-            <Reveal delay={250} className="shrink-0">
-              <PhotoStack />
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Marquee */}
-      <Reveal>
-        <Marquee />
-      </Reveal>
-
-      {/* Selected case studies */}
-      <section
-        style={{
-          background:
-            "linear-gradient(160deg, #17232e 0%, #362d1a 55%, #1c2a1c 100%)",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-6 py-16">
+      {/* Selected work: editorial index, not an equal-card grid.
+          06-component-system.md's "Project index item", selected variant,
+          composed via ProjectIndexItem's narrative/balanced/artifact
+          primitive system (see comment above and on the component itself). */}
+      <Container variant="standard" className="pt-[var(--space-10)] pb-[var(--space-7)]">
         <Reveal>
-          <h2 className="font-serif text-5xl sm:text-6xl text-neutral-50 mb-10">Selected case studies</h2>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--text-h1)",
+              lineHeight: "var(--leading-h1)",
+              color: "var(--color-text)",
+            }}
+          >
+            Selected work
+          </h2>
         </Reveal>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {featured.map((cs, i) => (
-            <CaseStudyCard key={cs.slug} cs={cs} delay={i * 90} />
-          ))}
-        </div>
-        </div>
-      </section>
+        <div className="mt-8 flex flex-col">
+          {featured.map(({ cs, primitive }, i) => {
+            // RoomEase (balanced): one headline stat carries the persuasion.
+            const stat = cs.slug === "roomease" ? cs.metrics[0] : undefined;
+            // ForceN and Chronicle (narrative): quiet supporting facts —
+            // ownership/coordination scale for ForceN, build depth for
+            // Chronicle. Greenhouse (artifact) gets neither; its shipped
+            // creative is the evidence.
+            const facts =
+              cs.slug === "forcen"
+                ? cs.metrics
+                : cs.slug === "chronicle"
+                  ? cs.metrics.filter((m) => m.label.includes("pipeline") || m.label.includes("tests"))
+                  : undefined;
 
-      {/* Work experience */}
-      <section
-        style={{
-          background:
-            "linear-gradient(160deg, #d7e3ee 0%, #ede2c4 55%, #d9ecc9 100%)",
-        }}
-      >
-        <div className="mx-auto max-w-6xl px-6 py-20 flex flex-col sm:flex-row gap-20">
-          <Reveal className="sm:w-64 shrink-0">
-            <h2 className="font-serif text-5xl sm:text-6xl text-neutral-900 leading-[1.05]">
-              Work
-              <br />
-              experience
-            </h2>
-          </Reveal>
-          <div className="flex-1 border-l-2 border-dashed border-neutral-500 pl-12">
-            {experience.map((job, i) => (
-              <Reveal key={`${job.company}-${job.timeframe}`} delay={i * 80} className="relative pb-14 last:pb-0">
-                <span className="absolute -left-[47px] top-1 w-5 h-5 rounded-full bg-neutral-900 border-4 border-[#d7e3ee] flex items-center justify-center" />
-                <p className="font-serif text-3xl text-neutral-900">{job.company}</p>
-                <p className="text-base text-neutral-600 mt-1.5 font-medium">
-                  {job.role} · {job.location} · {job.timeframe}
-                </p>
-                <p className="text-lg text-neutral-700 mt-3 max-w-lg leading-relaxed">
-                  {job.synopsis}
-                </p>
-                {job.caseStudySlug && (
-                  <Link
-                    href={`/work/${job.caseStudySlug}`}
-                    className="text-sm font-bold text-rose-600 hover:text-rose-700 mt-3 inline-block"
-                  >
-                    Read more →
-                  </Link>
-                )}
-              </Reveal>
-            ))}
-          </div>
+            return (
+              <ProjectIndexItem
+                key={cs.slug}
+                number={String(i + 1).padStart(2, "0")}
+                title={cs.title}
+                description={cs.oneLiner}
+                meta={`${cs.role} · ${yearOf(cs.timeframe)}`}
+                href={`/work/${cs.slug}`}
+                variant="selected"
+                image={cs.heroMedia}
+                primitive={primitive}
+                stat={stat}
+                facts={facts}
+              />
+            );
+          })}
         </div>
-      </section>
+      </Container>
 
-      {/* Craft manifesto / stat strip */}
+      {/* Additional experience: quiet, compact, deliberately not a second
+          Selected Work. See AdditionalExperience.tsx's doc comment. */}
+      <Container variant="standard" className="pt-[var(--space-7)] pb-[var(--space-8)]">
+        <Reveal>
+          <p
+            style={{
+              fontSize: "var(--text-label)",
+              letterSpacing: "var(--tracking-label)",
+              textTransform: "uppercase",
+              color: "var(--color-text-subtle)",
+            }}
+          >
+            Additional experience
+          </p>
+        </Reveal>
+        <div className="mt-6">
+          <AdditionalExperience />
+        </div>
+      </Container>
+
+      {/* CTA block — retokenized (was raw hex + a raw <a>), Phase 8 Pass 1.
+          Shares the site's dark field instead of a light peach island, and
+          reuses the shared Action component instead of a one-off <a>. Now
+          sits directly after the portfolio's proof (no stats detour
+          between them, decision of record 2026-08-19). */}
       <Reveal>
         <section
-          className="py-16"
-          style={{
-            background:
-              "linear-gradient(160deg, #17232e 0%, #362d1a 55%, #1c2a1c 100%)",
-          }}
+          className="pt-[var(--space-7)] pb-[var(--space-9)] text-center"
+          style={{ background: "var(--color-surface-2)" }}
         >
-          <div className="mx-auto max-w-6xl px-6">
-            <p className="text-xs uppercase tracking-widest text-neutral-500">
-              What I build
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl text-neutral-50 mt-3 mb-10">
-              I build <RotatingWord words={manifestoWords} />
-            </h2>
-            <div className="flex flex-wrap gap-x-10 gap-y-5">
-              <Stat label="Internships" value="5" />
-              <Stat label="Case Studies" value={String(caseStudies.length)} />
-              <Stat label="Building Since" value="2022" />
-            </div>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* CTA block */}
-      <Reveal>
-        <section
-          className="py-20 text-center"
-          style={{ background: "linear-gradient(135deg,#f0c9b8,#f6ded0)" }}
-        >
-          <h2 className="font-serif text-4xl text-neutral-900">Let&apos;s connect.</h2>
-          <p className="text-base text-neutral-700 mt-3">
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "var(--text-h1)",
+              lineHeight: "var(--leading-h1)",
+              color: "var(--color-text)",
+            }}
+          >
+            Let&apos;s connect.
+          </h2>
+          <p className="mt-3" style={{ fontSize: "var(--text-body-l)", color: "var(--color-text-muted)" }}>
             Open to full-time product, TPM, and product design roles, reach out.
           </p>
-          <a
+          <Action
             href="https://linkedin.com/in/kamal-ahsan"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white rounded-lg px-7 py-4 text-base font-medium mt-7 hover:bg-neutral-700 transition-colors"
+            className="mt-7"
           >
             Connect on LinkedIn ↗
-          </a>
+          </Action>
         </section>
       </Reveal>
-    </div>
-  );
-}
-
-function Tag({ color, label }: { color: string; label: string }) {
-  return (
-    <span className="text-sm font-bold border-2 border-neutral-900 rounded-full px-3.5 py-2 flex items-center gap-2 bg-white/70 text-neutral-900">
-      <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-      {label}
-    </span>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="pr-10 border-r border-neutral-700 last:border-r-0 last:pr-0">
-      <div className="w-6 h-6 rounded-full border-2 border-amber-400 relative mb-2.5">
-        <span className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full bg-amber-400 -translate-x-1/2 -translate-y-1/2" />
-      </div>
-      <p className="text-xs uppercase tracking-wide text-neutral-500">{label}</p>
-      <p className="font-serif text-3xl text-neutral-50 mt-1">{value}</p>
-    </div>
-  );
-}
-
-function PhotoStack() {
-  return (
-    <div className="relative w-[250px] h-[295px] sm:w-[360px] sm:h-[420px] lg:w-[400px] lg:h-[465px]">
-      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-8 sm:top-12 -left-2.5 sm:-left-3.5 rotate-[-9deg] z-10">
-        <div
-          className="w-full h-full rounded-lg"
-          style={{ background: "linear-gradient(160deg,#d8e4dc,#b7c8bd)" }}
-        />
-      </div>
-      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-3.5 sm:top-5 left-4 sm:left-6 rotate-[6deg] z-20">
-        <div
-          className="w-full h-full rounded-lg"
-          style={{ background: "linear-gradient(160deg,#e3dccb,#cdbfa1)" }}
-        />
-      </div>
-      <div className="absolute w-[218px] h-[258px] sm:w-[312px] sm:h-[365px] lg:w-[347px] lg:h-[405px] bg-neutral-900 rounded-xl p-2.5 shadow-xl top-0 left-1.5 sm:left-2.5 rotate-[-2deg] z-30">
-        <div
-          className="w-full h-full rounded-lg relative"
-          style={{ background: "linear-gradient(160deg,#e8e3d6,#c9d6cd 55%,#a9b8ae)" }}
-        >
-          <span className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-[#fdfaf5] text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded text-neutral-900">
-            KAMAL_01.JPG
-          </span>
-        </div>
-      </div>
     </div>
   );
 }

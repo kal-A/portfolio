@@ -43,6 +43,8 @@ export interface CaseStudy {
   contribution?: string;
   links?: { label: string; href: string }[];
   images?: { src: string; alt: string; channel?: string; channelSlug?: string; caption?: string }[];
+  /** One representative image for the homepage/work-index row media slot. See docs/redesign/06-component-system.md's Project index item ("purposeful thumbnail or media"). `position` is a deliberate CSS object-position for this specific asset's aspect-[4/3] crop, not left to center by default. */
+  heroMedia?: { src: string; alt: string; position?: string };
   mockups?: "hera";
   /** Confidentiality note or artifact-recreation disclaimer, shown as an italic aside. */
   note?: string;
@@ -57,6 +59,8 @@ export interface CaseStudy {
   figures?: { id: string; caption: string; evidence: "reconstructed" | "verified" }[];
   /** 2-4 specific lessons, per PORTFOLIO_CASE_STUDY_SYSTEM.md §9.14. Distinct from the lighter whatIdImprove field. */
   reflection?: string[];
+  /** Short labeled fact blocks for the "at a glance" section — 07-case-study-system.md's Executive summary / 06-component-system.md's role-and-scope pattern. 2-5 items. */
+  atAGlance?: { label: string; value: string }[];
 }
 
 const caseStudiesData: CaseStudy[] = [
@@ -71,6 +75,7 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Design & Marketing Intern",
     location: "Remote (New York, NY)",
     timeframe: "Jan 2023 – Apr 2023",
+    heroMedia: { src: "/case-studies/hera-fertility/source-payment-homepage-cards.png", alt: "Payment-plan cards from Hera Fertility's financing homepage" },
     oneLiner: "Fertility treatment financing is confusing and high-stakes, and Hera had no existing product to design from.",
     summary:
       "Designed the financing application's prequalification flow, payment-plan comparison, and clinic-discovery experience for a 0-to-1 fertility platform, and shipped the account-segmentation flow that routes new users into them, using Hotjar and Google Analytics to decide what to build next.",
@@ -174,6 +179,7 @@ const caseStudiesData: CaseStudy[] = [
     company: "RoomEase · University of Waterloo Capstone (MSE 401/402)",
     role: "Team Member - User Prototype, Testing & Presentation",
     timeframe: "Spring 2025 – Winter 2026",
+    heroMedia: { src: "/case-studies/roomease/video/poster/booking-form.jpg", alt: "The RoomEase booking flow: a real room, DWE 1501, selected and ready to book", position: "top" },
     oneLiner: "University clubs and departments were booking rooms across 34+ different websites, each with its own process, with no shared way to check what a room actually offered.",
     summary:
       "A 5-person Management Engineering capstone team turned a fragmented, mostly manual UW room-booking process into a working booking-and-recommendation prototype, tested through a controlled comparison against the current process with students and club executives.",
@@ -226,13 +232,24 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Designer Intern",
     location: "Mississauga, ON",
     timeframe: "Jan 2025 – Apr 2025",
+    heroMedia: { src: "/case-studies/greenhouse/greenhouse-hero-collage.jpg", alt: "Greenhouse Juices retail, e-commerce, and email creative", position: "left" },
     oneLiner: "The same bottle of Fiery Ginger had to work as an Amazon listing, a Klaviyo email, and a printed trade sell sheet - three formats, three audiences, one brand.",
     summary:
       "Designed and adapted retail, e-commerce, email, and internal brand creative across Amazon, trade/retail collateral, and Klaviyo campaigns, while helping keep the UID tracking and inventory routing behind them organized enough for a lean team to move in sync.",
     tags: ["Retail & E-commerce Design", "Product Tracking", "Inventory Coordination"],
     toolTags: ["Adobe Creative Suite", "Canva", "Microsoft Planner", "OneDrive"],
     artifacts: ["Product Design", "Retail & E-commerce Assets", "UID Tracking Sheet", "Inventory Routing", "Sprint Board"],
-    metrics: [],
+    metrics: [
+      { value: "20%", label: "increase in campaign engagement" },
+      { value: "12%", label: "lift in conversion" },
+      { value: "25%", label: "gain in delivery consistency" },
+      { value: "30%", label: "improvement in shipment accuracy" },
+    ],
+    atAGlance: [
+      { label: "Role", value: "Design and marketing support for a lean internal team." },
+      { label: "Scope", value: "Retail assets, e-commerce, product tracking, inventory coordination." },
+      { label: "Channels", value: "Amazon, retail & marketing collateral, email, and internal brand design." },
+    ],
     problem:
       "An Amazon listing earns attention in a thumbnail grid; a Klaviyo email earns it in an inbox; a printed trade sell sheet earns it in the ten seconds a retail buyer spends scanning a table. Greenhouse needed the same handful of product lines - Fiery Ginger, Green Ritual, Super Smoothies - to hold together as one recognizable brand across all of it, with a lean 8-person team and no shared system feeding those channels. Without one, the same bottle could look like a different product from one touchpoint to the next, and no one had a clear view of which product records and inventory were actually current behind the scenes.",
     process: [
@@ -241,9 +258,10 @@ const caseStudiesData: CaseStudy[] = [
       "Built out UID and inventory tracking in OneDrive connecting Amazon, retail, and e-commerce, so product status and stock were something the team could check in one place instead of chasing down channel by channel.",
     ],
     outcome: [
-      "Amazon, email, and retail creative stayed visually consistent with the Greenhouse brand while still meeting each channel's own format and constraints.",
-      "The 8-person team worked off a shared sprint cadence instead of ad hoc requests, giving campaign output a predictable rhythm for the first time.",
-      "UID and inventory tracking gave the team one shared reference for product status and stock instead of re-checking with whoever last touched a given SKU.",
+      "Creative for 12+ campaigns across Amazon, email, and retail collateral stayed on-brand without slowing down for each channel's different format - each one adapted on its own terms instead of being resized from a single master file after the fact.",
+      "A shared sprint cadence replaced ad hoc requests, letting the team plan a higher volume of campaign work in advance instead of reacting to it channel by channel.",
+      "Centralizing UID and inventory tracking in OneDrive cut the time spent chasing product status by hand, surfacing gaps before they became a shipping problem instead of after.",
+      "Clearer ownership at each handoff reduced the rework that comes from two people touching the same asset or SKU without knowing it.",
     ],
   },
   {
@@ -256,6 +274,7 @@ const caseStudiesData: CaseStudy[] = [
     company: "Pill Pal · HCI Course Project (MSE 343)",
     role: "Team Member, Redesign Rationale, Prototyping & Evaluation",
     timeframe: "Course Project",
+    heroMedia: { src: "/case-studies/pill-pal/figma-horizontal-prototype.png", alt: "Pill Pal Apple Watch medication-tracker prototype" },
     oneLiner: "Most medication-tracking apps aren't designed for the vision, dexterity, and stakes constraints older adults actually face.",
     summary:
       "An Apple Watch medication-tracking app for older adults, designed through cognitive walkthroughs and medium-fidelity prototyping, then stress-tested with a 4-evaluator heuristic evaluation that surfaced 20 ranked usability issues.",
@@ -303,6 +322,7 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Engineer Intern",
     location: "Toronto, ON",
     timeframe: "Sep 2025 – Dec 2025",
+    heroMedia: { src: "/case-studies/forceN/homepage-hero.png", alt: "ForceN's Dev Systems product line" },
     oneLiner: "ForceN wanted standard Dev Systems built ahead of demand and shipped from finished inventory instead of starting from zero on every order.",
     summary:
       "Developed the end-to-end operating roadmap connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment, so ForceN's standard Dev Systems could become an inventory-backed product line.",
@@ -347,6 +367,7 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Designer & Developer Intern",
     location: "Remote (Waterloo, ON)",
     timeframe: "May 2022 – Aug 2022",
+    heroMedia: { src: "/case-studies/pathpeer/pathpeer-hero-home.png", alt: "PathPeer's mentor-discovery homepage" },
     oneLiner: "Built a career-mentorship discovery platform as one of two developers/designers, then used analytics, session recordings, and no-code prototyping to decide what to fix and build next.",
     summary:
       "Designed and built PathPeer's mentorship-discovery platform as one of two developers/designers on a small team, covering mentor search, discovery, and shortlisting end to end on the Bubble.io no-code platform. Used Google Analytics and Hotjar recordings to analyze search and shortlisting behavior, then turned that evidence into a mentor tagging and discovery taxonomy, a homepage discovery flow for newly added mentors matched to a user's career path, and a company-of-interest discovery path. Prototyped and validated the smaller changes directly in Bubble.io before requesting further development time, and worked as the platform's de facto product manager on feature planning and prioritization.",
@@ -441,6 +462,7 @@ const caseStudiesData: CaseStudy[] = [
     role: "Product Operations & UX Research Intern",
     location: "Mississauga, ON",
     timeframe: "Sep 2023 – Dec 2023",
+    heroMedia: { src: "/case-studies/informatica/informatica-logo.png", alt: "Informatica" },
     oneLiner: "Informatica needed a full set of cybersecurity educational web experiences built by a six-person co-op team, with no existing structure for what teaching the material well would actually require.",
     summary:
       "Helped turn an open-ended cybersecurity education project, covering personal, school, and workplace security plus safe networking practices, into research, page structure, and build assignments a six-person co-op team could execute, then applied the same research-to-decision and planning approach to Informatica's other web and content requests.",
@@ -528,6 +550,7 @@ const caseStudiesData: CaseStudy[] = [
     company: "Chronicle · Independent Product",
     role: "Solo builder - product, architecture, and AI systems",
     timeframe: "2026 - ongoing",
+    heroMedia: { src: "/case-studies/chronicle/chronicle-landing.jpg", alt: "Chronicle's actual homepage: \"Where do you want to begin?\", a map-first entry point over the North Atlantic with suggested starting-point questions", position: "top" },
     oneLiner:
       "Historical claims need evidence, provenance, and uncertainty attached to them, not a confident chatbot answer or a static timeline.",
     summary:
@@ -637,4 +660,24 @@ export const caseStudies: CaseStudy[] = displayOrder
 
 export function getCaseStudy(slug: string) {
   return caseStudies.find((c) => c.slug === slug);
+}
+
+/**
+ * Human labels for /work's archive rows, translated from the existing
+ * `caseStudyType` field rather than a new tag system (decision of record
+ * 2026-08-19). The enum is domain-shaped, not career-shaped, on purpose —
+ * these labels are a quiet scanning aid, not a classification the visitor
+ * is meant to read as "which department Kamal belongs to."
+ */
+const caseStudyTypeLabels: Record<CaseStudy["caseStudyType"], string> = {
+  "product-ux": "Product / UX",
+  "systems-operations": "Systems / Operations",
+  "visual-growth": "Visual / Brand",
+  "research-strategy": "Research / Evaluation",
+  technical: "Technical Product",
+  compact: "Product / UX",
+};
+
+export function evidenceLabel(cs: CaseStudy): string {
+  return caseStudyTypeLabels[cs.caseStudyType];
 }

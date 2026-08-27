@@ -1,3 +1,12 @@
+> **Supplemented, 2026-08-18.** The five projects and order below remain a
+> reasonable starting point, but homepage-featured status is now explicitly
+> evidence-gated per `09-storytelling-system.md`'s "Portfolio proof map" —
+> assign each candidate project a primary/secondary competency, one
+> memorable decision, one credible outcome, and one limitation, and choose
+> the featured set so it complements rather than repeats itself, rather than
+> assuming this list is fixed. PathPeer and Informatica are no longer
+> excluded by tier — see [SUPERSEDED.md](SUPERSEDED.md).
+
 # Selected Case Studies
 
 The selected case studies should balance product, design, systems, and

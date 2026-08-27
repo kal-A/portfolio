@@ -1,3 +1,9 @@
+> **Partially superseded, 2026-08-18.** Page structure and narrative spine
+> remain authoritative. The "Visual direction" section (sky/cauliflower
+> blues, warm ivory/beige) is superseded by `02-design-language.md`'s token
+> system — Hera's completed reconstruction work is preserved and visually
+> migrated, not rebuilt. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Hera Fertility - Portfolio Implementation Instructions
 
 ## Positioning

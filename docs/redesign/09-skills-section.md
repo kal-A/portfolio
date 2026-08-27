@@ -1,3 +1,7 @@
+> **Historical/reference only, 2026-08-18.** Never implemented; no conflict
+> with the design-freeze foundation but no current structural home in
+> `03-layout-system.md`'s homepage either. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Skills / Ways I Work Section
 
 Replace the generic skills keyword grid with a more thoughtful, categorized

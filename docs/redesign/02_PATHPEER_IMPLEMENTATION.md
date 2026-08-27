@@ -1,3 +1,9 @@
+> **Partially superseded, 2026-08-18.** Page structure and narrative spine
+> remain authoritative. The "Visual direction" section (orange/blue/white,
+> orange-to-blue gradients) is superseded by `02-design-language.md`'s token
+> system — PathPeer's completed content work is preserved and visually
+> migrated, not rebuilt. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # PathPeer - Portfolio Implementation Instructions
 
 ## Positioning

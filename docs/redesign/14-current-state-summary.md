@@ -1,3 +1,18 @@
+> **Partially superseded, 2026-08-18.** The "Design system (current, locked
+> in)" section below describes the pre-migration palette, box-language, and
+> gradient system and is now historical only under the design-freeze
+> foundation (`00-portfolio-vision.md` through `05-motion-system.md`). The
+> "Site structure" section below is also stale in one specific way,
+> corrected here rather than in the body: **`/experience` no longer exists
+> as a separate route.** It was merged into `/work` at some point before
+> the 2026-08-18 Phase 1 audit — `/work` now renders `components/WorkTabs.tsx`,
+> a client-side "Work experience / Projects" tab toggle, and `/work/[slug]`
+> covers 8 case studies today (roomease, forcen, greenhouse, hera-fertility,
+> pill-pal, pathpeer, informatica, chronicle), not the 5 listed below. See
+> `docs/redesign/MIGRATION-INVENTORY.md` for the verified 2026-08-18 route
+> inventory and [SUPERSEDED.md](SUPERSEDED.md) for the rest of this
+> document's status.
+
 # Current State Summary — Read This First When Resuming
 
 This is the single up-to-date summary of the portfolio project. If context

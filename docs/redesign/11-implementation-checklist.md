@@ -1,3 +1,12 @@
+> **Partially superseded, 2026-08-18.** Steps 8–9 (old homepage structure,
+> old hero copy) are superseded by `03-layout-system.md` / `04-hero-system.md`.
+> The project-tier priority in step 13 ("keep PathPeer and Informatica in
+> supporting/archive treatment") is retired by decision of record: both keep
+> full case-study pages, and homepage-featured status is evidence-gated
+> rather than tier-gated. The general step pattern and final-quality
+> question format remain a useful reference. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Implementation Steps and Final Quality Check
 
 ## Implementation steps

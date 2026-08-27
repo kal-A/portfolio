@@ -1,3 +1,10 @@
+> **Partially superseded, 2026-08-18.** Structural fixes (numbering,
+> alignment, hover hierarchy, table hover, diagram legibility, media sizing)
+> remain authoritative. Per-project color instructions (Greenhouse's pale
+> beige/off-white/green, PathPeer's orange-to-blue gradients, Informatica's
+> light-blue/red backgrounds) are superseded by `02-design-language.md`'s
+> token system. See [docs/redesign/SUPERSEDED.md](docs/redesign/SUPERSEDED.md).
+
 # Portfolio Work Experience + Global Polish Pass
 
 ## Scope

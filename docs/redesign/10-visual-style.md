@@ -1,3 +1,7 @@
+> **Historical/reference only, 2026-08-18.** Superseded by the more precise
+> `01-design-philosophy.md` and `02-design-language.md`. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Visual Style Direction
 
 Use a visual style that feels:

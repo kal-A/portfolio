@@ -1,3 +1,10 @@
+> **Partially superseded, 2026-08-18.** Core rules (don't invent, don't show
+> placeholders, don't present estimates as hard results) remain
+> authoritative. The classification list below is superseded for metric
+> labeling by `09-storytelling-system.md`'s "Metrics and evidence language"
+> taxonomy (Measured / Directional / Estimated / Target / Qualitative) — use
+> that set going forward. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Metrics and Claims Audit
 
 Audit every metric and claim before displaying it.

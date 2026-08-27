@@ -1,3 +1,8 @@
+> **Historical/reference only, 2026-08-18.** Moot: decorative section
+> gradients are excluded by `01-design-philosophy.md`'s anti-pattern list
+> and `02-design-language.md`'s gradient rule (light-falloff/data only). See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Dark section gradient options
 
 Reference for the background used on the "What I build" and "Selected case studies"

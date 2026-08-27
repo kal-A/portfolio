@@ -1,3 +1,8 @@
+> **Partially superseded, 2026-08-18.** Page structure and narrative spine
+> remain authoritative. The "Visual direction" section (sky blue/red
+> palette) is superseded by `02-design-language.md`'s token system. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Informatica - Portfolio Implementation Instructions
 
 ## Positioning

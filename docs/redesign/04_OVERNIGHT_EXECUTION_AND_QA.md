@@ -1,3 +1,8 @@
+> **Partially superseded, 2026-08-18.** Execution order and content/truth QA
+> remain authoritative. The "Design QA" section's shadow/border/gradient
+> language is superseded by the design-freeze foundation's QA criteria. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Overnight Execution Order and QA
 
 Use this file to complete the three experiences without waiting for additional input.

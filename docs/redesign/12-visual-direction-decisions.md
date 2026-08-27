@@ -1,3 +1,8 @@
+> **Historical/reference only, 2026-08-18.** This file's own header already
+> marks it superseded by `13-final-hero-homepage-spec.md`. That file is now
+> itself historical under the design-freeze foundation, so this file is
+> doubly so. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Visual Direction — Decisions So Far (Live Log)
 
 This tracks decisions made during mockup review, before any of it is built

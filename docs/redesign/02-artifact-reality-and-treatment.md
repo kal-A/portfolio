@@ -1,3 +1,11 @@
+> **Partially superseded, 2026-08-18.** The artifact-strength ranking and
+> truth/evidence rules remain authoritative. The PathPeer/Informatica
+> archive-only tier instruction is retired (decision of record, 2026-08-18):
+> both keep full case-study pages; homepage-featured status is instead
+> determined by evidence strength, role relevance, outcome credibility, and
+> complementarity with the rest of the featured set. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Artifact Reality and Project Treatment
 
 Very important: different projects have different levels of physical/visual

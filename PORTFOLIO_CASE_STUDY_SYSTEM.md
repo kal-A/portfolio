@@ -1,6 +1,15 @@
 # Portfolio Case Study System
 ## Source-of-truth instructions for Claude Code
 
+> **Partially superseded, 2026-08-18.** §1–24 and §26 (content architecture,
+> evidence rules, case-study types/tiers, diagram data model) remain
+> authoritative. §25.3 (background-bloom continuity) and §25.4 (comic-box
+> shadow language) are superseded by `docs/redesign/02-design-language.md`.
+> §26.1's diagram-architecture question is resolved: retain the current
+> hybrid (semantic HTML/CSS, hand-built SVG, ELK only where automatic layout
+> materially helps) with no React Flow or additional graph-rendering
+> framework. See [docs/redesign/SUPERSEDED.md](docs/redesign/SUPERSEDED.md).
+
 > **Provenance note:** This file consolidates two drafts of the same spec pasted in the same message on 2026-07-28 — they were byte-identical, so no reconciliation was needed. It supersedes the older, lighter-weight `docs/redesign/07-case-study-specifics.md` for anything related to writing/structuring individual case-study detail pages (that file's per-project framing is consistent with this one, just far less detailed — no conflicts found). See the "Amendments" section at the end for directives added on top of the original draft.
 
 This document defines how every experience or project **details page** in Kamal Ahsan's portfolio should be researched, written, illustrated, structured, and implemented.

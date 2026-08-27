@@ -1,3 +1,9 @@
+> **Historical/reference only, 2026-08-18.** This document's hero copy and
+> homepage section structure are fully superseded by
+> [04-hero-system.md](04-hero-system.md) and
+> [03-layout-system.md](03-layout-system.md)'s homepage section. See
+> [SUPERSEDED.md](SUPERSEDED.md). Kept below for historical record only.
+
 # Homepage Structure and Hero
 
 ## Recommended homepage structure
