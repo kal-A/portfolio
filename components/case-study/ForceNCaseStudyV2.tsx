@@ -33,13 +33,15 @@ import Reveal from "@/components/Reveal";
  */
 const HERO_TITLE = "An inventory-backed production system for ForceN's Dev Systems";
 
-/** Page-local "what I'd improve next" — a genuine forward-looking step, rather
- *  than the shared data file's `whatIdImprove`, which reads as a confidentiality
- *  disclaimer (already covered by `cs.note`). Ties back to the reflection card
- *  "automation earns its place after the process is proven": the procurement and
- *  replenishment triggers are the proven manual steps now safe to automate. */
+/** Page-local "what I'd improve next" — a genuine forward-looking enhancement,
+ *  rather than the shared data file's `whatIdImprove`, which reads as a
+ *  confidentiality disclaimer (already covered by `cs.note`). Framed as the next
+ *  step to add, not something done differently: AI workflows firing the
+ *  order-triggered actions the moment an order lands, with manual edits kept for
+ *  the exceptions. Ties back to "automation earns its place after the process is
+ *  proven" — these are now the proven steps ready to automate. */
 const WHAT_ID_IMPROVE =
-  "The procurement and replenishment triggers in the workflow are still kicked off by hand. The next thing I'd build is an AI-driven automation layer — using a workflow tool like n8n — so that when the minimum-stock check flags a component below threshold, it creates and routes the parts-procurement requirement on its own instead of waiting for someone to catch it. The roadmap already isolates those triggers as their own steps, which is exactly what makes them safe to hand to automation now that the manual process is proven.";
+  "The natural next step is an AI-workflow layer — using something like n8n — that reacts the moment an order is placed: automatically firing the order and build triggers, allocating the unit, and posting the finished-inventory deductions instead of routing each of those steps by hand. Manual edits stay available wherever a human call is needed, so it speeds up the common path without giving up control on the exceptions.";
 const HERO_LEAD =
   "ForceN wanted its standard Dev Systems to stop being built from zero on every order and become a real product line: produced ahead of demand, held in finished inventory, and ready to ship the moment an order arrived. As the product engineering intern I owned the end-to-end operating roadmap — connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment into one repeatable model — and coordinated 14+ hardware units across 6+ stakeholders in engineering, operations, and inventory. Internal trackers and company-specific materials are confidential, so this page reconstructs the same workflow logic in a public-safe form.";
 
