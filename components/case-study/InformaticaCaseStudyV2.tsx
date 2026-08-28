@@ -48,7 +48,7 @@ const SNAPSHOT_ITEMS = [
   { label: "Role", value: "Product Operations and UX Research intern who helped structure and coordinate a six-person build." },
   { label: "Scope", value: "Research-to-decision flow, curriculum structure, implementation-path choices, and cross-team coordination." },
   { label: "Team", value: "Six co-op students total (five alongside me), working across research, design, and development on the cybersecurity education project." },
-  { label: "Tools", value: "Trello, Microsoft Planner, Microsoft Loop, Java and classic web development, no-code tools." },
+  { label: "Tools", value: "Trello, Microsoft Planner, Microsoft Loop, JavaScript and classic web development, no-code tools." },
   { label: "Core skills", value: "Product Operations, UX Research, Educational Content Strategy." },
 ];
 
@@ -143,7 +143,7 @@ const IMPLEMENTATION_PATHS = [
     tradeoff: "More setup time than no-code, but far more flexible",
   },
   {
-    path: "Java-based frameworks",
+    path: "JavaScript-based frameworks",
     example: "More complex interactive testing and activity experiences",
     why: "Handled logic and state that no-code and static pages couldn't support",
     tradeoff: "Needed a developer to build and maintain",
@@ -507,14 +507,14 @@ export default function InformaticaCaseStudyV2() {
             <p className="mt-8" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
               General informational and knowledge pages, the bulk of the curriculum, went through no-code tools, so
               content could be produced and edited quickly. Specialized testing, activity, and interactive pages needed
-              logic no-code couldn&apos;t reliably support, so those went through classic web development or Java-based
+              logic no-code couldn&apos;t reliably support, so those went through classic web development or JavaScript-based
               frameworks instead, matching the extra setup time to the pages that actually needed the flexibility.
             </p>
 
             <DecisionBlock
               title="Match implementation method to page type instead of picking one build approach for the whole project"
               situation="General knowledge pages needed to be quick to produce and easy to edit, but testing, activity, and interactive pages needed logic such as scoring, state, or custom interaction that no-code tools couldn't reliably support."
-              result="No-code tools covered the general informational pages, while classic web development and Java-based frameworks covered the testing, activity, and interactive pages that actually needed the flexibility."
+              result="No-code tools covered the general informational pages, while classic web development and JavaScript-based frameworks covered the testing, activity, and interactive pages that actually needed the flexibility."
             />
           </Section>
         </Container>
