@@ -20,7 +20,7 @@ import Reveal from "@/components/Reveal";
  *
  * Content is preserved from the shipped light page and the shared data file
  * verbatim (strategy, the three production/replenishment decisions, the
- * documentation hub, additional responsibilities, results, and reflection) —
+ * documentation hub, additional responsibilities, results, and reflection);
  * nothing is invented or re-measured here. ForceN is a systems/operations case
  * study with no walkthrough videos, so the page carries no VideoRow; its
  * centrepiece is the reconstructed production-and-fulfilment workflow diagram,
@@ -28,12 +28,12 @@ import Reveal from "@/components/Reveal";
  * (ForceNWorkflowDiagramV2).
  *
  * Per playbook §10 the bespoke SVG workflow diagram keeps its own grammar
- * (shape carries meaning) — only the shell and layout around it, and the
+ * (shape carries meaning); only the shell and layout around it, and the
  * diagram's own fills/strokes, move onto the token system this pass.
  */
 const HERO_TITLE = "An inventory-backed production system for ForceN's Dev Systems";
 
-/** Page-local "what I'd improve next" — a genuine forward-looking enhancement,
+/** Page-local "what I'd improve next": a genuine forward-looking enhancement,
  *  rather than the shared data file's `whatIdImprove`, which reads as a
  *  confidentiality disclaimer (already covered by `cs.note`). Framed as the next
  *  step to add, not something done differently: AI workflows firing the
@@ -42,9 +42,9 @@ const HERO_TITLE = "An inventory-backed production system for ForceN's Dev Syste
  *  named low-code tool, which dates faster and reads narrower. Ties back to
  *  "automation earns its place after the process is proven". */
 const WHAT_ID_IMPROVE =
-  "The natural next step is an agentic AI-workflow layer that reacts the moment an order is placed — automatically firing the order and build triggers, allocating the unit, and posting the finished-inventory deductions instead of routing each of those steps by hand. It keeps a human in the loop for the exceptions, so the automation carries the common path without giving up control where a person's judgment still matters.";
+  "The natural next step is an agentic AI-workflow layer that reacts the moment an order is placed: automatically firing the order and build triggers, allocating the unit, and posting the finished-inventory deductions instead of routing each of those steps by hand. It keeps a human in the loop for the exceptions, so the automation carries the common path without giving up control where a person's judgment still matters.";
 const HERO_LEAD =
-  "ForceN wanted its standard Dev Systems to stop being built from zero on every order and become a real product line: produced ahead of demand, held in finished inventory, and ready to ship the moment an order arrived. As the product engineering intern I owned the end-to-end operating roadmap — connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment into one repeatable model — and coordinated 14+ hardware units across 6+ stakeholders in engineering, operations, and inventory. Internal trackers and company-specific materials are confidential, so this page reconstructs the same workflow logic in a public-safe form.";
+  "ForceN wanted its standard Dev Systems to stop being built from zero on every order and become a real product line: produced ahead of demand, held in finished inventory, and ready to ship the moment an order arrived. As the product engineering intern I owned the end-to-end operating roadmap (connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment into one repeatable model) and coordinated 14+ hardware units across 6+ stakeholders in engineering, operations, and inventory. Internal trackers and company-specific materials are confidential, so this page reconstructs the same workflow logic in a public-safe form.";
 
 const TOC_ITEMS = [
   { href: "#s-glance", label: "At a glance" },
@@ -58,7 +58,7 @@ const TOC_ITEMS = [
 ];
 
 const SNAPSHOT_ITEMS = [
-  { label: "Role", value: "Product engineering intern — owned the end-to-end Dev System production and fulfilment roadmap." },
+  { label: "Role", value: "Product engineering intern who owned the end-to-end Dev System production and fulfilment roadmap." },
   { label: "Scope", value: "Parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment." },
   { label: "Coordination", value: "14+ hardware units, 6+ stakeholders across engineering, operations, and inventory." },
   { label: "Tools", value: "Arena (part & config records), Confluence (process docs), Onshape (assembly context), Python (calibration scripts)." },
@@ -76,7 +76,7 @@ const RESULT_STATS = [
 
 const CONSTRAINTS = [
   "Internal trackers, calibration materials, scripts, and company-specific records are confidential. This write-up reconstructs the same process logic in a public-safe form.",
-  "The production system had to connect demand, component availability, assembly, quality, and replenishment — not just one stage in isolation.",
+  "The production system had to connect demand, component availability, assembly, quality, and replenishment, not just one stage in isolation.",
   "No dedicated tracking system was in place. Any fix had to work within tools the team already used.",
 ];
 
@@ -147,7 +147,7 @@ const REFLECTION_CARDS = [
   {
     category: "Systems",
     title: "Systems thinking beats step-by-step thinking",
-    body: "Looking at any single stage in isolation — assembly, calibration, shipping — made each one look fine. It was only mapping the full system, end to end, that showed where it actually broke.",
+    body: "Looking at any single stage in isolation (assembly, calibration, shipping) made each one look fine. It was only mapping the full system, end to end, that showed where it actually broke.",
   },
   {
     category: "Coordination",
@@ -167,7 +167,7 @@ const REFLECTION_CARDS = [
   {
     category: "Learning fast",
     title: "You don't need a mechanical background to fix a mechanical process",
-    body: "I came into ForceN's hardware and calibration workflow without a mechanical engineering background. The roadmap didn't need me to redesign the sensors — it needed the handoffs between people, parts, and steps to be traceable. That was a systems problem I could learn fast.",
+    body: "I came into ForceN's hardware and calibration workflow without a mechanical engineering background. The roadmap didn't need me to redesign the sensors; it needed the handoffs between people, parts, and steps to be traceable. That was a systems problem I could learn fast.",
   },
   {
     category: "Traceability",
@@ -303,7 +303,7 @@ export default function ForceNCaseStudyV2() {
             <Section accentLabel anchor="s-outcomes" number="01" heading="What the roadmap delivered">
               <p className="mt-4" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
                 The roadmap connected product configuration, component availability, production, quality, and finished
-                inventory into one repeatable operating model — reducing dependence on order-triggered production.
+                inventory into one repeatable operating model, reducing dependence on order-triggered production.
               </p>
               <Grid className="mt-8">
                 {RESULT_STATS.map((s, i) => (
@@ -322,7 +322,7 @@ export default function ForceNCaseStudyV2() {
       {/* ---------- 02: The workflow (diagram) ---------- */}
       {/* The header and provenance note sit in the standard band (aligned with
           every other section); the diagram itself breaks out to the wider `page`
-          container as a deliberate, symmetric wide figure — the two-system chart
+          container as a deliberate, symmetric wide figure; the two-system chart
           is genuinely wide (~2200px intrinsic), so a wider centred plate keeps
           node labels legible instead of shrinking them to fit a 1280 column. */}
       <section id="s-workflow" style={BAND.baseBordered}>
@@ -336,7 +336,7 @@ export default function ForceNCaseStudyV2() {
             <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
               Stock production builds standard configurations ahead of demand. Customer fulfilment draws from finished
               inventory instead of triggering a new build, and only creates a production requirement when the requested
-              configuration isn&apos;t already on the shelf. Shape carries the meaning — rectangle is a process, diamond
+              configuration isn&apos;t already on the shelf. Shape carries the meaning: rectangle is a process, diamond
               a decision, cylinder a data store, document a record, and a double border an automated step.
             </p>
           </Section>
@@ -365,7 +365,7 @@ export default function ForceNCaseStudyV2() {
                 ForceN wanted Dev Systems to become the standardized, off-the-shelf product line: configurations built{" "}
                 <span style={{ color: "var(--color-text)", fontWeight: 600 }}>before</span> an order arrived, held in
                 finished inventory, and ready to ship the moment one did. The roadmap wasn&apos;t only about moving a
-                unit between teams — it had to make a standard configuration producible, testable, stockable, and ready
+                unit between teams; it had to make a standard configuration producible, testable, stockable, and ready
                 to fulfil an order without restarting the process from zero.
               </p>
             </div>
@@ -481,7 +481,7 @@ export default function ForceNCaseStudyV2() {
           <Section accentLabel number="05" label="Documentation" heading="A roadmap only works when someone else can run it">
             <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
               Each step needed more than a status label. It needed the correct part references, work instructions,
-              calibration procedure, quality record, inventory transaction, and ownership information — so the process
+              calibration procedure, quality record, inventory transaction, and ownership information, so the process
               could be repeated across teams and continued by future employees.
             </p>
 
@@ -537,7 +537,7 @@ export default function ForceNCaseStudyV2() {
         <Container variant="standard" className="py-16 md:py-20">
           <Section accentLabel number="06" label="Additional work" heading="Additional product engineering responsibilities">
             <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
-              These supported the wider Dev System work — not all separate case studies on their own, but part of what
+              These supported the wider Dev System work, not all separate case studies on their own, but part of what
               kept the production line moving.
             </p>
 

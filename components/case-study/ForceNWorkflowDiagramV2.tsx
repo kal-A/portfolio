@@ -14,7 +14,7 @@ import {
 /**
  * Dark-shell counterpart to ForceNWorkflowDiagram (which stays on the legacy
  * warm/paper light page). Same elkjs auto-layout and the same reconstructed
- * node/edge data — only the visual treatment moves onto the dark token set,
+ * node/edge data; only the visual treatment moves onto the dark token set,
  * and the docked full-height side drawer is replaced with a floating popover
  * pinned next to the clicked node (the pattern approved on RoomEase V2:
  * createPortal, position:fixed, anchored to the node's on-screen rect,
@@ -28,7 +28,7 @@ import {
 
 // Nodes that represent an exception/side path (procurement, rework,
 // replenishment) take a faint accent tint instead of the plain surface fill,
-// so they read as branching off the main straight-through flow — the dark-token
+// so they read as branching off the main straight-through flow, the dark-token
 // equivalent of the light page's white-vs-amber separation.
 const SIDE_PATH_IDS = new Set([
   "procure-components",
@@ -465,7 +465,7 @@ export default function ForceNWorkflowDiagramV2() {
         ))}
       </div>
 
-      {/* Floating popover — pinned to the clicked node, over the page. */}
+      {/* Floating popover, pinned to the clicked node, over the page. */}
       {activeNode &&
         pos &&
         typeof document !== "undefined" &&
