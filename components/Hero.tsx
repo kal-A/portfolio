@@ -1,67 +1,97 @@
-import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
 
 /**
- * FINAL hero atmosphere + contour assets (implemented 2026-08-25, approved
- * direction — see docs/redesign/CURRENT-HANDOFF.md). Hero copy is still
- * the pending placeholder text awaiting separate approval — this pass
- * only replaces the visual layers, not the words.
+ * Hero — cinematic "figure standing within the atmosphere" (rebuilt 2026-08-28
+ * to the FINAL VISIBILITY CORRECTION brief). The figure is a full-body ivory
+ * line drawing (public/hero/hero-figure-ivory.png, the complete figure down to
+ * the shoes) but the lower body is never allowed to resolve: it is concealed by
+ * a permanent responsive mask, foreground fog, and the bottom fade, not cropped
+ * out of the asset.
  *
- * Layer order (docs/redesign/04-hero-system.md's five independent layers):
- *   1. near-black stage field  -> this <section>'s own background
- *   2. atmosphere raster       -> first aria-hidden absolute div, real PNG
- *   3. subtle vignette/light   -> second aria-hidden absolute div
- *   4. SVG contour             -> CSS mask (public/hero/portfolio-hero-contour-v5.svg)
- *      recolored via background-color on a masked div, not an inline
- *      <svg><path>, so the reveal-sweep mask (layer below) and the shape
- *      mask compose as two nested elements instead of one — the file's
- *      own vector geometry is never touched or re-traced.
- *   5. semantic content        -> the z-10 content block, DOM-first
+ * Visibility hierarchy, clearest to concealed:
+ *   hair / glasses / raised hand / restrained beard  -> clearest (top of mask)
+ *   head / collar / shoulder / upper coat            -> clearly suggested
+ *   windblown coat edge                              -> lit + wind-animated
+ *   torso / upper legs                               -> intermittent through fog
+ *   below the knees                                  -> fully concealed
+ *
+ * Layer order (bottom to top), each an independent element:
+ *   1. near-black stage field   -> the <section> background
+ *   2. atmosphere raster        -> distant warm fog + light beyond the figure
+ *   3. figure                   -> ivory line art, knee-down mask, top-down draw-on
+ *   4. foreground fog           -> crosses IN FRONT of the figure; buries the base
+ *   5. semantic content         -> z-10, the primary reading target, never gated
+ *
+ * The entrance is a top-down draw-on: the figure is revealed from the head
+ * downward and the reveal is spent by the coat / upper-leg area, so the lower
+ * legs are never drawn on before being hidden. The knee-down region stays
+ * unresolved the whole time. Reduced motion / route-return skip to the settled
+ * state.
  */
 export default function Hero() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: "var(--color-bg)", minHeight: "clamp(520px, 78vh, 760px)" }}
+      style={{ background: "var(--color-bg)", minHeight: "clamp(520px, 82vh, 780px)" }}
     >
-      {/* Layer 2: atmosphere raster. hero-atmosphere carries the optional
-          1200-1500ms light bloom (04-hero-system.md's motion table) — a
-          3-5% brightness lift, once, after the contour has settled. The
-          image itself already carries the quiet near-black left side
-          (behind the text) fading into restrained warm fog toward the
-          right (behind the figure) — cover+center reproduces that
-          composition at any hero aspect ratio without distorting it. */}
-      <div aria-hidden="true" className="hero-atmosphere pointer-events-none absolute inset-0">
-        <Image
-          src="/hero/portfolio-hero-atmosphere-final.png"
-          alt=""
-          fill
-          priority
-          quality={92}
-          sizes="100vw"
-          className="object-cover"
+      {/* Layer 2: atmosphere raster — the distant, restrained warm fog and the
+          light kept beyond and above the figure. Quiet near-black on the left
+          (behind the text) so the copy stays the primary reading target. */}
+      <div
+        aria-hidden="true"
+        className="hero-atmosphere pointer-events-none absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url(/hero/portfolio-hero-atmosphere-final.png)" }}
+      />
+
+      {/* Layer 3: the figure. Two nested masks keep the two jobs separate:
+          the wrapper carries the top-down reveal wipe (the draw-on); the inner
+          element carries the permanent knee-down concealment gradient and the
+          ivory line art itself. self-anchored bottom-right and grounded, so the
+          shoes sit at the stage floor even though they are never visible. */}
+      <div
+        aria-hidden="true"
+        className="hero-figure pointer-events-none absolute bottom-0 hidden sm:block"
+        style={{
+          right: "clamp(0px, 3vw, 72px)",
+          width: "clamp(300px, 36vw, 500px)",
+          height: "min(94%, 720px)",
+        }}
+      >
+        <div
+          className="hero-figure-inner absolute inset-0"
+          style={{
+            backgroundImage: "url(/hero/hero-figure-ivory.png)",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "bottom center",
+            backgroundSize: "contain",
+          }}
         />
       </div>
 
-      {/* Layer 3: optional, extremely subtle vignette (PLACEHOLDER, decorative) */}
+      {/* Layer 4: foreground fog — sits IN FRONT of the figure (above layer 3,
+          below the z-10 content) so it visibly crosses the contour instead of
+          sitting behind it. The base gradient buries everything from the knees
+          down into the stage floor; the drifting wisp adds wind across the
+          torso and coat. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 z-[3]"
         style={{
           background:
-            "radial-gradient(120% 100% at 50% 0%, transparent 55%, rgba(0,0,0,0.32) 100%)",
+            "linear-gradient(to top, var(--color-bg) 0%, rgba(11,12,15,0.94) 7%, rgba(11,12,15,0.6) 20%, rgba(11,12,15,0.18) 33%, transparent 44%), radial-gradient(58% 42% at 74% 62%, rgba(14,15,19,0.5) 0%, transparent 72%)",
         }}
       />
+      <div aria-hidden="true" className="hero-fog-wisp pointer-events-none absolute inset-0 z-[3]" />
+      {/* A soft warm light lifting the windblown coat edge, drifting on the wind. */}
+      <div aria-hidden="true" className="hero-coat-glow pointer-events-none absolute inset-0 z-[3]" />
 
       <Container
         variant="page"
-        className="relative z-10 flex flex-col lg:flex-row lg:justify-between items-center gap-12 lg:gap-16 py-[clamp(64px,12vh,120px)]"
+        className="relative z-10 py-[clamp(64px,12vh,120px)]"
       >
-        {/* Layer 5: semantic content — renders immediately, no client JS,
-            no animation. This is the DOM's first child of the row, so it is
-            also visually first at every breakpoint (content-first at
-            compact, text-left at large via flex-row). */}
+        {/* Layer 5: semantic content — renders immediately, no client JS, no
+            animation, DOM-first. Left-aligned; the figure lives on the right. */}
         <div className="max-w-[52ch]">
           <h1
             style={{
@@ -94,119 +124,85 @@ export default function Hero() {
             </Action>
           </div>
         </div>
-
-        {/* Layer 4: SVG contour, approved v5 geometry (three-quarter-back,
-            facing inward, adjusting glasses, coat sweeping right) —
-            public/hero/portfolio-hero-contour-v5.svg, used ONLY as a CSS
-            mask shape, never re-rasterized or re-traced. Two nested
-            elements split the two concerns the original placeholder's
-            single <svg><path> combined: hero-contour-mask (unchanged
-            class, unchanged sweep-reveal CSS below) still does the
-            fog-reveal sweep; the inner div's own mask defines WHICH
-            pixels are the figure, filled with the warm-ivory accent
-            color so recoloring never touches the source file. Width
-            hits the requested ~28-34% desktop stage-width range;
-            self-end grounds the figure at the stage floor at every
-            breakpoint (not just compact, per the approved composition).
-            Below 360px the wrapper still crops to the head/shoulder
-            fragment instead of shrinking the whole figure into an
-            unreadable miniature — same technique as before, just
-            applied to the mask-sized div instead of an SVG element. */}
-        <div
-          aria-hidden="true"
-          className="hero-contour-mask shrink-0 self-end aspect-[2/3] w-[160px] sm:w-[200px] md:w-[29%] lg:w-[32%] max-[359px]:w-[130px] max-[359px]:h-[150px] max-[359px]:overflow-hidden"
-        >
-          <div
-            className="hero-contour-path w-full h-full max-[359px]:w-[220px] max-[359px]:h-[330px] max-[359px]:max-w-none"
-            style={{
-              backgroundColor: "#E5DCC9",
-              maskImage: "url(/hero/portfolio-hero-contour-v5.svg)",
-              WebkitMaskImage: "url(/hero/portfolio-hero-contour-v5.svg)",
-              maskRepeat: "no-repeat",
-              WebkitMaskRepeat: "no-repeat",
-              maskSize: "contain",
-              WebkitMaskSize: "contain",
-              maskPosition: "bottom right",
-              WebkitMaskPosition: "bottom right",
-            }}
-          />
-        </div>
       </Container>
 
-      {/* Finite, single-play reveal, begins at 250ms and finishes over the
-          850ms hero-duration token (settles at 1100ms). Combines mask and
-          opacity — 04-hero-system.md is explicit that this "should feel
-          like the figure emerging from fog, not a hand literally drawing
-          every line," which ruled out a stroke-dasharray/dashoffset
-          line-draw technique (the literal "hand drawing" look) in favor of
-          a soft mask that sweeps upward while the figure fades in. The mask
-          lives on hero-contour-mask (the sizing wrapper, so its percentage
-          geometry resolves against a plain box rather than SVG viewport
-          units); the fade lives on the inner shape div (.hero-contour-path
-          — same class name as the old inline <path>, now applied to a div
-          whose own CSS mask is the approved SVG file). hero-atmosphere then
-          runs one subtle 3-5% brightness bloom from 1200-1500ms. Reduced
-          motion shows the final state immediately with no travel and no
-          bloom. Content above is never gated on this — it is already
-          visible at 0ms. .hero-contour-skip (set by the inline script
-          below, once per browser session) prevents the entrance sequence
-          from replaying on a route return — 04-hero-system.md's Non-goals
-          list this explicitly ("Replaying the animation on route return,
-          hover, or scroll"). */}
       <style>{`
-        .hero-contour-path {
+        /* Permanent knee-down concealment + the ivory line weight. The mask is
+           full-strength through the torso, thins across the upper legs (the
+           "intermittent through fog" band), and is gone by the knee — so the
+           shoes/ankles/lower-leg in the asset never resolve. Also the resting
+           opacity (< 1) keeps the figure emerging from the field rather than
+           reading as flat line art laid over it. */
+        .hero-figure-inner {
           opacity: 0;
-          animation: hero-contour-fade var(--duration-hero) var(--ease-enter) 250ms 1 forwards;
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.45) 57%, rgba(0,0,0,0.12) 64%, transparent 68%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.45) 57%, rgba(0,0,0,0.12) 64%, transparent 68%);
+          animation: hero-figure-fade 1500ms var(--ease-enter) 300ms 1 forwards;
         }
-        @keyframes hero-contour-fade {
-          to { opacity: 0.7; }
+        @keyframes hero-figure-fade { to { opacity: 0.86; } }
+
+        /* Top-down draw-on: the wrapper mask exposes a growing band from the top,
+           soft leading edge, so the head/hand/hair resolve first and the reveal
+           runs down into the coat. It grows past the concealed lower body, so the
+           reveal is visually spent around the coat / upper-leg. */
+        .hero-figure {
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+          -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+          -webkit-mask-position: top; mask-position: top;
+          -webkit-mask-size: 100% 14%; mask-size: 100% 14%;
+          animation: hero-figure-reveal 1500ms var(--ease-enter) 300ms 1 forwards;
         }
-        .hero-contour-mask {
-          -webkit-mask-image: linear-gradient(to top, black 0%, black 85%, transparent 100%);
-          mask-image: linear-gradient(to top, black 0%, black 85%, transparent 100%);
-          -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-          -webkit-mask-position: bottom;
-          mask-position: bottom;
-          -webkit-mask-size: 100% 8%;
-          mask-size: 100% 8%;
-          animation: hero-contour-sweep var(--duration-hero) var(--ease-enter) 250ms 1 forwards;
+        @keyframes hero-figure-reveal {
+          to { -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
         }
-        @keyframes hero-contour-sweep {
-          to { -webkit-mask-size: 100% 130%; mask-size: 100% 130%; }
+
+        /* Wind: a low, slow drift of a warm fog wisp across the torso/coat. */
+        .hero-fog-wisp {
+          background: radial-gradient(46% 38% at 66% 50%, rgba(32,27,22,0.30) 0%, transparent 66%);
+          animation: hero-fog-drift 17s ease-in-out infinite alternate;
+          will-change: transform;
         }
+        @keyframes hero-fog-drift {
+          from { transform: translate3d(-2.5%, 0.5%, 0); }
+          to   { transform: translate3d(3%, -1%, 0); }
+        }
+
+        /* The lit, animated coat edge: a soft warm glow riding the windblown
+           side, breathing gently so the coat reads as "selectively illuminated
+           and animated" rather than statically outlined. */
+        .hero-coat-glow {
+          background: radial-gradient(30% 26% at 80% 56%, rgba(197,138,74,0.16) 0%, transparent 70%);
+          opacity: 0;
+          animation: hero-coat-glow-in 1600ms var(--ease-standard) 1100ms 1 forwards, hero-coat-breathe 9s ease-in-out 2700ms infinite alternate;
+        }
+        @keyframes hero-coat-glow-in { to { opacity: 1; } }
+        @keyframes hero-coat-breathe {
+          from { transform: translate3d(0,0,0); opacity: 0.7; }
+          to   { transform: translate3d(1.5%, -0.5%, 0); opacity: 1; }
+        }
+
+        /* One subtle, single-play atmosphere bloom after the figure settles. */
         .hero-atmosphere {
-          animation: hero-bloom 300ms var(--ease-standard) 1200ms 1 forwards;
+          animation: hero-bloom 300ms var(--ease-standard) 1600ms 1 forwards;
         }
         @keyframes hero-bloom {
           from { filter: brightness(1); }
-          to { filter: brightness(1.04); }
+          to   { filter: brightness(1.035); }
         }
-        :root.hero-contour-skip .hero-contour-path {
-          animation: none;
-          opacity: 0.7;
-        }
-        :root.hero-contour-skip .hero-contour-mask {
-          animation: none;
-          -webkit-mask-size: 100% 130%;
-          mask-size: 100% 130%;
-        }
-        :root.hero-contour-skip .hero-atmosphere {
-          animation: none;
-        }
+
+        /* Route-return: settle immediately, no entrance replay. */
+        :root.hero-contour-skip .hero-figure-inner { animation: none; opacity: 0.86; }
+        :root.hero-contour-skip .hero-figure { animation: none; -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
+        :root.hero-contour-skip .hero-atmosphere { animation: none; }
+        :root.hero-contour-skip .hero-coat-glow { animation: hero-coat-breathe 9s ease-in-out infinite alternate; opacity: 1; }
+
         @media (prefers-reduced-motion: reduce) {
-          .hero-contour-path {
-            animation: none;
-            opacity: 0.7;
-          }
-          .hero-contour-mask {
-            animation: none;
-            -webkit-mask-size: 100% 130%;
-            mask-size: 100% 130%;
-          }
-          .hero-atmosphere {
-            animation: none;
-          }
+          .hero-figure-inner { animation: none; opacity: 0.86; }
+          .hero-figure { animation: none; -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
+          .hero-fog-wisp { animation: none; }
+          .hero-coat-glow { animation: none; opacity: 1; }
+          .hero-atmosphere { animation: none; }
         }
       `}</style>
       <script
