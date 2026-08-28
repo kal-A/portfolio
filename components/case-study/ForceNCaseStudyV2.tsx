@@ -37,11 +37,12 @@ const HERO_TITLE = "An inventory-backed production system for ForceN's Dev Syste
  *  rather than the shared data file's `whatIdImprove`, which reads as a
  *  confidentiality disclaimer (already covered by `cs.note`). Framed as the next
  *  step to add, not something done differently: AI workflows firing the
- *  order-triggered actions the moment an order lands, with manual edits kept for
- *  the exceptions. Ties back to "automation earns its place after the process is
- *  proven" — these are now the proven steps ready to automate. */
+ *  order-triggered actions the moment an order lands, with a human in the loop
+ *  for the exceptions. Capability-first (agentic AI workflows) rather than a
+ *  named low-code tool, which dates faster and reads narrower. Ties back to
+ *  "automation earns its place after the process is proven". */
 const WHAT_ID_IMPROVE =
-  "The natural next step is an AI-workflow layer — using something like n8n — that reacts the moment an order is placed: automatically firing the order and build triggers, allocating the unit, and posting the finished-inventory deductions instead of routing each of those steps by hand. Manual edits stay available wherever a human call is needed, so it speeds up the common path without giving up control on the exceptions.";
+  "The natural next step is an agentic AI-workflow layer that reacts the moment an order is placed — automatically firing the order and build triggers, allocating the unit, and posting the finished-inventory deductions instead of routing each of those steps by hand. It keeps a human in the loop for the exceptions, so the automation carries the common path without giving up control where a person's judgment still matters.";
 const HERO_LEAD =
   "ForceN wanted its standard Dev Systems to stop being built from zero on every order and become a real product line: produced ahead of demand, held in finished inventory, and ready to ship the moment an order arrived. As the product engineering intern I owned the end-to-end operating roadmap — connecting parts planning, procurement, assembly, calibration, documentation, finished-product inventory, and fulfilment into one repeatable model — and coordinated 14+ hardware units across 6+ stakeholders in engineering, operations, and inventory. Internal trackers and company-specific materials are confidential, so this page reconstructs the same workflow logic in a public-safe form.";
 
