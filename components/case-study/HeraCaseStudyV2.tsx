@@ -36,11 +36,12 @@ import {
  * period maps do, rather than being re-themed. The shell carries the layout,
  * prose, cards, tables, and the analytics process flow.
  *
- * Note on scope: the resume's separate Hera marketing figures (a centralized
- * Looker marketing tool, a 500+ user reporting tool, blog/quiz conversion
- * lifts) are deliberately NOT rendered here, matching the light page's standing
- * decision to keep unverifiable percentage claims off the page until their
- * baselines can be confirmed. Copy is em-dash free.
+ * Note on scope: the marketing half of the role is included as its own
+ * caveated band, using the smaller, more reasonable resume figures (a 500+ user
+ * internal reporting tool and a roughly 50% content-driven conversion lift), per
+ * the user's direction. The larger resume claims (a 300% operating-efficiency
+ * figure and a 100% engagement figure) stay off, since their baselines aren't
+ * documented. Copy is em-dash free.
  */
 const HERO_TITLE = "Designing financing and care-discovery flows for a 0-to-1 fertility platform";
 const HERO_LEAD =
@@ -56,6 +57,7 @@ const TOC_ITEMS = [
   { href: "#s-analytics", label: "Behaviour & analytics" },
   { href: "#s-roadmap", label: "Roadmap & rollout" },
   { href: "#s-outcomes", label: "Outcomes" },
+  { href: "#s-marketing", label: "Marketing & content" },
   { href: "#s-reflection", label: "Reflection" },
 ];
 
@@ -1066,8 +1068,49 @@ export default function HeraCaseStudyV2() {
         </Container>
       </section>
 
+      {/* ---------- 09: Marketing side of the role ---------- */}
+      <section id="s-marketing" style={BAND.tint}>
+        <Container variant="standard" className="py-16 md:py-20">
+          <Section accentLabel number="09" label="Marketing & content" heading="The marketing half of the role">
+            <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
+              Product design was one side of a Product Design and Marketing role. The other was marketing analytics and
+              content: I built internal reporting and marketing tooling in Looker Studio and Excel, and produced blog and
+              quiz content aimed at bringing the right users into the funnel the design work was shaping.
+            </p>
+          </Section>
+
+          <div
+            className="mt-9 px-6 py-7 md:px-8 md:py-8 rounded-[var(--radius-default)] border border-l-[3px]"
+            style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))" }}
+          >
+            <p className="mb-2" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+              From the internship performance summary
+            </p>
+            <p className="mb-6" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
+              These figures are reported for the internship period from a separate performance summary, alongside the
+              marketing work, rather than re-measured for this case study.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>500+</p>
+                <p className="mt-1.5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+                  users supported by an automated internal reporting tool for clinics, built in Looker Studio and Excel to
+                  improve data accuracy and reporting speed.
+                </p>
+              </div>
+              <div>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>~50%</p>
+                <p className="mt-1.5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+                  increase in website traffic and conversions from the blogs and quizzes produced during the internship.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* ---------- Reflection ---------- */}
-      <section id="s-reflection" style={BAND.tint}>
+      <section id="s-reflection" style={BAND.baseBordered}>
         <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
           <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
             Reflection
