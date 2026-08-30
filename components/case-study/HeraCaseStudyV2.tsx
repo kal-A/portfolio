@@ -407,6 +407,27 @@ function splitReflection(text: string): { title: string; body: string } {
   return { title: text.slice(0, splitAt + 1).trim(), body: text.slice(splitAt + 2).trim() };
 }
 
+/** A compact horizontal provenance card: a small source-sketch thumbnail beside
+ *  its caption, full width. Replaces the tall single-image column that stranded
+ *  a half-band of empty space next to taller content. */
+function SourceNote({ src, alt, aspect, eyebrow, children }: { src: string; alt: string; aspect: string; eyebrow: string; children: React.ReactNode }) {
+  return (
+    <div className="grid sm:grid-cols-[220px_1fr] gap-6 items-start px-5 py-5 md:px-6 md:py-6 rounded-[var(--radius-default)] border" style={{ background: "var(--color-surface-1)", borderColor: "var(--color-line)" }}>
+      <div className="overflow-hidden rounded-[var(--radius-button)] border" style={{ borderColor: "var(--color-line-strong, var(--color-line))", background: "#fff" }}>
+        <div className="relative w-full bg-white" style={{ aspectRatio: aspect }}>
+          <Image src={src} alt={alt} fill className="object-contain" sizes="220px" />
+        </div>
+      </div>
+      <div>
+        <p className="mb-1.5" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+          {eyebrow}
+        </p>
+        <p className="text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{children}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function HeraCaseStudyV2() {
   const cs = getCaseStudy("hera-fertility")!;
 
@@ -816,7 +837,7 @@ export default function HeraCaseStudyV2() {
             style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))" }}
           >
             <div className="mb-2.5"><ProvenancePill>Open design hypothesis</ProvenancePill></div>
-            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
+            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
               The price-range filter is marked &ldquo;Difficult&rdquo; in the original sketch. It stayed in the design
               as a flagged, unresolved hypothesis, since clinic pricing wasn&apos;t consistently available to filter
               against, rather than shipped as a filter that looked functional but wasn&apos;t. It was never user-tested.
@@ -905,49 +926,44 @@ export default function HeraCaseStudyV2() {
             <ProcessFlow steps={ANALYTICS_STEPS} rowLength={4} detailBelow middleLabel="Investigation turns a pattern into something worth proposing" />
           </div>
 
-          <div className="mt-14 grid lg:grid-cols-[1fr_1.3fr] gap-8 items-start">
-            <Reveal className="min-w-0">
-              <PlateImage
-                src="/case-studies/hera-fertility/sketch-ga-metrics.png"
-                alt="Original marketing-metrics planning notes: acquisition, audience, traffic, and behaviour-and-engagement metric groups, with CAC and LTV marked as a maybe addition"
-                aspect="1435 / 1509"
-                maxHeight={520}
-              />
-              <FigureCaption eyebrow="Source notes · metrics planning">
-                The original metrics-planning notes, grouped into acquisition, audience, traffic, and behaviour and
-                engagement, with CAC and LTV marked &ldquo;maybe&rdquo; rather than core. The scoped plan and insight
-                table are built directly from this list.
-              </FigureCaption>
-            </Reveal>
+          <div className="mt-12">
+            <SourceNote
+              src="/case-studies/hera-fertility/sketch-ga-metrics.png"
+              alt="Original marketing-metrics planning notes: acquisition, audience, traffic, and behaviour-and-engagement metric groups, with CAC and LTV marked as a maybe addition"
+              aspect="1435 / 1509"
+              eyebrow="Source notes · metrics planning"
+            >
+              The original metrics-planning notes, grouped into acquisition, audience, traffic, and behaviour and
+              engagement, with CAC and LTV marked &ldquo;maybe&rdquo; rather than core. The scoped plan and the insight
+              cards below are built directly from this list.
+            </SourceNote>
 
-            <div className="min-w-0">
-              <p className="mb-4" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
-                From signal to measured action
-              </p>
-              <div className="flex flex-col gap-4">
-                {ANALYTICS_INSIGHTS.map((row, i) => (
-                  <Reveal key={row.signal} delay={i * 60}>
-                    <div className={`px-6 py-5 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-1)", borderColor: "var(--color-line)" }}>
-                      <p className="mb-3" style={{ color: "var(--color-text)", fontWeight: 600, lineHeight: "var(--leading-body)" }}>{row.signal}</p>
-                      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
-                        {[
-                          ["Interpretation", row.interpretation],
-                          ["Product opportunity", row.opportunity],
-                          ["Proposed action", row.action],
-                          ["Measurement", row.measurement],
-                        ].map(([label, value]) => (
-                          <div key={label}>
-                            <p className="mb-1" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
-                              {label}
-                            </p>
-                            <p className="text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{value}</p>
-                          </div>
-                        ))}
-                      </div>
+            <p className="mt-10 mb-4" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+              From signal to measured action
+            </p>
+            <div className="grid lg:grid-cols-2 gap-4 items-stretch">
+              {ANALYTICS_INSIGHTS.map((row, i) => (
+                <Reveal key={row.signal} delay={i * 60} className="h-full">
+                  <div className={`h-full px-6 py-5 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-1)", borderColor: "var(--color-line)" }}>
+                    <p className="mb-3" style={{ color: "var(--color-text)", fontWeight: 600, lineHeight: "var(--leading-body)" }}>{row.signal}</p>
+                    <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+                      {[
+                        ["Interpretation", row.interpretation],
+                        ["Product opportunity", row.opportunity],
+                        ["Proposed action", row.action],
+                        ["Measurement", row.measurement],
+                      ].map(([label, value]) => (
+                        <div key={label}>
+                          <p className="mb-1" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+                            {label}
+                          </p>
+                          <p className="text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{value}</p>
+                        </div>
+                      ))}
                     </div>
-                  </Reveal>
-                ))}
-              </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </Container>
@@ -964,21 +980,18 @@ export default function HeraCaseStudyV2() {
             </p>
           </Section>
 
-          <div className="mt-10 grid lg:grid-cols-[1fr_1.6fr] gap-8 items-start">
-            <Reveal className="min-w-0">
-              <PlateImage
-                src="/case-studies/hera-fertility/sketch-roadmap.png"
-                alt="Original handwritten roadmap notes: a six-week timeline, project owner and co-op resources, the end goal, and a three-phase execution roadmap with tasks and owners"
-                aspect="1435 / 1636"
-                maxHeight={520}
-              />
-              <FigureCaption eyebrow="Source notes · roadmap">
-                The original planning notes: a six-week timeline (Feb 21 to Mar 27), Thiv as project owner, Faiq and
-                Kamal as co-ops, and the three-phase roadmap the table is translated from directly, task by task.
-              </FigureCaption>
-            </Reveal>
+          <div className="mt-10">
+            <SourceNote
+              src="/case-studies/hera-fertility/sketch-roadmap.png"
+              alt="Original handwritten roadmap notes: a six-week timeline, project owner and co-op resources, the end goal, and a three-phase execution roadmap with tasks and owners"
+              aspect="1435 / 1636"
+              eyebrow="Source notes · roadmap"
+            >
+              The original planning notes: a six-week timeline (Feb 21 to Mar 27), Thiv as project owner, Faiq and Kamal
+              as co-ops, and the three-phase roadmap the cards below are translated from directly, task by task.
+            </SourceNote>
 
-            <div className="min-w-0 flex flex-col gap-5">
+            <div className="mt-8 flex flex-col gap-5">
               {ROADMAP_PHASES.map((p, i) => (
                 <Reveal key={p.phase} delay={i * 80}>
                   <div className="overflow-hidden rounded-[var(--radius-default)] border" style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}>
@@ -1035,38 +1048,38 @@ export default function HeraCaseStudyV2() {
       {/* ---------- 08: Outcomes ---------- */}
       <section id="s-outcomes" style={BAND.baseBordered}>
         <Container variant="standard" className="py-16 md:py-20">
-          <Section accentLabel number="08" label="Outcomes" heading="What was designed, decided, and shipped">
-            <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
-              This internship&apos;s usability-test results and post-launch analytics were not preserved, so most of the
-              outcomes below describe what was designed, decided, and handed off, rather than measured percentages. The
-              segmentation flow is the exception: it shipped. The numbers describe the scope of that work, not a claimed
-              platform-wide result.
-            </p>
-
-            <Grid className="mt-8">
+          <div className="grid lg:grid-cols-2 gap-x-14 gap-y-10 items-center">
+            <div>
+              <Section accentLabel number="08" label="Outcomes" heading="What was designed, decided, and shipped" />
+              <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
+                This internship&apos;s usability-test results and post-launch analytics were not preserved, so most of
+                the outcomes below describe what was designed, decided, and handed off, rather than measured percentages.
+                The segmentation flow is the exception: it shipped. The numbers describe the scope of that work, not a
+                claimed platform-wide result.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
               {SCOPE_STATS.map((s, i) => (
-                <div key={s.label} className="col-span-2 sm:col-span-2 lg:col-span-3">
-                  <Reveal delay={i * 70}>
-                    <StatCard value={s.value} label={s.label} />
-                  </Reveal>
-                </div>
+                <Reveal key={s.label} delay={i * 70}>
+                  <StatCard value={s.value} label={s.label} />
+                </Reveal>
               ))}
-            </Grid>
+            </div>
+          </div>
 
-            <ul className="mt-12 flex flex-col">
-              {cs.outcome.map((row, i) => (
-                <li key={row} style={{ borderTop: i === 0 ? "none" : "1px solid var(--color-line)" }}>
-                  <Reveal
-                    delay={i * 60}
-                    className="flex items-start gap-4 -mx-3 px-3 py-4 rounded-[var(--radius-default)] transition-colors duration-[var(--duration-base)] hover:bg-[var(--color-surface-2)]"
-                  >
-                    <span aria-hidden="true" className="mt-1 shrink-0" style={{ color: "var(--accent-bright, var(--color-project-accent))" }}>✓</span>
-                    <span style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>{row}</span>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </Section>
+          <ul className="mt-12 grid sm:grid-cols-2 gap-x-10 gap-y-1">
+            {cs.outcome.map((row, i) => (
+              <li key={row}>
+                <Reveal
+                  delay={i * 60}
+                  className="h-full flex items-start gap-4 -mx-3 px-3 py-4 rounded-[var(--radius-default)] transition-colors duration-[var(--duration-base)] hover:bg-[var(--color-surface-2)]"
+                >
+                  <span aria-hidden="true" className="mt-1 shrink-0" style={{ color: "var(--accent-bright, var(--color-project-accent))" }}>✓</span>
+                  <span style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{row}</span>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
@@ -1145,13 +1158,13 @@ export default function HeraCaseStudyV2() {
 
           {cs.whatIdImprove && (
             <div
-              className="mt-10 px-6 py-6 rounded-[var(--radius-default)] border border-l-[3px]"
+              className="mt-10 grid md:grid-cols-[240px_1fr] gap-x-10 gap-y-3 px-6 py-6 md:px-8 rounded-[var(--radius-default)] border border-l-[3px]"
               style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-1)" }}
             >
-              <p className="mb-2.5" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+              <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
                 What I&apos;d improve next
               </p>
-              <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>{cs.whatIdImprove}</p>
+              <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{cs.whatIdImprove}</p>
             </div>
           )}
 
