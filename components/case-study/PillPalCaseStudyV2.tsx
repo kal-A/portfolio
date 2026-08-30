@@ -285,7 +285,7 @@ const BAND = {
 } as const;
 
 const CARD_HOVER =
-  "transition-all duration-[var(--duration-base)] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.28)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_6%,var(--color-surface-2))]";
+  "transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--accent-bright,var(--color-project-accent))] hover:shadow-[0_16px_40px_rgba(0,0,0,0.42)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_11%,var(--color-surface-2))]";
 
 function PullQuote({ children, cite }: { children: React.ReactNode; cite?: string }) {
   return (
@@ -338,7 +338,7 @@ function ProvenancePill({ children, solid = false }: { children: React.ReactNode
  *  and float on the dark field, framed and shadowed (playbook section 10). */
 function LightPlate({ children, bg = "#ffffff", className = "" }: { children: React.ReactNode; bg?: string; className?: string }) {
   return (
-    <div className={`overflow-hidden rounded-[var(--radius-default)] border shadow-[0_10px_36px_rgba(0,0,0,0.4)] ${className}`} style={{ borderColor: "var(--color-line-strong, var(--color-line))", background: bg }}>
+    <div className={`overflow-hidden rounded-[var(--radius-default)] border shadow-[0_10px_36px_rgba(0,0,0,0.4)] transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--accent-bright,var(--color-project-accent))] hover:shadow-[0_22px_55px_rgba(0,0,0,0.55)] ${className}`} style={{ borderColor: "var(--color-line-strong, var(--color-line))", background: bg }}>
       {children}
     </div>
   );

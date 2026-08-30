@@ -172,7 +172,7 @@ const BAND = {
 /** Shared card-hover language from the Chronicle reference (playbook section 6):
  *  lift, soft shadow, and a faint accent-tinted wash for otherwise-static cards. */
 const CARD_HOVER =
-  "transition-all duration-[var(--duration-base)] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.28)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_6%,var(--color-surface-2))]";
+  "transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--accent-bright,var(--color-project-accent))] hover:shadow-[0_16px_40px_rgba(0,0,0,0.42)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_11%,var(--color-surface-2))]";
 
 /** One deliberate typographic beat per page (playbook section 4): a single
  *  strong line lifted to display scale with a large pale accent quotation mark. */

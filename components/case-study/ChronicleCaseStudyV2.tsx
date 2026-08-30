@@ -330,7 +330,7 @@ function NumberedList({ items, compact = false }: { items: string[]; compact?: b
  *  ProcessFlow's buttons use, diluted for a non-clickable card so it reads
  *  as "crafted" rather than falsely implying these are pressable. */
 const CARD_HOVER =
-  "transition-all duration-[var(--duration-base)] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.28)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_6%,var(--color-surface-2))]";
+  "transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--accent-bright,var(--color-project-accent))] hover:shadow-[0_16px_40px_rgba(0,0,0,0.42)] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_11%,var(--color-surface-2))]";
 
 /** Narrative paragraph paired tightly beside its media, vertically centered
  *  on the same axis, alternating which side the media sits on section to
