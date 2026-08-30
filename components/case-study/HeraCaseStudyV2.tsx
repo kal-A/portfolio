@@ -1073,38 +1073,41 @@ export default function HeraCaseStudyV2() {
       {/* ---------- 09: Marketing side of the role ---------- */}
       <section id="s-marketing" style={BAND.tint}>
         <Container variant="standard" className="py-16 md:py-20">
-          <Section accentLabel number="09" label="Marketing & content" heading="The marketing half of the role">
-            <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}>
-              Product design was one side of a Product Design and Marketing role. The other was marketing analytics and
-              content: I built internal reporting and marketing tooling in Looker Studio and Excel, and produced blog and
-              quiz content aimed at bringing the right users into the funnel the design work was shaping.
-            </p>
-          </Section>
+          <div className="grid lg:grid-cols-2 gap-x-14 gap-y-10 items-center">
+            <div>
+              <Section accentLabel number="09" label="Marketing & content" heading="The marketing half of the role" />
+              <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
+                Product design was one side of a Product Design and Marketing role. The other was marketing analytics and
+                content: I built internal reporting and marketing tooling in Looker Studio and Excel, and produced blog and
+                quiz content aimed at bringing the right users into the funnel the design work was shaping.
+              </p>
+            </div>
 
-          <div
-            className="mt-9 px-6 py-7 md:px-8 md:py-8 rounded-[var(--radius-default)] border border-l-[3px]"
-            style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))" }}
-          >
-            <p className="mb-2" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
-              From the internship performance summary
-            </p>
-            <p className="mb-6" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
-              These figures are reported for the internship period from a separate performance summary, alongside the
-              marketing work, rather than re-measured for this case study.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-8">
-              <div>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>500+</p>
-                <p className="mt-1.5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
-                  users supported by an automated internal reporting tool for clinics, built in Looker Studio and Excel to
-                  improve data accuracy and reporting speed.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>~50%</p>
-                <p className="mt-1.5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
-                  increase in website traffic and conversions from the blogs and quizzes produced during the internship.
-                </p>
+            <div
+              className="px-6 py-7 md:px-8 md:py-8 rounded-[var(--radius-default)] border border-l-[3px]"
+              style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))" }}
+            >
+              <p className="mb-2" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+                From the internship performance summary
+              </p>
+              <p className="mb-6" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+                These figures are reported for the internship period from a separate performance summary, alongside the
+                marketing work, rather than re-measured for this case study.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
+                <div>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>500+</p>
+                  <p className="mt-1.5 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+                    users supported by an automated internal reporting tool for clinics, built in Looker Studio and Excel
+                    to improve data accuracy and reporting speed.
+                  </p>
+                </div>
+                <div>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: "var(--leading-h1)", color: "var(--color-text)" }}>~50%</p>
+                  <p className="mt-1.5 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+                    increase in website traffic and conversions from the blogs and quizzes produced during the internship.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -1152,9 +1155,24 @@ export default function HeraCaseStudyV2() {
             </div>
           )}
 
-          <p className="mt-10 text-sm italic" style={{ color: "var(--color-text-subtle)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
-            {cs.contribution} Team: {cs.team}
-          </p>
+          <div className="mt-12 pt-8 grid md:grid-cols-2 gap-x-14 gap-y-6" style={{ borderTop: "1px solid var(--color-line)" }}>
+            <div>
+              <p className="mb-2" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+                My contribution
+              </p>
+              <p className="text-sm italic" style={{ color: "var(--color-text-subtle)", lineHeight: "var(--leading-body)" }}>
+                {cs.contribution}
+              </p>
+            </div>
+            <div>
+              <p className="mb-2" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+                Team
+              </p>
+              <p className="text-sm italic" style={{ color: "var(--color-text-subtle)", lineHeight: "var(--leading-body)" }}>
+                {cs.team}
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
     </div>
