@@ -314,13 +314,10 @@ html {
 @media (hover: hover) and (pointer: fine) {
   .hover-reveal-media img {
     filter: grayscale(1);
-    /* Slow, decelerating bloom so the color eases in rather than snapping.
-       Triggered on scroll-into-view (.is-revealed, set by MediaFrame's
-       IntersectionObserver), so the images arrive in grayscale and fill
-       with color on their own; hover/focus still forces color too. */
-    transition: filter 900ms var(--ease-enter);
+    /* Longer, gentle fade so color eases in on hover/focus instead of
+       snapping (the previous 280ms read as abrupt). */
+    transition: filter 550ms var(--ease-standard);
   }
-  .hover-reveal-media.is-revealed img,
   .group:hover .hover-reveal-media img,
   .group:focus-visible .hover-reveal-media img {
     filter: grayscale(0);
