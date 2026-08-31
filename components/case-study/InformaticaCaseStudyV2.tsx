@@ -177,7 +177,7 @@ const REFLECTION = [
 ];
 
 const WHAT_ID_IMPROVE =
-  "I don't have a reliable time-saved figure for the content automation workflow, so I've kept that part of the case study scoped to what it did rather than estimating an impact number I can't verify.";
+  "Splitting the curriculum into four topic tracks let six of us build in parallel, but it also meant four people were each designing their own testing and activity pages. Next time I'd define a shared set of interactive-page components up front, so the tracks stayed consistent for learners instead of drifting apart, and nobody rebuilt the same quiz or exercise pattern twice.";
 
 const BAND = {
   base: { background: "var(--color-bg)" },
@@ -622,13 +622,13 @@ export default function InformaticaCaseStudyV2() {
           </div>
 
           <div
-            className="mt-10 px-6 py-6 rounded-[var(--radius-default)] border border-l-[3px]"
+            className="mt-10 grid md:grid-cols-[240px_1fr] gap-x-10 gap-y-3 px-6 py-6 md:px-8 rounded-[var(--radius-default)] border border-l-[3px]"
             style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-1)" }}
           >
-            <p className="mb-2.5" style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+            <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
               What I&apos;d improve next
             </p>
-            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>{WHAT_ID_IMPROVE}</p>
+            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{WHAT_ID_IMPROVE}</p>
           </div>
 
           {cs.note && (

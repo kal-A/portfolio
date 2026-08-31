@@ -260,6 +260,7 @@ export default function ForceNWorkflowDiagramV2() {
   const [layout, setLayout] = useState<Awaited<ReturnType<typeof computeLayout>> | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [pos, setPos] = useState<PopPos | null>(null);
+  const [open, setOpen] = useState(false);
   const mounted = useRef(true);
   const wrapRef = useRef<HTMLDivElement>(null);
   const popRef = useRef<HTMLDivElement>(null);
@@ -289,6 +290,15 @@ export default function ForceNWorkflowDiagramV2() {
     [activeIndex]
   );
 
+  // Minimizing the diagram also dismisses any open popover, so it can't hang
+  // over the page after the nodes it points at have collapsed away.
+  const toggleOpen = useCallback(() => {
+    setOpen((o) => {
+      if (o) setActiveId(null);
+      return !o;
+    });
+  }, []);
+
   // Pin the popover next to the active node's on-screen rect. Prefers the right
   // of the node, flips to the left when it would overflow, and clamps to the
   // viewport. Re-runs on scroll/resize so it tracks the node as the page moves.
@@ -317,14 +327,24 @@ export default function ForceNWorkflowDiagramV2() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActiveId(null);
     };
+    // Click anywhere that isn't the popover or another node closes it. Clicks
+    // on a node fall through to that node's own handler, which switches focus.
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node | null;
+      if (popRef.current && target && popRef.current.contains(target)) return;
+      if (target instanceof Element && target.closest("[data-node]")) return;
+      setActiveId(null);
+    };
     window.addEventListener("scroll", onMove, true);
     window.addEventListener("resize", onMove);
     window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown, true);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onMove, true);
       window.removeEventListener("resize", onMove);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown, true);
     };
   }, [activeId]);
 
@@ -336,6 +356,36 @@ export default function ForceNWorkflowDiagramV2() {
         .fn2-diagram .node-hit:focus-visible .shape-outer { filter: drop-shadow(0 0 0 2px var(--accent-bright, var(--color-project-accent))); }
         .fn2-diagram .node-hit:hover .inner-line { opacity: 0.85; }
       `}</style>
+
+      {/* Collapse/expand tab: the auto-laid workflow is tall, so it stays
+          minimized until the reader chooses to open it. */}
+      <div
+        className={`flex items-center justify-between gap-4 rounded-[var(--radius-default)] border px-5 py-4 ${open ? "mb-4" : ""}`}
+        style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+      >
+        <div>
+          <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+            Interactive diagram
+          </p>
+          <p className="mt-1 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+            {open
+              ? "Click any node to read what happens at that step."
+              : `Full production and fulfilment workflow, ${forceNWorkflowNodeOrder.length} steps. Minimized to save space.`}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={toggleOpen}
+          aria-expanded={open}
+          className="shrink-0 px-4 py-2 text-sm font-medium rounded-[var(--radius-button)] border transition-all duration-[var(--duration-base)] hover:border-[var(--accent-bright,var(--color-project-accent))] hover:text-[var(--accent-bright,var(--color-project-accent))] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_10%,var(--color-surface-1))]"
+          style={{ borderColor: "var(--color-line-strong, var(--color-line))", color: "var(--color-text)", background: "var(--color-surface-2)" }}
+        >
+          {open ? "Minimize ▲" : "View full design flow ▾"}
+        </button>
+      </div>
+
+      {open && (
+      <>
       <div
         className="fn2-diagram rounded-[var(--radius-default)] overflow-auto border"
         style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
@@ -464,6 +514,8 @@ export default function ForceNWorkflowDiagramV2() {
           </span>
         ))}
       </div>
+      </>
+      )}
 
       {/* Floating popover, pinned to the clicked node, over the page. */}
       {activeNode &&

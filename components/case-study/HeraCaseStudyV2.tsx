@@ -47,6 +47,15 @@ const HERO_TITLE = "Designing financing and care-discovery flows for a 0-to-1 fe
 const HERO_LEAD =
   "Hera's financing application ran entirely through Loanglide, a third-party loan processor, and there was no in-house product to design the sign-up, payment, or clinic-discovery experience around. I designed the financing flow, a payment-plan concept grounded in competitive research, and the clinic-discovery experience, and shipped the account-segmentation flow that routes new users into them, then used Hotjar and Google Analytics to decide what came next. Most screens here are professional reconstructions built from the real wireframes, research notes, and roadmap, since no production screens were preserved.";
 
+/** Page-local "what I'd improve next", overriding the shared data file's
+ *  `whatIdImprove` (which reads as a case-study provenance caveat about
+ *  results not being preserved: that belongs to the SourceNotes, not the
+ *  reflection). This version speaks to the actual work: the payment-plan
+ *  concept shipped on competitive research and judgment rather than patient
+ *  testing, so the forward-looking step is to validate it with real users. */
+const WHAT_ID_IMPROVE =
+  "The payment-plan concept was grounded in competitive research and shipped on judgment, without a round of testing against how real patients actually weigh cost during fertility treatment. Next time I'd put the financing flow in front of real users early and read it alongside the Hotjar and Google Analytics signals, so the plan-comparison step is validated by how people behave rather than by what looked reasonable to us.";
+
 const TOC_ITEMS = [
   { href: "#s-glance", label: "At a glance" },
   { href: "#s-scope", label: "What it covered" },
@@ -1156,17 +1165,15 @@ export default function HeraCaseStudyV2() {
             })}
           </div>
 
-          {cs.whatIdImprove && (
-            <div
-              className="mt-10 grid md:grid-cols-[240px_1fr] gap-x-10 gap-y-3 px-6 py-6 md:px-8 rounded-[var(--radius-default)] border border-l-[3px]"
-              style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-1)" }}
-            >
-              <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
-                What I&apos;d improve next
-              </p>
-              <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{cs.whatIdImprove}</p>
-            </div>
-          )}
+          <div
+            className="mt-10 grid md:grid-cols-[240px_1fr] gap-x-10 gap-y-3 px-6 py-6 md:px-8 rounded-[var(--radius-default)] border border-l-[3px]"
+            style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-1)" }}
+          >
+            <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+              What I&apos;d improve next
+            </p>
+            <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{WHAT_ID_IMPROVE}</p>
+          </div>
 
           <div className="mt-12 pt-8 grid md:grid-cols-2 gap-x-14 gap-y-6" style={{ borderTop: "1px solid var(--color-line)" }}>
             <div>
