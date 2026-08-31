@@ -5,14 +5,14 @@ import { caseStudies, getCaseStudy } from "@/lib/content/case-studies";
 import { caseStudyTheme } from "@/lib/content/theme";
 import Metric from "@/components/Metric";
 import Diagram from "@/components/case-study/Diagram";
-import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudy";
-import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudy";
-import PillPalCaseStudy from "@/components/case-study/PillPalCaseStudy";
-import PathPeerCaseStudy from "@/components/case-study/PathPeerCaseStudy";
-import RoomEaseCaseStudy from "@/components/case-study/RoomEaseCaseStudy";
-import HeraCaseStudy from "@/components/case-study/HeraCaseStudy";
-import InformaticaCaseStudy from "@/components/case-study/InformaticaCaseStudy";
-import ChronicleCaseStudy from "@/components/case-study/ChronicleCaseStudy";
+import ForceNCaseStudy from "@/components/case-study/ForceNCaseStudyV2";
+import GreenhouseCaseStudy from "@/components/case-study/GreenhouseCaseStudyV2";
+import PillPalCaseStudy from "@/components/case-study/PillPalCaseStudyV2";
+import PathPeerCaseStudy from "@/components/case-study/PathPeerCaseStudyV2";
+import RoomEaseCaseStudy from "@/components/case-study/RoomEaseCaseStudyV2";
+import HeraCaseStudy from "@/components/case-study/HeraCaseStudyV2";
+import InformaticaCaseStudy from "@/components/case-study/InformaticaCaseStudyV2";
+import ChronicleCaseStudy from "@/components/case-study/ChronicleCaseStudyV2";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
