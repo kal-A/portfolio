@@ -73,7 +73,14 @@ function drawDelays(paths: string[]): number[] {
 
 function buildFigureSvg(paths: string[]): string {
   const delays = drawDelays(paths);
-  const pathEls = paths.map((d) => `<path d="${d}" fill="url(#heroFigBronze)"/>`).join("");
+  // Fill AND stroke each contour with the same bronze gradient: the trace is a
+  // very fine single-line drawing, so a stroke thickens the lines enough that
+  // the whole figure (arm, coat, legs) reads at this small size on the dark
+  // field, not just the dense head. stroke-width is in the 1024x1536 asset
+  // space (~4 there renders as a hairline on screen).
+  const pathEls = paths
+    .map((d) => `<path d="${d}" fill="url(#heroFigBronze)" stroke="url(#heroFigBronze)" stroke-width="4" stroke-linejoin="round"/>`)
+    .join("");
   // The reveal mask traces the figure's OWN paths: a thick round stroke along
   // each contour, drawn on with stroke-dashoffset. Because these are the actual
   // artwork paths, the reveal is perfectly aligned and, once drawn, blankets the
