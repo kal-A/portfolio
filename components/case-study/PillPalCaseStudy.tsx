@@ -355,7 +355,7 @@ function FigureCaption({ eyebrow, children }: { eyebrow: string; children: React
   );
 }
 
-export default function PillPalCaseStudyV2() {
+export default function PillPalCaseStudy() {
   const cs = getCaseStudy("pill-pal")!;
 
   return (

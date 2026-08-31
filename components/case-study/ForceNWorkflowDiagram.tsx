@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import ELK, { type ElkNode } from "elkjs/lib/elk.bundled.js";
 import {
   forceNWorkflowNodes,
@@ -10,18 +11,25 @@ import {
   type WorkflowNodeType,
 } from "@/lib/content/forcen-workflow";
 
-// Colors match the approved forcen-preview.html mockup's "comic-box" language.
-const INK = "#201c17";
-const INK_SOFT = "#5c564c";
-const AMBER_FILL = "#fdf1de";
-const AMBER_LINE = "#a15a10";
-const DECISION_FILL = "#2b2e33";
-const DECISION_TEXT = "#f0c98a";
-const PAPER = "#fdfaf5";
+/**
+ * Dark-shell counterpart to ForceNWorkflowDiagram (which stays on the legacy
+ * warm/paper light page). Same elkjs auto-layout and the same reconstructed
+ * node/edge data; only the visual treatment moves onto the dark token set,
+ * and the docked full-height side drawer is replaced with a floating popover
+ * pinned next to the clicked node (the pattern approved on RoomEase:
+ * createPortal, position:fixed, anchored to the node's on-screen rect,
+ * following scroll/resize, clamped to the viewport, closes on ✕/Escape).
+ *
+ * Shape carries meaning (rectangle = process, diamond = decision, cylinder =
+ * data store, document = record, double-border = automated step, pill = event
+ * / end state). Exception/side-path nodes (procurement, replenishment, rework)
+ * take a faint accent tint so they read as off the main straight-through line.
+ */
 
 // Nodes that represent an exception/side path (procurement, rework,
-// replenishment) render white instead of amber to visually separate them
-// from the main straight-through flow, same as the mockup.
+// replenishment) take a faint accent tint instead of the plain surface fill,
+// so they read as branching off the main straight-through flow, the dark-token
+// equivalent of the light page's white-vs-amber separation.
 const SIDE_PATH_IDS = new Set([
   "procure-components",
   "trigger-component-replenishment",
@@ -55,10 +63,14 @@ const TYPE_LABEL: Record<WorkflowNodeType, string> = {
 };
 
 function fillFor(node: WorkflowNode): string {
-  if (node.type === "decision") return DECISION_FILL;
-  if (node.type === "event" || node.type === "endpoint" || node.type === "data-store") return "#fff";
-  if (SIDE_PATH_IDS.has(node.id)) return "#fff";
-  return AMBER_FILL;
+  if (node.type === "decision") return "var(--color-project-accent)";
+  if (SIDE_PATH_IDS.has(node.id))
+    return "color-mix(in srgb, var(--color-project-accent) 12%, var(--color-surface-2))";
+  return "var(--color-surface-2)";
+}
+
+function textFor(node: WorkflowNode): string {
+  return node.type === "decision" ? "var(--color-bg)" : "var(--color-text)";
 }
 
 interface LaidOutNode extends WorkflowNode {
@@ -157,27 +169,20 @@ async function computeLayout() {
 
 function NodeShape({ node, active }: { node: LaidOutNode; active: boolean }) {
   const { width, height, type } = node;
-  const fill = fillFor(node);
-  const strokeWidth = active ? 4.5 : 2.5;
+  const shapeStyle = {
+    fill: fillFor(node),
+    stroke: active ? "var(--accent-bright, var(--color-project-accent))" : "var(--color-line-strong, var(--color-line))",
+  } as React.CSSProperties;
+  const strokeWidth = active ? 4 : 2.25;
 
   if (type === "decision") {
     const points = `${width / 2},2 ${width - 2},${height / 2} ${width / 2},${height - 2} 2,${height / 2}`;
-    return <polygon className="shape-outer" points={points} fill={fill} stroke={INK} strokeWidth={strokeWidth} />;
+    return <polygon points={points} style={shapeStyle} strokeWidth={strokeWidth} />;
   }
 
   if (type === "event" || type === "endpoint") {
     return (
-      <rect
-        className="shape-outer"
-        x={1}
-        y={1}
-        width={width - 2}
-        height={height - 2}
-        rx={(height - 2) / 2}
-        fill={fill}
-        stroke={INK}
-        strokeWidth={strokeWidth}
-      />
+      <rect x={1} y={1} width={width - 2} height={height - 2} rx={(height - 2) / 2} style={shapeStyle} strokeWidth={strokeWidth} />
     );
   }
 
@@ -187,13 +192,11 @@ function NodeShape({ node, active }: { node: LaidOutNode; active: boolean }) {
     return (
       <g>
         <path
-          className="shape-outer"
           d={`M2,${bodyTop} v${height - rimH - 2} a${(width - 4) / 2},${rimH / 2} 0 0 0 ${width - 4},0 v${-(height - rimH - 2)}`}
-          fill={fill}
-          stroke={INK}
+          style={shapeStyle}
           strokeWidth={strokeWidth}
         />
-        <ellipse cx={width / 2} cy={bodyTop} rx={(width - 4) / 2} ry={rimH / 2} fill={fill} stroke={INK} strokeWidth={strokeWidth} />
+        <ellipse cx={width / 2} cy={bodyTop} rx={(width - 4) / 2} ry={rimH / 2} style={shapeStyle} strokeWidth={strokeWidth} />
       </g>
     );
   }
@@ -202,10 +205,8 @@ function NodeShape({ node, active }: { node: LaidOutNode; active: boolean }) {
     const waveH = 10;
     return (
       <path
-        className="shape-outer"
         d={`M2,2 H${width - 2} V${height - waveH - 2} Q${width * 0.75},${height - 2} ${width / 2},${height - waveH - 2} Q${width * 0.25},${height + waveH - 2} 2,${height - waveH - 2} Z`}
-        fill={fill}
-        stroke={INK}
+        style={shapeStyle}
         strokeWidth={strokeWidth}
       />
     );
@@ -214,7 +215,7 @@ function NodeShape({ node, active }: { node: LaidOutNode; active: boolean }) {
   if (type === "automated-subprocess") {
     return (
       <g>
-        <rect className="shape-outer" x={1} y={1} width={width - 2} height={height - 2} rx={10} fill={fill} stroke={INK} strokeWidth={strokeWidth} />
+        <rect x={1} y={1} width={width - 2} height={height - 2} rx={10} style={shapeStyle} strokeWidth={strokeWidth} />
         <rect
           x={7}
           y={7}
@@ -222,37 +223,47 @@ function NodeShape({ node, active }: { node: LaidOutNode; active: boolean }) {
           height={height - 14}
           rx={6}
           fill="none"
-          stroke={AMBER_LINE}
           strokeWidth={1.5}
           strokeDasharray="4 3"
           className="inner-line"
+          style={{ stroke: "var(--accent-bright, var(--color-project-accent))" }}
         />
       </g>
     );
   }
 
-  return <rect className="shape-outer" x={1} y={1} width={width - 2} height={height - 2} rx={10} fill={fill} stroke={INK} strokeWidth={strokeWidth} />;
+  return <rect x={1} y={1} width={width - 2} height={height - 2} rx={10} style={shapeStyle} strokeWidth={strokeWidth} />;
 }
 
-function edgeStrokeProps(style: string) {
+function edgeStrokeProps(style: string): { stroke: string; strokeDasharray?: string; accent: boolean } {
   switch (style) {
     case "rework":
-      return { stroke: "#c04b2c", strokeDasharray: "6 4" };
+      return { stroke: "var(--accent-bright, var(--color-project-accent))", strokeDasharray: "6 4", accent: true };
     case "replenishment":
-      return { stroke: "#2c6e5e", strokeDasharray: "2 4" };
+      return { stroke: "var(--accent-bright, var(--color-project-accent))", strokeDasharray: "2 5", accent: true };
     case "parallel":
-      return { stroke: "#3a6b93", strokeDasharray: "1 5" };
+      return { stroke: "var(--color-text-muted)", strokeDasharray: "1 6", accent: false };
     case "data-update":
-      return { stroke: "#8a6b1f", strokeDasharray: "5 3" };
+      return { stroke: "var(--color-text-subtle)", strokeDasharray: "5 4", accent: false };
     default:
-      return { stroke: INK, strokeDasharray: undefined };
+      return { stroke: "var(--color-text-subtle)", strokeDasharray: undefined, accent: false };
   }
+}
+
+interface PopPos {
+  left: number;
+  top: number;
+  width: number;
 }
 
 export default function ForceNWorkflowDiagram() {
   const [layout, setLayout] = useState<Awaited<ReturnType<typeof computeLayout>> | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [pos, setPos] = useState<PopPos | null>(null);
+  const [open, setOpen] = useState(false);
   const mounted = useRef(true);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     mounted.current = true;
@@ -268,198 +279,313 @@ export default function ForceNWorkflowDiagram() {
     () => layout?.nodes.find((n) => n.id === activeId) ?? null,
     [layout, activeId]
   );
-
   const activeIndex = activeId ? forceNWorkflowNodeOrder.indexOf(activeId) : -1;
 
-  function stepActive(delta: number) {
-    if (activeIndex === -1) return;
-    const next =
-      (activeIndex + delta + forceNWorkflowNodeOrder.length) % forceNWorkflowNodeOrder.length;
-    setActiveId(forceNWorkflowNodeOrder[next]);
-  }
+  const stepActive = useCallback(
+    (delta: number) => {
+      if (activeIndex === -1) return;
+      const next = (activeIndex + delta + forceNWorkflowNodeOrder.length) % forceNWorkflowNodeOrder.length;
+      setActiveId(forceNWorkflowNodeOrder[next]);
+    },
+    [activeIndex]
+  );
+
+  // Minimizing the diagram also dismisses any open popover, so it can't hang
+  // over the page after the nodes it points at have collapsed away.
+  const toggleOpen = useCallback(() => {
+    setOpen((o) => {
+      if (o) setActiveId(null);
+      return !o;
+    });
+  }, []);
+
+  // Pin the popover next to the active node's on-screen rect. Prefers the right
+  // of the node, flips to the left when it would overflow, and clamps to the
+  // viewport. Re-runs on scroll/resize so it tracks the node as the page moves.
+  useEffect(() => {
+    if (!activeId) {
+      setPos(null);
+      return;
+    }
+    const compute = () => {
+      const el = wrapRef.current?.querySelector<SVGGElement>(`[data-node="${activeId}"]`);
+      if (!el) return;
+      const nr = el.getBoundingClientRect();
+      const pad = 12;
+      const width = Math.min(340, window.innerWidth - pad * 2);
+      const ph = popRef.current?.offsetHeight ?? 260;
+      let left = nr.right + 14;
+      if (left + width > window.innerWidth - pad) left = nr.left - width - 14;
+      left = Math.max(pad, Math.min(left, window.innerWidth - width - pad));
+      let top = nr.top + nr.height / 2 - ph / 2;
+      top = Math.max(pad, Math.min(top, window.innerHeight - ph - pad));
+      setPos({ left, top, width });
+    };
+    compute();
+    const raf = requestAnimationFrame(compute); // refine once popover height is known
+    const onMove = () => compute();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveId(null);
+    };
+    // Click anywhere that isn't the popover or another node closes it. Clicks
+    // on a node fall through to that node's own handler, which switches focus.
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node | null;
+      if (popRef.current && target && popRef.current.contains(target)) return;
+      if (target instanceof Element && target.closest("[data-node]")) return;
+      setActiveId(null);
+    };
+    window.addEventListener("scroll", onMove, true);
+    window.addEventListener("resize", onMove);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown, true);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onMove, true);
+      window.removeEventListener("resize", onMove);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown, true);
+    };
+  }, [activeId]);
 
   return (
-    <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen px-2 sm:px-6">
+    <div ref={wrapRef}>
       <style>{`
-        .fn-diagram .node-hit { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .18s ease-out; }
-        .fn-diagram .node-hit .shape-outer { transition: filter .18s ease-out; }
-        .fn-diagram .node-hit:hover { transform: translate(-2px, -2px); }
-        .fn-diagram .node-hit:hover .shape-outer { filter: brightness(1.05) drop-shadow(3px 3px 0 ${INK}); }
-        .fn-diagram .node-hit:hover .inner-line { opacity: 0.85; }
+        .fn2-diagram .node-hit { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .18s ease-out; outline: none; }
+        .fn2-diagram .node-hit:hover { transform: translate(-2px, -2px); }
+        .fn2-diagram .node-hit:focus-visible .shape-outer { filter: drop-shadow(0 0 0 2px var(--accent-bright, var(--color-project-accent))); }
+        .fn2-diagram .node-hit:hover .inner-line { opacity: 0.85; }
       `}</style>
-      <div className="mx-auto max-w-[1880px]">
-        <div
-          className="fn-diagram rounded-2xl overflow-auto"
-          style={{ border: `3px solid ${INK}`, background: PAPER, boxShadow: `6px 6px 0 ${INK}` }}
+
+      {/* Collapse/expand tab: the auto-laid workflow is tall, so it stays
+          minimized until the reader chooses to open it. */}
+      <div
+        className={`flex items-center justify-between gap-4 rounded-[var(--radius-default)] border px-5 py-4 ${open ? "mb-4" : ""}`}
+        style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+      >
+        <div>
+          <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+            Interactive diagram
+          </p>
+          <p className="mt-1 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+            {open
+              ? "Click any node to read what happens at that step."
+              : `Full production and fulfilment workflow, ${forceNWorkflowNodeOrder.length} steps. Minimized to save space.`}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={toggleOpen}
+          aria-expanded={open}
+          className="shrink-0 px-4 py-2 text-sm font-medium rounded-[var(--radius-button)] border transition-all duration-[var(--duration-base)] hover:border-[var(--accent-bright,var(--color-project-accent))] hover:text-[var(--accent-bright,var(--color-project-accent))] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_10%,var(--color-surface-1))]"
+          style={{ borderColor: "var(--color-line-strong, var(--color-line))", color: "var(--color-text)", background: "var(--color-surface-2)" }}
         >
-          {!layout ? (
-            <div className="flex items-center justify-center h-64 text-sm" style={{ color: INK_SOFT }}>
-              Computing diagram layout…
-            </div>
-          ) : (
-            <svg
-              width="100%"
-              viewBox={`-20 -20 ${layout.width + 40} ${layout.height + 40}`}
-              style={{ aspectRatio: `${layout.width + 40} / ${layout.height + 40}`, minWidth: 900 }}
-              className="block"
-              role="img"
-              aria-label="ForceN Dev System production and fulfilment workflow diagram"
-            >
-              <defs>
-                <marker
-                  id="fn-arrowhead"
-                  markerWidth="12"
-                  markerHeight="12"
-                  refX="9.5"
-                  refY="3.5"
-                  orient="auto"
-                  markerUnits="strokeWidth"
-                >
-                  <path d="M0,0 L9.5,3.5 L0,7 Z" fill={INK} />
-                </marker>
-              </defs>
-
-              {layout.edges.map((e) => {
-                if (e.points.length < 2) return null;
-                const d = e.points
-                  .map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`)
-                  .join(" ");
-                const { stroke, strokeDasharray } = edgeStrokeProps(e.style);
-                const labelPos = e.labelPos ?? e.points[Math.floor(e.points.length / 2)];
-                return (
-                  <g key={e.id}>
-                    <path
-                      d={d}
-                      fill="none"
-                      stroke={stroke}
-                      strokeWidth={2.75}
-                      strokeDasharray={strokeDasharray}
-                      markerEnd="url(#fn-arrowhead)"
-                    />
-                    {e.label && (
-                      <text
-                        x={labelPos.x}
-                        y={labelPos.y}
-                        fontSize={12}
-                        fontWeight={700}
-                        fill={INK_SOFT}
-                        textAnchor="middle"
-                        style={{ paintOrder: "stroke", stroke: PAPER, strokeWidth: 5 }}
-                      >
-                        {e.label}
-                      </text>
-                    )}
-                  </g>
-                );
-              })}
-
-              {layout.nodes.map((n) => (
-                <g key={n.id} transform={`translate(${n.x},${n.y})`}>
-                  <g
-                    onClick={() => setActiveId(n.id)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(evt) => {
-                      if (evt.key === "Enter" || evt.key === " ") setActiveId(n.id);
-                    }}
-                    className="node-hit"
-                  >
-                    <NodeShape node={n} active={n.id === activeId} />
-                    {n.type === "decision" ? (
-                      <foreignObject
-                        x={n.width * 0.22}
-                        y={n.height * 0.28}
-                        width={n.width * 0.56}
-                        height={n.height * 0.44}
-                      >
-                        <div className="w-full h-full flex items-center justify-center text-center">
-                          <span className="text-[13px] leading-tight font-bold" style={{ color: DECISION_TEXT }}>
-                            {n.title}
-                          </span>
-                        </div>
-                      </foreignObject>
-                    ) : (
-                      <foreignObject x={6} y={4} width={n.width - 12} height={n.height - 8}>
-                        <div className="w-full h-full flex items-center justify-center text-center px-1">
-                          <span className="text-[13px] leading-tight font-bold" style={{ color: INK }}>
-                            {n.title}
-                          </span>
-                        </div>
-                      </foreignObject>
-                    )}
-                  </g>
-                </g>
-              ))}
-            </svg>
-          )}
-        </div>
-
-        {activeNode && (
-          <div className="fixed inset-0 z-40" onClick={() => setActiveId(null)}>
-            <div className="absolute inset-0 bg-black/20" />
-            <div
-              className="absolute right-0 top-0 h-full w-full max-w-md bg-white p-8 overflow-y-auto"
-              style={{ borderLeft: `3px solid ${INK}` }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between">
-                <span
-                  className="text-[13px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-full"
-                  style={{
-                    background: fillFor(activeNode),
-                    color: activeNode.type === "decision" ? DECISION_TEXT : INK,
-                    border: `2px solid ${INK}`,
-                  }}
-                >
-                  {TYPE_LABEL[activeNode.type]}
-                </span>
-                <button
-                  onClick={() => setActiveId(null)}
-                  className="text-neutral-400 hover:text-neutral-900 text-base"
-                  aria-label="Close"
-                >
-                  ✕
-                </button>
-              </div>
-              <h3 className="font-serif text-[28px] leading-tight mt-5" style={{ color: INK }}>
-                {activeNode.title}
-              </h3>
-              <p className="text-base leading-relaxed mt-3.5" style={{ color: INK_SOFT }}>
-                {activeNode.description}
-              </p>
-              <div className="flex gap-3 mt-8">
-                <button
-                  onClick={() => stepActive(-1)}
-                  className="cs-box flex-1 py-2.5 text-base font-bold"
-                >
-                  ← Prev
-                </button>
-                <button
-                  onClick={() => stepActive(1)}
-                  className="cs-box flex-1 py-2.5 text-base font-bold"
-                >
-                  Next →
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-[13px] font-semibold" style={{ color: INK_SOFT }}>
-          {(Object.keys(TYPE_LABEL) as WorkflowNodeType[]).map((t) => (
-            <span key={t} className="flex items-center gap-1.5">
-              <span
-                className="inline-block w-3.5 h-3.5 rounded-sm"
-                style={{
-                  background: t === "decision" ? DECISION_FILL : t === "process" ? AMBER_FILL : "#fff",
-                  border: `1.5px solid ${INK}`,
-                }}
-              />
-              {TYPE_LABEL[t]}
-            </span>
-          ))}
-        </div>
+          {open ? "Minimize ▲" : "View full design flow ▾"}
+        </button>
       </div>
+
+      {open && (
+      <>
+      <div
+        className="fn2-diagram rounded-[var(--radius-default)] overflow-auto border"
+        style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+      >
+        {!layout ? (
+          <div className="flex items-center justify-center h-64 text-sm" style={{ color: "var(--color-text-subtle)" }}>
+            Computing diagram layout…
+          </div>
+        ) : (
+          <svg
+            width="100%"
+            viewBox={`-20 -20 ${layout.width + 40} ${layout.height + 40}`}
+            style={{ aspectRatio: `${layout.width + 40} / ${layout.height + 40}`, minWidth: 900 }}
+            className="block"
+            role="img"
+            aria-label="ForceN Dev System production and fulfilment workflow diagram"
+          >
+            <defs>
+              <marker id="fn2-arrowhead" markerWidth="12" markerHeight="12" refX="9.5" refY="3.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9.5,3.5 L0,7 Z" style={{ fill: "var(--color-text-subtle)" }} />
+              </marker>
+              <marker id="fn2-arrowhead-accent" markerWidth="12" markerHeight="12" refX="9.5" refY="3.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9.5,3.5 L0,7 Z" style={{ fill: "var(--accent-bright, var(--color-project-accent))" }} />
+              </marker>
+            </defs>
+
+            {layout.edges.map((e) => {
+              if (e.points.length < 2) return null;
+              const d = e.points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+              const { stroke, strokeDasharray, accent } = edgeStrokeProps(e.style);
+              const labelPos = e.labelPos ?? e.points[Math.floor(e.points.length / 2)];
+              return (
+                <g key={e.id}>
+                  <path
+                    d={d}
+                    fill="none"
+                    strokeWidth={2.75}
+                    strokeDasharray={strokeDasharray}
+                    markerEnd={accent ? "url(#fn2-arrowhead-accent)" : "url(#fn2-arrowhead)"}
+                    style={{ stroke }}
+                  />
+                  {e.label && (
+                    <text
+                      x={labelPos.x}
+                      y={labelPos.y}
+                      fontSize={12}
+                      fontWeight={600}
+                      textAnchor="middle"
+                      style={{ fill: "var(--color-text-muted)", paintOrder: "stroke", stroke: "var(--color-surface-1)", strokeWidth: 5 }}
+                    >
+                      {e.label}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+
+            {layout.nodes.map((n) => (
+              <g key={n.id} transform={`translate(${n.x},${n.y})`}>
+                <g
+                  data-node={n.id}
+                  onClick={() => setActiveId(n.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(evt) => {
+                    if (evt.key === "Enter" || evt.key === " ") {
+                      evt.preventDefault();
+                      setActiveId(n.id);
+                    }
+                  }}
+                  className="node-hit"
+                  aria-label={`${n.title} (${TYPE_LABEL[n.type]})`}
+                >
+                  <g className="shape-outer">
+                    <NodeShape node={n} active={n.id === activeId} />
+                  </g>
+                  {n.type === "decision" ? (
+                    <foreignObject x={n.width * 0.22} y={n.height * 0.28} width={n.width * 0.56} height={n.height * 0.44}>
+                      <div className="w-full h-full flex items-center justify-center text-center">
+                        <span className="text-[13px] leading-tight font-semibold" style={{ color: textFor(n) }}>
+                          {n.title}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  ) : (
+                    <foreignObject x={6} y={4} width={n.width - 12} height={n.height - 8}>
+                      <div className="w-full h-full flex items-center justify-center text-center px-1">
+                        <span className="text-[13px] leading-tight font-semibold" style={{ color: textFor(n) }}>
+                          {n.title}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  )}
+                </g>
+              </g>
+            ))}
+          </svg>
+        )}
+      </div>
+
+      {/* Legend + hint below the chart. */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <span
+          style={{
+            fontSize: "var(--text-label)",
+            letterSpacing: "var(--tracking-label)",
+            textTransform: "uppercase",
+            color: "var(--accent-bright, var(--color-project-accent))",
+          }}
+        >
+          Click any node
+        </span>
+        {(Object.keys(TYPE_LABEL) as WorkflowNodeType[]).map((t) => (
+          <span key={t} className="flex items-center gap-1.5 text-sm" style={{ color: "var(--color-text-muted)" }}>
+            <span
+              aria-hidden="true"
+              className="inline-block w-3.5 h-3.5 shrink-0"
+              style={{
+                background: t === "decision" ? "var(--color-project-accent)" : "var(--color-surface-2)",
+                border: "1.5px solid var(--color-line-strong, var(--color-line))",
+                borderRadius: t === "event" || t === "endpoint" ? "999px" : t === "decision" ? "2px" : "3px",
+                transform: t === "decision" ? "rotate(45deg)" : undefined,
+              }}
+            />
+            {TYPE_LABEL[t]}
+          </span>
+        ))}
+      </div>
+      </>
+      )}
+
+      {/* Floating popover, pinned to the clicked node, over the page. */}
+      {activeNode &&
+        pos &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={popRef}
+            role="dialog"
+            aria-label={activeNode.title}
+            className="fixed z-50 rounded-[var(--radius-default)] border p-5"
+            style={{
+              left: pos.left,
+              top: pos.top,
+              width: pos.width,
+              background: "var(--color-surface-2)",
+              borderColor: "var(--color-line-strong, var(--color-line))",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.55)",
+            }}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span
+                className="rounded-full px-2.5 py-1 border"
+                style={{
+                  fontSize: "var(--text-label)",
+                  letterSpacing: "var(--tracking-label)",
+                  textTransform: "uppercase",
+                  color: "var(--accent-bright, var(--color-project-accent))",
+                  borderColor: "var(--accent-bright, var(--color-project-accent))",
+                }}
+              >
+                {TYPE_LABEL[activeNode.type]}
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveId(null)}
+                aria-label="Close"
+                className="text-sm w-7 h-7 flex items-center justify-center rounded-full transition-colors hover:bg-[var(--color-surface-1)]"
+                style={{ color: "var(--color-text-subtle)" }}
+              >
+                ✕
+              </button>
+            </div>
+            <h3 className="mt-3" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", lineHeight: "var(--leading-h3)", color: "var(--color-text)" }}>
+              {activeNode.title}
+            </h3>
+            <p className="mt-3" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+              {activeNode.description}
+            </p>
+            <div className="flex items-center justify-between gap-2.5 mt-5">
+              <span className="text-sm" style={{ color: "var(--color-text-subtle)" }}>
+                {activeIndex + 1} / {forceNWorkflowNodeOrder.length}
+              </span>
+              <div className="flex gap-2.5">
+                {(["prev", "next"] as const).map((dir) => (
+                  <button
+                    key={dir}
+                    type="button"
+                    onClick={() => stepActive(dir === "prev" ? -1 : 1)}
+                    className="px-3.5 py-2 text-sm font-medium rounded-[var(--radius-button)] border transition-all duration-[var(--duration-base)] hover:border-[var(--accent-bright,var(--color-project-accent))] hover:text-[var(--accent-bright,var(--color-project-accent))] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_10%,var(--color-surface-1))]"
+                    style={{ borderColor: "var(--color-line)", color: "var(--color-text)", background: "var(--color-surface-1)" }}
+                  >
+                    {dir === "prev" ? "← Prev" : "Next →"}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

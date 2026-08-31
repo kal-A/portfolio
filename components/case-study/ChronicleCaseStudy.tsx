@@ -397,7 +397,7 @@ function PullQuote({ children, cite }: { children: React.ReactNode; cite?: strin
   );
 }
 
-export default function ChronicleCaseStudyV2() {
+export default function ChronicleCaseStudy() {
   const cs = getCaseStudy("chronicle")!;
   const theme = caseStudyTheme.chronicle;
 

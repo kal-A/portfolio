@@ -12,8 +12,8 @@ import Reveal from "@/components/Reveal";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
- * the PathPeer page after the Greenhouse pilot, the Chronicle V2 reference, the
- * RoomEase V2 gold standard, ForceN V2, and Informatica V2. PathPeer currently
+ * the PathPeer page after the Greenhouse pilot, the Chronicle reference, the
+ * RoomEase gold standard, ForceN, and Informatica. PathPeer currently
  * ships on the legacy warm/paper *light* design system
  * (components/case-study/PathPeerCaseStudy.tsx: cs-box / --ink / blocks/*); this
  * is its rebuild on the shared dark editorial shell.
@@ -28,7 +28,7 @@ import Reveal from "@/components/Reveal";
  * re-themed diagram; its two process flows use the shell ProcessFlow
  * (detailBelow), and everything else is token cards.
  *
- * Structurally closest to Informatica V2 (research-strategy: StatCard,
+ * Structurally closest to Informatica (research-strategy: StatCard,
  * DecisionBlock, ReconstructedNote, two ProcessFlows), but its reflection uses
  * the richer RoomEase two-tier (category + title + body) treatment rather than
  * Informatica's flat paragraphs, since PathPeer's reflection was the section
@@ -158,7 +158,7 @@ const LEGACY_METRICS = [
 /** The reflection cards, each split into a short category, a bold title, and a
  *  lighter body from the shared data file's `reflection` entries (which are
  *  written as "Title sentence. Body sentence."). The two-tier hierarchy matches
- *  the RoomEase V2 gold standard rather than the flatter Informatica variant,
+ *  the RoomEase gold standard rather than the flatter Informatica variant,
  *  since PathPeer's ending was the section flagged for a rebuild. Categories
  *  label each reflection's theme; titles and bodies are verbatim from `cs`. */
 const REFLECTION_CATEGORIES = ["Evidence", "Planning", "No-code", "Measurement"];
@@ -278,7 +278,7 @@ function splitReflection(text: string): { title: string; body: string } {
   return { title: text.slice(0, splitAt + 1).trim(), body: text.slice(splitAt + 2).trim() };
 }
 
-export default function PathPeerCaseStudyV2() {
+export default function PathPeerCaseStudy() {
   const cs = getCaseStudy("pathpeer")!;
   const accent = caseStudyTheme.pathpeer.accent;
 

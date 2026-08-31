@@ -1,21 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
-// Hand-positioned SVG diagram (no layout engine, per the decision to keep
-// diagrams hand-built this pass). Shape carries meaning: pill = event/end
-// state, rectangle = process, diamond = decision (>=2 labelled branches),
-// document = record. Reconstructed from the team's EOT report (six-step
-// matching algorithm, Table 4), the FDR presentation ("How the Recommendation
-// Engine Works" two-stage model), the manual-override wireframe (Figure 2.3),
-// and the "Governed Multi-Role Workflow" slide (member / executive / admin).
-
-const INK = "#201c17";
-const INK_SOFT = "#5c564c";
-const GOLD_FILL = "#fdf3d9";
-const DECISION_FILL = "#2b2419";
-const DECISION_TEXT = "#eab848";
-const PAPER = "#fffdf8";
+/**
+ * Dark-shell counterpart to RoomEaseAllocationDiagram (which stays on the
+ * legacy warm/paper light page). Same hand-positioned flowchart geometry and
+ * the same reconstructed source data — only the visual treatment moves onto
+ * the dark token set.
+ *
+ * Interaction: clicking a node opens a floating popover pinned NEXT TO that
+ * node (anchored to its on-screen position, following scroll/resize, clamped
+ * to the viewport) — so the explanation appears right where you clicked, never
+ * a scroll away in a docked side column. Closes on ✕, Escape, or opening
+ * another node. Shape carries meaning: pill = event / end state, rectangle =
+ * process, diamond = decision (>=2 labelled branches), document = record.
+ */
 
 type NodeType = "event" | "process" | "decision" | "document" | "endpoint";
 
@@ -54,7 +54,7 @@ const nodes: DNode[] = [
     h: 82,
     zone: "input",
     synopsis:
-      "Removes rooms with time conflicts, rooms below the required capacity, and rooms missing required features (AV, accessibility). Anything that fails a hard constraint is out, full stop - this is the feasibility layer, not the preference layer.",
+      "Removes rooms with time conflicts, rooms below the required capacity, and rooms missing required features (AV, accessibility). Anything that fails a hard constraint is out, full stop — this is the feasibility layer, not the preference layer.",
   },
   {
     id: "scoring",
@@ -95,7 +95,7 @@ const nodes: DNode[] = [
   {
     id: "override",
     type: "process",
-    title: "Manual override - reason required",
+    title: "Manual override — reason required",
     x: 24,
     y: 592,
     w: 200,
@@ -138,7 +138,7 @@ const nodes: DNode[] = [
     h: 84,
     zone: "validation",
     synopsis:
-      "If the admin finds a conflict or policy problem, the request is sent back with a reason instead of being silently rejected - the same transparency principle as the user-side override.",
+      "If the admin finds a conflict or policy problem, the request is sent back with a reason instead of being silently rejected — the same transparency principle as the user-side override.",
   },
   {
     id: "confirmed",
@@ -150,7 +150,7 @@ const nodes: DNode[] = [
     h: 60,
     zone: "validation",
     synopsis:
-      "The confirmation screen shows the event summary and room summary and logs the booking to prevent it from conflicting with any later request - closing the loop that a manual, email-based process couldn't reliably close.",
+      "The confirmation screen shows the event summary and room summary and logs the booking to prevent it from conflicting with any later request — closing the loop that a manual, email-based process couldn't reliably close.",
   },
 ];
 
@@ -161,8 +161,6 @@ interface DEdge {
   from: string;
   points: [number, number][];
   label?: string;
-  /** Explicit label position, for edges where the derived midpoint collides
-   * with a node (e.g. right at a decision diamond's tip). */
   labelPos?: [number, number];
   labelAnchor?: "start" | "middle" | "end";
   style: "solid" | "decision" | "rework";
@@ -216,67 +214,22 @@ const edges: DEdge[] = [
   {
     id: "e11",
     from: "changes",
-    points: [[546, 742], [505, 742], [505, 490]],
+    // Route up the gap, then enter the suggestions box HORIZONTALLY through its
+    // right edge (x=505) — a vertical arrow into the side of a box reads as a
+    // mistake; the final segment must be perpendicular to the edge it meets.
+    points: [[546, 742], [525, 742], [525, 490], [505, 490]],
     label: "Back to suggestions",
-    labelPos: [513, 556],
+    labelPos: [531, 556],
     labelAnchor: "start",
     style: "rework",
   },
 ];
 
 const ZONE_BANDS: { id: string; label: string; y: number; h: number; fill: string }[] = [
-  { id: "input", label: "Input & Processing", y: 0, h: 424, fill: "rgba(234,184,72,0.10)" },
-  { id: "execution", label: "Execution", y: 424, h: 434, fill: "rgba(234,184,72,0.04)" },
-  { id: "validation", label: "Validation", y: 858, h: 260, fill: "rgba(234,184,72,0.10)" },
+  { id: "input", label: "Input & Processing", y: 0, h: 424, fill: "color-mix(in srgb, var(--color-project-accent) 9%, transparent)" },
+  { id: "execution", label: "Execution", y: 424, h: 434, fill: "color-mix(in srgb, var(--color-project-accent) 3.5%, transparent)" },
+  { id: "validation", label: "Validation", y: 858, h: 260, fill: "color-mix(in srgb, var(--color-project-accent) 9%, transparent)" },
 ];
-
-function fillFor(n: DNode) {
-  if (n.type === "decision") return DECISION_FILL;
-  if (n.type === "event" || n.type === "endpoint" || n.type === "document") return "#fff";
-  return GOLD_FILL;
-}
-
-function NodeShape({ node, active }: { node: DNode; active: boolean }) {
-  const { w, h, type } = node;
-  const fill = fillFor(node);
-  const strokeWidth = active ? 4.5 : 2.5;
-
-  if (type === "decision") {
-    const points = `${w / 2},2 ${w - 2},${h / 2} ${w / 2},${h - 2} 2,${h / 2}`;
-    return <polygon points={points} fill={fill} stroke={INK} strokeWidth={strokeWidth} />;
-  }
-  if (type === "event" || type === "endpoint") {
-    return (
-      <rect
-        x={1}
-        y={1}
-        width={w - 2}
-        height={h - 2}
-        rx={(h - 2) / 2}
-        fill={fill}
-        stroke={INK}
-        strokeWidth={strokeWidth}
-      />
-    );
-  }
-  if (type === "document") {
-    const waveH = 10;
-    return (
-      <path
-        d={`M2,2 H${w - 2} V${h - waveH - 2} Q${w * 0.75},${h - 2} ${w / 2},${h - waveH - 2} Q${w * 0.25},${h + waveH - 2} 2,${h - waveH - 2} Z`}
-        fill={fill}
-        stroke={INK}
-        strokeWidth={strokeWidth}
-      />
-    );
-  }
-  return <rect x={1} y={1} width={w - 2} height={h - 2} rx={10} fill={fill} stroke={INK} strokeWidth={strokeWidth} />;
-}
-
-function edgeStrokeProps(style: DEdge["style"]) {
-  if (style === "rework") return { stroke: "#a15a10", strokeDasharray: "6 4" };
-  return { stroke: INK, strokeDasharray: undefined };
-}
 
 const TYPE_LABEL: Record<NodeType, string> = {
   event: "Start",
@@ -286,166 +239,364 @@ const TYPE_LABEL: Record<NodeType, string> = {
   endpoint: "End state",
 };
 
+function nodeFill(type: NodeType) {
+  return type === "decision" ? "var(--color-project-accent)" : "var(--color-surface-2)";
+}
+function nodeTextColor(type: NodeType) {
+  return type === "decision" ? "var(--color-bg)" : "var(--color-text)";
+}
+
+function NodeShape({ node, active }: { node: DNode; active: boolean }) {
+  const { w, h, type } = node;
+  const shapeStyle = {
+    fill: nodeFill(type),
+    stroke: active ? "var(--accent-bright, var(--color-project-accent))" : "var(--color-line-strong, var(--color-line))",
+  } as React.CSSProperties;
+  const strokeWidth = active ? 4 : 2;
+
+  if (type === "decision") {
+    const points = `${w / 2},2 ${w - 2},${h / 2} ${w / 2},${h - 2} 2,${h / 2}`;
+    return <polygon points={points} style={shapeStyle} strokeWidth={strokeWidth} />;
+  }
+  if (type === "event" || type === "endpoint") {
+    return <rect x={1} y={1} width={w - 2} height={h - 2} rx={(h - 2) / 2} style={shapeStyle} strokeWidth={strokeWidth} />;
+  }
+  if (type === "document") {
+    const waveH = 10;
+    return (
+      <path
+        d={`M2,2 H${w - 2} V${h - waveH - 2} Q${w * 0.75},${h - 2} ${w / 2},${h - waveH - 2} Q${w * 0.25},${h + waveH - 2} 2,${h - waveH - 2} Z`}
+        style={shapeStyle}
+        strokeWidth={strokeWidth}
+      />
+    );
+  }
+  return <rect x={1} y={1} width={w - 2} height={h - 2} rx={10} style={shapeStyle} strokeWidth={strokeWidth} />;
+}
+
+function edgeStyleProps(style: DEdge["style"]): React.CSSProperties & { strokeDasharray?: string } {
+  if (style === "rework") return { stroke: "var(--accent-bright, var(--color-project-accent))", strokeDasharray: "6 4" };
+  return { stroke: "var(--color-text-subtle)" };
+}
+
+function LegendSwatch({ type }: { type: NodeType }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-block w-3.5 h-3.5 shrink-0"
+      style={{
+        background: nodeFill(type),
+        border: "1.5px solid var(--color-line-strong, var(--color-line))",
+        borderRadius: type === "event" || type === "endpoint" ? "999px" : type === "decision" ? "2px" : "3px",
+        transform: type === "decision" ? "rotate(45deg)" : undefined,
+      }}
+    />
+  );
+}
+
+interface PopPos {
+  left: number;
+  top: number;
+  width: number;
+}
+
 export default function RoomEaseAllocationDiagram() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [pos, setPos] = useState<PopPos | null>(null);
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
   const activeNode = useMemo(() => nodes.find((n) => n.id === activeId) ?? null, [activeId]);
   const activeIndex = activeId ? nodeOrder.indexOf(activeId) : -1;
 
-  function stepActive(delta: number) {
-    if (activeIndex === -1) return;
-    const next = (activeIndex + delta + nodeOrder.length) % nodeOrder.length;
-    setActiveId(nodeOrder[next]);
-  }
+  const stepActive = useCallback(
+    (delta: number) => {
+      if (activeIndex === -1) return;
+      const next = (activeIndex + delta + nodeOrder.length) % nodeOrder.length;
+      setActiveId(nodeOrder[next]);
+    },
+    [activeIndex],
+  );
+
+  // Minimizing the diagram also dismisses any open popover, so it can't hang
+  // over the page after the nodes it points at have collapsed away.
+  const toggleOpen = useCallback(() => {
+    setOpen((o) => {
+      if (o) setActiveId(null);
+      return !o;
+    });
+  }, []);
+
+  // Pin the popover next to the active node's on-screen rect. Prefers the right
+  // of the node, flips to the left when it would overflow, and clamps to the
+  // viewport. Re-runs on scroll/resize so it tracks the node as the page moves.
+  useEffect(() => {
+    if (!activeId) {
+      setPos(null);
+      return;
+    }
+    const compute = () => {
+      const el = wrapRef.current?.querySelector<SVGGElement>(`[data-node="${activeId}"]`);
+      if (!el) return;
+      const nr = el.getBoundingClientRect();
+      const pad = 12;
+      const width = Math.min(340, window.innerWidth - pad * 2);
+      const ph = popRef.current?.offsetHeight ?? 260;
+      let left = nr.right + 14;
+      if (left + width > window.innerWidth - pad) left = nr.left - width - 14;
+      left = Math.max(pad, Math.min(left, window.innerWidth - width - pad));
+      let top = nr.top + nr.height / 2 - ph / 2;
+      top = Math.max(pad, Math.min(top, window.innerHeight - ph - pad));
+      setPos({ left, top, width });
+    };
+    compute();
+    const raf = requestAnimationFrame(compute); // refine once popover height is known
+    const onMove = () => compute();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveId(null);
+    };
+    // Click anywhere that isn't the popover or another node closes it. Clicks
+    // on a node fall through to that node's own handler, which switches focus.
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node | null;
+      if (popRef.current && target && popRef.current.contains(target)) return;
+      if (target instanceof Element && target.closest("[data-node]")) return;
+      setActiveId(null);
+    };
+    window.addEventListener("scroll", onMove, true);
+    window.addEventListener("resize", onMove);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown, true);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onMove, true);
+      window.removeEventListener("resize", onMove);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown, true);
+    };
+  }, [activeId]);
 
   const width = 800;
   const height = 1130;
 
   return (
-    <div className="relative">
-      <style>{`
-        .re-diagram .node-hit { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .18s ease-out; }
-        .re-diagram .node-hit .shape-outer { transition: filter .18s ease-out; }
-        .re-diagram .node-hit:hover { transform: translate(-2px, -2px); }
-      `}</style>
-      <div
-        className="re-diagram rounded-2xl overflow-auto"
-        style={{ border: `3px solid ${INK}`, background: PAPER, boxShadow: `6px 6px 0 ${INK}` }}
-      >
-        <svg
-          width="100%"
-          viewBox={`-20 -20 ${width + 200} ${height + 40}`}
-          style={{ aspectRatio: `${width + 200} / ${height + 40}`, minWidth: 640 }}
-          className="block"
-          role="img"
-          aria-label="Diagram: how a RoomEase booking request becomes a ranked, approved room"
+    <div ref={wrapRef}>
+      <div className="mx-auto max-w-4xl">
+        {/* Collapse/expand tab: the full flowchart is tall, so it stays
+            minimized until the reader chooses to open it. */}
+        <div
+          className={`flex items-center justify-between gap-4 rounded-[var(--radius-default)] border px-5 py-4 ${open ? "mb-4" : ""}`}
+          style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
         >
-          <defs>
-            <marker id="re-arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-              <path d="M0,0 L8,3 L0,6 Z" fill={INK} />
-            </marker>
-          </defs>
+          <div>
+            <p style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+              Interactive diagram
+            </p>
+            <p className="mt-1 text-sm" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
+              {open
+                ? "Click any node to read what happens at that step."
+                : `Full allocation flow, ${nodes.length} steps. Minimized to save space.`}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={toggleOpen}
+            aria-expanded={open}
+            className="shrink-0 px-4 py-2 text-sm font-medium rounded-[var(--radius-button)] border transition-all duration-[var(--duration-base)] hover:border-[var(--accent-bright,var(--color-project-accent))] hover:text-[var(--accent-bright,var(--color-project-accent))] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_10%,var(--color-surface-1))]"
+            style={{ borderColor: "var(--color-line-strong, var(--color-line))", color: "var(--color-text)", background: "var(--color-surface-2)" }}
+          >
+            {open ? "Minimize ▲" : "View full design flow ▾"}
+          </button>
+        </div>
 
-          {ZONE_BANDS.map((z) => (
-            <g key={z.id}>
-              <rect x={-10} y={z.y} width={width + 180} height={z.h} fill={z.fill} />
-              <text x={width + 150} y={z.y + 26} fontSize={13} fontWeight={800} fill={INK_SOFT} textAnchor="end" letterSpacing="0.04em">
-                {z.label.toUpperCase()}
-              </text>
-            </g>
-          ))}
+        {open && (
+        <>
+        <div
+          className="re2-diagram rounded-[var(--radius-default)] overflow-auto border"
+          style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+        >
+          <style>{`
+            .re2-diagram .node-hit { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .18s ease-out; outline: none; }
+            .re2-diagram .node-hit:hover { transform: translate(-2px, -2px); }
+            .re2-diagram .node-hit:focus-visible .shape-outer { filter: drop-shadow(0 0 0 2px var(--accent-bright, var(--color-project-accent))); }
+          `}</style>
+          <svg
+            width="100%"
+            viewBox={`-20 -20 ${width + 200} ${height + 40}`}
+            style={{ aspectRatio: `${width + 200} / ${height + 40}`, minWidth: 620 }}
+            className="block"
+            role="img"
+            aria-label="Diagram: how a RoomEase booking request becomes a ranked, approved room"
+          >
+            <defs>
+              <marker id="re2-arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L8,3 L0,6 Z" style={{ fill: "var(--color-text-subtle)" }} />
+              </marker>
+              <marker id="re2-arrowhead-accent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L8,3 L0,6 Z" style={{ fill: "var(--accent-bright, var(--color-project-accent))" }} />
+              </marker>
+            </defs>
 
-          {edges.map((e) => {
-            const d = e.points.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
-            const { stroke, strokeDasharray } = edgeStrokeProps(e.style);
-            const mid = e.points[Math.floor((e.points.length - 1) / 2)];
-            const [labelX, labelY] = e.labelPos ?? [mid[0] + (e.points.length > 2 ? 8 : 34), mid[1] - 8];
-            const labelAnchor = e.labelAnchor ?? (e.points.length > 2 ? "start" : "middle");
-            return (
-              <g key={e.id}>
-                <path d={d} fill="none" stroke={stroke} strokeWidth={2} strokeDasharray={strokeDasharray} markerEnd="url(#re-arrowhead)" />
-                {e.label && (
-                  <text
-                    x={labelX}
-                    y={labelY}
-                    fontSize={11}
-                    fontWeight={700}
-                    fill={INK_SOFT}
-                    textAnchor={labelAnchor}
-                    style={{ paintOrder: "stroke", stroke: PAPER, strokeWidth: 5 }}
-                  >
-                    {e.label}
-                  </text>
-                )}
+            {ZONE_BANDS.map((z) => (
+              <g key={z.id}>
+                <rect x={-10} y={z.y} width={width + 180} height={z.h} style={{ fill: z.fill }} />
+                <text
+                  x={width + 150}
+                  y={z.y + 26}
+                  fontSize={13}
+                  fontWeight={700}
+                  textAnchor="end"
+                  letterSpacing="0.06em"
+                  style={{ fill: "var(--color-text-subtle)" }}
+                >
+                  {z.label.toUpperCase()}
+                </text>
               </g>
-            );
-          })}
+            ))}
 
-          {nodes.map((n) => (
-            <g key={n.id} transform={`translate(${n.x},${n.y})`}>
-              <g
-                onClick={() => setActiveId(n.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(evt) => {
-                  if (evt.key === "Enter" || evt.key === " ") setActiveId(n.id);
-                }}
-                className="node-hit"
-                aria-label={`${n.title} (${TYPE_LABEL[n.type]})`}
-              >
-                <g className="shape-outer">
-                  <NodeShape node={n} active={n.id === activeId} />
-                </g>
-                <foreignObject x={6} y={4} width={n.w - 12} height={n.h - 8}>
-                  <div className="w-full h-full flex items-center justify-center text-center px-1">
-                    <span
-                      className="text-[11.5px] leading-tight font-bold"
-                      style={{ color: n.type === "decision" ? DECISION_TEXT : INK }}
+            {edges.map((e) => {
+              const d = e.points.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
+              const { stroke, strokeDasharray } = edgeStyleProps(e.style);
+              const mid = e.points[Math.floor((e.points.length - 1) / 2)];
+              const [labelX, labelY] = e.labelPos ?? [mid[0] + (e.points.length > 2 ? 8 : 34), mid[1] - 8];
+              const labelAnchor = e.labelAnchor ?? (e.points.length > 2 ? "start" : "middle");
+              const markerId = e.style === "rework" ? "url(#re2-arrowhead-accent)" : "url(#re2-arrowhead)";
+              return (
+                <g key={e.id}>
+                  <path d={d} fill="none" style={{ stroke }} strokeWidth={2} strokeDasharray={strokeDasharray} markerEnd={markerId} />
+                  {e.label && (
+                    <text
+                      x={labelX}
+                      y={labelY}
+                      fontSize={11}
+                      fontWeight={600}
+                      textAnchor={labelAnchor}
+                      style={{ fill: "var(--color-text-muted)", paintOrder: "stroke", stroke: "var(--color-surface-1)", strokeWidth: 5 }}
                     >
-                      {n.title}
-                    </span>
-                  </div>
-                </foreignObject>
+                      {e.label}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+
+            {nodes.map((n) => (
+              <g key={n.id} transform={`translate(${n.x},${n.y})`}>
+                <g
+                  data-node={n.id}
+                  onClick={() => setActiveId(n.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(evt) => {
+                    if (evt.key === "Enter" || evt.key === " ") {
+                      evt.preventDefault();
+                      setActiveId(n.id);
+                    }
+                  }}
+                  className="node-hit"
+                  aria-label={`${n.title} (${TYPE_LABEL[n.type]})`}
+                >
+                  <g className="shape-outer">
+                    <NodeShape node={n} active={n.id === activeId} />
+                  </g>
+                  <foreignObject x={6} y={4} width={n.w - 12} height={n.h - 8}>
+                    <div className="w-full h-full flex items-center justify-center text-center px-1">
+                      <span className="text-[11.5px] leading-tight font-semibold" style={{ color: nodeTextColor(n.type) }}>
+                        {n.title}
+                      </span>
+                    </div>
+                  </foreignObject>
+                </g>
               </g>
-            </g>
+            ))}
+          </svg>
+        </div>
+
+        {/* Legend + hint below the chart (no docked column any more). */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span style={{ fontSize: "var(--text-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase", color: "var(--accent-bright, var(--color-project-accent))" }}>
+            Click any node
+          </span>
+          {(Object.keys(TYPE_LABEL) as NodeType[]).map((t) => (
+            <span key={t} className="flex items-center gap-1.5 text-sm" style={{ color: "var(--color-text-muted)" }}>
+              <LegendSwatch type={t} />
+              {TYPE_LABEL[t]}
+            </span>
           ))}
-        </svg>
+        </div>
+        </>
+        )}
       </div>
 
-      {activeNode && (
-        <div className="fixed inset-0 z-40" onClick={() => setActiveId(null)}>
-          <div className="absolute inset-0 bg-black/20" />
+      {/* Floating popover — pinned to the clicked node, over the page. */}
+      {activeNode &&
+        pos &&
+        typeof document !== "undefined" &&
+        createPortal(
           <div
-            className="absolute right-0 top-0 h-full w-full max-w-sm bg-white p-6 overflow-y-auto"
-            style={{ borderLeft: `3px solid ${INK}` }}
-            onClick={(e) => e.stopPropagation()}
+            ref={popRef}
+            role="dialog"
+            aria-label={activeNode.title}
+            className="fixed z-50 rounded-[var(--radius-default)] border p-5"
+            style={{
+              left: pos.left,
+              top: pos.top,
+              width: pos.width,
+              background: "var(--color-surface-2)",
+              borderColor: "var(--color-line-strong, var(--color-line))",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.55)",
+            }}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <span
-                className="text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full"
+                className="rounded-full px-2.5 py-1 border"
                 style={{
-                  background: fillFor(activeNode),
-                  color: activeNode.type === "decision" ? DECISION_TEXT : INK,
-                  border: `2px solid ${INK}`,
+                  fontSize: "var(--text-label)",
+                  letterSpacing: "var(--tracking-label)",
+                  textTransform: "uppercase",
+                  color: "var(--accent-bright, var(--color-project-accent))",
+                  borderColor: "var(--accent-bright, var(--color-project-accent))",
                 }}
               >
                 {TYPE_LABEL[activeNode.type]}
               </span>
-              <button onClick={() => setActiveId(null)} className="text-neutral-400 hover:text-neutral-900 text-sm" aria-label="Close">
+              <button
+                type="button"
+                onClick={() => setActiveId(null)}
+                aria-label="Close"
+                className="text-sm w-7 h-7 flex items-center justify-center rounded-full transition-colors hover:bg-[var(--color-surface-1)]"
+                style={{ color: "var(--color-text-subtle)" }}
+              >
                 ✕
               </button>
             </div>
-            <h3 className="font-serif text-2xl mt-4" style={{ color: INK }}>
+            <h3 className="mt-3" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", lineHeight: "var(--leading-h3)", color: "var(--color-text)" }}>
               {activeNode.title}
             </h3>
-            <p className="text-sm leading-relaxed mt-3" style={{ color: INK_SOFT }}>
+            <p className="mt-3" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>
               {activeNode.synopsis}
             </p>
-            <div className="flex gap-3 mt-8">
-              <button onClick={() => stepActive(-1)} className="cs-box flex-1 py-2 text-sm font-bold">
-                ← Prev
-              </button>
-              <button onClick={() => stepActive(1)} className="cs-box flex-1 py-2 text-sm font-bold">
-                Next →
-              </button>
+            <div className="flex items-center justify-between gap-2.5 mt-5">
+              <span className="text-sm" style={{ color: "var(--color-text-subtle)" }}>
+                {activeIndex + 1} / {nodes.length}
+              </span>
+              <div className="flex gap-2.5">
+                {(["prev", "next"] as const).map((dir) => (
+                  <button
+                    key={dir}
+                    type="button"
+                    onClick={() => stepActive(dir === "prev" ? -1 : 1)}
+                    className="px-3.5 py-2 text-sm font-medium rounded-[var(--radius-button)] border transition-all duration-[var(--duration-base)] hover:border-[var(--accent-bright,var(--color-project-accent))] hover:text-[var(--accent-bright,var(--color-project-accent))] hover:bg-[color-mix(in_srgb,var(--color-project-accent)_10%,var(--color-surface-1))]"
+                    style={{ borderColor: "var(--color-line)", color: "var(--color-text)", background: "var(--color-surface-1)" }}
+                  >
+                    {dir === "prev" ? "← Prev" : "Next →"}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-xs font-semibold" style={{ color: INK_SOFT }}>
-        {(Object.keys(TYPE_LABEL) as NodeType[]).map((t) => (
-          <span key={t} className="flex items-center gap-1.5">
-            <span
-              className="inline-block w-3 h-3 rounded-sm"
-              style={{
-                background: t === "decision" ? DECISION_FILL : t === "process" ? GOLD_FILL : "#fff",
-                border: `1.5px solid ${INK}`,
-              }}
-            />
-            {TYPE_LABEL[t]}
-          </span>
-        ))}
-      </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

@@ -95,7 +95,7 @@ const BAND = {
   baseBordered: { background: "var(--color-bg)", borderTop: "1px solid var(--color-line)" },
 } as const;
 
-export default function GreenhouseCaseStudyV2() {
+export default function GreenhouseCaseStudy() {
   const cs = getCaseStudy("greenhouse")!;
   const theme = caseStudyTheme.greenhouse;
 

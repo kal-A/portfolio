@@ -8,7 +8,7 @@ import Reveal from "@/components/Reveal";
  * light/dark section bands), so that prop is gone — border color is a
  * plain neutral line (`--color-line-strong`), not the project accent:
  * `--color-project-accent` is reserved for exactly one functional use
- * elsewhere on the page (see GreenhouseCaseStudyV2's doc comment,
+ * elsewhere on the page (see GreenhouseCaseStudy's doc comment,
  * decision of record 2026-08-25) rather than repeated on every structural
  * divider. Lives under shell/ rather than replacing blocks/Chapter.tsx in place
  * because the other seven case studies still import the original and are

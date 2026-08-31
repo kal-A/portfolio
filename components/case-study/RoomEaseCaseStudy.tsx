@@ -8,13 +8,13 @@ import CaseStudyHero from "@/components/case-study/shell/CaseStudyHero";
 import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
 import ProcessFlow, { type ProcessStep } from "@/components/case-study/shell/ProcessFlow";
-import RoomEaseAllocationDiagramV2 from "@/components/case-study/RoomEaseAllocationDiagramV2";
+import RoomEaseAllocationDiagram from "@/components/case-study/RoomEaseAllocationDiagram";
 import MediaFrame from "@/components/ui/MediaFrame";
 import Reveal from "@/components/Reveal";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
- * next page after the approved Greenhouse pilot and the Chronicle V2 reference
+ * next page after the approved Greenhouse pilot and the Chronicle reference
  * implementation. RoomEase currently ships on the legacy warm/gold *light*
  * design system (components/case-study/RoomEaseCaseStudy.tsx: cs-box / --ink /
  * blocks/*); this is its rebuild on the shared dark editorial shell, so it
@@ -433,7 +433,7 @@ function ReconstructedNote({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function RoomEaseCaseStudyV2() {
+export default function RoomEaseCaseStudy() {
   const cs = getCaseStudy("roomease")!;
   const theme = caseStudyTheme.roomease;
 
@@ -674,7 +674,7 @@ export default function RoomEaseCaseStudyV2() {
             </p>
 
             <div className="mt-10">
-              <RoomEaseAllocationDiagramV2 />
+              <RoomEaseAllocationDiagram />
             </div>
             <ReconstructedNote>
               Rebuilt from the team&apos;s six-step matching algorithm (EOT report, Table 4), the FDR&apos;s two-stage

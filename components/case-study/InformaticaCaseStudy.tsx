@@ -12,8 +12,8 @@ import Reveal from "@/components/Reveal";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
- * the Informatica page after the Greenhouse pilot, the Chronicle V2 reference,
- * the RoomEase V2 gold standard, and ForceN V2. Informatica currently ships on
+ * the Informatica page after the Greenhouse pilot, the Chronicle reference,
+ * the RoomEase gold standard, and ForceN. Informatica currently ships on
  * the legacy warm/paper *light* design system
  * (components/case-study/InformaticaCaseStudy.tsx: cs-box / --ink / blocks/*);
  * this is its rebuild on the shared dark editorial shell.
@@ -286,7 +286,7 @@ function ReconstructedNote({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function InformaticaCaseStudyV2() {
+export default function InformaticaCaseStudy() {
   const cs = getCaseStudy("informatica")!;
   const accent = caseStudyTheme.informatica.accent;
 

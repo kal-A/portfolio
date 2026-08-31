@@ -19,8 +19,8 @@ import {
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
- * the Hera Fertility page after the Greenhouse pilot, the Chronicle V2 reference,
- * the RoomEase V2 gold standard, ForceN V2, Informatica V2, and PathPeer V2.
+ * the Hera Fertility page after the Greenhouse pilot, the Chronicle reference,
+ * the RoomEase gold standard, ForceN, Informatica, and PathPeer.
  * Hera currently ships on the legacy warm/paper *light* design system
  * (components/case-study/HeraCaseStudy.tsx: cs-box / --ink / blocks/*); this is
  * its rebuild on the shared dark editorial shell.
@@ -437,7 +437,7 @@ function SourceNote({ src, alt, aspect, eyebrow, children }: { src: string; alt:
   );
 }
 
-export default function HeraCaseStudyV2() {
+export default function HeraCaseStudy() {
   const cs = getCaseStudy("hera-fertility")!;
 
   return (

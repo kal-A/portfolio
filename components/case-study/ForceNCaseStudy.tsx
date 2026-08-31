@@ -6,13 +6,13 @@ import Section from "@/components/layout/Section";
 import CaseStudyHero from "@/components/case-study/shell/CaseStudyHero";
 import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
-import ForceNWorkflowDiagramV2 from "@/components/case-study/ForceNWorkflowDiagramV2";
+import ForceNWorkflowDiagram from "@/components/case-study/ForceNWorkflowDiagram";
 import Reveal from "@/components/Reveal";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
- * the ForceN page after the approved Greenhouse pilot, the Chronicle V2
- * reference implementation, and the RoomEase V2 gold standard. ForceN currently
+ * the ForceN page after the approved Greenhouse pilot, the Chronicle
+ * reference implementation, and the RoomEase gold standard. ForceN currently
  * ships on the legacy warm/paper *light* design system
  * (components/case-study/ForceNCaseStudy.tsx: cs-box / --ink / blocks/*); this
  * is its rebuild on the shared dark editorial shell so it matches Greenhouse,
@@ -25,7 +25,7 @@ import Reveal from "@/components/Reveal";
  * study with no walkthrough videos, so the page carries no VideoRow; its
  * centrepiece is the reconstructed production-and-fulfilment workflow diagram,
  * re-themed onto the token set with the RoomEase floating-popover interaction
- * (ForceNWorkflowDiagramV2).
+ * (ForceNWorkflowDiagram).
  *
  * Per playbook §10 the bespoke SVG workflow diagram keeps its own grammar
  * (shape carries meaning); only the shell and layout around it, and the
@@ -259,7 +259,7 @@ function ReconstructedNote({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function ForceNCaseStudyV2() {
+export default function ForceNCaseStudy() {
   const cs = getCaseStudy("forcen")!;
   const accent = "#d9871f";
 
@@ -343,7 +343,7 @@ export default function ForceNCaseStudyV2() {
         </Container>
 
         <Container variant="page" className="mt-10">
-          <ForceNWorkflowDiagramV2 />
+          <ForceNWorkflowDiagram />
         </Container>
 
         <Container variant="standard" className="pb-16 md:pb-20">
