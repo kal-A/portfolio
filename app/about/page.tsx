@@ -100,11 +100,10 @@ export default function AboutPage() {
               }}
             >
               <p>
-                It started in high school, with the basics and a lot of data structures and
-                algorithms, and a stretch spent teaching younger kids to code at coding camps. The
-                real learning came from building things I wanted to exist: an online
-                rock-paper-scissors game, Discord bots for my friends&apos; servers, and a COVID
-                case tracker I put together when lockdown hit.
+                It started in high school: the basics, a lot of data structures and algorithms,
+                and a stretch teaching younger kids to code at camps. What actually taught me,
+                though, was building things I wanted to exist, from small games and Discord bots
+                to a COVID case tracker I put together when lockdown hit.
               </p>
               <p>
                 University turned that into a direction. I started in frontend, which is quietly

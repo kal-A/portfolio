@@ -1,97 +1,160 @@
+import fs from "node:fs";
+import path from "node:path";
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
 
 /**
- * Hero — cinematic "figure standing within the atmosphere" (rebuilt 2026-08-28
- * to the FINAL VISIBILITY CORRECTION brief). The figure is a full-body ivory
- * line drawing (public/hero/hero-figure-ivory.png, the complete figure down to
- * the shoes) but the lower body is never allowed to resolve: it is concealed by
- * a permanent responsive mask, foreground fog, and the bottom fade, not cropped
- * out of the asset.
+ * Hero - final implementation pass (2026-08-31). A cinematic "figure on the
+ * shelf, facing the distant light" composition:
  *
- * Visibility hierarchy, clearest to concealed:
- *   hair / glasses / raised hand / restrained beard  -> clearest (top of mask)
- *   head / collar / shoulder / upper coat            -> clearly suggested
- *   windblown coat edge                              -> lit + wind-animated
- *   torso / upper legs                               -> intermittent through fog
- *   below the knees                                  -> fully concealed
+ *   Layer 0  near-black stage           -> <section> background
+ *   Layer 1  atmosphere raster (v6)     -> baked light (upper-middle-left) + shelf
+ *   Layer 1b fog behind the figure      -> depth between figure and atmosphere
+ *   Layer 2  figure (inline v8 contour) -> bronze line art, knee-down fade, sketch-in
+ *   Layer 3  fog crossing the knees      -> buries the base in front of the figure
+ *   Layer 10 semantic content            -> headline/lead/actions, never gated
  *
- * Layer order (bottom to top), each an independent element:
- *   1. near-black stage field   -> the <section> background
- *   2. atmosphere raster        -> distant warm fog + light beyond the figure
- *   3. figure                   -> ivory line art, knee-down mask, top-down draw-on
- *   4. foreground fog           -> crosses IN FRONT of the figure; buries the base
- *   5. semantic content         -> z-10, the primary reading target, never gated
+ * The figure asset (public/hero/hero-figure-contour-v8.svg) is a VTracer
+ * trace: 27 FILLED paths, no centreline strokes. So it cannot be drawn with a
+ * stroke-dashoffset trace directly. Instead the filled artwork is revealed
+ * through an animated SVG mask of broad guide strokes that follow the body
+ * (hair -> hand/beard -> collar -> coat -> windblown edge -> faint upper leg),
+ * each drawn on with stroke-dashoffset, staggered, ~200ms..1.5s. The strokes
+ * overlap to blanket the silhouette so the settled figure is complete. This is
+ * the same "draw the contour on, do not fade the whole object in" idea the
+ * spec asks for, adapted to filled trace art per its own fallback instruction.
  *
- * The entrance is a top-down draw-on: the figure is revealed from the head
- * downward and the reveal is spent by the coat / upper-leg area, so the lower
- * legs are never drawn on before being hidden. The knee-down region stays
- * unresolved the whole time. Reduced motion / route-return skip to the settled
- * state.
+ * Colour: a single vertical bronze gradient with falling alpha (no white, no
+ * uniform opacity): clearest at the hair/hand, thinning through the coat, gone
+ * by the knee, so the lower legs never resolve and most of the torso stays
+ * absorbed into the dark. No glow, bloom, or drop shadow.
+ *
+ * The paths are read at build time and inlined (this is a server component,
+ * statically prerendered) so the masked figure is present and already hidden
+ * in the first painted frame - no post-hydration flash. Reduced motion and
+ * route-return settle straight to the final static composition.
+ *
+ * Placement is driven by CSS custom properties (--fig-left/-top/-h) so the
+ * figure can be nudged onto the shelf without touching structure.
  */
+
+function figurePaths(): string[] {
+  const file = path.join(process.cwd(), "public/hero/hero-figure-contour-v8.svg");
+  const svg = fs.readFileSync(file, "utf8");
+  return Array.from(svg.matchAll(/<path\s+d="([^"]+)"/g)).map((m) => m[1]);
+}
+
+// Full asset frame. (The figure is authored to sit grounded within its own
+// 1024x1536 canvas, so the whole frame is the viewBox; preserveAspectRatio
+// xMidYMax then rests its base at the container bottom.)
+const FIG = { x: 0, y: 0, w: 1024, h: 1536 };
+const FIG_VB = `${FIG.x} ${FIG.y} ${FIG.w} ${FIG.h}`;
+const FIG_BOTTOM = FIG.y + FIG.h;
+
+// Coat-tail region (asset coords): the windblown flare in the lower right.
+// Used both to clip the drifting copy and (inverted) to cut the same region
+// out of the static copy, so the two never double up.
+const COAT_TAIL = "M598 712 L712 724 L872 826 L936 858 L904 908 L788 966 L648 952 L600 858 Z";
+
+// Per-path draw delays: order the trace paths roughly top-to-bottom (by their
+// first move) so the sketch reads head -> coat -> hem, and spread the starts
+// across ~150ms..1250ms.
+function drawDelays(paths: string[]): number[] {
+  const firstY = paths.map((d) => {
+    const m = d.match(/^M\s*-?[\d.]+[ ,]+(-?[\d.]+)/);
+    return m ? parseFloat(m[1]) : 0;
+  });
+  const order = firstY.map((y, i) => [y, i] as const).sort((a, b) => a[0] - b[0]);
+  const rank = new Array<number>(paths.length);
+  order.forEach(([, idx], r) => (rank[idx] = r));
+  const n = Math.max(1, paths.length - 1);
+  return paths.map((_, i) => Math.round(150 + (rank[i] / n) * 1100));
+}
+
+function buildFigureSvg(paths: string[]): string {
+  const delays = drawDelays(paths);
+  const pathEls = paths.map((d) => `<path d="${d}" fill="url(#heroFigBronze)"/>`).join("");
+  // The reveal mask traces the figure's OWN paths: a thick round stroke along
+  // each contour, drawn on with stroke-dashoffset. Because these are the actual
+  // artwork paths, the reveal is perfectly aligned and, once drawn, blankets the
+  // thin trace lines so the settled figure is complete.
+  const trace = paths
+    .map((d, i) => `<path d="${d}" pathLength="1" style="animation-delay:${delays[i]}ms"/>`)
+    .join("");
+  return `
+<svg class="hero-figure-svg" viewBox="${FIG_VB}" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="heroFigBronze" gradientUnits="userSpaceOnUse" x1="0" y1="${FIG.y}" x2="0" y2="${FIG_BOTTOM}">
+      <stop offset="0.05" stop-color="rgb(198,168,126)" stop-opacity="0.72"/>
+      <stop offset="0.18" stop-color="rgb(195,165,122)" stop-opacity="0.64"/>
+      <stop offset="0.25" stop-color="rgb(192,162,120)" stop-opacity="0.52"/>
+      <stop offset="0.42" stop-color="rgb(190,160,119)" stop-opacity="0.44"/>
+      <stop offset="0.60" stop-color="rgb(188,157,116)" stop-opacity="0.38"/>
+      <stop offset="0.70" stop-color="rgb(186,155,114)" stop-opacity="0.24"/>
+      <stop offset="0.76" stop-color="rgb(186,155,114)" stop-opacity="0.10"/>
+      <stop offset="0.80" stop-color="rgb(186,155,114)" stop-opacity="0"/>
+      <stop offset="1" stop-color="rgb(186,155,114)" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="heroCoatTailClip"><path d="${COAT_TAIL}"/></clipPath>
+    <mask id="heroAntiTail" maskUnits="userSpaceOnUse" x="${FIG.x}" y="${FIG.y}" width="${FIG.w}" height="${FIG.h}">
+      <rect x="${FIG.x}" y="${FIG.y}" width="${FIG.w}" height="${FIG.h}" fill="#fff"/>
+      <path d="${COAT_TAIL}" fill="#000"/>
+    </mask>
+    <mask id="heroSketch" maskUnits="userSpaceOnUse" x="${FIG.x}" y="${FIG.y}" width="${FIG.w}" height="${FIG.h}">
+      <g class="hero-sketch" fill="none" stroke="#fff" stroke-width="42" stroke-linecap="round" stroke-linejoin="round">
+        ${trace}
+      </g>
+    </mask>
+  </defs>
+  <g mask="url(#heroSketch)">
+    <g mask="url(#heroAntiTail)">${pathEls}</g>
+    <g class="hero-coat-tail" clip-path="url(#heroCoatTailClip)">${pathEls}</g>
+  </g>
+</svg>`;
+}
+
 export default function Hero() {
+  const figureSvg = buildFigureSvg(figurePaths());
+
   return (
     <section
       className="relative overflow-hidden"
       style={{ background: "var(--color-bg)", minHeight: "clamp(520px, 82vh, 780px)" }}
     >
-      {/* Layer 2: atmosphere raster — the distant, restrained warm fog and the
-          light kept beyond and above the figure. Quiet near-black on the left
-          (behind the text) so the copy stays the primary reading target. */}
+      {/* Layer 1: atmosphere raster (v6) - distant warm light upper-middle-left
+          and the illustrated shelf, both baked in. bg-cover keeps it filling
+          the stage; the left stays quiet-dark behind the copy. */}
       <div
         aria-hidden="true"
         className="hero-atmosphere pointer-events-none absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/hero/portfolio-hero-atmosphere-final.png)" }}
+        style={{ backgroundImage: "url(/hero/hero-atmosphere-v6.png)" }}
       />
 
-      {/* Layer 3: the figure. Two nested masks keep the two jobs separate:
-          the wrapper carries the top-down reveal wipe (the draw-on); the inner
-          element carries the permanent knee-down concealment gradient and the
-          ivory line art itself. self-anchored bottom-right and grounded, so the
-          shoes sit at the stage floor even though they are never visible. */}
+      {/* Layer 1b: fog BEHIND the figure - a little separation from the sky. */}
+      <div aria-hidden="true" className="hero-fog-back pointer-events-none absolute inset-0 z-[1]" />
+
+      {/* Layer 2: the figure. Inlined so the mask hides it from the first
+          painted frame (no flash), positioned onto the right-hand shelf. */}
       <div
         aria-hidden="true"
-        className="hero-figure pointer-events-none absolute bottom-0 hidden sm:block"
-        style={{
-          right: "clamp(0px, 3vw, 72px)",
-          width: "clamp(300px, 36vw, 500px)",
-          height: "min(94%, 720px)",
-        }}
-      >
-        <div
-          className="hero-figure-inner absolute inset-0"
-          style={{
-            backgroundImage: "url(/hero/hero-figure-ivory.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "bottom center",
-            backgroundSize: "contain",
-          }}
-        />
-      </div>
+        className="hero-figure-wrap pointer-events-none absolute hidden sm:block z-[2]"
+        dangerouslySetInnerHTML={{ __html: figureSvg }}
+      />
 
-      {/* Layer 4: foreground fog — sits IN FRONT of the figure (above layer 3,
-          below the z-10 content) so it visibly crosses the contour instead of
-          sitting behind it. The base gradient buries everything from the knees
-          down into the stage floor; the drifting wisp adds wind across the
-          torso and coat. */}
+      {/* Layer 3: foreground fog crossing the knees IN FRONT of the figure and
+          burying its base into the stage floor. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-[3]"
         style={{
           background:
-            "linear-gradient(to top, var(--color-bg) 0%, rgba(11,12,15,0.94) 7%, rgba(11,12,15,0.6) 20%, rgba(11,12,15,0.18) 33%, transparent 44%), radial-gradient(58% 42% at 74% 62%, rgba(14,15,19,0.5) 0%, transparent 72%)",
+            "linear-gradient(to top, var(--color-bg) 0%, rgba(11,12,15,0.92) 8%, rgba(11,12,15,0.5) 19%, rgba(11,12,15,0.14) 30%, transparent 40%)",
         }}
       />
-      <div aria-hidden="true" className="hero-fog-wisp pointer-events-none absolute inset-0 z-[3]" />
-      {/* A soft warm light lifting the windblown coat edge, drifting on the wind. */}
-      <div aria-hidden="true" className="hero-coat-glow pointer-events-none absolute inset-0 z-[3]" />
+      <div aria-hidden="true" className="hero-fog-front pointer-events-none absolute inset-0 z-[3]" />
 
-      <Container
-        variant="page"
-        className="relative z-10 py-[clamp(64px,12vh,120px)]"
-      >
-        {/* Layer 5: semantic content — renders immediately, no client JS, no
-            animation, DOM-first. Left-aligned; the figure lives on the right. */}
+      <Container variant="page" className="relative z-10 py-[clamp(64px,12vh,120px)]">
+        {/* Layer 10: semantic content - unchanged, DOM-first, never gated. */}
         <div className="max-w-[52ch]">
           <h1
             style={{
@@ -127,81 +190,78 @@ export default function Hero() {
       </Container>
 
       <style>{`
-        /* Permanent knee-down concealment + the ivory line weight. The mask is
-           full-strength through the torso, thins across the upper legs (the
-           "intermittent through fog" band), and is gone by the knee — so the
-           shoes/ankles/lower-leg in the asset never resolve. Also the resting
-           opacity (< 1) keeps the figure emerging from the field rather than
-           reading as flat line art laid over it. */
-        .hero-figure-inner {
-          opacity: 0;
-          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.45) 57%, rgba(0,0,0,0.12) 64%, transparent 68%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.45) 57%, rgba(0,0,0,0.12) 64%, transparent 68%);
-          animation: hero-figure-fade 1500ms var(--ease-enter) 300ms 1 forwards;
+        /* Placement onto the right-hand shelf. Feet sit at (top + height); the
+           figure's own artwork is grounded at the bottom of its viewBox, so the
+           container bottom is the implied shelf line. Nudge via these vars. */
+        .hero-figure-wrap {
+          left: var(--fig-left, 71%);
+          top: var(--fig-top, 26.5%);
+          height: var(--fig-h, 56%);
         }
-        @keyframes hero-figure-fade { to { opacity: 0.86; } }
+        .hero-figure-svg { height: 100%; width: auto; display: block; }
 
-        /* Top-down draw-on: the wrapper mask exposes a growing band from the top,
-           soft leading edge, so the head/hand/hair resolve first and the reveal
-           runs down into the coat. It grows past the concealed lower body, so the
-           reveal is visually spent around the coat / upper-leg. */
-        .hero-figure {
-          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
-          -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-          -webkit-mask-position: top; mask-position: top;
-          -webkit-mask-size: 100% 14%; mask-size: 100% 14%;
-          animation: hero-figure-reveal 1500ms var(--ease-enter) 300ms 1 forwards;
+        /* Sketch-in reveal: each mask path traces the figure's own contour with
+           stroke-dashoffset, staggered head-to-hem via inline animation-delay.
+           The hidden state lives in this (server-rendered) CSS, so the figure is
+           concealed in the first painted frame - no flash. */
+        .hero-sketch path {
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: hero-draw 520ms var(--ease-standard) forwards;
         }
-        @keyframes hero-figure-reveal {
-          to { -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
-        }
+        @keyframes hero-draw { to { stroke-dashoffset: 0; } }
 
-        /* Wind: a low, slow drift of a warm fog wisp across the torso/coat. */
-        .hero-fog-wisp {
-          background: radial-gradient(46% 38% at 66% 50%, rgba(32,27,22,0.30) 0%, transparent 66%);
-          animation: hero-fog-drift 17s ease-in-out infinite alternate;
+        /* Ambient coat-tail drift - the isolated windblown region only, hinged
+           near where it leaves the coat. Starts once the sketch has settled. */
+        .hero-coat-tail {
+          transform-box: view-box;
+          transform-origin: 626px 758px;
+          animation: hero-coat-drift 6.5s ease-in-out 2000ms infinite alternate;
           will-change: transform;
         }
-        @keyframes hero-fog-drift {
-          from { transform: translate3d(-2.5%, 0.5%, 0); }
-          to   { transform: translate3d(3%, -1%, 0); }
+        @keyframes hero-coat-drift {
+          from { transform: rotate(-1.2deg); }
+          to   { transform: rotate(1.5deg); }
         }
 
-        /* The lit, animated coat edge: a soft warm glow riding the windblown
-           side, breathing gently so the coat reads as "selectively illuminated
-           and animated" rather than statically outlined. */
-        .hero-coat-glow {
-          background: radial-gradient(30% 26% at 80% 56%, rgba(197,138,74,0.16) 0%, transparent 70%);
-          opacity: 0;
-          animation: hero-coat-glow-in 1600ms var(--ease-standard) 1100ms 1 forwards, hero-coat-breathe 9s ease-in-out 2700ms infinite alternate;
+        /* Two restrained fog layers: one behind, one crossing the knees in
+           front. Both crawl only a couple of percent over ~20-26s. */
+        .hero-fog-back {
+          background: radial-gradient(52% 40% at 70% 46%, rgba(28,26,22,0.34) 0%, transparent 70%);
+          animation: hero-fog-back 26s ease-in-out infinite alternate;
+          will-change: transform;
         }
-        @keyframes hero-coat-glow-in { to { opacity: 1; } }
-        @keyframes hero-coat-breathe {
-          from { transform: translate3d(0,0,0); opacity: 0.7; }
-          to   { transform: translate3d(1.5%, -0.5%, 0); opacity: 1; }
+        @keyframes hero-fog-back {
+          from { transform: translate3d(-1.5%, 0.4%, 0); }
+          to   { transform: translate3d(1.5%, -0.8%, 0); }
+        }
+        .hero-fog-front {
+          background: radial-gradient(46% 26% at 72% 76%, rgba(12,13,17,0.55) 0%, transparent 72%);
+          animation: hero-fog-front 21s ease-in-out infinite alternate;
+          will-change: transform;
+        }
+        @keyframes hero-fog-front {
+          from { transform: translate3d(-2%, 0, 0); }
+          to   { transform: translate3d(2.5%, -0.6%, 0); }
         }
 
-        /* One subtle, single-play atmosphere bloom after the figure settles. */
-        .hero-atmosphere {
-          animation: hero-bloom 300ms var(--ease-standard) 1600ms 1 forwards;
-        }
-        @keyframes hero-bloom {
-          from { filter: brightness(1); }
-          to   { filter: brightness(1.035); }
-        }
+        /* One subtle, single-play atmosphere lift after the figure settles. */
+        .hero-atmosphere { animation: hero-bloom 320ms var(--ease-standard) 1600ms 1 forwards; }
+        @keyframes hero-bloom { from { filter: brightness(1); } to { filter: brightness(1.03); } }
+
+        /* Responsive placement onto the shelf as the cover-crop shifts. */
+        @media (min-width: 1536px) { .hero-figure-wrap { --fig-left: 72%; --fig-top: 25%; --fig-h: 57%; } }
+        @media (max-width: 900px) { .hero-figure-wrap { --fig-left: 67%; --fig-top: 29%; --fig-h: 50%; } }
+        @media (max-width: 700px) { .hero-figure-wrap { --fig-left: 63%; --fig-top: 32%; --fig-h: 44%; opacity: 0.85; } }
 
         /* Route-return: settle immediately, no entrance replay. */
-        :root.hero-contour-skip .hero-figure-inner { animation: none; opacity: 0.86; }
-        :root.hero-contour-skip .hero-figure { animation: none; -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
+        :root.hero-contour-skip .hero-sketch path { animation: none; stroke-dashoffset: 0; }
         :root.hero-contour-skip .hero-atmosphere { animation: none; }
-        :root.hero-contour-skip .hero-coat-glow { animation: hero-coat-breathe 9s ease-in-out infinite alternate; opacity: 1; }
 
         @media (prefers-reduced-motion: reduce) {
-          .hero-figure-inner { animation: none; opacity: 0.86; }
-          .hero-figure { animation: none; -webkit-mask-size: 100% 118%; mask-size: 100% 118%; }
-          .hero-fog-wisp { animation: none; }
-          .hero-coat-glow { animation: none; opacity: 1; }
+          .hero-sketch path { animation: none; stroke-dashoffset: 0; }
+          .hero-coat-tail { animation: none; }
+          .hero-fog-back, .hero-fog-front { animation: none; }
           .hero-atmosphere { animation: none; }
         }
       `}</style>
