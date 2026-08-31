@@ -46,7 +46,12 @@ import Action from "@/components/ui/Action";
 function figurePaths(): string[] {
   const file = path.join(process.cwd(), "public/hero/hero-figure-contour-v8.svg");
   const svg = fs.readFileSync(file, "utf8");
-  return Array.from(svg.matchAll(/<path\s+d="([^"]+)"/g)).map((m) => m[1]);
+  const all = Array.from(svg.matchAll(/<path\s+d="([^"]+)"/g)).map((m) => m[1]);
+  // Drop three VTracer artifacts: long, smooth strokes that shoot out of the
+  // top of the head into empty space. They are not part of the figure, nor of
+  // the windblown hair (which lives in the main contour), just trace noise.
+  const STRAY = new Set([21, 22, 24]);
+  return all.filter((_, i) => !STRAY.has(i));
 }
 
 function buildFigureSvg(paths: string[]): string {
