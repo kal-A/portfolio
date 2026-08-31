@@ -85,14 +85,14 @@ function buildFigureSvg(paths: string[]): string {
 <svg class="hero-figure-svg" viewBox="${FIG_VB}" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="heroFigBronze" gradientUnits="userSpaceOnUse" x1="0" y1="${FIG.y}" x2="0" y2="${FIG_BOTTOM}">
-      <stop offset="0.05" stop-color="rgb(198,168,126)" stop-opacity="0.72"/>
-      <stop offset="0.18" stop-color="rgb(195,165,122)" stop-opacity="0.64"/>
-      <stop offset="0.25" stop-color="rgb(192,162,120)" stop-opacity="0.52"/>
-      <stop offset="0.42" stop-color="rgb(190,160,119)" stop-opacity="0.44"/>
-      <stop offset="0.60" stop-color="rgb(188,157,116)" stop-opacity="0.38"/>
-      <stop offset="0.70" stop-color="rgb(186,155,114)" stop-opacity="0.24"/>
-      <stop offset="0.76" stop-color="rgb(186,155,114)" stop-opacity="0.10"/>
-      <stop offset="0.80" stop-color="rgb(186,155,114)" stop-opacity="0"/>
+      <stop offset="0.04" stop-color="rgb(198,168,126)" stop-opacity="0.80"/>
+      <stop offset="0.20" stop-color="rgb(195,165,122)" stop-opacity="0.76"/>
+      <stop offset="0.38" stop-color="rgb(192,162,120)" stop-opacity="0.72"/>
+      <stop offset="0.54" stop-color="rgb(190,160,119)" stop-opacity="0.68"/>
+      <stop offset="0.68" stop-color="rgb(188,157,116)" stop-opacity="0.60"/>
+      <stop offset="0.77" stop-color="rgb(186,155,114)" stop-opacity="0.44"/>
+      <stop offset="0.85" stop-color="rgb(186,155,114)" stop-opacity="0.18"/>
+      <stop offset="0.91" stop-color="rgb(186,155,114)" stop-opacity="0"/>
       <stop offset="1" stop-color="rgb(186,155,114)" stop-opacity="0"/>
     </linearGradient>
     <clipPath id="heroCoatTailClip"><path d="${COAT_TAIL}"/></clipPath>
