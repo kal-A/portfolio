@@ -206,10 +206,18 @@ export default function Hero() {
            concealed in the first painted frame - no flash. */
         .hero-sketch path {
           stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          animation: hero-draw 520ms var(--ease-standard) forwards;
+          /* Visible by DEFAULT so the figure always renders even if the
+             mask-internal animation cannot run in a given browser. The
+             animation (both fill-mode) hides it during the delay and draws it
+             on when it does run, so there is still no flash and the sketch-in
+             plays where supported. */
+          stroke-dashoffset: 0;
+          animation: hero-draw 520ms var(--ease-standard) both;
         }
-        @keyframes hero-draw { to { stroke-dashoffset: 0; } }
+        @keyframes hero-draw {
+          from { stroke-dashoffset: 1; }
+          to { stroke-dashoffset: 0; }
+        }
 
         /* Ambient coat-tail drift - the isolated windblown region only, hinged
            near where it leaves the coat. Starts once the sketch has settled. */
