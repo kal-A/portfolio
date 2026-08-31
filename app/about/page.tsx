@@ -55,7 +55,8 @@ export default function AboutPage() {
               color: "var(--color-text)",
             }}
           >
-            I studied Management Engineering at the University of Waterloo.
+            I started out writing code, then kept following each problem upstream: into
+            design, and then into how the work itself gets run.
           </p>
           <p
             className="mt-5"
@@ -65,12 +66,12 @@ export default function AboutPage() {
               color: "var(--color-text-muted)",
             }}
           >
-            Since then my work has moved between product design, operations, and engineering:
-            designing the financing and clinic-discovery flow at Hera Fertility, running
-            sprints for an eight-person team at Greenhouse, and owning a hardware transfer
-            workflow from procurement through shipment at ForceN. I&apos;ve run usability tests
-            and I&apos;ve written the code behind the feature being tested, often on the same
-            project.
+            I studied Management Engineering at the University of Waterloo, which is a co-op
+            degree, so every role below happened between study terms, while I was still an
+            undergrad, and not after graduating. Alternating school and work every four months
+            meant I got to try on a different hat each time: I shipped code, then designed the
+            product that code was for, then ended up owning the messy process that decided
+            whether any of it went out on time.
           </p>
         </Container>
       </div>
@@ -95,11 +96,21 @@ export default function AboutPage() {
               style={{ fontSize: "var(--text-body-l)", lineHeight: "var(--leading-body-l)", color: "var(--color-text-muted)" }}
             >
               <p>
-                My background is in engineering, so I started out comfortable with systems,
-                constraints, and the technical side of building something. Working in UX and
-                product design taught me that a working system and a usable one are not the same
-                thing. Working in product operations taught me something else: a lot of interface
-                problems are not really interface problems.
+                I came in through engineering, so I started where I was most comfortable:
+                writing code, and treating a product as a system to be built correctly.
+                Chronicle is the clearest artifact of that stretch, an 8-stage pipeline I built
+                solo, typed contracts and 500-plus tests included.
+              </p>
+              <p>
+                Design pulled me in next. Once you have watched someone struggle with a screen
+                you were proud of, you cannot unlearn that a working system and a usable one are
+                two different things. RoomEase, Pill Pal, and Hera&apos;s financing flow were
+                where I learned to close that gap on purpose, with real testing instead of taste.
+              </p>
+              <p>
+                Product and operations came last, almost by accident. At Greenhouse and ForceN I
+                kept running into the same realization: the interface problem in front of me
+                usually was not the real problem.
               </p>
             </div>
 
@@ -132,9 +143,11 @@ export default function AboutPage() {
                 did more than any single redesign would have.
               </p>
               <p>
-                That is roughly how I ended up working the way I do now. Before I design a screen
-                or write a requirement, I try to find out what is actually happening underneath
-                it.
+                So now I work backwards from there. Before I design a screen or write a
+                requirement, I go find out what is actually happening underneath it. That
+                instinct is the one thread connecting a Python pipeline, a usability test, and a
+                shared tracking sheet: the same question every time, just a different tool for
+                the answer.
               </p>
             </div>
           </Container>
@@ -215,15 +228,19 @@ export default function AboutPage() {
         </div>
       </Reveal>
 
-      {/* Closing note: small, quiet, not a "fun facts" section. Decision of
-          record 2026-08-19: present-day geopolitics removed (not a real
-          interest); the professional tie-back to Chronicle and the
-          self-deprecating "more useful than my degree" line were both cut
-          as manufactured-sounding personal-brand copy the user flagged. */}
+      {/* Closing note: small and personal, but written with a real voice
+          rather than a robotic "fun facts" list. Interests are history (for
+          the cause-and-effect of it), soccer and hockey, and fashion.
+          Present-day geopolitics and architecture were dropped at the user's
+          request; the history line is deliberately tied back to how he reads
+          workflows, so it reads as a real person, not a bio template. */}
       <Container variant="reading" className="mt-8">
-        <p style={{ fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", color: "var(--color-text-subtle)" }}>
-          Outside of work, I read a lot of history, especially the geopolitics of earlier eras.
-          I follow soccer and hockey, and I pay close attention to architecture and fashion.
+        <p style={{ fontSize: "var(--text-body)", lineHeight: "var(--leading-body-l)", color: "var(--color-text-muted)" }}>
+          Away from all of this, I read a lot of history, mostly for the cause and effect of it:
+          how one quiet decision in one decade sets up the crisis in the next. (Occupational
+          hazard, apparently. I do the same thing with workflows.) I watch more soccer and hockey
+          than I can strictly justify and will happily argue about either. And I care more than
+          is reasonable about how things are cut and put together, so I follow fashion closely.
         </p>
       </Container>
     </div>
