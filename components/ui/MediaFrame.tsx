@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * The one media grammar shared by every project thumbnail on the site
@@ -56,9 +56,34 @@ export default function MediaFrame({
 }) {
   const [failed, setFailed] = useState(false);
 
+  // Scroll-into-view color bloom (only when hoverReveal opts in). The frame
+  // starts grayscale and eases to full color the first time it enters the
+  // viewport, so color "comes in" on arrival instead of only on hover. The
+  // grayscale state itself is still gated to hover-capable pointers in CSS,
+  // so touch visitors keep full color with no observer effect needed.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    if (!hoverReveal) return;
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hoverReveal]);
+
   return (
     <div
-      className={`relative overflow-hidden ${hoverReveal ? "hover-reveal-media" : ""} ${
+      ref={wrapRef}
+      className={`relative overflow-hidden ${hoverReveal ? "hover-reveal-media" : ""} ${revealed ? "is-revealed" : ""} ${
         interactive
           ? "group transition-all duration-[var(--duration-base)] ease-[var(--ease-standard)] hover:-translate-y-1 hover:border-[var(--accent-bright,var(--color-project-accent))] hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)]"
           : ""
