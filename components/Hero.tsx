@@ -79,14 +79,19 @@ function buildFigureSvg(paths: string[]): string {
       <stop offset="1.00" stop-color="rgb(182,152,114)" stop-opacity="0.72"/>
     </linearGradient>
 
-    <!-- Lower-body fade: white (visible) down to ~56% of the figure, strong
-         fade through the knees, fully transparent by ~78%, so the shins and
-         shoes never resolve. Static; independent of the draw reveal. -->
+    <!-- Lower-body fade: a long, gentle ramp so the figure DISSOLVES into the
+         mist instead of ending suddenly. Full opacity to ~50% of the figure,
+         then a soft multi-stop falloff through the thighs and knees, fully gone
+         by ~86%. Static; independent of the draw reveal. The foreground mist
+         bank finishes concealing whatever faint line remains. -->
     <linearGradient id="heroLowerFade" gradientUnits="userSpaceOnUse" x1="0" y1="${yTop}" x2="0" y2="${yBot}">
       <stop offset="0.00" stop-color="#fff"/>
-      <stop offset="0.56" stop-color="#fff"/>
-      <stop offset="0.68" stop-color="#888"/>
-      <stop offset="0.78" stop-color="#000"/>
+      <stop offset="0.50" stop-color="#fff"/>
+      <stop offset="0.60" stop-color="#d8d8d8"/>
+      <stop offset="0.68" stop-color="#a0a0a0"/>
+      <stop offset="0.75" stop-color="#5c5c5c"/>
+      <stop offset="0.82" stop-color="#242424"/>
+      <stop offset="0.88" stop-color="#000"/>
       <stop offset="1.00" stop-color="#000"/>
     </linearGradient>
     <mask id="heroLowerMask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="${VB_X}" y="${VB_Y}" width="${VB_W}" height="${VB_H}">
@@ -144,7 +149,19 @@ export default function Hero() {
             "linear-gradient(to top, var(--color-bg) 0%, rgba(11,12,15,0.92) 12%, rgba(11,12,15,0.55) 22%, rgba(11,12,15,0.16) 32%, transparent 42%)",
         }}
       />
-      <div aria-hidden="true" className="hero-fog-front pointer-events-none absolute inset-0 z-[3]" />
+      {/* Foreground mist bank - several overlapping blurred, irregular fog
+          shapes filling the gap between the lower coat and the shelf on the
+          right ~45% of the hero. Faint at the coat, dense through the thighs
+          and knees, opaque over the legs and shoes, dissolving into the shelf.
+          Sits in front of both the figure (z-2) and the baked-in shelf. Each
+          shape drifts horizontally only 1-3% over 20-30s. */}
+      <div aria-hidden="true" className="hero-mist pointer-events-none absolute inset-0 z-[4]">
+        <span className="hero-mist-blob hm1" />
+        <span className="hero-mist-blob hm2" />
+        <span className="hero-mist-blob hm3" />
+        <span className="hero-mist-blob hm4" />
+        <span className="hero-mist-blob hm5" />
+      </div>
 
       <Container variant="page" className="relative z-10 py-[clamp(64px,12vh,120px)]">
         {/* Layer 10: semantic content - unchanged, DOM-first, never gated. */}
@@ -220,15 +237,31 @@ export default function Hero() {
           from { transform: translate3d(-1.5%, 0.4%, 0); }
           to   { transform: translate3d(1.5%, -0.8%, 0); }
         }
-        .hero-fog-front {
-          background: radial-gradient(46% 26% at 80% 70%, rgba(12,13,17,0.55) 0%, transparent 72%);
-          animation: hero-fog-front 21s ease-in-out infinite alternate;
-          will-change: transform;
-        }
-        @keyframes hero-fog-front {
-          from { transform: translate3d(-2%, 0, 0); }
-          to   { transform: translate3d(2.5%, -0.6%, 0); }
-        }
+        /* FOREGROUND MIST BANK. Each blob is a full-bleed layer carrying one
+           soft, wide radial ellipse placed in the lower-right; overlapping them
+           builds an irregular fog with no straight lines or hard cutoffs, and
+           the blur dissolves any residual edge. Opacity and darkness climb from
+           the lower coat (hm1, faint, lit) down through the knees to the legs
+           and shoes (hm4/hm5, near-opaque, background-toned) so the figure
+           dissolves in and the bank settles onto the shelf. Each drifts
+           horizontally only 1-3% over 23-30s. */
+        .hero-mist-blob { position: absolute; inset: 0; will-change: transform; }
+        /* Painted back-to-front. First three are near-background-toned
+           CONCEALERS that sit directly over the leg lines, shoes and base and
+           quietly erase the thin bronze lines (they read as nothing over the
+           near-black stage, so raising their opacity never shows a dark patch).
+           The last two are the VISIBLE, lit fog that lays a soft grey bank over
+           the thighs and knees ON TOP, so that zone reads as fog, not a hole. */
+        .hm1 { background: radial-gradient(26% 15% at 82% 65%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.92) 55%, transparent 80%); filter: blur(16px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
+        .hm2 { background: radial-gradient(38% 22% at 82% 75%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.6) 52%, transparent 80%); filter: blur(22px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
+        .hm3 { background: radial-gradient(60% 27% at 80% 89%, rgba(11,12,15,0.80) 0%, rgba(11,12,15,0.38) 54%, transparent 82%); filter: blur(24px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
+        .hm4 { background: radial-gradient(42% 21% at 81% 62%, rgba(50,52,61,0.60) 0%, rgba(34,36,45,0.28) 48%, transparent 74%); filter: blur(32px); animation: hero-mist-b 23s ease-in-out infinite alternate; }
+        .hm5 { background: radial-gradient(48% 20% at 76% 53%, rgba(60,62,72,0.32) 0%, rgba(46,48,58,0.14) 48%, transparent 72%); filter: blur(32px); animation: hero-mist-a 27s ease-in-out infinite alternate; }
+        @keyframes hero-mist-a { from { transform: translate3d(-1%, 0, 0); }    to { transform: translate3d(1.2%, -0.4%, 0); } }
+        @keyframes hero-mist-b { from { transform: translate3d(1%, 0, 0); }     to { transform: translate3d(-0.8%, 0.3%, 0); } }
+        @keyframes hero-mist-c { from { transform: translate3d(-1.4%, 0, 0); }  to { transform: translate3d(1.3%, -0.3%, 0); } }
+        @keyframes hero-mist-d { from { transform: translate3d(0.6%, 0, 0); }   to { transform: translate3d(-0.9%, 0.2%, 0); } }
+        @keyframes hero-mist-e { from { transform: translate3d(-0.7%, 0, 0); }  to { transform: translate3d(0.6%, 0, 0); } }
 
         /* One subtle, single-play atmosphere lift after the figure settles. */
         .hero-atmosphere { animation: hero-bloom 320ms var(--ease-standard) 1600ms 1 forwards; }
@@ -245,7 +278,7 @@ export default function Hero() {
 
         @media (prefers-reduced-motion: reduce) {
           .hero-figure-draw { animation: none; clip-path: inset(0 0 0 0); }
-          .hero-fog-back, .hero-fog-front { animation: none; }
+          .hero-fog-back, .hero-mist-blob { animation: none; }
           .hero-atmosphere { animation: none; }
         }
       `}</style>
