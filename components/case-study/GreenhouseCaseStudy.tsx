@@ -162,8 +162,8 @@ export default function GreenhouseCaseStudy() {
           <Section
             anchor="s-gallery"
             number="02"
-            heading="One brand, four completely different formats"
-            intro="An Amazon listing, an email send, a printed sell sheet, and an internal concept deck each earn attention differently. Every asset below adapted to that format instead of resizing the same file - while staying recognizably Greenhouse."
+            heading="One brand, five completely different formats"
+            intro="An Amazon listing, an email send, a printed sell sheet, a LinkedIn announcement, and an internal concept deck each earn attention differently. Every asset below adapted to that format instead of resizing the same file, while staying recognizably Greenhouse."
           >
             <div className="mt-8">
               <CategoryGrid channels={greenhouseChannels} linkBase="/work/greenhouse" />

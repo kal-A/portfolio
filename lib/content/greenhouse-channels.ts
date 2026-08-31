@@ -262,6 +262,67 @@ export const greenhouseChannels: ChannelGallery[] = [
     ],
   },
   {
+    slug: "social-trade-shows",
+    label: "Social & Trade Shows",
+    intro:
+      "LinkedIn announcements marking Greenhouse's trade-show booths and new retail placements. One flexible template, adapted across four shows and a retail launch so every post stayed on brand while carrying its own event, booth, and product mix.",
+    accent: "#357a8a",
+    tintFrom: "#e2f0f3",
+    tintTo: "#8fbfca",
+    assets: [
+      {
+        src: "/case-studies/greenhouse/social-unfi-innovation-jan.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement for the UNFI Innovation Show, Booth 93, showing the Super Smoothie cartons and bottles",
+        caption:
+          "The season's first trade announcement, built around the new Super Smoothie cartons and single-serve bottles for the UNFI Innovation Show in Vaughan. Booth #93, January 2025.",
+        size: "feature",
+      },
+      {
+        src: "/case-studies/greenhouse/social-kehe-summer-phoenix.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement for the KeHE Summer Show in Phoenix, illustrated wellness-shot lineup on a yellow field",
+        caption:
+          "A trade-show announcement for the KeHE Summer Show in Phoenix, using the illustrated wellness-shot lineup on a bright field. Booth #404, February 2025.",
+        size: "wide",
+      },
+      {
+        src: "/case-studies/greenhouse/social-kehe-summer-phoenix-alt.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement for the KeHE Summer Show in Phoenix, photographed wellness-shot bottles with a hard shadow",
+        caption:
+          "A second creative direction for the same Phoenix show, swapping the illustrated bottles for a photographed set with a hard directional shadow, so the team could compare treatments before posting.",
+      },
+      {
+        src: "/case-studies/greenhouse/social-rc-show-toronto.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement for the RC Show in Toronto, the full product range spilling from a branded tote",
+        caption:
+          "The full product range spilling from a branded tote for the RC Show in Toronto, the same template carrying a much larger lineup. Enercare Centre, Booth #3319, April 2025.",
+      },
+      {
+        src: "/case-studies/greenhouse/social-food-basics-launch.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement marking Ginger Defence and Smart Energy landing in Food Basics",
+        caption:
+          "A retail-win announcement rather than a trade-show one, marking Ginger Defence and Smart Energy landing in Food Basics. Proudly Canadian, March 2025.",
+      },
+      {
+        src: "/case-studies/greenhouse/social-unfi-summer-orlando.jpg",
+        width: 2000,
+        height: 1626,
+        alt: "Greenhouse LinkedIn announcement for the UNFI Spring and Summer Show in Orlando, product range spilling from a branded tote",
+        caption:
+          "The same tote-spill layout adapted for the UNFI Spring and Summer Show in Orlando, showing how one announcement system scaled from show to show. Booth #304, February 2025.",
+      },
+    ],
+  },
+  {
     slug: "internal-brand-team",
     label: "Internal Brand & Team Design",
     intro:
