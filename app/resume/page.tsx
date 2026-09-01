@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
+import ContactCTA from "@/components/ContactCTA";
 
 export const metadata = { title: "Resume · Kamal Ahsan" };
 
@@ -31,11 +32,19 @@ export default function ResumePage() {
               color: "var(--color-text)",
             }}
           >
-            Resume
+            The one-page version
           </h1>
           <p className="mt-4" style={{ fontSize: "var(--text-lead)", lineHeight: "var(--leading-lead)", color: "var(--color-text-muted)" }}>
             B.A.Sc. in Honours Management Engineering, University of Waterloo (2026). Looking for
-            full-time product roles.
+            full-time product roles. The case studies on{" "}
+            <Link
+              href="/work"
+              className="underline underline-offset-4 decoration-[var(--color-line-strong)] hover:decoration-[var(--color-text)]"
+              style={{ color: "var(--color-accent)" }}
+            >
+              Work
+            </Link>{" "}
+            go deeper on each role.
           </p>
 
           <Action href="/resume/Kamal-Ahsan-Resume.pdf" download className="mt-8">
@@ -113,6 +122,8 @@ export default function ResumePage() {
           </p>
         </Container>
       </div>
+
+      <ContactCTA />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Reveal from "@/components/Reveal";
+import ContactCTA from "@/components/ContactCTA";
 
 export const metadata = { title: "About · Kamal Ahsan" };
 
@@ -125,6 +126,7 @@ export default function AboutPage() {
           </Container>
         </div>
       </Reveal>
+      <ContactCTA />
     </div>
   );
 }

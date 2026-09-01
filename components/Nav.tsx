@@ -7,14 +7,14 @@ import { usePathname } from "next/navigation";
 /**
  * Single route-data source consumed by both the desktop link list and the
  * compact menu below — docs/redesign/03-layout-system.md's "Navigation":
- * identity at left, Work/About/Resume/contact action at right. "Home" is
- * not a separate item; the identity link covers it.
+ * identity at left, Work/About/Resume at right. "Home" is not a separate
+ * item; the identity link covers it. Contact is no longer a route: it lives
+ * as the ContactCTA band closing every main page, plus the footer.
  */
 const routes = [
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/resume", label: "Resume" },
-  { href: "/contact", label: "Contact" },
 ];
 
 function isActive(pathname: string, href: string) {

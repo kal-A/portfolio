@@ -4,7 +4,7 @@ import Hero from "@/components/Hero";
 import Container from "@/components/layout/Container";
 import ProjectIndexItem, { ProjectIndexItemPrimitive } from "@/components/ui/ProjectIndexItem";
 import AdditionalExperience from "@/components/AdditionalExperience";
-import Action from "@/components/ui/Action";
+import ContactCTA from "@/components/ContactCTA";
 
 /**
  * Featured set and ordering, decision of record 2026-08-19 (visual +
@@ -133,38 +133,11 @@ export default function Home() {
         </div>
       </Container>
 
-      {/* CTA block — retokenized (was raw hex + a raw <a>), Phase 8 Pass 1.
-          Shares the site's dark field instead of a light peach island, and
-          reuses the shared Action component instead of a one-off <a>. Now
-          sits directly after the portfolio's proof (no stats detour
-          between them, decision of record 2026-08-19). */}
+      {/* Closing contact CTA: the shared ContactCTA used sitewide (replaces
+          this page's former one-off "Let's connect" block and the standalone
+          /contact route). */}
       <Reveal>
-        <section
-          className="pt-[var(--space-7)] pb-[var(--space-9)] text-center"
-          style={{ background: "var(--color-surface-2)" }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "var(--text-h1)",
-              lineHeight: "var(--leading-h1)",
-              color: "var(--color-text)",
-            }}
-          >
-            Let&apos;s connect.
-          </h2>
-          <p className="mt-3" style={{ fontSize: "var(--text-body-l)", color: "var(--color-text-muted)" }}>
-            Open to full-time product, TPM, and product design roles, reach out.
-          </p>
-          <Action
-            href="https://linkedin.com/in/kamal-ahsan"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7"
-          >
-            Connect on LinkedIn ↗
-          </Action>
-        </section>
+        <ContactCTA />
       </Reveal>
     </div>
   );

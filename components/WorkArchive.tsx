@@ -24,9 +24,9 @@ import ProjectIndexItem from "@/components/ui/ProjectIndexItem";
  * scannable equivalence across all eight projects instead.
  */
 const groups: { label: string; slugs: string[] }[] = [
+  { label: "Systems & Technical", slugs: ["forcen", "chronicle"] },
   { label: "Product & Design", slugs: ["roomease", "hera-fertility", "greenhouse", "pill-pal"] },
   { label: "Research & Strategy", slugs: ["pathpeer", "informatica"] },
-  { label: "Systems & Technical", slugs: ["chronicle", "forcen"] },
 ];
 
 function yearOf(timeframe: string) {

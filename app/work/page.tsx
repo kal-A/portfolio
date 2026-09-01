@@ -1,5 +1,6 @@
 import WorkArchive from "@/components/WorkArchive";
 import Container from "@/components/layout/Container";
+import ContactCTA from "@/components/ContactCTA";
 
 export const metadata = { title: "Work · Kamal Ahsan" };
 
@@ -46,6 +47,8 @@ export default function WorkIndex() {
       <Container variant="standard" className="mt-4">
         <WorkArchive />
       </Container>
+
+      <ContactCTA />
     </div>
   );
 }
