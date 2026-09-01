@@ -34,7 +34,7 @@ export default function Hero() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: "var(--color-bg)", minHeight: "clamp(520px, 82vh, 780px)" }}
+      style={{ background: "var(--color-bg)", minHeight: "clamp(480px, 68vh, 620px)" }}
     >
       {/* Layer 1: atmosphere raster (v6) - distant warm light and the
           illustrated shelf, both baked in. */}
@@ -86,7 +86,7 @@ export default function Hero() {
         <span className="hero-mist-blob hm5" />
       </div>
 
-      <Container variant="page" className="relative z-10 py-[clamp(64px,12vh,120px)]">
+      <Container variant="page" className="relative z-10 pt-[clamp(56px,11vh,104px)] pb-[clamp(28px,5vh,52px)]">
         {/* Layer 10: semantic content - unchanged, DOM-first, never gated. */}
         <div className="max-w-[52ch]">
           <h1
