@@ -363,7 +363,8 @@ export default function ForceNCaseStudy() {
               <Section accentLabel number="03" label="Strategy" heading="From build-to-order to inventory readiness" />
               <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
                 ForceN wanted Dev Systems to become the standardized, off-the-shelf product line: configurations built{" "}
-                <span style={{ color: "var(--color-text)", fontWeight: 600 }}>before</span> an order arrived, held in
+                <span style={{ color: "var(--color-text)", fontWeight: 600 }}>before</span>{" "}
+                an order arrived, held in
                 finished inventory, and ready to ship the moment one did. The roadmap wasn&apos;t only about moving a
                 unit between teams; it had to make a standard configuration producible, testable, stockable, and ready
                 to fulfil an order without restarting the process from zero.

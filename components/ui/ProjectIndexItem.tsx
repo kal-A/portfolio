@@ -249,7 +249,13 @@ export default function ProjectIndexItem({
 
       {primitive ? (
         <div className="min-w-0 flex flex-col md:flex-row md:items-center gap-6 md:gap-8 lg:gap-10">
-          <div className={`min-w-0 flex-1 ${artifactLeads ? "order-2" : "order-1"}`}>
+          {/* On mobile everything stacks, so text always leads and the image
+              follows, for every primitive. The "artifact leads" reorder is a
+              desktop-only left/right arrangement (md:order-*); applying it on
+              mobile put the artifact row's image directly under the previous
+              row's image, reading as a large empty gap between the two
+              synopsis blocks. */}
+          <div className={`min-w-0 flex-1 order-1 ${artifactLeads ? "md:order-2" : "md:order-1"}`}>
             <NarrativeBlock
               title={title}
               meta={meta}
@@ -265,7 +271,7 @@ export default function ProjectIndexItem({
               objectPosition={image.position}
               sizes={imageSizes}
               hoverReveal
-              className={`aspect-[4/3] shrink-0 ${imageWidthClass} ${artifactLeads ? "order-1" : "order-2"}`}
+              className={`aspect-[4/3] shrink-0 order-2 ${imageWidthClass} ${artifactLeads ? "md:order-1" : "md:order-2"}`}
             />
           )}
         </div>
