@@ -97,8 +97,8 @@ export default function Hero() {
               color: "var(--color-text)",
             }}
           >
-            I take what&apos;s fragmented{" "}
-            <span style={{ color: "var(--color-accent)" }}>and give it structure.</span>
+            I build products by starting with{" "}
+            <span style={{ color: "var(--color-accent)" }}>how they actually work.</span>
           </h1>
           <p
             className="mt-6"
@@ -109,9 +109,9 @@ export default function Hero() {
               maxWidth: "var(--measure-lead)",
             }}
           >
-            At ForceN, that meant owning a hardware transfer workflow end to end. At
-            RoomEase, it meant taking a booking process spread across 34 different
-            websites and testing it into an 88%-usable system.
+            I came up through code and design into product, and I do my best work in the
+            parts underneath: the workflows, the systems, the edge cases most people skip.
+            Everything below is a project taken end to end.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <Action href="/work">View case studies</Action>
