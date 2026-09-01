@@ -2,30 +2,31 @@ import { caseStudies, evidenceLabel } from "@/lib/content/case-studies";
 import ProjectIndexItem from "@/components/ui/ProjectIndexItem";
 
 /**
- * Grouped archive + refined editorial rows — decision of record 2026-08-19,
- * replacing the old Work Experience / Projects tabs. That split organized
- * by employment status (was this a paid internship?), which is not what a
- * visitor trying to evaluate the work needs: it put RoomEase (UX research)
- * and Chronicle (AI systems) in one tab and ForceN (ops) next to Hera
- * (fintech UX) in the other, for reasons unrelated to what any of them
- * demonstrate. It also buried Pill Pal — never mentioned on the homepage or
- * in Additional Experience — behind a tab most homepage visitors had no
- * reason to click.
+ * Grouped archive + refined editorial rows. Projects are grouped by the kind
+ * of work each one actually demonstrates (its `caseStudyType` evidence), not
+ * by employment status or a rigid professional identity. Three sections keep
+ * each group coherent instead of lumping unlike work together: the earlier
+ * two-bucket split had Greenhouse (retail/brand DESIGN) sitting under
+ * "Systems, Operations & Technical" next to ForceN's hardware ops and
+ * Chronicle's AI systems, which read as miscategorised.
  *
- * These two groups use the project's strongest evidence as the placement
- * criterion, not a rigid professional identity — several projects
- * genuinely span both. Order within each group is proof strength /
- * relevance, not chronology; /work's job is discovery, not a dated record
- * (that's /resume).
+ *   Product & Design    -> the things people directly use: fintech and booking
+ *                          UX, brand/retail design, an HCI wearable.
+ *   Research & Strategy  -> behaviour-into-plan work: analytics-driven feature
+ *                          planning, curriculum/ops research.
+ *   Systems & Technical  -> the build/ops end: a hardware production workflow,
+ *                          an AI-systems architecture.
  *
- * Rows omit `number` and `primitive` on purpose: sequential numbering is
- * the homepage's curated-argument device, and per-project composition
- * variance is the homepage's storytelling job. /work needs consistent,
+ * Order within each group is proof strength / relevance, not chronology;
+ * /work's job is discovery, not a dated record (that's /resume). Rows omit
+ * `number` and `primitive` on purpose: sequential numbering and composition
+ * variance are the homepage's storytelling devices; /work needs consistent,
  * scannable equivalence across all eight projects instead.
  */
 const groups: { label: string; slugs: string[] }[] = [
-  { label: "Product, UX & Research", slugs: ["roomease", "hera-fertility", "pathpeer", "pill-pal"] },
-  { label: "Systems, Operations & Technical", slugs: ["forcen", "greenhouse", "chronicle", "informatica"] },
+  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "greenhouse", "pill-pal"] },
+  { label: "Research & Strategy", slugs: ["pathpeer", "informatica"] },
+  { label: "Systems & Technical", slugs: ["chronicle", "forcen"] },
 ];
 
 function yearOf(timeframe: string) {
