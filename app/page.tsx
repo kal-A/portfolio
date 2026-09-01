@@ -66,7 +66,7 @@ export default function Home() {
           06-component-system.md's "Project index item", selected variant,
           composed via ProjectIndexItem's narrative/balanced/artifact
           primitive system (see comment above and on the component itself). */}
-      <Container variant="standard" className="pt-[var(--space-10)] pb-[var(--space-7)]">
+      <Container variant="standard" className="pt-[var(--space-7)] pb-[var(--space-7)]">
         <Reveal>
           <h2
             style={{
