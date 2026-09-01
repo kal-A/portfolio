@@ -1,121 +1,36 @@
-import fs from "node:fs";
-import path from "node:path";
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
 
 /**
  * Hero (2026-08-31) - cinematic "figure on the shelf, facing the distant
  * light" composition. Layered strictly so positioning, fading and the draw
- * reveal never fight each other (this was the root of the earlier
- * missing-paths / shifting bugs):
+ * reveal never fight each other:
  *
  *   Layer 0  near-black stage            -> <section> background
  *   Layer 1  atmosphere raster (v6)      -> baked light + illustrated shelf
  *   Layer 1b fog behind the figure       -> depth between figure and sky
- *   Layer 2  figure (inline v8 contour)  -> see nesting below
+ *   Layer 2  figure (bronze line art)    -> see nesting below
  *   Layer 3  foreground knee mist        -> SIBLING above the figure
  *   Layer 10 semantic content            -> headline/lead/actions, never gated
  *
- * The figure itself is nested so each concern is isolated:
+ * The figure is the clean ivory line drawing recoloured to bronze
+ * (public/hero/hero-figure-bronze.png, built by tinting the source art's own
+ * alpha mask). This keeps the smooth, flowing hair the vector TRACE mangled
+ * into spikes - a region tracer cannot preserve fine line hair. The raster is
+ * cropped tight to the figure so it positions predictably, and is nested so
+ * each concern is isolated:
  *
  *   .hero-figure-wrap   (CSS: right/top/height only - NEVER an x transform)
- *     <svg 0 0 1024 1536>
- *       <g mask=lower-body-fade>     static gradient, hides legs + shoes
- *         <g mask=draw-reveal>       animated top-down wipe (hair -> coat)
- *           <g .hero-figure-g>       the 27 filled v8 paths, muted bronze
+ *     .hero-figure-draw (animated clip-path top-down draw reveal)
+ *       <img>           (CSS mask-image = the lower-body fade)
  *
- * Why the figure used to break:
- *   1) MISSING PATHS - a hand-authored reveal mask whose stroke skeleton was
- *      misaligned with the trace geometry masked most of the figure out, and a
- *      steep bronze opacity gradient faded the torso/legs to zero. Fixed by
- *      making the draw mask a full-width wipe (it cannot miss geometry) and
- *      moving the "vanish" into a dedicated lower-body-fade gradient mask.
- *   2) LEFTWARD SHIFT - the figure was positioned with `left:%` on a viewBox
- *      wider than the drawn figure, so xMid-centering + responsive --fig-left
- *      changes slid it. Fixed by anchoring with `right` and never transforming
- *      the position layer.
- *
- * The asset (public/hero/hero-figure-contour-v8.svg) is a VTracer trace, read
- * at build time and inlined (server component, statically prerendered) so the
- * figure is present in the first painted HTML with no hydration flash. The
- * draw mask defaults to fully revealed, so if its animation cannot run the
- * whole (upper) figure still shows - it can never hide the figure, only draw
- * it in. Reduced motion / route-return settle straight to the static frame.
+ * The draw reveal defaults to fully revealed, so if it cannot run the whole
+ * (upper) figure still shows; the both fill-mode holds the clipped first frame
+ * so there is no full-figure flash. Reduced motion / route-return settle
+ * straight to the static frame.
  */
 
-function figurePaths(): string[] {
-  const file = path.join(process.cwd(), "public/hero/hero-figure-contour-v8.svg");
-  const svg = fs.readFileSync(file, "utf8");
-  const all = Array.from(svg.matchAll(/<path\s+d="([^"]+)"/g)).map((m) => m[1]);
-  // Drop three VTracer artifacts: long, smooth strokes that shoot out of the
-  // top of the head into empty space. They are not part of the figure, nor of
-  // the windblown hair (which lives in the main contour), just trace noise.
-  const STRAY = new Set([21, 22, 24]);
-  return all.filter((_, i) => !STRAY.has(i));
-}
-
-function buildFigureSvg(paths: string[]): string {
-  const pathEls = paths
-    .map(
-      (d) =>
-        `<path d="${d}" fill="url(#heroFigBronze)" stroke="url(#heroFigBronze)" stroke-width="3" stroke-linejoin="round"/>`
-    )
-    .join("");
-
-  // The v8 trace draws only in the left ~40% of its native 1024x1536 box and
-  // even runs to negative x (the raised arm), so the native viewBox both
-  // clipped the arm and, with xMid centering, placed the figure nowhere near
-  // where it is anchored. Crop to the figure's true content bounds
-  // (x:-237..395, y:-7..1438, measured from the path data) so it fills the
-  // frame, is never clipped, and positions predictably.
-  const VB_X = -250, VB_Y = -20, VB_W = 680, VB_H = 1480;
-  const vb = `${VB_X} ${VB_Y} ${VB_W} ${VB_H}`;
-  const yTop = VB_Y, yBot = VB_Y + VB_H;
-
-  return `
-<svg class="hero-figure-svg" viewBox="${vb}" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-  <defs>
-    <!-- Muted bronze-grey. No white, no glow. The lower-body-fade mask does
-         the vanishing, so this stays near-uniform. -->
-    <linearGradient id="heroFigBronze" gradientUnits="userSpaceOnUse" x1="0" y1="${yTop}" x2="0" y2="${yBot}">
-      <stop offset="0.00" stop-color="rgb(212,182,140)" stop-opacity="0.92"/>
-      <stop offset="0.50" stop-color="rgb(200,170,128)" stop-opacity="0.88"/>
-      <stop offset="0.80" stop-color="rgb(190,160,120)" stop-opacity="0.82"/>
-      <stop offset="1.00" stop-color="rgb(182,152,114)" stop-opacity="0.72"/>
-    </linearGradient>
-
-    <!-- Lower-body fade: a long, gentle ramp so the figure DISSOLVES into the
-         mist instead of ending suddenly. Full opacity to ~50% of the figure,
-         then a soft multi-stop falloff through the thighs and knees, fully gone
-         by ~86%. Static; independent of the draw reveal. The foreground mist
-         bank finishes concealing whatever faint line remains. -->
-    <linearGradient id="heroLowerFade" gradientUnits="userSpaceOnUse" x1="0" y1="${yTop}" x2="0" y2="${yBot}">
-      <stop offset="0.00" stop-color="#fff"/>
-      <stop offset="0.50" stop-color="#fff"/>
-      <stop offset="0.60" stop-color="#d8d8d8"/>
-      <stop offset="0.68" stop-color="#a0a0a0"/>
-      <stop offset="0.75" stop-color="#5c5c5c"/>
-      <stop offset="0.82" stop-color="#242424"/>
-      <stop offset="0.88" stop-color="#000"/>
-      <stop offset="1.00" stop-color="#000"/>
-    </linearGradient>
-    <mask id="heroLowerMask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="${VB_X}" y="${VB_Y}" width="${VB_W}" height="${VB_H}">
-      <rect x="${VB_X}" y="${VB_Y}" width="${VB_W}" height="${VB_H}" fill="url(#heroLowerFade)"/>
-    </mask>
-  </defs>
-
-  <!-- Lower-body fade is a STATIC mask (static mask content renders reliably;
-       only ANIMATING elements inside an SVG <mask> is fragile - that is why
-       the draw reveal lives outside the SVG, as a clip-path on a wrapper). -->
-  <g mask="url(#heroLowerMask)">
-    <g class="hero-figure-g">${pathEls}</g>
-  </g>
-</svg>`;
-}
-
 export default function Hero() {
-  const figureSvg = buildFigureSvg(figurePaths());
-
   return (
     <section
       className="relative overflow-hidden"
@@ -134,13 +49,16 @@ export default function Hero() {
 
       {/* Layer 2: the figure. The outer wrap is position-only (right/top/size,
           never transformed). The inner layer owns the draw reveal via an
-          animated clip-path (compositor-reliable, unlike a mask-internal
-          animation). */}
+          animated clip-path (compositor-reliable). The img carries the
+          lower-body fade as a CSS mask-image. */}
       <div
         aria-hidden="true"
         className="hero-figure-wrap pointer-events-none absolute hidden sm:block z-[2]"
       >
-        <div className="hero-figure-draw" dangerouslySetInnerHTML={{ __html: figureSvg }} />
+        <div className="hero-figure-draw">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="hero-figure-img" src="/hero/hero-figure-bronze.png" alt="" aria-hidden="true" draggable={false} />
+        </div>
       </div>
 
       {/* Layer 3: foreground knee mist - a SIBLING above the figure (not inside
@@ -214,7 +132,15 @@ export default function Hero() {
           height: var(--fig-h, 54%);
         }
         .hero-figure-draw { height: 100%; }
-        .hero-figure-svg { height: 100%; width: auto; display: block; }
+        /* The figure raster, height-driven so the wrap's right edge stays put.
+           LOWER-BODY FADE: a CSS mask with a long, gentle ramp so the figure
+           dissolves into the mist through the thighs and knees instead of
+           ending suddenly (full to ~50%, soft falloff, fully gone by ~88%). */
+        .hero-figure-img {
+          height: 100%; width: auto; display: block;
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.12) 82%, transparent 88%);
+                  mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.12) 82%, transparent 88%);
+        }
 
         /* DRAW REVEAL: a top-down clip-path wipe (hair/hands first, then
            shoulders, arms, coat). clip-path animates on the compositor and is
