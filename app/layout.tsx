@@ -24,9 +24,28 @@ const onest = Onest({
 });
 
 export const metadata: Metadata = {
-  title: "Kamal Ahsan · Product & TPM Portfolio",
+  metadataBase: new URL("https://kamalahsan.vercel.app"),
+  title: "Kamal Ahsan · Portfolio",
   description:
     "Product management, product design, and UX/UI work from Kamal Ahsan, Management Engineering, University of Waterloo.",
+  // Link-preview (iMessage, Slack, etc.) card. Without an explicit image,
+  // scrapers grab the first <img> on the page (the ForceN thumbnail). The
+  // branded card comes from app/opengraph-image.tsx; here we just fix the
+  // title/description that previews read.
+  openGraph: {
+    title: "Kamal Ahsan · Portfolio",
+    description:
+      "Product management, product design, and UX/UI work from Kamal Ahsan.",
+    url: "https://kamalahsan.vercel.app",
+    siteName: "Kamal Ahsan",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kamal Ahsan · Portfolio",
+    description:
+      "Product management, product design, and UX/UI work from Kamal Ahsan.",
+  },
 };
 
 export default function RootLayout({
