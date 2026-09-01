@@ -13,9 +13,27 @@ export interface ProjectTheme {
   /** Fallback initials (used as alt text / non-visual fallback). */
   mark: string;
   image?: string;
+  /** CSS object-position for the hero `image`; defaults to "left top". */
+  imagePosition?: string;
+  /** How the hero `image` should fill its frame; defaults to "cover". */
+  imageFit?: "cover" | "contain";
+  /** Real project/company logo. Used as the corner badge, and as the
+   * centered card hero (on the fillFrom/fillTo gradient) for projects
+   * with no photo `image` to show. */
+  logo?: string;
 }
 
 export const caseStudyTheme: Record<string, ProjectTheme> = {
+  chronicle: {
+    bg: "#eef1e9",
+    accent: "#2e4a6b",
+    accentSoft: "#dbe3ee",
+    fillFrom: "#eef2f8",
+    fillTo: "#5c7ea3",
+    iconBg: "linear-gradient(135deg, #5c7ea3, #1f3a52)",
+    mark: "CH",
+    image: "/case-studies/chronicle/map-concert-of-europe-1815.jpg",
+  },
   roomease: {
     bg: "#f5f1e6",
     accent: "#c9941a",
@@ -25,6 +43,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #f0b429, #8a5a0a)",
     mark: "RE",
     image: "/case-studies/roomease/hero.png",
+    imagePosition: "center 30%",
   },
   "hera-fertility": {
     bg: "#e9edf2",
@@ -34,6 +53,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#6fa0c4",
     iconBg: "linear-gradient(135deg, #5a92bf, #1f3a52)",
     mark: "HF",
+    logo: "/case-studies/hera/hera-logo.png",
   },
   greenhouse: {
     bg: "#eef2e2",
@@ -43,7 +63,7 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#4bc192",
     iconBg: "linear-gradient(135deg, #3fb37f, #1c5c3f)",
     mark: "GH",
-    image: "/case-studies/greenhouse/greenhouse-home-hero.png",
+    image: "/case-studies/greenhouse/greenhouse-hero-collage.jpg",
   },
   forcen: {
     bg: "#f5f1ea",
@@ -54,6 +74,8 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #c9ccd0, #2b2e33)",
     mark: "FN",
     image: "/case-studies/forceN/homepage-hero.png",
+    imagePosition: "center 40%",
+    logo: "/case-studies/forceN/forcen-logo.jpg",
   },
   "pill-pal": {
     bg: "#efe9f6",
@@ -63,6 +85,9 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     fillTo: "#a983d1",
     iconBg: "linear-gradient(135deg, #9b7bc4, #4a2f73)",
     mark: "PP",
+    image: "/case-studies/pill-pal/wireframe-mymeds-list.png",
+    imageFit: "contain",
+    imagePosition: "center",
   },
   pathpeer: {
     bg: "#fdece0",
@@ -73,14 +98,16 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #f0954a, #a3430f)",
     mark: "PA",
     image: "/case-studies/pathpeer/pathpeer-hero-home.png",
+    logo: "/case-studies/pathpeer/pathpeer-logo.jpg",
   },
   informatica: {
-    bg: "#fbeaf0",
-    accent: "#b53a63",
-    accentSoft: "#f7dbe4",
-    fillFrom: "#fbeaf0",
-    fillTo: "#d97a9c",
-    iconBg: "linear-gradient(135deg, #e08aa8, #7a2846)",
+    bg: "#eaf3fb",
+    accent: "#4a7fab",
+    accentSoft: "#dbe9f5",
+    fillFrom: "#eaf3fb",
+    fillTo: "#7fb0dd",
+    iconBg: "linear-gradient(135deg, #7fb0dd, #b23a3a)",
     mark: "IN",
+    logo: "/case-studies/informatica/informatica-logo.png",
   },
 };

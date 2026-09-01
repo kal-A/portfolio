@@ -1,23 +1,333 @@
 @import "tailwindcss";
 
 :root {
+  /* --- Legacy tokens (pre-migration). Kept unchanged and still the tokens
+     actually consumed by <body> and every page's markup — see the
+     "New design-system tokens" block below. Do not repoint these until
+     Phase 3 migrates the global shell; doing so earlier would put the
+     current light-mode text/components on a background they were never
+     designed for. Not removed until every consumer has migrated off them. */
   --background: #ffffff;
   --foreground: #171717;
+  --ink: #201c17;
+  --ink-soft: #5c564c;
+  /* Theme-able comic-box accent (defaults to ForceN's amber). Bespoke
+     case-study pages override these on their root wrapper to re-tint every
+     .cs-box hover wash, light variant, and on-page-nav hover in one place.
+     The comic-box system itself is intentionally not removed yet — see
+     PORTFOLIO_CASE_STUDY_SYSTEM.md §25.4 (superseded design rationale) and
+     SUPERSEDED.md (current status: superseded, scheduled for removal once
+     every case study migrates off it, not before). */
+  --cs-wash-from: #fdf1de;
+  --cs-wash-to: #eaa64a;
+  --cs-light-from: #fdf6e7;
+  --cs-light-to: #f6dfb2;
+  --cs-accent-deep: #a15a10;
+  --cs-accent-wash-rgb: 217, 135, 31;
+
+  /* ============================================================
+     New design-system tokens — Phase 2, 2026-08-18.
+     Source: docs/redesign/02-design-language.md (color, typography,
+     spacing, shape/borders, elevation) and docs/redesign/05-motion-system.md
+     (motion durations/easings).
+
+     STATUS: defined and available, but NOT YET CONSUMED by <body>, page
+     backgrounds, or component styling. The global shell (body background,
+     default text color) stays on the legacy tokens above until Phase 3.
+     Wiring <body> to --color-bg now — before every page's text/components
+     have migrated off their hardcoded light-mode colors — would produce
+     dark-on-dark or otherwise broken intermediate states across most
+     routes, which the Phase 2 authorization explicitly rules out. Treat
+     everything in this block as "ready for Phase 3+ to consume," not
+     "active." components/case-study/* and the homepage do not read these
+     tokens yet.
+     ============================================================ */
+
+  /* Color */
+  --color-bg: #0b0c0f;
+  --color-surface-1: #111318;
+  --color-surface-2: #171a20;
+  --color-text: #f1e8db;
+  --color-text-muted: #b8b1a7;
+  --color-text-subtle: #817d77;
+  --color-line: rgba(241, 232, 219, 0.16);
+  --color-line-strong: rgba(241, 232, 219, 0.3);
+  --color-accent: #c89b62;
+  --color-accent-soft: #e3c7a4;
+  /* Case studies may override this on their root wrapper, same pattern as
+     the legacy --cs-accent-deep today. Falls back to --color-accent until
+     a project sets its own. */
+  --color-project-accent: var(--color-accent);
+  --color-focus: #8ccbff;
+  --color-success: #79b892;
+  --color-warning: #d7aa68;
+  --color-danger: #d77b72;
+
+  /* Typography scale (font families wired below, once loaded via
+     next/font/google in app/layout.tsx: --font-newsreader, --font-onest) */
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-onest), Arial, Helvetica, sans-serif;
+  --text-display-xl: clamp(4rem, 8vw, 8.5rem);
+  --leading-display-xl: 0.91; /* documented range .88–.94 */
+  --text-display-l: clamp(3rem, 5.5vw, 6rem);
+  --leading-display-l: 0.97; /* documented range .94–1 */
+  --text-h1: clamp(2.5rem, 4vw, 4.5rem);
+  --leading-h1: 1.02;
+  --text-h2: clamp(1.75rem, 2.6vw, 3rem);
+  --leading-h2: 1.08;
+  --text-h3: 1.25rem; /* 1.125rem on compact — apply via responsive utility */
+  --leading-h3: 1.25;
+  --text-lead: clamp(1.25rem, 1.8vw, 1.75rem);
+  --leading-lead: 1.45;
+  --text-body-l: 1.125rem; /* 1.0625rem on compact */
+  --leading-body-l: 1.65;
+  --text-body: 1rem;
+  --leading-body: 1.6;
+  --text-small: 0.875rem;
+  --leading-small: 1.5;
+  --text-label: 0.75rem;
+  --leading-label: 1.2;
+  --tracking-label: 0.08em;
+  --text-metric: clamp(3rem, 6vw, 6.5rem);
+  --leading-metric: 0.9;
+  --measure-body: 65ch; /* documented range 58–72ch */
+  --measure-lead: 45ch; /* documented range 38–52ch */
+
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 160px;
+  --space-section-responsive: clamp(72px, 10vw, 160px);
+
+  /* Shape and borders */
+  --radius-default: 12px; /* media and substantial surfaces */
+  --radius-control: 999px; /* pills only, not every button */
+  --radius-button: 8px;
+  --border-width-default: 1px;
+  --border-color-default: var(--color-line);
+
+  /* Elevation and texture — default is none; this is the one named
+     exception (image-stage shadow), not a general shadow recipe. */
+  --shadow-none: none;
+  --shadow-image-stage: 0 24px 80px rgba(0, 0, 0, 0.28);
+
+  /* Motion (docs/redesign/05-motion-system.md) */
+  --duration-instant: 100ms;
+  --duration-fast: 180ms;
+  --duration-base: 280ms;
+  --duration-slow: 500ms;
+  --duration-hero: 850ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-linear: linear;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-onest);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-onest), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 .font-serif {
-  font-family: var(--font-dm-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+}
+
+/* Comic-box treatment: bold ink border, hard offset shadow, hover-pop.
+   See PORTFOLIO_CASE_STUDY_SYSTEM.md §25.4. */
+.cs-box {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--ink);
+  background: linear-gradient(160deg, #fffefb 0%, #f7f1e3 100%);
+  transition: transform 0.16s ease-out, box-shadow 0.16s ease-out;
+}
+.cs-box:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+/* Fill-wash hover: same color-wash pattern as CaseStudyCard/homepage.
+   z-index: -1 (inside .cs-box's own isolated stacking context) keeps this
+   behind ALL content -- including bare text nodes, which paint above
+   positioned z-index:0+ siblings but below negative ones. */
+.cs-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(150deg, var(--cs-wash-from) 0%, var(--cs-wash-to) 100%);
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}
+.cs-box:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.cs-box.dark::before {
+  background: linear-gradient(150deg, #3a3e44 0%, #1c1f23 100%);
+}
+.cs-pill {
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  background: linear-gradient(160deg, #fffefb 0%, #f5efe1 100%);
+  transition: transform 0.14s ease-out, box-shadow 0.14s ease-out;
+}
+.cs-pill:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.cs-pill.highlight:hover {
+  background: var(--cs-accent-deep, #181614);
+  color: #fff9ee;
+  border-color: var(--cs-accent-deep, #181614);
+}
+.cs-box.dark {
+  background: linear-gradient(160deg, #34383e 0%, #23262b 100%);
+  color: #f3efe6;
+  border-color: #1c1f23;
+  box-shadow: 5px 5px 0 #1c1f23;
+}
+.cs-box.dark:hover {
+  box-shadow: 8px 8px 0 #1c1f23;
+}
+.cs-box.light {
+  background: linear-gradient(160deg, var(--cs-light-from) 0%, var(--cs-light-to) 100%);
+}
+.cs-seam {
+  border-top: 5px solid var(--ink);
+}
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Any .cs-box that hosts its own internally-hoverable rows (on-page nav,
+   data tables, decision matrices). Hover hierarchy (see
+   PORTFOLIO_CASE_STUDY_SYSTEM.md): base surface, then a light whole-container
+   wash on .cs-box.quiet-hover:hover, then a darker, more saturated wash on
+   the exact row under the pointer (.opn-link / .cs-hover-row). The container
+   wash must stay subtle -- it should never outweigh the row directly hovered. */
+.cs-box.quiet-hover {
+  transition: box-shadow 0.16s ease-out;
+}
+.cs-box.quiet-hover:hover {
+  transform: none;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.cs-box.quiet-hover::before {
+  transform: none;
+}
+.cs-box.quiet-hover:hover::before {
+  opacity: 0.4;
+  transform: none;
+}
+/* Extremely subtle fill-wash for light content cards where the full-strength
+   .cs-box wash (opacity 1, page-accent color) would overwhelm the card's own
+   identity. Reuses the site's established "subtle" opacity token (0.14, see
+   Chapter.tsx's section numerals) instead of an arbitrary value. Candidate
+   for the reusable "subtle card hover" rule -- see
+   PORTFOLIO_SPATIAL_COMPOSITION_RULES.md. Not yet applied site-wide. */
+.cs-box.subtle-fill:hover::before {
+  opacity: 0.4;
+}
+.opn-link {
+  transition: color 0.12s ease, background 0.12s ease;
+  border-radius: 10px;
+}
+.opn-link:hover {
+  color: var(--cs-accent-deep);
+  background: rgba(20, 16, 12, 0.14);
+}
+.opn-link .navicon {
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.opn-link .navicon svg {
+  transition: stroke 0.12s ease;
+}
+.opn-link:hover .navicon {
+  background: var(--ink);
+  transform: scale(1.12) rotate(-4deg);
+}
+.opn-link:hover .navicon svg {
+  stroke: #fff9ee;
+}
+
+/* Div-based row lists that behave like tables (decision matrices, comparison
+   rows) but aren't a literal <table>: same hierarchy as .cs-table, applied
+   via a class on each row instead of relying on tbody tr. */
+.cs-hover-row {
+  transition: background-color 0.15s ease;
+}
+.cs-hover-row:nth-of-type(even) {
+  background-color: rgba(var(--cs-accent-wash-rgb), 0.05);
+}
+.cs-hover-row:hover {
+  background-color: rgba(var(--cs-accent-wash-rgb), 0.18);
+}
+
+/* Case-study data tables: hover one row at a time, never the whole table.
+   Zebra striping + hover both live in CSS (not inline styles) so the
+   :hover rule can actually win the cascade. */
+.cs-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+.cs-table tbody tr:nth-child(even) {
+  background-color: rgba(var(--cs-accent-wash-rgb), 0.05);
+}
+.cs-table tbody tr:hover {
+  background-color: rgba(var(--cs-accent-wash-rgb), 0.18);
+}
+
+/* Homepage Selected Work media: grayscale-at-rest, full color on hover/
+   focus — decision of record 2026-08-20. Gated to real hover-capable
+   pointers only (`hover: hover` + `pointer: fine`), so the grayscale state
+   can never be the ONLY state a touch visitor sees: on a touch device this
+   block doesn't apply at all, and MediaFrame's images render in full color
+   by default with no interaction required. Applied via a class on
+   MediaFrame's wrapper (`hoverReveal` prop), toggled by the ancestor
+   `.group` Link's real :hover/:focus-visible state — not a bare :hover on
+   the frame itself, so keyboard focus reveals color exactly like mouse
+   hover does. Filter-only transition: never touches layout, so the fixed
+   aspect-[4/3] frame cannot resize or jump. */
+@media (hover: hover) and (pointer: fine) {
+  .hover-reveal-media img {
+    filter: grayscale(1);
+    /* Longer, gentle fade so color eases in on hover/focus instead of
+       snapping (the previous 280ms read as abrupt). */
+    transition: filter 550ms var(--ease-standard);
+  }
+  .group:hover .hover-reveal-media img,
+  .group:focus-visible .hover-reveal-media img {
+    filter: grayscale(0);
+  }
+  /* A color change is not motion, but respect the preference anyway:
+     no grayscale state at all, so nothing animates. */
+  @media (prefers-reduced-motion: reduce) {
+    .hover-reveal-media img {
+      filter: none;
+      transition: none;
+    }
+  }
 }

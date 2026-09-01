@@ -8,7 +8,7 @@ export default function Metric({
   accent?: string;
 }) {
   return (
-    <div className="rounded-lg px-5 py-4" style={{ border: "2px solid #181614" }}>
+    <div className="cs-box px-5 py-4">
       <div className="font-serif text-2xl" style={{ color: accent }}>
         {value}
       </div>

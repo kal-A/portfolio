@@ -1,3 +1,14 @@
+> **Partially superseded, 2026-08-18.** The three card-type categories
+> (visual / systems-process / archive) remain authoritative for content.
+> Visual specifics (artifact-chip styling, etc.) route through the new token
+> system in `02-design-language.md`. The instruction to keep PathPeer and
+> Informatica confined to the archive card type is retired — both keep full
+> case-study pages; only homepage-featured status remains evidence-gated.
+> The homepage project-index presentation itself (this document's original
+> visual/card treatment) is now governed by
+> `06-component-system.md`'s "Project index item" spec — an editorial row,
+> not a grid of equal cards. See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Project Card Types
 
 Create or support three main project card variants.

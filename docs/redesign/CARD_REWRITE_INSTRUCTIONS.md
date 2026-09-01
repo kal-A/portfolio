@@ -1,3 +1,10 @@
+> **Supplemented, 2026-08-18.** Per-card copy format and banned-word rules
+> remain authoritative. The homepage's card-based visual presentation is
+> now superseded by `06-component-system.md`'s "Project index item" spec
+> (an editorial row, not a card grid) — this document's copy rules apply to
+> that new presentation, not the card layout it originally assumed. See
+> [SUPERSEDED.md](SUPERSEDED.md).
+
 # Project Card Rewrite — Instructions for Claude Code
 
 > **Superseded by [`docs/redesign/00-INDEX.md`](docs/redesign/00-INDEX.md)

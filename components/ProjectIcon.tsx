@@ -1,4 +1,11 @@
 const paths: Record<string, React.ReactNode> = {
+  chronicle: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5l2 3.3-2 1.4-2-1.4z" />
+      <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
+    </>
+  ),
   roomease: (
     <>
       <rect x="3" y="5" width="18" height="16" rx="2" />
@@ -53,9 +60,11 @@ const paths: Record<string, React.ReactNode> = {
 export default function ProjectIcon({
   slug,
   className,
+  style,
 }: {
   slug: string;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const path = paths[slug];
   if (!path) return null;
@@ -69,6 +78,7 @@ export default function ProjectIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
     >
       {path}
     </svg>

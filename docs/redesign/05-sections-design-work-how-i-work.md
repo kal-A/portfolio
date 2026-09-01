@@ -1,5 +1,10 @@
 # "Design Work / Visual Evidence" and "How I Work" Sections
 
+> **Historical/reference only, 2026-08-18.** These sections were never
+> implemented and have no equivalent slot in `03-layout-system.md`'s
+> homepage structure. Kept for the underlying content ideas only, not as a
+> section spec. See [SUPERSEDED.md](SUPERSEDED.md).
+
 ## Design Work / Visual Evidence section
 
 Add a section that clearly shows Kamal's design ability. This is important

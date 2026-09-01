@@ -1,3 +1,12 @@
+> **Historical/reference only, 2026-08-18.** Superseded by the design-freeze
+> foundation. Conflicts: base palette (warm paper vs. near-black), the
+> simultaneous multi-accent pill/card colors vs. one accent family,
+> decorative gradients vs. light-falloff/data-only gradients, and the card
+> fill-on-hover effect vs. no page-field recoloring. The hero concept (pill
+> tags, photo stack, hand-drawn signature) is fully replaced by
+> `04-hero-system.md`. Section order is superseded by `03-layout-system.md`.
+> See [SUPERSEDED.md](SUPERSEDED.md).
+
 # Final Homepage/Hero Spec — Approved, Ready to Implement
 
 This supersedes the exploratory notes in
