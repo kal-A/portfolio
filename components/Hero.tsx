@@ -111,7 +111,7 @@ export default function Hero() {
           >
             I came up through code and design into product, and I do my best work in the
             parts underneath: the workflows, the systems, the edge cases most people skip.
-            Everything below is a project taken end to end.
+            A selection of that work is below.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <Action href="/work">View case studies</Action>
