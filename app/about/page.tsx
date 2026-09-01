@@ -86,11 +86,11 @@ const offClock: { label: string; body: string }[] = [
   },
   {
     label: "Sport",
-    body: "I follow soccer and hockey closely, and I am always up for arguing about either.",
+    body: "I am not much for arguing about it, but I am passionate about my teams: Arsenal, and, unfortunately, the Maple Leafs.",
   },
   {
     label: "Style",
-    body: "I put thought into how I dress, down to the details like fragrance. It is something I enjoy getting right.",
+    body: "I am really into dressing well, and I have a fragrance collection I am proud of.",
   },
 ];
 
