@@ -303,7 +303,7 @@ export default function AboutPage() {
                 color: "var(--color-text)",
               }}
             >
-              First, the part that has nothing to do with work.
+              The part that has nothing to do with work.
             </p>
             <div className="grid gap-10 md:grid-cols-3">
               {offClock.map((o) => (
