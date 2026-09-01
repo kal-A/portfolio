@@ -89,8 +89,8 @@ const offClock: { label: string; body: string }[] = [
     body: "More soccer and hockey than I can strictly justify, and I will happily argue about either.",
   },
   {
-    label: "Fashion",
-    body: "I care more than is reasonable about how things are cut and put together, so I follow it closely.",
+    label: "Style",
+    body: "I care more than is reasonable about how things are cut and put together, so how I dress, down to the fragrance, is never an afterthought.",
   },
 ];
 
