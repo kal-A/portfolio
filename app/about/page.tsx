@@ -82,15 +82,15 @@ const timeline: { phase: string; when: string; body: string }[] = [
 const offClock: { label: string; body: string }[] = [
   {
     label: "History",
-    body: "I read a lot of it, mostly for the cause and effect: how one quiet decision in one decade sets up the crisis in the next. (Occupational hazard, apparently; I do the same thing with workflows.)",
+    body: "I read a fair amount of history. What gets me is the cause and effect, how one decision quietly sets up the next. I catch myself reading workflows the same way.",
   },
   {
     label: "Sport",
-    body: "More soccer and hockey than I can strictly justify, and I will happily argue about either.",
+    body: "I follow soccer and hockey closely, and I am always up for arguing about either.",
   },
   {
     label: "Style",
-    body: "I care more than is reasonable about how things are cut and put together, so how I dress, down to the fragrance, is never an afterthought.",
+    body: "I put thought into how I dress, down to the details like fragrance. It is something I enjoy getting right.",
   },
 ];
 
