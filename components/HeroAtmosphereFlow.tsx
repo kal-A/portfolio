@@ -55,13 +55,18 @@ float fbm(vec2 p) {
 void main() {
   vec2 uv = (vUv - 0.5) * uScale + 0.5;
   float t = uTime;
-  // Domain-warped flow: the offset field itself drifts, so the haze churns
-  // and slowly rises rather than just shimmering in place.
-  vec2 q = vec2(
-    fbm(uv * 2.2 + vec2(0.0, t * 0.09) + fbm(uv * 1.5 + t * 0.05)),
-    fbm(uv * 2.2 + vec2(5.2, -t * 0.08) + fbm(uv * 1.5 - t * 0.06))
-  );
-  vec2 disp = (q - 0.5) * 2.0 * uAmp;
+  // WIND, not a dance. The noise field is advected in a single direction
+  // (mostly across, a little up), so the haze drifts like wind-blown cloud
+  // and the shapes stay coherent as they travel, keeping the still image
+  // recognizable. Only a whisper of in-place evolution (the t*0.015 term)
+  // keeps it from looking rigidly rigid; the isotropic domain-warp churn that
+  // read as "dancing" is gone.
+  vec2 wind = vec2(-0.05, -0.014);
+  vec2 a1 = uv * 2.0 + wind * t;
+  vec2 a2 = uv * 3.6 + wind * (t * 1.5) + 7.3;
+  float nx = fbm(a1 + vec2(0.0, t * 0.015)) * 0.7 + fbm(a2) * 0.3;
+  float ny = fbm(a1 + vec2(4.7, 1.3)) * 0.7 + fbm(a2 + vec2(2.1, 6.4)) * 0.3;
+  vec2 disp = (vec2(nx, ny) - 0.5) * 2.0 * uAmp;
   // Keep the shelf (bottom of the image) stable; let the sky/haze move.
   disp *= smoothstep(0.12, 0.62, vUv.y);
   vec2 s = clamp(uv + disp, vec2(0.0015), vec2(0.9985));
