@@ -60,8 +60,8 @@ export default function ContactCTA() {
             color: "var(--color-text-muted)",
           }}
         >
-          I&apos;m looking for full-time product roles: product management, product design, UX, and
-          technical product. The fastest way to reach me is email.
+          I&apos;m open to full-time product roles: product management, product design, UX, and
+          technical product. Email&apos;s the fastest way to reach me.
         </p>
 
         <div className="mt-8 space-y-4">
