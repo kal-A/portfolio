@@ -1,7 +1,7 @@
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
 import HeroAtmosphereFlow from "@/components/HeroAtmosphereFlow";
-import HeroFigureFlow from "@/components/HeroFigureFlow";
+import HeroMistFlow from "@/components/HeroMistFlow";
 
 /**
  * Hero (2026-08-31) - cinematic "figure on the shelf, facing the distant
@@ -67,10 +67,8 @@ export default function Hero() {
         className="hero-figure-wrap pointer-events-none absolute hidden sm:block z-[2]"
       >
         <div className="hero-figure-draw">
-          {/* Figure driven through a WebGL2 sway shader (hair + coat move in the
-              wind); falls back to the original masked <img> when WebGL2 is
-              unavailable or reduced-motion is set. */}
-          <HeroFigureFlow src="/hero/hero-figure-bronze.png" imgClassName="hero-figure-img" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="hero-figure-img" src="/hero/hero-figure-bronze.png" alt="" aria-hidden="true" draggable={false} />
         </div>
       </div>
 
@@ -92,11 +90,16 @@ export default function Hero() {
           Sits in front of both the figure (z-2) and the baked-in shelf. Each
           shape drifts horizontally only 1-3% over 20-30s. */}
       <div aria-hidden="true" className="hero-mist pointer-events-none absolute inset-0 z-[4]">
+        {/* hm1-hm3: near-opaque concealers that quietly erase the leg lines and
+            shoes. Kept as-is; they must stay put to keep the lower body hidden. */}
         <span className="hero-mist-blob hm1" />
         <span className="hero-mist-blob hm2" />
         <span className="hero-mist-blob hm3" />
-        <span className="hero-mist-blob hm4" />
-        <span className="hero-mist-blob hm5" />
+        {/* The visible, lit fog on top is now a real drifting procedural fog
+            (WebGL2), localized to the figure's lower body, so it actually moves
+            instead of a soft gradient nudging imperceptibly. Falls back to
+            nothing (the concealers still hide the legs) if WebGL2 is missing. */}
+        <HeroMistFlow className="pointer-events-none absolute inset-0 block h-full w-full" />
       </div>
 
       <Container variant="page" className="relative z-10 pt-[clamp(56px,11vh,104px)] pb-[clamp(28px,5vh,52px)]">
@@ -144,7 +147,7 @@ export default function Hero() {
           top: var(--fig-top, 24%);
           height: var(--fig-h, 54%);
         }
-        .hero-figure-draw { height: 100%; position: relative; }
+        .hero-figure-draw { height: 100%; }
         /* The figure raster, height-driven so the wrap's right edge stays put.
            LOWER-BODY FADE: a CSS mask with a long, gentle ramp so the figure
            dissolves into the mist through the thighs and knees instead of
@@ -199,14 +202,6 @@ export default function Hero() {
         .hm1 { background: radial-gradient(26% 15% at 82% 65%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.92) 55%, transparent 80%); filter: blur(16px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
         .hm2 { background: radial-gradient(38% 22% at 82% 75%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.6) 52%, transparent 80%); filter: blur(22px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
         .hm3 { background: radial-gradient(60% 27% at 80% 89%, rgba(11,12,15,0.80) 0%, rgba(11,12,15,0.38) 54%, transparent 82%); filter: blur(24px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
-        .hm4 { background: radial-gradient(42% 21% at 81% 62%, rgba(50,52,61,0.60) 0%, rgba(34,36,45,0.28) 48%, transparent 74%); filter: blur(32px); animation: hero-mist-b 17s ease-in-out infinite alternate; }
-        .hm5 { background: radial-gradient(48% 20% at 76% 53%, rgba(60,62,72,0.32) 0%, rgba(46,48,58,0.14) 48%, transparent 72%); filter: blur(32px); animation: hero-mist-a 20s ease-in-out infinite alternate; }
-        /* The two lit fog layers carry the visible drift: wider travel (about
-           5-6%) with a slight leftward+upward bias so the fog around the figure
-           rolls with the same wind as the sky. The concealer blobs below stay
-           near-still so the legs remain hidden. */
-        @keyframes hero-mist-a { from { transform: translate3d(-2.6%, 1.1%, 0); }  to { transform: translate3d(3.0%, -1.6%, 0); } }
-        @keyframes hero-mist-b { from { transform: translate3d(2.4%, 0.7%, 0); }   to { transform: translate3d(-3.3%, -1.3%, 0); } }
         @keyframes hero-mist-c { from { transform: translate3d(-1.4%, 0, 0); }  to { transform: translate3d(1.3%, -0.3%, 0); } }
         @keyframes hero-mist-d { from { transform: translate3d(0.6%, 0, 0); }   to { transform: translate3d(-0.9%, 0.2%, 0); } }
         @keyframes hero-mist-e { from { transform: translate3d(-0.7%, 0, 0); }  to { transform: translate3d(0.6%, 0, 0); } }
