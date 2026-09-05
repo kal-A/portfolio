@@ -194,9 +194,23 @@ export default function Hero() {
         @keyframes hero-mist-d { from { transform: translate3d(0.6%, 0, 0); }   to { transform: translate3d(-0.9%, 0.2%, 0); } }
         @keyframes hero-mist-e { from { transform: translate3d(-0.7%, 0, 0); }  to { transform: translate3d(0.6%, 0, 0); } }
 
-        /* One subtle, single-play atmosphere lift after the figure settles. */
-        .hero-atmosphere { animation: hero-bloom 320ms var(--ease-standard) 1600ms 1 forwards; }
+        /* Ambient life: a one-time brightness lift after the figure settles,
+           plus a very slow, continuous drift + micro-zoom so the distant light
+           and haze read as breathing instead of frozen. A >1 base scale is held
+           at all times so the pan can never expose an edge. Felt, not seen:
+           about 3% of travel over a full minute, ease-in-out so it never has a
+           visible start or stop. */
+        .hero-atmosphere {
+          will-change: transform;
+          animation:
+            hero-bloom 320ms var(--ease-standard) 1600ms 1 forwards,
+            hero-atmo-drift 60s ease-in-out 0s infinite alternate;
+        }
         @keyframes hero-bloom { from { filter: brightness(1); } to { filter: brightness(1.03); } }
+        @keyframes hero-atmo-drift {
+          from { transform: scale(1.035) translate3d(-0.4%, 0.25%, 0); }
+          to   { transform: scale(1.06) translate3d(0.5%, -0.3%, 0); }
+        }
 
         /* Responsive placement as the cover-crop shifts. */
         @media (min-width: 1536px) { .hero-figure-wrap { --fig-right: 11%; --fig-top: 24%; --fig-h: 56%; } }
@@ -205,7 +219,9 @@ export default function Hero() {
 
         /* Route-return: settle immediately, no entrance replay. */
         :root.hero-contour-skip .hero-figure-draw { animation: none; clip-path: inset(0 0 0 0); }
-        :root.hero-contour-skip .hero-atmosphere { animation: none; }
+        /* On route-return, skip only the one-time bloom; the ambient drift is
+           not an entrance, so it keeps running. */
+        :root.hero-contour-skip .hero-atmosphere { animation: hero-atmo-drift 60s ease-in-out 0s infinite alternate; }
 
         @media (prefers-reduced-motion: reduce) {
           .hero-figure-draw { animation: none; clip-path: inset(0 0 0 0); }
