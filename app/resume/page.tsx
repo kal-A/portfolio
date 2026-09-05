@@ -35,7 +35,7 @@ export default function ResumePage() {
             The one-page version
           </h1>
           <p className="mt-4" style={{ fontSize: "var(--text-lead)", lineHeight: "var(--leading-lead)", color: "var(--color-text-muted)" }}>
-            B.A.Sc. in Honours Management Engineering, University of Waterloo (2026). Looking for
+            B.A.Sc. in Honours Management Engineering, University of Waterloo (2026). Open to
             full-time product roles. The case studies on{" "}
             <Link
               href="/work"
