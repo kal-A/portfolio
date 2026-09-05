@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
+import HeroAtmosphereFlow from "@/components/HeroAtmosphereFlow";
 
 /**
  * Hero (2026-08-31) - cinematic "figure on the shelf, facing the distant
@@ -42,6 +43,15 @@ export default function Hero() {
         aria-hidden="true"
         className="hero-atmosphere pointer-events-none absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url(/hero/hero-atmosphere-v6.png)" }}
+      />
+
+      {/* Layer 1 (live): the same atmosphere raster driven through a WebGL2
+          flow shader so the light and haze visibly churn and drift. Painted
+          over the CSS fallback above; hides itself (revealing that static
+          background) when WebGL2 is unavailable or reduced-motion is set. */}
+      <HeroAtmosphereFlow
+        src="/hero/hero-atmosphere-v6.png"
+        className="hero-flow pointer-events-none absolute inset-0 block h-full w-full"
       />
 
       {/* Layer 1b: fog BEHIND the figure - separation from the sky. */}
