@@ -2,6 +2,7 @@ import Container from "@/components/layout/Container";
 import Action from "@/components/ui/Action";
 import HeroAtmosphereFlow from "@/components/HeroAtmosphereFlow";
 import HeroMistFlow from "@/components/HeroMistFlow";
+import HeroBuildTyping from "@/components/HeroBuildTyping";
 
 /**
  * Hero (2026-08-31) - cinematic "figure on the shelf, facing the distant
@@ -106,6 +107,7 @@ export default function Hero() {
         {/* Layer 10: semantic content - unchanged, DOM-first, never gated. */}
         <div className="max-w-[52ch]">
           <h1
+            aria-label="I build products, systems, workflows, experiences, and tools."
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "var(--text-display-l)",
@@ -113,8 +115,10 @@ export default function Hero() {
               color: "var(--color-text)",
             }}
           >
-            I build products by starting with{" "}
-            <span style={{ color: "var(--color-accent)" }}>how they actually work.</span>
+            <span aria-hidden="true" className="block">I build</span>
+            <span aria-hidden="true" className="block">
+              <HeroBuildTyping />
+            </span>
           </h1>
           <p
             className="mt-6"
@@ -127,7 +131,6 @@ export default function Hero() {
           >
             I came up through code and design into product, and I do my best work in the
             parts underneath: the workflows, the systems, the edge cases most people skip.
-            Take a look at what I&apos;ve done, and what I&apos;m up to.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <Action href="/work">View case studies</Action>
@@ -148,6 +151,18 @@ export default function Hero() {
           height: var(--fig-h, 54%);
         }
         .hero-figure-draw { height: 100%; }
+
+        /* Typewriter caret trailing the cycling manifesto word. */
+        .hero-caret {
+          display: inline-block;
+          width: 0.06em;
+          height: 0.82em;
+          margin-left: 0.06em;
+          background: currentColor;
+          vertical-align: -0.04em;
+          animation: hero-caret-blink 1s steps(1, end) infinite;
+        }
+        @keyframes hero-caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
         /* The figure raster, height-driven so the wrap's right edge stays put.
            LOWER-BODY FADE: a CSS mask with a long, gentle ramp so the figure
            dissolves into the mist through the thighs and knees instead of
@@ -239,6 +254,7 @@ export default function Hero() {
           .hero-figure-draw { animation: none; clip-path: inset(0 0 0 0); }
           .hero-fog-back, .hero-mist-blob { animation: none; }
           .hero-atmosphere { animation: none; }
+          .hero-caret { animation: none; opacity: 1; }
         }
       `}</style>
       <script
