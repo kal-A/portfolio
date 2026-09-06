@@ -146,9 +146,9 @@ export default function Hero() {
            right edge so it never drifts left, and this element is never given
            an x-transform. Nudge via these vars. */
         .hero-figure-wrap {
-          right: var(--fig-right, 10%);
+          right: var(--fig-right, 15%);
           top: var(--fig-top, 24%);
-          height: var(--fig-h, 54%);
+          height: var(--fig-h, 68%);
         }
         .hero-figure-draw { height: 100%; }
 
@@ -240,9 +240,9 @@ export default function Hero() {
         }
 
         /* Responsive placement as the cover-crop shifts. */
-        @media (min-width: 1536px) { .hero-figure-wrap { --fig-right: 11%; --fig-top: 24%; --fig-h: 56%; } }
-        @media (max-width: 900px)  { .hero-figure-wrap { --fig-right: 7%;  --fig-top: 26%; --fig-h: 50%; } }
-        @media (max-width: 700px)  { .hero-figure-wrap { --fig-right: 4%;  --fig-top: 28%; --fig-h: 44%; opacity: 0.9; } }
+        @media (min-width: 1536px) { .hero-figure-wrap { --fig-right: 16%; --fig-top: 24%; --fig-h: 70%; } }
+        @media (max-width: 900px)  { .hero-figure-wrap { --fig-right: 7%;  --fig-top: 26%; --fig-h: 52%; } }
+        @media (max-width: 700px)  { .hero-figure-wrap { --fig-right: 4%;  --fig-top: 28%; --fig-h: 46%; opacity: 0.9; } }
 
         /* Route-return: settle immediately, no entrance replay. */
         :root.hero-contour-skip .hero-figure-draw { animation: none; clip-path: inset(0 0 0 0); }

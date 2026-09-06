@@ -18,12 +18,17 @@ const WORDS = ["Products", "Systems", "Workflows", "Experiences", "Tools"];
 const TYPE_MS = 85; // per character
 const HOLD_MS = 1700; // pause on the finished word
 const GAP_MS = 420; // pause after clearing, before the next word
+const START_MS = 500; // beat before the very first word types in
 
 export default function HeroBuildTyping() {
-  const [typed, setTyped] = useState(WORDS[0] + ".");
+  // Start empty so the first word types in on load rather than being present.
+  const [typed, setTyped] = useState("");
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTyped(WORDS[0] + ".");
+      return;
+    }
 
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
@@ -53,8 +58,8 @@ export default function HeroBuildTyping() {
       step();
     };
 
-    // First word is already on screen (server-rendered): just hold, then cycle.
-    clearThenNext();
+    // Start empty and type the first word in after a short beat, then cycle.
+    timer = setTimeout(typeWord, START_MS);
 
     return () => {
       cancelled = true;
