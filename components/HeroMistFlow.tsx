@@ -56,8 +56,8 @@ void main() {
   // band toward the figure (so the bottom is always being re-covered). The
   // high smoothstep floor (0.50) keeps only the dense noise peaks, so the mist
   // reads as SEPARATE chunks with dark gaps between them, not one blanket.
-  vec2 wind = vec2(-0.024, 0.004);
-  vec2 p = vec2(uv.x * asp, uv.y) * 2.2 + wind * t;
+  vec2 wind = vec2(-0.014, 0.0025);
+  vec2 p = vec2(uv.x * asp, uv.y) * 1.9 + wind * t;
   float base = fbm(p);
   float detail = fbm(p * 2.1 + 5.0 + wind * (t * 0.6));
   float cov = smoothstep(0.50, 0.82, base * 0.7 + detail * 0.3);
