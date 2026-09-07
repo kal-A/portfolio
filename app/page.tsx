@@ -62,6 +62,11 @@ export default function Home() {
     <div>
       <Hero />
 
+      {/* Content plane: opaque and stacked above the hero so, as the hero
+          recedes on scroll (HeroReveal), this whole block slides up and over
+          it instead of hard-cutting. Its own background prevents the receding
+          hero from showing through the transparent sections. */}
+      <div className="relative z-10" style={{ background: "var(--color-bg)" }}>
       {/* Selected work: editorial index, not an equal-card grid.
           06-component-system.md's "Project index item", selected variant,
           composed via ProjectIndexItem's narrative/balanced/artifact
@@ -139,6 +144,7 @@ export default function Home() {
       <Reveal>
         <ContactCTA />
       </Reveal>
+      </div>
     </div>
   );
 }
