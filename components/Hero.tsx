@@ -166,11 +166,12 @@ export default function Hero() {
         /* The figure raster, height-driven so the wrap's right edge stays put.
            LOWER-BODY FADE: a CSS mask with a long, gentle ramp so the figure
            dissolves into the mist through the thighs and knees instead of
-           ending suddenly (full to ~50%, soft falloff, fully gone by ~88%). */
+           ending suddenly. Held solid to ~66% so the flowy coat hem stays
+           visible, then a soft falloff through the legs, fully gone by ~91%. */
         .hero-figure-img {
           height: 100%; width: auto; display: block;
-          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.12) 82%, transparent 88%);
-                  mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.12) 82%, transparent 88%);
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgba(0,0,0,0.85) 74%, rgba(0,0,0,0.48) 80%, rgba(0,0,0,0.18) 86%, transparent 91%);
+                  mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgba(0,0,0,0.85) 74%, rgba(0,0,0,0.48) 80%, rgba(0,0,0,0.18) 86%, transparent 91%);
         }
 
         /* DRAW REVEAL: a top-down clip-path wipe (hair/hands first, then
