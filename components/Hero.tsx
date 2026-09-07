@@ -150,19 +150,21 @@ export default function Hero() {
 
       <style>{`
         /* SCROLL RECEDE: as the first viewport of scroll advances, the whole
-           hero settles into the background instead of hard-cutting. A slight
-           downward parallax lag (it trails the scroll), a scale-down, a soft
-           blur and a partial fade read as depth, while the opaque content
-           plane below (position relative, higher z) slides up and over it.
-           Driven by --hero-p / --hero-lag set by HeroReveal; defaults keep it
-           flat if the script never runs. transform-origin biased slightly high
-           so it recedes up-and-back. */
+           hero settles into the background instead of hard-cutting. A downward
+           parallax lag (it trails the scroll), a scale-down and a partial fade
+           read as depth, while the opaque content plane below (position
+           relative, higher z) slides up and over it. Driven by --hero-p /
+           --hero-lag set by HeroReveal; defaults keep it flat if the script
+           never runs. transform-origin biased slightly high so it recedes
+           up-and-back. No CSS filter here on purpose: a filter (even blur(0))
+           on this subtree forces the WebGL atmosphere and mist canvases through
+           an offscreen pass that renders them blank, so depth comes from scale
+           and fade alone. */
         #hero-root {
-          transform: translate3d(0, var(--hero-lag, 0px), 0) scale(calc(1 - 0.08 * var(--hero-p, 0)));
+          transform: translate3d(0, var(--hero-lag, 0px), 0) scale(calc(1 - 0.09 * var(--hero-p, 0)));
           transform-origin: 50% 40%;
           opacity: calc(1 - 0.55 * var(--hero-p, 0));
-          filter: blur(calc(var(--hero-p, 0) * 4px));
-          will-change: transform, opacity, filter;
+          will-change: transform, opacity;
         }
 
         /* FULL-VIEWPORT HERO: fill the screen below the sticky nav so the
