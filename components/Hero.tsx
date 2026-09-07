@@ -36,8 +36,8 @@ import HeroBuildTyping from "@/components/HeroBuildTyping";
 export default function Hero() {
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ background: "var(--color-bg)", minHeight: "clamp(480px, 68vh, 620px)" }}
+      className="hero-fill relative overflow-hidden"
+      style={{ background: "var(--color-bg)" }}
     >
       {/* Layer 1: atmosphere raster (v6) - distant warm light and the
           illustrated shelf, both baked in. */}
@@ -145,6 +145,15 @@ export default function Hero() {
       </Container>
 
       <style>{`
+        /* FULL-VIEWPORT HERO: fill the screen below the sticky nav so the
+           landing image and its text own the whole first view and "Selected
+           work" only appears on scroll. Subtract a hair less than the nav's
+           real height (about 73 to 77px across breakpoints) so the fold always
+           lands inside the hero and the next section never peeks. vh first as a
+           fallback, then dvh where supported so mobile browser chrome is
+           accounted for. */
+        .hero-fill { min-height: calc(100vh - 72px); min-height: calc(100dvh - 72px); }
+
         /* POSITION LAYER: right/top/size only. The figure is anchored by its
            right edge so it never drifts left, and this element is never given
            an x-transform. Nudge via these vars. */
