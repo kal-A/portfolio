@@ -7,15 +7,16 @@ import { useEffect, useRef } from "react";
  * old approach nudged a soft radial gradient a few percent, which is invisible
  * because a near-uniform blur has no structure to see move. This renders a
  * procedural fog field (value-noise fBm, in the spirit of the Canvas UI Clouds
- * shader) advected slowly in one direction, so wisps actually drift. Localized
- * to a soft ellipse over the thighs/knees so it reads as a fog bank settling on
- * the shelf, not a screen-wide haze. The chunks are sized big and fairly
- * apparent so the mist reads as distinct clouds drifting over the (dark)
- * lower body, not a faint wash.
+ * shader) advected so chunks keep drifting in from the left across a wide,
+ * flatter band over the lower body, so the figure's bottom is always being
+ * re-covered. A high coverage threshold keeps only the dense noise peaks, so
+ * the mist reads as SEPARATE apparent chunks with dark gaps between them, not
+ * one connected blanket.
  *
- * This is only the lit, visible fog. The near-opaque concealer blobs that hide
- * the legs are separate CSS layers beneath it and are untouched, so if WebGL2
- * is unavailable the legs still stay hidden; this canvas simply doesn't draw.
+ * This is only the lit, visible fog. The dark background-toned chunks that keep
+ * the lower body reading dark are separate CSS layers beneath it and are
+ * untouched, so if WebGL2 is unavailable the lower body still stays dark with
+ * the mask-floored ghost; this canvas simply doesn't draw.
  * Under reduced motion it paints a single static frame (fog present, not
  * moving).
  */
@@ -51,18 +52,20 @@ void main() {
   vec2 top = vec2(uv.x, 1.0 - uv.y);    // y measured from the top (matches CSS %)
   float t = uTime;
 
-  // Fog wisps advected slowly leftward (same wind as the sky), a little up.
-  // Lower frequency = bigger, more apparent chunks of mist.
-  vec2 wind = vec2(-0.018, 0.006);
-  vec2 p = vec2(uv.x * asp, uv.y) * 1.7 + wind * t;
+  // Chunks advected so they keep drifting in from the left across the lower
+  // band toward the figure (so the bottom is always being re-covered). The
+  // high smoothstep floor (0.50) keeps only the dense noise peaks, so the mist
+  // reads as SEPARATE chunks with dark gaps between them, not one blanket.
+  vec2 wind = vec2(-0.024, 0.004);
+  vec2 p = vec2(uv.x * asp, uv.y) * 2.2 + wind * t;
   float base = fbm(p);
   float detail = fbm(p * 2.1 + 5.0 + wind * (t * 0.6));
-  float cov = smoothstep(0.34, 0.80, base * 0.7 + detail * 0.3);
+  float cov = smoothstep(0.50, 0.82, base * 0.7 + detail * 0.3);
 
-  // Localize to a soft ellipse over the figure's lower body (widened a touch
-  // so the bigger chunks have room).
-  vec2 d = (top - vec2(0.80, 0.66)) / vec2(0.30, 0.30);
-  float region = exp(-dot(d, d) * 1.2);
+  // Wide, flatter band across the lower area: dense near the figure and
+  // extending well to the left so there is always a chunk feeding in.
+  vec2 d = (top - vec2(0.70, 0.72)) / vec2(0.42, 0.20);
+  float region = exp(-dot(d, d) * 1.1);
 
   float a = cov * region * uOpacity;
   vec3 fog = vec3(0.31, 0.32, 0.37);    // cool grey, matches the old lit fog
