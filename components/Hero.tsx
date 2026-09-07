@@ -91,11 +91,12 @@ export default function Hero() {
           Sits in front of both the figure (z-2) and the baked-in shelf. Each
           shape drifts horizontally only 1-3% over 20-30s. */}
       <div aria-hidden="true" className="hero-mist pointer-events-none absolute inset-0 z-[4]">
-        {/* hm1-hm3: a few faint GREY mist chunks over the lower body. They no
-            longer erase the legs; the figure mask now floors the lower body at
-            ~0.1 so the legs stay a barely-visible ghost at all times (never a
-            void), and these chunks are the near-constant grey haze that softly
-            obscures that ghost. */}
+        {/* hm1-hm3: a few DARK (background-toned) mist chunks over the lower
+            body. They darken/soften the area rather than erasing it: the figure
+            mask now floors the lower body at ~0.1 so the legs stay a
+            barely-visible ghost at all times (never a void), and these dark
+            chunks keep that zone reading dark, not a light patch, while softly
+            obscuring the ghost. */}
         <span className="hero-mist-blob hm1" />
         <span className="hero-mist-blob hm2" />
         <span className="hero-mist-blob hm3" />
@@ -207,17 +208,18 @@ export default function Hero() {
         /* FOREGROUND MIST CHUNKS. Each blob is a full-bleed layer carrying one
            soft, wide radial ellipse over the figure's lower body; overlapping
            them builds an irregular fog with no straight lines or hard cutoffs,
-           and the blur dissolves any residual edge. They are faint cool-grey
-           chunks (not dark erasers): a near-constant, slightly-drifting base
-           haze that softly obscures the ghosted legs, while the WebGL fog
-           supplies the stronger moving mist on top. Because the figure mask
-           floors the legs at ~0.1, the body is never fully erased: mist over it
-           = obscured, mist off it = the faintest ghost. Each drifts only 1-3%
-           over 25-30s. */
+           and the blur dissolves any residual edge. They are DARK
+           background-toned chunks (not light/white haze): a near-constant,
+           slightly-drifting base that keeps the lower body reading dark while
+           softly obscuring the ghosted legs; the WebGL fog supplies the moving
+           mist on top. Because the figure mask floors the legs at ~0.1, the
+           body is never fully erased: mist over it = dark and obscured, mist
+           off it = the faintest dark ghost. Each drifts only 1-3% over
+           25-30s. */
         .hero-mist-blob { position: absolute; inset: 0; will-change: transform; }
-        .hm1 { background: radial-gradient(30% 19% at 82% 66%, rgba(140,145,160,0.30) 0%, rgba(140,145,160,0.12) 55%, transparent 80%); filter: blur(18px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
-        .hm2 { background: radial-gradient(40% 24% at 80% 76%, rgba(140,145,160,0.26) 0%, rgba(130,135,150,0.10) 52%, transparent 80%); filter: blur(24px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
-        .hm3 { background: radial-gradient(56% 28% at 79% 86%, rgba(140,145,160,0.22) 0%, rgba(130,135,150,0.09) 54%, transparent 82%); filter: blur(26px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
+        .hm1 { background: radial-gradient(30% 19% at 82% 66%, rgba(11,12,15,0.60) 0%, rgba(11,12,15,0.30) 55%, transparent 82%); filter: blur(18px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
+        .hm2 { background: radial-gradient(42% 24% at 80% 76%, rgba(11,12,15,0.66) 0%, rgba(11,12,15,0.32) 52%, transparent 82%); filter: blur(24px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
+        .hm3 { background: radial-gradient(58% 28% at 79% 87%, rgba(11,12,15,0.72) 0%, rgba(11,12,15,0.34) 54%, transparent 84%); filter: blur(26px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
         @keyframes hero-mist-c { from { transform: translate3d(-1.4%, 0, 0); }  to { transform: translate3d(1.3%, -0.3%, 0); } }
         @keyframes hero-mist-d { from { transform: translate3d(0.6%, 0, 0); }   to { transform: translate3d(-0.9%, 0.2%, 0); } }
         @keyframes hero-mist-e { from { transform: translate3d(-0.7%, 0, 0); }  to { transform: translate3d(0.6%, 0, 0); } }
