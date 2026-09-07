@@ -81,7 +81,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-[3]"
         style={{
           background:
-            "linear-gradient(to top, rgba(11,12,15,0.7) 0%, rgba(11,12,15,0.3) 12%, rgba(11,12,15,0.1) 24%, transparent 34%)",
+            "linear-gradient(to top, var(--color-bg) 0%, rgba(11,12,15,0.92) 12%, rgba(11,12,15,0.55) 22%, rgba(11,12,15,0.16) 32%, transparent 42%)",
         }}
       />
       {/* Foreground mist bank - several overlapping blurred, irregular fog
@@ -91,16 +91,15 @@ export default function Hero() {
           Sits in front of both the figure (z-2) and the baked-in shelf. Each
           shape drifts horizontally only 1-3% over 20-30s. */}
       <div aria-hidden="true" className="hero-mist pointer-events-none absolute inset-0 z-[4]">
-        {/* hm1-hm3: faint GREY drifting veils over the lower body. They no
-            longer erase the legs (the figure is meant to read as a whole person
-            standing in light mist, not a half figure); they just soften the
-            coat/legs so the structure stays apparent but atmospheric. */}
+        {/* hm1-hm3: near-opaque concealers that quietly erase the leg lines and
+            shoes. Kept as-is; they must stay put to keep the lower body hidden. */}
         <span className="hero-mist-blob hm1" />
         <span className="hero-mist-blob hm2" />
         <span className="hero-mist-blob hm3" />
-        {/* Plus a real drifting procedural fog (WebGL2), localized to the
-            figure's lower body, so the mist actually moves over it. Falls back
-            to nothing (the figure simply shows) if WebGL2 is missing. */}
+        {/* The visible, lit fog on top is now a real drifting procedural fog
+            (WebGL2), localized to the figure's lower body, so it actually moves
+            instead of a soft gradient nudging imperceptibly. Falls back to
+            nothing (the concealers still hide the legs) if WebGL2 is missing. */}
         <HeroMistFlow className="pointer-events-none absolute inset-0 block h-full w-full" />
       </div>
 
@@ -167,13 +166,12 @@ export default function Hero() {
         /* The figure raster, height-driven so the wrap's right edge stays put.
            LOWER-BODY FADE: a CSS mask with a long, gentle ramp so the figure
            dissolves into the mist through the thighs and knees instead of
-           ending suddenly. Held solid to ~84% so the whole figure (coat, legs)
-           reads as present; only the feet/base soften into the shelf, gone by
-           100%. The grey mist veils below do the atmospheric softening. */
+           ending suddenly. Held solid to ~66% so the flowy coat hem stays
+           visible, then a soft falloff through the legs, fully gone by ~91%. */
         .hero-figure-img {
           height: 100%; width: auto; display: block;
-          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 84%, rgba(0,0,0,0.7) 92%, rgba(0,0,0,0.3) 97%, transparent 100%);
-                  mask-image: linear-gradient(to bottom, #000 0%, #000 84%, rgba(0,0,0,0.7) 92%, rgba(0,0,0,0.3) 97%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgba(0,0,0,0.85) 74%, rgba(0,0,0,0.48) 80%, rgba(0,0,0,0.18) 86%, transparent 91%);
+                  mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgba(0,0,0,0.85) 74%, rgba(0,0,0,0.48) 80%, rgba(0,0,0,0.18) 86%, transparent 91%);
         }
 
         /* DRAW REVEAL: a top-down clip-path wipe (hair/hands first, then
@@ -203,17 +201,23 @@ export default function Hero() {
           to   { transform: translate3d(1.5%, -0.8%, 0); }
         }
         /* FOREGROUND MIST BANK. Each blob is a full-bleed layer carrying one
-           soft, wide radial ellipse placed over the figure's lower body;
-           overlapping them builds an irregular fog with no straight lines or
-           hard cutoffs, and the blur dissolves any residual edge. They are
-           faint cool-grey veils (not dark erasers): they soften the coat and
-           legs so the figure reads as standing in light mist, its structure
-           still apparent, rather than dissolving into a half figure. Each
-           drifts slowly so the mist visibly moves over the body. */
+           soft, wide radial ellipse placed in the lower-right; overlapping them
+           builds an irregular fog with no straight lines or hard cutoffs, and
+           the blur dissolves any residual edge. Opacity and darkness climb from
+           the lower coat (hm1, faint, lit) down through the knees to the legs
+           and shoes (hm4/hm5, near-opaque, background-toned) so the figure
+           dissolves in and the bank settles onto the shelf. Each drifts
+           horizontally only 1-3% over 23-30s. */
         .hero-mist-blob { position: absolute; inset: 0; will-change: transform; }
-        .hm1 { background: radial-gradient(30% 18% at 82% 68%, rgba(150,155,170,0.32) 0%, rgba(150,155,170,0.15) 55%, transparent 82%); filter: blur(18px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
-        .hm2 { background: radial-gradient(42% 24% at 80% 78%, rgba(150,155,170,0.28) 0%, rgba(140,145,160,0.13) 52%, transparent 82%); filter: blur(24px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
-        .hm3 { background: radial-gradient(58% 28% at 80% 88%, rgba(150,155,170,0.24) 0%, rgba(140,145,160,0.11) 54%, transparent 84%); filter: blur(26px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
+        /* Painted back-to-front. First three are near-background-toned
+           CONCEALERS that sit directly over the leg lines, shoes and base and
+           quietly erase the thin bronze lines (they read as nothing over the
+           near-black stage, so raising their opacity never shows a dark patch).
+           The last two are the VISIBLE, lit fog that lays a soft grey bank over
+           the thighs and knees ON TOP, so that zone reads as fog, not a hole. */
+        .hm1 { background: radial-gradient(26% 15% at 82% 65%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.92) 55%, transparent 80%); filter: blur(16px); animation: hero-mist-c 29s ease-in-out infinite alternate; }
+        .hm2 { background: radial-gradient(38% 22% at 82% 75%, rgba(11,12,15,1) 0%, rgba(11,12,15,0.6) 52%, transparent 80%); filter: blur(22px); animation: hero-mist-d 25s ease-in-out infinite alternate; }
+        .hm3 { background: radial-gradient(60% 27% at 80% 89%, rgba(11,12,15,0.80) 0%, rgba(11,12,15,0.38) 54%, transparent 82%); filter: blur(24px); animation: hero-mist-e 30s ease-in-out infinite alternate; }
         @keyframes hero-mist-c { from { transform: translate3d(-1.4%, 0, 0); }  to { transform: translate3d(1.3%, -0.3%, 0); } }
         @keyframes hero-mist-d { from { transform: translate3d(0.6%, 0, 0); }   to { transform: translate3d(-0.9%, 0.2%, 0); } }
         @keyframes hero-mist-e { from { transform: translate3d(-0.7%, 0, 0); }  to { transform: translate3d(0.6%, 0, 0); } }
