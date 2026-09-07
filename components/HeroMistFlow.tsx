@@ -9,7 +9,9 @@ import { useEffect, useRef } from "react";
  * procedural fog field (value-noise fBm, in the spirit of the Canvas UI Clouds
  * shader) advected slowly in one direction, so wisps actually drift. Localized
  * to a soft ellipse over the thighs/knees so it reads as a fog bank settling on
- * the shelf, not a screen-wide haze, and kept deliberately faint.
+ * the shelf, not a screen-wide haze. The chunks are sized big and fairly
+ * apparent so the mist reads as distinct clouds drifting over the (dark)
+ * lower body, not a faint wash.
  *
  * This is only the lit, visible fog. The near-opaque concealer blobs that hide
  * the legs are separate CSS layers beneath it and are untouched, so if WebGL2
@@ -50,15 +52,17 @@ void main() {
   float t = uTime;
 
   // Fog wisps advected slowly leftward (same wind as the sky), a little up.
+  // Lower frequency = bigger, more apparent chunks of mist.
   vec2 wind = vec2(-0.018, 0.006);
-  vec2 p = vec2(uv.x * asp, uv.y) * 2.6 + wind * t;
+  vec2 p = vec2(uv.x * asp, uv.y) * 1.7 + wind * t;
   float base = fbm(p);
   float detail = fbm(p * 2.1 + 5.0 + wind * (t * 0.6));
-  float cov = smoothstep(0.42, 0.86, base * 0.7 + detail * 0.3);
+  float cov = smoothstep(0.34, 0.80, base * 0.7 + detail * 0.3);
 
-  // Localize to a soft ellipse over the figure's lower body.
-  vec2 d = (top - vec2(0.80, 0.66)) / vec2(0.24, 0.26);
-  float region = exp(-dot(d, d) * 1.3);
+  // Localize to a soft ellipse over the figure's lower body (widened a touch
+  // so the bigger chunks have room).
+  vec2 d = (top - vec2(0.80, 0.66)) / vec2(0.30, 0.30);
+  float region = exp(-dot(d, d) * 1.2);
 
   float a = cov * region * uOpacity;
   vec3 fog = vec3(0.31, 0.32, 0.37);    // cool grey, matches the old lit fog
@@ -67,7 +71,7 @@ void main() {
 
 export default function HeroMistFlow({
   className,
-  opacity = 0.5,
+  opacity = 0.8,
 }: {
   className?: string;
   opacity?: number;
