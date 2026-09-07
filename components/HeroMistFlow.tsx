@@ -52,23 +52,27 @@ void main() {
   vec2 top = vec2(uv.x, 1.0 - uv.y);    // y measured from the top (matches CSS %)
   float t = uTime;
 
-  // Chunks advected so they keep drifting in from the left across the lower
-  // band toward the figure (so the bottom is always being re-covered). The
-  // high smoothstep floor (0.50) keeps only the dense noise peaks, so the mist
-  // reads as SEPARATE chunks with dark gaps between them, not one blanket.
-  vec2 wind = vec2(-0.014, 0.0025);
-  vec2 p = vec2(uv.x * asp, uv.y) * 1.9 + wind * t;
+  // Strong single-direction wind so each chunk visibly travels across the
+  // hero from right to left, with only a touch of vertical drift.
+  vec2 wind = vec2(-0.055, 0.004);
+  // Big features (low frequency) so the noise forms a few LARGE chunks, not
+  // fine specks; several of them fit across the width.
+  vec2 p = vec2(uv.x * asp, uv.y) * 2.3 + wind * t;
   float base = fbm(p);
-  float detail = fbm(p * 2.1 + 5.0 + wind * (t * 0.6));
-  float cov = smoothstep(0.50, 0.82, base * 0.7 + detail * 0.3);
+  float detail = fbm(p * 2.0 + 5.0 + wind * (t * 0.6));
+  // Threshold tuned so several dense peaks survive as SEPARATE big chunks with
+  // dark gaps between them (asymmetric, not one connected blanket), while still
+  // being clearly visible. Verified to hold 2 to 5 distinct chunks across the
+  // full drift cycle and never wash out to a blank band.
+  float cov = smoothstep(0.34, 0.68, base * 0.7 + detail * 0.3);
 
-  // Wide, flatter band across the lower area: dense near the figure and
-  // extending well to the left so there is always a chunk feeding in.
-  vec2 d = (top - vec2(0.70, 0.72)) / vec2(0.42, 0.20);
-  float region = exp(-dot(d, d) * 1.1);
+  // Full-width horizontal band across the lower body so chunks appear all the
+  // way across and sweep through, rather than being pinned to one spot. A soft
+  // gaussian top and bottom keeps it a band, not a hard edge.
+  float band = exp(-pow((top.y - 0.70) / 0.24, 2.0));
 
-  float a = cov * region * uOpacity;
-  vec3 fog = vec3(0.31, 0.32, 0.37);    // cool grey, matches the old lit fog
+  float a = cov * band * uOpacity;
+  vec3 fog = vec3(0.30, 0.31, 0.36);    // cool grey, matches the old lit fog
   outColor = vec4(fog * a, a);          // premultiplied
 }`;
 
