@@ -3,6 +3,7 @@ import Action from "@/components/ui/Action";
 import HeroAtmosphereFlow from "@/components/HeroAtmosphereFlow";
 import HeroMistFlow from "@/components/HeroMistFlow";
 import HeroBuildTyping from "@/components/HeroBuildTyping";
+import HeroReveal from "@/components/HeroReveal";
 
 /**
  * Hero (2026-08-31) - cinematic "figure on the shelf, facing the distant
@@ -36,7 +37,8 @@ import HeroBuildTyping from "@/components/HeroBuildTyping";
 export default function Hero() {
   return (
     <section
-      className="hero-fill relative overflow-hidden"
+      id="hero-root"
+      className="hero-fill relative z-0 flex flex-col justify-center overflow-hidden"
       style={{ background: "var(--color-bg)" }}
     >
       {/* Layer 1: atmosphere raster (v6) - distant warm light and the
@@ -106,7 +108,7 @@ export default function Hero() {
         <HeroMistFlow className="pointer-events-none absolute inset-0 block h-full w-full" />
       </div>
 
-      <Container variant="page" className="relative z-10 pt-[clamp(56px,11vh,104px)] pb-[clamp(28px,5vh,52px)]">
+      <Container variant="page" className="relative z-10 py-[clamp(24px,5vh,64px)]">
         {/* Layer 10: semantic content - unchanged, DOM-first, never gated. */}
         <div className="max-w-[52ch]">
           <h1
@@ -144,7 +146,25 @@ export default function Hero() {
         </div>
       </Container>
 
+      <HeroReveal />
+
       <style>{`
+        /* SCROLL RECEDE: as the first viewport of scroll advances, the whole
+           hero settles into the background instead of hard-cutting. A slight
+           downward parallax lag (it trails the scroll), a scale-down, a soft
+           blur and a partial fade read as depth, while the opaque content
+           plane below (position relative, higher z) slides up and over it.
+           Driven by --hero-p / --hero-lag set by HeroReveal; defaults keep it
+           flat if the script never runs. transform-origin biased slightly high
+           so it recedes up-and-back. */
+        #hero-root {
+          transform: translate3d(0, var(--hero-lag, 0px), 0) scale(calc(1 - 0.08 * var(--hero-p, 0)));
+          transform-origin: 50% 40%;
+          opacity: calc(1 - 0.55 * var(--hero-p, 0));
+          filter: blur(calc(var(--hero-p, 0) * 4px));
+          will-change: transform, opacity, filter;
+        }
+
         /* FULL-VIEWPORT HERO: fill the screen below the sticky nav so the
            landing image and its text own the whole first view and "Selected
            work" only appears on scroll. Subtract a hair less than the nav's
@@ -267,6 +287,7 @@ export default function Hero() {
           .hero-fog-back, .hero-mist-blob { animation: none; }
           .hero-atmosphere { animation: none; }
           .hero-caret { animation: none; opacity: 1; }
+          #hero-root { transform: none; opacity: 1; filter: none; }
         }
       `}</style>
       <script
