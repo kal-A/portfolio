@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { caseStudies } from "@/lib/content/case-studies";
 import Reveal from "@/components/Reveal";
 import Hero from "@/components/Hero";
@@ -72,18 +73,43 @@ export default function Home() {
           composed via ProjectIndexItem's narrative/balanced/artifact
           primitive system (see comment above and on the component itself). */}
       <Container variant="standard" className="pt-[var(--space-7)] pb-[var(--space-7)]">
-        <Reveal>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "var(--text-h1)",
-              lineHeight: "var(--leading-h1)",
-              color: "var(--color-text)",
-            }}
-          >
-            Selected work
-          </h2>
-        </Reveal>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
+          <Reveal>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "var(--text-h1)",
+                lineHeight: "var(--leading-h1)",
+                color: "var(--color-text)",
+              }}
+            >
+              Selected work
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <Link
+              href="/work"
+              className="group inline-flex items-center gap-2 rounded-md transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
+              style={{
+                fontSize: "var(--text-label)",
+                letterSpacing: "var(--tracking-label)",
+                textTransform: "uppercase",
+                color: "var(--color-text-subtle)",
+              }}
+            >
+              <span className="transition-colors duration-300 group-hover:text-[color:var(--color-text)]">
+                All work
+              </span>
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none"
+                style={{ color: "var(--color-accent)" }}
+              >
+                &rarr;
+              </span>
+            </Link>
+          </Reveal>
+        </div>
         <div className="mt-8 flex flex-col">
           {featured.map(({ cs, primitive }, i) => {
             // RoomEase (balanced): one headline stat carries the persuasion.
@@ -100,19 +126,20 @@ export default function Home() {
                   : undefined;
 
             return (
-              <ProjectIndexItem
-                key={cs.slug}
-                number={String(i + 1).padStart(2, "0")}
-                title={cs.title}
-                description={cs.oneLiner}
-                meta={`${cs.role} · ${yearOf(cs.timeframe)}`}
-                href={`/work/${cs.slug}`}
-                variant="selected"
-                image={cs.heroMedia}
-                primitive={primitive}
-                stat={stat}
-                facts={facts}
-              />
+              <Reveal key={cs.slug} delay={i * 90}>
+                <ProjectIndexItem
+                  number={String(i + 1).padStart(2, "0")}
+                  title={cs.title}
+                  description={cs.oneLiner}
+                  meta={`${cs.role} · ${yearOf(cs.timeframe)}`}
+                  href={`/work/${cs.slug}`}
+                  variant="selected"
+                  image={cs.heroMedia}
+                  primitive={primitive}
+                  stat={stat}
+                  facts={facts}
+                />
+              </Reveal>
             );
           })}
         </div>
