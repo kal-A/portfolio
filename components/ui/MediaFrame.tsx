@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { registerParallax } from "@/components/ui/mediaParallax";
 
 /**
  * The one media grammar shared by every project thumbnail on the site
@@ -39,6 +40,7 @@ export default function MediaFrame({
   priority,
   hoverReveal = false,
   interactive = false,
+  parallax = false,
 }: {
   src: string;
   alt: string;
@@ -53,8 +55,33 @@ export default function MediaFrame({
    *  default so callers that already sit inside a `.group` (Selected Work,
    *  /work) keep their existing behaviour. */
   interactive?: boolean;
+  /** Opt-in scroll parallax: the image drifts vertically within its frame as
+   *  the frame travels through the viewport (see mediaParallax). Off by
+   *  default; a no-op under reduced motion. */
+  parallax?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!parallax || failed) return;
+    const el = parallaxRef.current;
+    if (!el) return;
+    return registerParallax(el);
+  }, [parallax, failed]);
+
+  const image = (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes={sizes}
+      priority={priority}
+      onError={() => setFailed(true)}
+      style={{ objectPosition }}
+      className="object-cover transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+    />
+  );
 
   return (
     <div
@@ -70,16 +97,21 @@ export default function MediaFrame({
       }}
     >
       {!failed ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          onError={() => setFailed(true)}
-          style={{ objectPosition }}
-          className="object-cover transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
-        />
+        parallax ? (
+          // Oversized inner wrapper so the image has room to drift vertically
+          // without exposing a frame edge; the translate is driven by
+          // --parallax-y (see mediaParallax), which stays 0 until the scroll
+          // loop runs, so the resting state is a centered, fully covering crop.
+          <div
+            ref={parallaxRef}
+            className="absolute inset-x-0 -inset-y-[9%] will-change-transform"
+            style={{ transform: "translate3d(0, var(--parallax-y, 0%), 0)" }}
+          >
+            {image}
+          </div>
+        ) : (
+          image
+        )
       ) : (
         <div
           className="absolute inset-0 flex items-center justify-center px-4 text-center"
