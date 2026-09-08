@@ -278,6 +278,7 @@ export default function ProjectIndexItem({
               objectPosition={image.position}
               sizes={imageSizes}
               hoverReveal
+              parallax
               className={`aspect-[4/3] shrink-0 order-2 ${imageWidthClass} ${artifactLeads ? "md:order-1" : "md:order-2"}`}
             />
           )}
@@ -291,6 +292,7 @@ export default function ProjectIndexItem({
               alt={image.alt}
               objectPosition={image.position}
               sizes={imageSizes}
+              parallax
               className={`aspect-[4/3] mt-4 md:mt-0 ${number ? "col-span-2 md:col-span-1" : "md:col-start-3"} shrink-0 ${imageWidthClass}`}
             />
           )}
