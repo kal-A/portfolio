@@ -50,6 +50,7 @@ export default function NextProject({
         alt={media.alt}
         objectPosition={media.position}
         sizes="(min-width: 768px) 400px, 100vw"
+        parallax
         className="aspect-[4/3] w-full md:w-[400px] shrink-0 order-1 md:order-2"
       />
     </Link>
