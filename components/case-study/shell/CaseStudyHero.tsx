@@ -105,6 +105,7 @@ export default function CaseStudyHero({
             objectPosition={media.position}
             sizes="(min-width: 1024px) 1120px, 100vw"
             priority
+            parallax
             className="aspect-[2/1] mt-10"
           />
         </Reveal>
