@@ -34,7 +34,7 @@ export default function HeroReveal() {
       const eff = Math.min(Math.max(window.scrollY, 0), heroH);
       const p = eff / heroH;
       root.style.setProperty("--hero-p", p.toFixed(4));
-      root.style.setProperty("--hero-lag", (eff * 0.22).toFixed(2) + "px");
+      root.style.setProperty("--hero-lag", (eff * 0.3).toFixed(2) + "px");
     };
 
     const onScroll = () => {

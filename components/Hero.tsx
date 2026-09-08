@@ -35,6 +35,10 @@ import HeroReveal from "@/components/HeroReveal";
  */
 
 export default function Hero() {
+  // Skill words in the lead are lifted out of the muted body colour to full
+  // strength and weight so they read as the scannable "what I do" at a glance.
+  const leadEmphasis = { color: "var(--color-text)", fontWeight: 600 } as const;
+
   return (
     <section
       id="hero-root"
@@ -134,8 +138,12 @@ export default function Hero() {
               maxWidth: "var(--measure-lead)",
             }}
           >
-            I came up through code and design into product, and I do my best work in the
-            parts underneath: the workflows, the systems, the edge cases most people skip.
+            I came up through <strong style={leadEmphasis}>code</strong> and{" "}
+            <strong style={leadEmphasis}>design</strong> into{" "}
+            <strong style={leadEmphasis}>product</strong>, and I do my best work in the parts
+            underneath: the <strong style={leadEmphasis}>workflows</strong>, the{" "}
+            <strong style={leadEmphasis}>systems</strong>, the{" "}
+            <strong style={leadEmphasis}>edge cases</strong> most people skip.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
             <Action href="/work">View case studies</Action>
@@ -161,9 +169,9 @@ export default function Hero() {
            an offscreen pass that renders them blank, so depth comes from scale
            and fade alone. */
         #hero-root {
-          transform: translate3d(0, var(--hero-lag, 0px), 0) scale(calc(1 - 0.09 * var(--hero-p, 0)));
+          transform: translate3d(0, var(--hero-lag, 0px), 0) scale(calc(1 - 0.14 * var(--hero-p, 0)));
           transform-origin: 50% 40%;
-          opacity: calc(1 - 0.55 * var(--hero-p, 0));
+          opacity: calc(1 - 0.68 * var(--hero-p, 0));
           will-change: transform, opacity;
         }
 

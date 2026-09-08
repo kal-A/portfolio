@@ -82,7 +82,7 @@ function NarrativeBlock({
   evidence?: ReactNode;
 }) {
   return (
-    <div className="min-w-0">
+    <div className="min-w-0 transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transform-none">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h3
           className="underline-offset-4 decoration-[var(--color-line-strong)] group-hover:underline"
@@ -94,6 +94,13 @@ function NarrativeBlock({
           }}
         >
           {title}
+          <span
+            aria-hidden="true"
+            className="ml-2 inline-block opacity-0 -translate-x-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 motion-reduce:transition-none"
+            style={{ color: "var(--color-accent)", fontSize: "0.62em" }}
+          >
+            &rarr;
+          </span>
         </h3>
         <span
           className="shrink-0 max-w-full"
@@ -236,11 +243,11 @@ export default function ProjectIndexItem({
       {number && (
         <span
           aria-hidden="true"
+          className="transition-colors duration-300 ease-out text-[color:var(--color-text-subtle)] group-hover:text-[color:var(--color-accent)]"
           style={{
             fontFamily: "var(--font-display)",
             fontSize: spacious ? "var(--text-h1)" : "var(--text-h2)",
             lineHeight: 1,
-            color: "var(--color-text-subtle)",
           }}
         >
           {number}
