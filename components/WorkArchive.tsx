@@ -1,5 +1,6 @@
 import { caseStudies, evidenceLabel } from "@/lib/content/case-studies";
 import ProjectIndexItem from "@/components/ui/ProjectIndexItem";
+import Reveal from "@/components/Reveal";
 
 /**
  * Grouped archive + refined editorial rows. Projects are grouped by the kind
@@ -44,27 +45,30 @@ export default function WorkArchive() {
 
         return (
           <div key={group.label}>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "var(--text-h2)",
-                lineHeight: "var(--leading-h2)",
-                color: "var(--color-text)",
-              }}
-            >
-              {group.label}
-            </h2>
+            <Reveal>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "var(--text-h2)",
+                  lineHeight: "var(--leading-h2)",
+                  color: "var(--color-text)",
+                }}
+              >
+                {group.label}
+              </h2>
+            </Reveal>
             <div className="mt-4 flex flex-col">
-              {items.map((cs) => (
-                <ProjectIndexItem
-                  key={cs.slug}
-                  title={cs.title}
-                  description={cs.oneLiner}
-                  meta={`${evidenceLabel(cs)} · ${cs.role} · ${yearOf(cs.timeframe)}`}
-                  href={`/work/${cs.slug}`}
-                  variant="complete"
-                  image={cs.heroMedia}
-                />
+              {items.map((cs, i) => (
+                <Reveal key={cs.slug} delay={i * 80}>
+                  <ProjectIndexItem
+                    title={cs.title}
+                    description={cs.oneLiner}
+                    meta={`${evidenceLabel(cs)} · ${cs.role} · ${yearOf(cs.timeframe)}`}
+                    href={`/work/${cs.slug}`}
+                    variant="complete"
+                    image={cs.heroMedia}
+                  />
+                </Reveal>
               ))}
             </div>
           </div>

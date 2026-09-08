@@ -215,17 +215,18 @@ export default function AboutPage() {
         </div>
       </Reveal>
 
-      {/* How I got here: the arc as a phase timeline with a marker rail. */}
-      <Reveal>
-        <div className="py-14 border-t" style={{ borderColor: "var(--color-line)" }}>
-          <Container variant="standard">
+      {/* How I got here: the arc as a phase timeline with a marker rail. Each
+          phase reveals in turn as you scroll down the rail, so the progression
+          reads as a cascade rather than one block appearing at once. */}
+      <div className="py-14 border-t" style={{ borderColor: "var(--color-line)" }}>
+        <Container variant="standard">
+          <Reveal>
             <p style={eyebrow}>How I got here</p>
-            <div className="mt-10">
-              {timeline.map((t, i) => (
-                <div
-                  key={t.phase}
-                  className="grid gap-x-10 md:grid-cols-[minmax(0,200px)_1fr]"
-                >
+          </Reveal>
+          <div className="mt-10">
+            {timeline.map((t, i) => (
+              <Reveal key={t.phase} delay={i * 90}>
+                <div className="grid gap-x-10 md:grid-cols-[minmax(0,200px)_1fr]">
                   {/* Phase + year, the rail label. */}
                   <div className="flex items-start gap-4 pb-2 md:pb-10">
                     <span
@@ -284,11 +285,11 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-              ))}
+              </Reveal>
+            ))}
             </div>
           </Container>
         </div>
-      </Reveal>
 
       {/* Off the clock: the personal beat, broken into labelled micro-blocks. */}
       <Reveal>

@@ -104,8 +104,14 @@ export default function MediaFrame({
           // loop runs, so the resting state is a centered, fully covering crop.
           <div
             ref={parallaxRef}
-            className="absolute inset-x-0 -inset-y-[9%] will-change-transform"
-            style={{ transform: "translate3d(0, var(--parallax-y, 0%), 0)" }}
+            className="absolute will-change-transform"
+            style={{
+              top: "-9%",
+              bottom: "-9%",
+              left: 0,
+              right: 0,
+              transform: "translate3d(0, var(--parallax-y, 0%), 0)",
+            }}
           >
             {image}
           </div>
