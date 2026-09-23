@@ -25,8 +25,8 @@ import Reveal from "@/components/Reveal";
  * scannable equivalence across all eight projects instead.
  */
 const groups: { label: string; slugs: string[] }[] = [
-  { label: "Systems & Technical", slugs: ["forcen", "chronicle"] },
-  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "greenhouse", "pill-pal"] },
+  { label: "Systems & Technical", slugs: ["forcen", "chronicle", "cities-of-east"] },
+  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "uwmsa-redesign", "greenhouse", "pill-pal"] },
   { label: "Research & Strategy", slugs: ["pathpeer", "informatica"] },
 ];
 

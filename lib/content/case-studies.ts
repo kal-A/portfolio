@@ -1,6 +1,8 @@
 export interface Metric {
   value: string;
   label: string;
+  /** States when a number is a proxy, estimate, or design target rather than a measured result. Rendered by the shell Metric component, never hidden. */
+  qualifier?: string;
 }
 
 export interface CaseStudy {
@@ -648,11 +650,220 @@ const caseStudiesData: CaseStudy[] = [
       "The map-first workspace has automated keyboard, accessibility, and mechanical test coverage, but no real human comprehension study has been run yet. That's the next validation gap I'd close before trusting the workspace design, and it's written down as an open test plan rather than skipped.",
     note: "Chronicle is an active, independent project. This page reflects the state of the project's own documentation at the time it was written, and is explicit about what's built versus what's still architected only.",
   },
+  {
+    slug: "uwmsa-redesign",
+    category: "visual",
+    entryType: "independent-project",
+    caseStudyType: "product-ux",
+    tier: "standard",
+    title: "Redesigning the UWMSA app around a five-second scan",
+    company: "UWMSA App - Independent Redesign",
+    role: "Solo - product design and prototyping",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "The Waterloo MSA app already had the right daily utilities, but oversized cards, repeated pills, and competing hierarchy made a quick between-class glance harder than it needed to be.",
+    summary:
+      "A self-initiated redesign of the University of Waterloo Muslim Students Association app: keep every useful daily utility and the fixed brand, and rebuild the composition so next prayer, room changes, and the next community item read in about five seconds. Built as an interactive prototype, screen by screen, with the design system pulled from real interface needs rather than imposed up front.",
+    tags: ["Product Design", "UX", "Design Systems"],
+    toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
+    artifacts: ["Interactive Prototype", "Process Atlas", "Design Directions", "Palette Studies"],
+    metrics: [
+      { value: "5", label: "primary screens rebuilt: Home, Events, Prayer, Campus, Duas" },
+      { value: "3", label: "distinct art directions explored from the same Friday data" },
+      { value: "~5s", label: "scan target for the daily essentials", qualifier: "design target, not a measured result" },
+      { value: "2", label: "supporting palette and emphasis studies (Warm Ledger, Gold Contrast)" },
+    ],
+    problem:
+      "The existing app was genuinely useful: real prayer times, Jumuʿah sessions, a campus map, duʿāʾ reading, and community links. The problem was composition, not content. Every object lived in its own card, a greeting competed with next-prayer data for the first scan, Friday sessions all received equal weight, and the secondary drawers behaved like a website navigation list dropped inside an app. The redesign had to preserve the usefulness and the brand while replacing that competing hierarchy with a calmer system a student could read between classes.",
+    process: [
+      "Started from the complete existing product, not a single hero screen: audited Home, Prayer, Jumuʿah, Campus, Duas, and the menu, and treated each real feature (map, long-form Arabic content, community links) as a constraint the new language had to support.",
+      "Fixed the non-negotiables up front: the official UWMSA mark, the heritage gold, and the real schedules and locations stayed; only composition, hierarchy, and interaction were open.",
+      "Set four working principles: design for a five-second scan, stop using a card for every object, keep the information architecture, and prototype before extracting a system.",
+      "Built three genuinely different first Home screens on the same Friday data (Quiet Utility, Islamic Editorial, Campus Editorial) so the comparison isolated product character instead of dressing content edits up as visual progress.",
+      "Ran the drafts through specific review and kept the marked-up failures: one announcement feed instead of unrelated sections, importance carried by metadata and typography rather than false selection, Jumuʿah returned to the full next-prayer width, and one room-change record shared across Home and the affected Prayer rows.",
+      "Grew Home into a real system by building the harder screens: Events forced recurrence, tentative and major-event states, and calendar traversal; Prayer forced one clear next-prayer signal alongside adhan and iqāmah; Campus tested list-and-map depth; Duas tested long-form devotional reading.",
+      "Refined the three core directions onto one consistent shell, added two focused palette studies, then set Quiet Utility as the foundation and kept building screen by screen.",
+    ],
+    outcome: [
+      "An interactive prototype of the redesigned app exists and is navigable, with Home, Events, Prayer, Campus, and Duas built rather than mocked as flat frames.",
+      "A design system is being pulled from actual interface needs: shared header geometry, navigation, spacing, type scale, and interaction now hold across screens, with visual emphasis the only thing that varies between directions.",
+      "The information architecture the community already knows is intact: Home, Events, Prayer, Campus, and Duas stay primary, while About, Donate, Linktree, and the IIC Library move behind the logo menu.",
+      "A process atlas documents the path from baseline to current decision, keeping the cause of each change, not only the polished result.",
+    ],
+    constraints: [
+      "Fixed brand: the official UWMSA mark and heritage gold were givens, so identity had to come from composition, not a new palette.",
+      "Keep it recognizable: the goal was to change the composition without making the app feel like a different product the community had to relearn.",
+      "Preserve real depth: a campus map, long-form Arabic and audio duʿāʾ content, and community links all had to fit the same calmer language.",
+      "In progress: this is a self-initiated redesign, not an adopted or shipped update, so it is a working prototype and a direction, not a release.",
+    ],
+    snapshot: {
+      challenge:
+        "Keep a genuinely useful community app and its fixed brand, but replace competing card-heavy hierarchy with a system readable in a five-second, between-class glance.",
+      contribution:
+        "Solo-audited the existing product, set the principles and constraints, explored three directions from the same data, corrected them through specific review, and built the primary screens as an interactive prototype.",
+      outcome:
+        "A navigable prototype and an emerging design system built on the Quiet Utility direction, with the information architecture the community already knows left intact.",
+      tools: ["Figma", "HTML", "CSS", "JavaScript"],
+    },
+    decisions: [
+      {
+        decision: "Design for a five-second scan as the primary constraint.",
+        rationale:
+          "The app is checked between classes. Next prayer, time remaining, room changes, and the next community item have to be understandable at a glance, so the whole hierarchy was built backward from that moment.",
+        alternatives: "Optimize each screen for completeness and let the daily glance emerge from it.",
+        result:
+          "Home leads with one next-prayer signal and the day's essentials, and secondary information steps back instead of competing for the first scan.",
+      },
+      {
+        decision: "Stop using a card for every object.",
+        rationale:
+          "Repeated containers and pills flattened importance: everything looked equally emphasized, which is the same as nothing being emphasized. Spacing, rules, type scale, and alignment can carry hierarchy on their own.",
+        alternatives: "Keep the card-per-object pattern and try to fix hierarchy with color and size alone.",
+        result:
+          "Containers are reserved for true emphasis or action; the rest of the hierarchy is carried by composition, which is what let the five-second scan work.",
+      },
+      {
+        decision: "Keep the information architecture; change the composition.",
+        rationale:
+          "The community already knows where things live. Reorganizing navigation would have added a relearning cost the redesign was never meant to impose.",
+        alternatives: "Restructure navigation around the new visual system.",
+        result:
+          "Home, Events, Prayer, Campus, and Duas stay primary; only lower-frequency destinations moved behind the logo menu.",
+      },
+      {
+        decision: "Prototype before extracting the system.",
+        rationale:
+          "A design system invented up front tends to fit the first screen and fight the rest. Home established the language, then Events, Prayer, Campus, and Duas exposed the states and components the system actually needed.",
+        alternatives: "Define a full component library first, then apply it to every screen.",
+        result:
+          "The system is being pulled from real interface needs (recurrence, major-event states, iqāmah, list-and-map, long-form reading) rather than imposed, which is why it holds across such different screens.",
+      },
+    ],
+    reflection: [
+      "Keeping the marked-up failures in a process archive, not just the polished result, made the review reasoning reusable: the cause of a change is more useful later than the change itself.",
+      "Exploring three directions on identical data was the decision that kept the work honest, because it separated product character from content edits dressed up as progress.",
+      "Fixing the brand and information architecture in advance was freeing, not limiting: with identity and structure settled, every remaining decision was about hierarchy and composition, which is where the real problem was.",
+    ],
+    note: "A self-initiated redesign of the UWMSA app, not affiliated with, endorsed by, or adopted by UWMSA. It is a working interactive prototype and a design direction in progress, not a shipped release. Screens and studies reflect the state of the prototype and process atlas at the time this page was written.",
+    links: [
+      { label: "Live prototype", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/" },
+      { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/process-atlas.html" },
+    ],
+    atAGlance: [
+      { label: "Role", value: "Solo product design and prototyping" },
+      { label: "Type", value: "Self-initiated app redesign" },
+      { label: "Status", value: "In progress" },
+      { label: "Focus", value: "Hierarchy, composition, and a five-second scan" },
+    ],
+  },
+  {
+    slug: "cities-of-east",
+    category: "systems",
+    entryType: "independent-project",
+    caseStudyType: "technical",
+    tier: "standard",
+    title: "Cities of East: a living atlas of architecture and climate",
+    company: "Cities of East - Independent Project",
+    role: "Solo - research, design, and build",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "Vernacular architecture across the historic East reads as style in most references, when it is really a set of answers to climate, terrain, and water.",
+    summary:
+      "An independent, interactive Living Atlas that ties architecture to climate, terrain, and waterways across regions of the historic East, from the Arabian Peninsula to the Iranian Plateau and South Asia. Each region opens into field studies of specific building responses, grounded in a stated sources-and-method approach and rendered on a layered map that can be read by terrain, climate, or waterway.",
+    tags: ["Design Research", "Interaction Design", "Cartography"],
+    toolTags: ["TypeScript", "React", "HTML Canvas", "SVG"],
+    artifacts: ["Interactive Atlas", "Field Studies", "Layered Basemap", "Sources & Method"],
+    metrics: [
+      { value: "11", label: "regions mapped, from the Arabian Peninsula to East Asia" },
+      { value: "3", label: "readable map layers: terrain, climate, waterways" },
+      { value: "6", label: "schematic climate families used to reason about built form" },
+      { value: "Studies", label: "built for early regions; the rest marked Atlas Expanding" },
+    ],
+    problem:
+      "Traditional architecture across the Islamic and eastern world is usually catalogued as ornament and style, detached from why it exists. A barjeel wind tower, a Shibam tower house, or an oasis settlement is really an answer to aridity, heat, terrain, and the location of water. The project's problem was to build a reading tool, not a gallery: a way to see a city's form as a response to its environment, and to hold that reasoning to real sources instead of aesthetic assertion.",
+    process: [
+      "Framed the atlas around one relationship, architecture as a response to climate and land, and designed the whole interface to keep returning to it rather than presenting buildings as isolated images.",
+      "Built a layered basemap that can be read three ways, by terrain, by climate, and by waterways, with a detail lens, so the same geography can be interrogated from different environmental angles.",
+      "Reduced climate to six schematic families (arid desert, semi-arid steppe, Mediterranean dry-summer, humid temperate, tropical monsoon, cold alpine) as a deliberately coarse reasoning tool, with a stated caveat that local conditions vary.",
+      "Structured the content as regions that open into field studies of specific responses: Shibam's tower houses as urban form, Dubai's barjeel and mangh as passive cooling, Souq Waqif as living heritage.",
+      "Wrote a sources-and-method section into each populated region so a claim about form and climate is traceable, not asserted.",
+      "Shipped the atlas as an expanding system: early regions carry real studies while later ones are openly marked Atlas Expanding, so the map stays honest about what is researched versus still to come.",
+    ],
+    outcome: [
+      "An interactive atlas is live and navigable: eleven regions on a layered map, with terrain, climate, and waterway readings and a detail lens.",
+      "Early regions carry real field studies (the Arabian Peninsula alone holds Shibam, barjeel passive cooling, and Souq Waqif), each tied back to climate-and-land and patterns-of-life context.",
+      "Every populated region exposes a sources-and-method note, so the architecture-to-climate reasoning is auditable rather than decorative.",
+      "The structure scales: unbuilt regions are labelled Atlas Expanding instead of faked, so the atlas grows without misrepresenting its coverage.",
+    ],
+    constraints: [
+      "Solo across disciplines: the research, the editorial and cartographic design, and the interactive build were all self-directed, so scope had to stay honest about what was actually studied.",
+      "Coarse by design: six climate families and schematic layers are intentionally simplified reasoning tools, which the interface has to state rather than imply as precise fact.",
+      "Breadth versus depth: the historic East is enormous, so the atlas commits to expanding region by region with real studies instead of thin global coverage.",
+      "In progress: several regions are still marked Atlas Expanding, so this is a growing project, not a finished reference.",
+    ],
+    snapshot: {
+      challenge:
+        "Turn traditional architecture across the historic East from a catalogue of styles into a readable argument about climate, terrain, and water, and keep that argument sourced.",
+      contribution:
+        "Solo research, editorial and cartographic design, and the interactive build: a layered basemap, a region-and-field-study structure, and a sources-and-method discipline.",
+      outcome:
+        "A live, expanding Living Atlas: eleven regions, three map layers, and real field studies for early regions, honest about what is still to come.",
+      tools: ["TypeScript", "React", "HTML Canvas", "SVG"],
+    },
+    decisions: [
+      {
+        decision: "Make climate the organizing idea, not architectural style.",
+        rationale:
+          "Most references sort traditional buildings by period or ornament. Reading them as environmental responses is the actual insight, so climate, terrain, and water became the spine of the interface instead of a caption.",
+        alternatives: "Organize the atlas by region and style, with climate as background context.",
+        result:
+          "The map leads with terrain, climate, and waterway layers, and every field study connects a building's form back to the conditions that produced it.",
+      },
+      {
+        decision: "Use six coarse climate families, and say so.",
+        rationale:
+          "A precise climate classification would imply a false accuracy the sources cannot support at this scale. A small, schematic set is a better reasoning tool for connecting form to environment.",
+        alternatives: "Adopt a full technical climate classification for the appearance of rigor.",
+        result:
+          "Six families carry the reasoning, with an explicit caveat that local conditions vary, so the simplification is honest rather than hidden.",
+      },
+      {
+        decision: "Expand region by region with real studies, not thin global coverage.",
+        rationale:
+          "The historic East is too large to cover credibly all at once. Depth in a few regions is more honest and more useful than a shallow pin on every country.",
+        alternatives: "Populate every region immediately with light, unsourced summaries.",
+        result:
+          "Early regions hold real field studies while the rest are marked Atlas Expanding, so coverage grows without pretending to be complete.",
+      },
+      {
+        decision: "Attach a sources-and-method note to every populated region.",
+        rationale:
+          "A claim that a building's form answers its climate is easy to assert and hard to trust without provenance. Method has to be visible for the atlas to be more than an aesthetic mood board.",
+        alternatives: "Present the studies as authoritative without exposing how they were built.",
+        result:
+          "Each region's reasoning is traceable, which is what separates this from a gallery of pretty vernacular buildings.",
+      },
+    ],
+    reflection: [
+      "Committing to climate as the spine, rather than style, was the decision that gave the atlas a reason to exist beyond a collection of nice buildings.",
+      "Marking regions Atlas Expanding instead of filling them with thin content kept the project honest, and made it easier to keep working without the map ever lying about its coverage.",
+      "Writing method into each region slowed the work down and was worth it: a sourced claim about form and climate is the whole point, and it is exactly what an interactive map makes tempting to skip.",
+    ],
+    note: "Cities of East is an active, independent research-and-design project. It uses deliberately schematic climate and terrain layers as reasoning tools, not precise scientific classification, and several regions are still marked Atlas Expanding. This page reflects the state of the atlas at the time it was written.",
+    links: [{ label: "Explore the atlas", href: "https://cities-of-east-atlas.kalahsn2003.chatgpt.site/#/atlas" }],
+    atAGlance: [
+      { label: "Role", value: "Solo research, design, and build" },
+      { label: "Type", value: "Independent interactive atlas" },
+      { label: "Status", value: "In progress, expanding" },
+      { label: "Idea", value: "Architecture as a response to climate and land" },
+    ],
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
-// projects (pill-pal) sort last.
-const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal"];
+// projects (pill-pal) sort last. The two independent, in-progress projects
+// (uwmsa-redesign, cities-of-east) sort after the established work.
+const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal", "uwmsa-redesign", "cities-of-east"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

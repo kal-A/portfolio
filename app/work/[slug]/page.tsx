@@ -8,6 +8,8 @@ import RoomEaseCaseStudy from "@/components/case-study/RoomEaseCaseStudy";
 import HeraCaseStudy from "@/components/case-study/HeraCaseStudy";
 import InformaticaCaseStudy from "@/components/case-study/InformaticaCaseStudy";
 import ChronicleCaseStudy from "@/components/case-study/ChronicleCaseStudy";
+import UwmsaRedesignCaseStudy from "@/components/case-study/UwmsaRedesignCaseStudy";
+import CitiesOfEastCaseStudy from "@/components/case-study/CitiesOfEastCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -31,5 +33,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (cs.slug === "hera-fertility") return <HeraCaseStudy />;
   if (cs.slug === "informatica") return <InformaticaCaseStudy />;
   if (cs.slug === "chronicle") return <ChronicleCaseStudy />;
+  if (cs.slug === "uwmsa-redesign") return <UwmsaRedesignCaseStudy />;
+  if (cs.slug === "cities-of-east") return <CitiesOfEastCaseStudy />;
   notFound();
 }

@@ -110,4 +110,22 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     mark: "IN",
     logo: "/case-studies/informatica/informatica-logo.png",
   },
+  "uwmsa-redesign": {
+    bg: "#f6f1e6",
+    accent: "#b8892f",
+    accentSoft: "#f0e4c9",
+    fillFrom: "#f8efd7",
+    fillTo: "#d8a648",
+    iconBg: "linear-gradient(135deg, #d8a648, #8a5f16)",
+    mark: "UW",
+  },
+  "cities-of-east": {
+    bg: "#f4ecdd",
+    accent: "#a96f30",
+    accentSoft: "#eaddc6",
+    fillFrom: "#f3e7d2",
+    fillTo: "#c79350",
+    iconBg: "linear-gradient(135deg, #c79350, #7a4d1c)",
+    mark: "CE",
+  },
 };
