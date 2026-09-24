@@ -38,9 +38,10 @@ export default function WorkIndex() {
               color: "var(--color-text-muted)",
             }}
           >
-            Internships on one side; the things I have built on my own, from a
-            capstone to independent work, on the other. Switch between work
-            experience and projects below.
+            Everything I have worked on, grouped by the kind of work it is:
+            systems and technical builds, product and design, research and
+            strategy. Filter to just hired work or just the things I have built
+            on my own, or browse it all.
           </p>
         </Container>
       </div>
