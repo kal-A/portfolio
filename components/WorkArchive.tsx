@@ -26,7 +26,7 @@ import Reveal from "@/components/Reveal";
  */
 const groups: { label: string; slugs: string[] }[] = [
   { label: "Systems & Technical", slugs: ["forcen", "chronicle", "cities-of-east"] },
-  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "uwmsa-redesign", "greenhouse", "pill-pal"] },
+  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "uwmsa-redesign", "greenhouse", "uwosp-redesign", "pill-pal"] },
   { label: "Research & Strategy", slugs: ["pathpeer", "informatica"] },
 ];
 

@@ -128,4 +128,13 @@ export const caseStudyTheme: Record<string, ProjectTheme> = {
     iconBg: "linear-gradient(135deg, #c79350, #7a4d1c)",
     mark: "CE",
   },
+  "uwosp-redesign": {
+    bg: "#eef2fb",
+    accent: "#2f5fd8",
+    accentSoft: "#dbe4fb",
+    fillFrom: "#e6edfc",
+    fillTo: "#6f92e8",
+    iconBg: "linear-gradient(135deg, #4f74e0, #21387f)",
+    mark: "OS",
+  },
 };

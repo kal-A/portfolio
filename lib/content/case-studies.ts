@@ -868,12 +868,123 @@ const caseStudiesData: CaseStudy[] = [
       { label: "Idea", value: "Architecture as a response to climate and land" },
     ],
   },
+  {
+    slug: "uwosp-redesign",
+    category: "visual",
+    entryType: "independent-project",
+    caseStudyType: "product-ux",
+    tier: "standard",
+    heroMedia: {
+      src: "/case-studies/uwosp-redesign/home.webp",
+      alt: "The redesigned UWOSP homepage: large editorial type over real photography",
+      position: "top",
+    },
+    title: "Redesigning the UWOSP site so restraint reads as intentional",
+    company: "UWOSP Website - Independent Redesign",
+    role: "Solo - product and visual design, prototyping",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "The UW Orphan Sponsorship Program site had the campaigns, donations, and impact to prove its work, but dense cards and unearned empty space made that work read smaller than it was.",
+    summary:
+      "A self-initiated redesign of the University of Waterloo Orphan Sponsorship Program website, shaped through direct critique. It keeps every piece of real evidence (campaign names, money, partners, households, and the children the program serves) and rebuilds the composition so each remaining element carries more meaning: editorial type as the brand, one cobalt interaction colour, motion that earns attention, and interior pages that finally match the homepage's presence.",
+    tags: ["Web Design", "UX", "Design Systems"],
+    toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
+    artifacts: ["Interactive Prototype", "Process Atlas", "Before / After Studies", "Allocation Chart"],
+    metrics: [
+      { value: "4", label: "interior page systems reworked: Campaigns, Donate, Impact, and the CTA and footer" },
+      { value: "4", label: "design principles pulled from direct critique" },
+      { value: "1", label: "cobalt interaction colour, used consistently across the site" },
+      { value: "1", label: "pie chart rebuilt as an explorable, accessible allocation" },
+    ],
+    problem:
+      "The original UWOSP site already had the right facts: real campaigns, donation progress, volunteer reasons, and trusted partner names. The problem was that dense cards and generic page patterns made that work feel smaller than it was, with no clear story tying it together. The fix could not be decoration, and it could not be stripping content to look minimal. The brief that came out of critique was sharper: keep every piece of real evidence, and make each remaining element carry more meaning, so that less actually reads as intentional rather than as missing content.",
+    process: [
+      "Audited the original site as a whole (campaigns, events, impact, and recruitment) and named the real problem as composition and story, not missing content.",
+      "Found the brand voice on the homepage first: large editorial type as the primary expression, one cobalt interaction colour, and ink-and-paper contrast with real photography.",
+      "Ran the drafts through direct, specific critique and kept the marked-up failures: impact buried under unearned space, a join sequence that tiny numbers did not explain, a mobile menu colliding with the logo, and donate padding that separated the message instead of supporting it.",
+      "Rebuilt the impact page so proof reads like an achievement: a stronger narrative, metrics given ceremony, and location cards that own the lower field instead of floating in space.",
+      "Turned the old four-bar allocation into one explorable donut: a selected slice lifts, the amount moves to the center without layout shift, legend and chart share a single active state, and motion is reduced on request.",
+      "Reworked mobile navigation from a collision into a deliberate overlay: full-width targets, the logo and close action on their own row, outside-click dismissal, and focus returned to the trigger.",
+      "Gave each interior page a distinct job on one shared system: Campaigns prioritize discovery, Donate turns numbers into proof, and Impact lets visitors inspect the record, all sharing type, rules, motion, and actions.",
+    ],
+    outcome: [
+      "An interactive prototype of the redesigned site exists and is navigable, from the homepage through Campaigns, Impact, Donate, and the CTA and footer.",
+      "Restraint reads as active rather than empty: the homepage's elegance carries into interior pages that now have enough personality, evidence, and interaction to support the mission.",
+      "The impact story reads as achievement: counters enter upward, reset only out of view, and never visibly reverse.",
+      "A shared system holds it together: navigation, buttons, inline links, cards, stats, and charts share predictable states, and the real content can be wired to the existing admin dashboard and CRM.",
+    ],
+    constraints: [
+      "Real information over placeholder polish: campaign names, money, partners, households, and the children the program serves all had to stay.",
+      "Economical, not empty: open space had to create contrast or pace, never look like missing content.",
+      "Motion with a reason: animation was reserved for entry, progress, and state change, not to rescue a weak layout.",
+      "In progress: a self-initiated redesign and interactive prototype, not an adopted or shipped update to the live site.",
+    ],
+    snapshot: {
+      challenge:
+        "Keep a nonprofit site's real evidence and its fixed mission, but replace dense cards and unearned empty space with a composition where restraint reads as intentional.",
+      contribution:
+        "Solo-audited the original site, found the brand voice on the homepage, corrected the interior pages through direct critique, and built the primary pages and interactions as a prototype.",
+      outcome:
+        "A navigable prototype and an emerging system where every interior page has a clear job, real evidence, and interaction that earns its motion.",
+      tools: ["Figma", "HTML", "CSS", "JavaScript"],
+    },
+    decisions: [
+      {
+        decision: "Make every remaining element carry more meaning instead of adding decoration.",
+        rationale:
+          "The guiding critique was that less is more, and adding more to the less breaks the philosophy. The fix for a thin-feeling page was not ornament, it was density of meaning: real campaigns, money, partners, and people.",
+        alternatives: "Fill the open space with decorative graphics and secondary content.",
+        result:
+          "Real evidence stayed, and open space became a tool for contrast and pace, so the site reads as deliberately economical rather than empty.",
+      },
+      {
+        decision: "Let type and one interaction colour carry the brand.",
+        rationale:
+          "The homepage found its voice through large editorial type and a single cobalt action colour before the rest of the system did. Making that the brand kept interior pages coherent without a heavy visual kit.",
+        alternatives: "Introduce more colours and decorative components per page to add variety.",
+        result:
+          "Type became the primary brand expression, and one interaction colour reads consistently across the whole site.",
+      },
+      {
+        decision: "Rebuild the pie chart as one explorable, accessible allocation.",
+        rationale:
+          "The original four bars did not match the new system. A single donut where a slice lifts and the amount recenters turns a static stat into something a visitor can inspect, and it had to stay legible with reduced motion.",
+        alternatives: "Keep the four separate bars, or animate the chart with no reduced-motion path.",
+        result:
+          "Legend and chart now share one active state, the center label changes without layout shift, and motion is reduced when the visitor asks for it.",
+      },
+      {
+        decision: "Treat mobile navigation as a deliberate layer.",
+        rationale:
+          "The prototype menu collided with the logo and the page beneath it, which read as a bug, not a design. Navigation needed clear separation and predictable dismissal.",
+        alternatives: "Keep the inline menu and fix only the spacing.",
+        result:
+          "The menu became a full-width overlay with outside-click dismissal, its own row for logo and close, and focus returned to the trigger.",
+      },
+    ],
+    reflection: [
+      "Working from direct, specific critique (marks on the exact places where whitespace and alignment stopped feeling intentional) made the redesign faster to reason about than a vague sense that something was off.",
+      "Keeping the real campaign names, money, and partners rather than placeholder content was the decision that let restraint feel like confidence instead of missing information.",
+      "Reserving motion for entry, progress, and state change kept it meaningful: a counter that only ever enters upward reads as an achievement, where the same motion used everywhere would have read as noise.",
+    ],
+    note: "A self-initiated redesign of the UWOSP website, not affiliated with, endorsed by, or adopted by UWOSP. It is a working interactive prototype and a design direction in progress, not a shipped release. Screens reflect the state of the prototype and process atlas at the time this page was written.",
+    links: [
+      { label: "Live prototype", href: "https://uwosp-redesign-feedback.kalahsn2003.chatgpt.site/" },
+      { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/osp-process-atlas" },
+    ],
+    atAGlance: [
+      { label: "Role", value: "Solo product and visual design" },
+      { label: "Type", value: "Self-initiated website redesign" },
+      { label: "Status", value: "In progress" },
+      { label: "Focus", value: "Restraint, story, and interaction" },
+    ],
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
 // projects (pill-pal) sort last. The two independent, in-progress projects
 // (uwmsa-redesign, cities-of-east) sort after the established work.
-const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal", "uwmsa-redesign", "cities-of-east"];
+const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal", "uwmsa-redesign", "cities-of-east", "uwosp-redesign"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

@@ -10,6 +10,7 @@ import InformaticaCaseStudy from "@/components/case-study/InformaticaCaseStudy";
 import ChronicleCaseStudy from "@/components/case-study/ChronicleCaseStudy";
 import UwmsaRedesignCaseStudy from "@/components/case-study/UwmsaRedesignCaseStudy";
 import CitiesOfEastCaseStudy from "@/components/case-study/CitiesOfEastCaseStudy";
+import UwospRedesignCaseStudy from "@/components/case-study/UwospRedesignCaseStudy";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -35,5 +36,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (cs.slug === "chronicle") return <ChronicleCaseStudy />;
   if (cs.slug === "uwmsa-redesign") return <UwmsaRedesignCaseStudy />;
   if (cs.slug === "cities-of-east") return <CitiesOfEastCaseStudy />;
+  if (cs.slug === "uwosp-redesign") return <UwospRedesignCaseStudy />;
   notFound();
 }
