@@ -38,8 +38,8 @@ export default function WorkIndex() {
               color: "var(--color-text-muted)",
             }}
           >
-            Every internship, capstone, and course project, grouped by what each one
-            demonstrates rather than by title or date.
+            Internships and a capstone on one side, the things I have built on my
+            own on the other. Switch between work experience and projects below.
           </p>
         </Container>
       </div>

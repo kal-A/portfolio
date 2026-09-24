@@ -37,6 +37,7 @@ const TOC_ITEMS = [
   { href: "#s-decisions", label: "Decisions" },
   { href: "#s-palette", label: "Emphasis studies" },
   { href: "#s-outcome", label: "Outcomes" },
+  { href: "#s-reflection", label: "Reflection" },
 ];
 
 const DIRECTIONS = [
@@ -353,26 +354,32 @@ export default function UwmsaRedesignCaseStudy() {
         </Container>
       </section>
 
-      {/* ---------- Outcomes + reflection ---------- */}
+      {/* ---------- Outcomes ---------- */}
       <section style={BAND.baseBordered}>
-        <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+        <Container variant="standard" className="py-16 md:py-20">
           <Section accentLabel anchor="s-outcome" number="08" label="Outcomes" heading="Where it stands">
             <NumberedList items={cs.outcome} />
+          </Section>
+        </Container>
+      </section>
 
-            {cs.reflection && cs.reflection.length > 0 && (
-              <div className="mt-16">
-                <p style={EYEBROW}>Reflection</p>
-                <div className="mt-6 grid gap-5 md:grid-cols-3">
-                  {cs.reflection.map((r, i) => (
-                    <Reveal key={r} delay={i * 80}>
-                      <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
-                        <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            )}
+      {/* ---------- Reflection (own section, matching the other case studies) ---------- */}
+      {cs.reflection && cs.reflection.length > 0 && (
+        <section id="s-reflection" style={BAND.tint}>
+          <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+            <p style={EYEBROW}>Reflection</p>
+            <h2 className="mt-2 mb-8" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+              What this redesign taught me
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cs.reflection.map((r, i) => (
+                <Reveal key={r} delay={i * 80}>
+                  <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
+                    <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
 
             {cs.note && (
               <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
@@ -384,9 +391,9 @@ export default function UwmsaRedesignCaseStudy() {
                 </p>
               </div>
             )}
-          </Section>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
     </div>
   );
 }

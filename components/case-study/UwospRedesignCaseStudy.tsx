@@ -25,6 +25,9 @@ import Reveal from "@/components/Reveal";
  * lib/content/case-studies.ts and the atlas narrative.
  */
 const WIDE = "aspect-[16/10]";
+// Desktop screenshots (~1.9:1) shown in full, un-cropped (fit="contain"), so the
+// whole page is readable rather than zoomed into a centre crop.
+const SHOT = "aspect-[16/9]";
 const PHONE = "aspect-[78/169]";
 const WIDE_SIZES = "(min-width: 1024px) 1160px, 100vw";
 const TILE_SIZES = "(min-width: 1024px) 380px, (min-width: 640px) 46vw, 92vw";
@@ -39,6 +42,7 @@ const TOC_ITEMS = [
   { href: "#s-mobile", label: "Mobile nav" },
   { href: "#s-decisions", label: "Decisions" },
   { href: "#s-outcome", label: "Outcomes" },
+  { href: "#s-reflection", label: "Reflection" },
 ];
 
 const PRINCIPLES = [
@@ -187,7 +191,7 @@ export default function UwospRedesignCaseStudy() {
               src={img("home")}
               alt="The redesigned UWOSP homepage: large editorial UWOSP wordmark over real photography, with a cobalt Donate action"
               sizes={WIDE_SIZES}
-              aspect="aspect-[16/9]"
+              aspect="aspect-[16/10]"
               objectPosition="top"
               priority
               interactive={false}
@@ -245,7 +249,8 @@ export default function UwospRedesignCaseStudy() {
                 src={img("orig-desktop")}
                 alt="The original UWOSP site: dense cards and generic page patterns"
                 sizes={TILE_SIZES}
-                aspect={WIDE}
+                aspect={SHOT}
+                fit="contain"
                 label="The original site"
                 caption="Real campaigns and partners were there, but dense cards made the work feel smaller than it was."
               />
@@ -287,7 +292,7 @@ export default function UwospRedesignCaseStudy() {
             <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {CRITIQUE.map((c, i) => (
                 <Reveal key={c.src} delay={i * 90}>
-                  <CaptionedMedia src={img(c.src)} alt={`Marked-up critique: ${c.label}`} sizes={TILE_SIZES} aspect={WIDE} label={c.label} caption={c.caption} />
+                  <CaptionedMedia src={img(c.src)} alt={`Marked-up critique: ${c.label}`} sizes={TILE_SIZES} aspect={SHOT} fit="contain" label={c.label} caption={c.caption} />
                 </Reveal>
               ))}
             </div>
@@ -308,10 +313,10 @@ export default function UwospRedesignCaseStudy() {
           >
             <div className="mt-8 grid gap-8 lg:grid-cols-2">
               <Reveal>
-                <CaptionedMedia src={img("stats")} alt="The rebuilt impact page: achievement statistics given ceremony" sizes={TILE_SIZES} aspect={WIDE} label="Metrics with ceremony" caption="Counters enter upward as achievements and never visibly count backward." />
+                <CaptionedMedia src={img("stats")} alt="The rebuilt impact page: achievement statistics given ceremony" sizes={TILE_SIZES} aspect={SHOT} fit="contain" label="Metrics with ceremony" caption="Counters enter upward as achievements and never visibly count backward." />
               </Reveal>
               <Reveal delay={90}>
-                <CaptionedMedia src={img("impact-after")} alt="The rebuilt impact page: location cards own the lower field" sizes={TILE_SIZES} aspect={WIDE} label="Location cards own the field" caption="Locations sit in cards that hold the lower field instead of floating in space." />
+                <CaptionedMedia src={img("impact-after")} alt="The rebuilt impact page: location cards own the lower field" sizes={TILE_SIZES} aspect={SHOT} fit="contain" label="Location cards own the field" caption="Locations sit in cards that hold the lower field instead of floating in space." />
               </Reveal>
             </div>
           </Section>
@@ -397,26 +402,32 @@ export default function UwospRedesignCaseStudy() {
         </section>
       )}
 
-      {/* ---------- Outcomes + reflection ---------- */}
+      {/* ---------- Outcomes ---------- */}
       <section style={BAND.baseBordered}>
-        <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+        <Container variant="standard" className="py-16 md:py-20">
           <Section accentLabel anchor="s-outcome" number="08" label="Outcomes" heading="Where it stands">
             <NumberedList items={cs.outcome} />
+          </Section>
+        </Container>
+      </section>
 
-            {cs.reflection && cs.reflection.length > 0 && (
-              <div className="mt-16">
-                <p style={EYEBROW}>Reflection</p>
-                <div className="mt-6 grid gap-5 md:grid-cols-3">
-                  {cs.reflection.map((r, i) => (
-                    <Reveal key={r} delay={i * 80}>
-                      <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
-                        <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            )}
+      {/* ---------- Reflection (own section, matching the other case studies) ---------- */}
+      {cs.reflection && cs.reflection.length > 0 && (
+        <section id="s-reflection" style={BAND.tint}>
+          <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+            <p style={EYEBROW}>Reflection</p>
+            <h2 className="mt-2 mb-8" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+              What this redesign taught me
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cs.reflection.map((r, i) => (
+                <Reveal key={r} delay={i * 80}>
+                  <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
+                    <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
 
             {cs.note && (
               <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
@@ -428,9 +439,9 @@ export default function UwospRedesignCaseStudy() {
                 </p>
               </div>
             )}
-          </Section>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
     </div>
   );
 }

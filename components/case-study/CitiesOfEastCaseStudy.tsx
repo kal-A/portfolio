@@ -33,6 +33,7 @@ const TOC_ITEMS = [
   { href: "#s-process", label: "Process" },
   { href: "#s-decisions", label: "Decisions" },
   { href: "#s-outcome", label: "Outcomes" },
+  { href: "#s-reflection", label: "Reflection" },
 ];
 
 const LAYERS = [
@@ -40,18 +41,56 @@ const LAYERS = [
     src: "atlas-terrain",
     label: "Terrain",
     caption: "Open and mixed land, arid desert, rugged highlands, and forested river gorges, so form can be read against the land it sits on.",
+    legendNote: "Schematic land cover; shading shows elevation.",
+    legend: [
+      { c: "#b7bfa0", t: "Open & mixed land" },
+      { c: "#c9a86a", t: "Desert & arid land" },
+      { c: "#a7a8a0", t: "Rocky highlands" },
+      { c: "#5f8f6a", t: "Forested & lush" },
+    ],
   },
   {
     src: "atlas-climate",
     label: "Climate",
     caption: "Six schematic climate families, from arid desert to cold alpine, a deliberately coarse tool for reasoning about built form.",
+    legendNote: "Schematic climate families; local conditions vary.",
+    legend: [
+      { c: "#c9a86a", t: "Arid / desert" },
+      { c: "#c4c6ae", t: "Semi-arid / steppe" },
+      { c: "#8fae78", t: "Mediterranean / dry summer" },
+      { c: "#aac2b0", t: "Humid temperate" },
+      { c: "#5f9f7e", t: "Tropical / monsoon" },
+      { c: "#9fb2bd", t: "Cold / alpine" },
+    ],
   },
   {
     src: "atlas-waterways",
     label: "Waterways",
     caption: "Major rivers and water-linked land, the corridors that decide where oasis settlements and trade cities actually sit.",
+    legendNote: "Major channels and fertile corridors.",
+    legend: [
+      { c: "#6f9fcf", t: "Major rivers" },
+      { c: "#4f8f92", t: "Water-linked land" },
+    ],
   },
 ];
+
+/** Readable key beneath each atlas layer: the same categories the map's own
+ *  small in-image legend carries, at a legible size so the terrain and climate
+ *  readings can actually be read. */
+function LayerLegend({ items, note }: { items: { c: string; t: string }[]; note: string }) {
+  return (
+    <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+      {items.map((it) => (
+        <span key={it.t} className="flex items-center gap-2">
+          <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: it.c, border: "1px solid rgba(255,255,255,0.14)" }} />
+          <span style={{ fontSize: "var(--text-small)", color: "var(--color-text-muted)" }}>{it.t}</span>
+        </span>
+      ))}
+      <span style={{ fontSize: "var(--text-small)", color: "var(--color-text-subtle)", fontStyle: "italic" }}>{note}</span>
+    </div>
+  );
+}
 
 const BAND = {
   base: { background: "var(--color-bg)" },
@@ -264,6 +303,7 @@ export default function CitiesOfEastCaseStudy() {
               {LAYERS.map((layer, i) => (
                 <Reveal key={layer.src} delay={i * 90}>
                   <CaptionedMedia src={img(layer.src)} alt={`Cities of East atlas, ${layer.label} reading`} sizes={WIDE_SIZES} aspect={WIDE} parallax label={layer.label} caption={layer.caption} />
+                  <LayerLegend items={layer.legend} note={layer.legendNote} />
                 </Reveal>
               ))}
             </div>
@@ -306,24 +346,30 @@ export default function CitiesOfEastCaseStudy() {
 
       {/* ---------- Outcomes + reflection ---------- */}
       <section style={BAND.baseBordered}>
-        <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+        <Container variant="standard" className="py-16 md:py-20">
           <Section accentLabel anchor="s-outcome" number="06" label="Outcomes" heading="Where it stands">
             <NumberedList items={cs.outcome} />
+          </Section>
+        </Container>
+      </section>
 
-            {cs.reflection && cs.reflection.length > 0 && (
-              <div className="mt-16">
-                <p style={EYEBROW}>Reflection</p>
-                <div className="mt-6 grid gap-5 md:grid-cols-3">
-                  {cs.reflection.map((r, i) => (
-                    <Reveal key={r} delay={i * 80}>
-                      <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
-                        <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            )}
+      {/* ---------- Reflection (own section, matching the other case studies) ---------- */}
+      {cs.reflection && cs.reflection.length > 0 && (
+        <section id="s-reflection" style={BAND.tint}>
+          <Container variant="standard" className="pt-16 pb-24 md:pt-20 md:pb-28">
+            <p style={EYEBROW}>Reflection</p>
+            <h2 className="mt-2 mb-8" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+              What building this taught me
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cs.reflection.map((r, i) => (
+                <Reveal key={r} delay={i * 80}>
+                  <div className={`h-full px-6 py-6 rounded-[var(--radius-default)] border ${CARD_HOVER}`} style={{ background: "var(--color-surface-2)", borderColor: "var(--color-line)" }}>
+                    <p style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body)" }}>{r}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
 
             {cs.note && (
               <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
@@ -335,9 +381,9 @@ export default function CitiesOfEastCaseStudy() {
                 </p>
               </div>
             )}
-          </Section>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
     </div>
   );
 }

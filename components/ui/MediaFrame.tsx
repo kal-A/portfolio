@@ -41,6 +41,7 @@ export default function MediaFrame({
   hoverReveal = false,
   interactive = false,
   parallax = false,
+  fit = "cover",
 }: {
   src: string;
   alt: string;
@@ -48,6 +49,10 @@ export default function MediaFrame({
   className?: string;
   objectPosition?: string;
   priority?: boolean;
+  /** object-fit for the image. Default "cover" (fills the frame, may crop);
+   *  "contain" shows the whole image un-cropped, letterboxed on the frame's
+   *  surface, for screenshots that must be read in full rather than framed. */
+  fit?: "cover" | "contain";
   /** Grayscale-at-rest, full color on hover/focus — hover-capable desktop only. See doc comment. */
   hoverReveal?: boolean;
   /** Opt-in hover "pop": makes the frame its own hover group so the built-in
@@ -79,7 +84,7 @@ export default function MediaFrame({
       priority={priority}
       onError={() => setFailed(true)}
       style={{ objectPosition }}
-      className="object-cover transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+      className={`${fit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-[var(--duration-base)] ease-[var(--ease-standard)] group-hover:scale-[1.03] group-focus-visible:scale-[1.03]`}
     />
   );
 

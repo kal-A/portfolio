@@ -1,34 +1,30 @@
+"use client";
+
+import { useState } from "react";
 import { caseStudies, evidenceLabel } from "@/lib/content/case-studies";
 import ProjectIndexItem from "@/components/ui/ProjectIndexItem";
 import Reveal from "@/components/Reveal";
 
 /**
- * Grouped archive + refined editorial rows. Projects are grouped by the kind
- * of work each one actually demonstrates (its `caseStudyType` evidence), not
- * by employment status or a rigid professional identity. Three sections keep
- * each group coherent instead of lumping unlike work together: the earlier
- * two-bucket split had Greenhouse (retail/brand DESIGN) sitting under
- * "Systems, Operations & Technical" next to ForceN's hardware ops and
- * Chronicle's AI systems, which read as miscategorised.
- *
- *   Product & Design    -> the things people directly use: fintech and booking
- *                          UX, brand/retail design, an HCI wearable.
- *   Research & Strategy  -> behaviour-into-plan work: analytics-driven feature
- *                          planning, curriculum/ops research.
- *   Systems & Technical  -> the build/ops end: a hardware production workflow,
- *                          an AI-systems architecture.
- *
- * Order within each group is proof strength / relevance, not chronology;
- * /work's job is discovery, not a dated record (that's /resume). Rows omit
- * `number` and `primitive` on purpose: sequential numbering and composition
- * variance are the homepage's storytelling devices; /work needs consistent,
- * scannable equivalence across all eight projects instead.
+ * /work archive, split by the kind of engagement each entry represents, with a
+ * segmented tab to switch between the two. Now that hired work and independent
+ * projects are evenly matched in count, splitting them is clearer than the old
+ * three thematic buckets: a reviewer usually wants either "where has he
+ * worked" or "what has he built on his own," and the tab answers that directly.
+ * The split is driven by `entryType` so new entries land in the right tab
+ * automatically: internships and the capstone are work experience; independent
+ * and course projects are projects. Order within each tab follows the shared
+ * `caseStudies` display order (proof strength / recency), so the requested
+ * redesigns sit mid-list, not at the top. Rows reuse the same ProjectIndexItem
+ * as before; only the grouping around them changed.
  */
-const groups: { label: string; slugs: string[] }[] = [
-  { label: "Systems & Technical", slugs: ["forcen", "chronicle", "cities-of-east"] },
-  { label: "Product & Design", slugs: ["roomease", "hera-fertility", "uwmsa-redesign", "greenhouse", "uwosp-redesign", "pill-pal"] },
-  { label: "Research & Strategy", slugs: ["pathpeer", "informatica"] },
-];
+const EXPERIENCE_TYPES = new Set(["internship", "capstone"]);
+
+const TABS = [
+  { id: "experiences", label: "Work experience" },
+  { id: "projects", label: "Projects" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
 
 function yearOf(timeframe: string) {
   const matches = timeframe.match(/\d{4}/g);
@@ -36,44 +32,63 @@ function yearOf(timeframe: string) {
 }
 
 export default function WorkArchive() {
-  return (
-    <div className="flex flex-col gap-14">
-      {groups.map((group) => {
-        const items = group.slugs
-          .map((slug) => caseStudies.find((cs) => cs.slug === slug))
-          .filter((cs): cs is NonNullable<typeof cs> => Boolean(cs));
+  const [tab, setTab] = useState<TabId>("experiences");
 
-        return (
-          <div key={group.label}>
-            <Reveal>
-              <h2
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "var(--text-h2)",
-                  lineHeight: "var(--leading-h2)",
-                  color: "var(--color-text)",
-                }}
+  const experiences = caseStudies.filter((cs) => EXPERIENCE_TYPES.has(cs.entryType));
+  const projects = caseStudies.filter((cs) => !EXPERIENCE_TYPES.has(cs.entryType));
+  const counts: Record<TabId, number> = { experiences: experiences.length, projects: projects.length };
+  const items = tab === "experiences" ? experiences : projects;
+
+  return (
+    <div>
+      <div
+        role="tablist"
+        aria-label="Filter work by type"
+        className="inline-flex gap-1 rounded-full border p-1"
+        style={{ borderColor: "var(--color-line)", background: "var(--color-surface-1)" }}
+      >
+        {TABS.map((t) => {
+          const active = tab === t.id;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => setTab(t.id)}
+              className="flex items-center gap-2 rounded-full px-4 sm:px-5 py-2 transition-colors duration-[var(--duration-base)] ease-[var(--ease-standard)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
+              style={
+                active
+                  ? { background: "var(--color-text)", color: "var(--color-bg)" }
+                  : { color: "var(--color-text-muted)" }
+              }
+            >
+              <span style={{ fontSize: "var(--text-body)", fontWeight: 500 }}>{t.label}</span>
+              <span
+                className="tabular-nums"
+                style={{ fontSize: "var(--text-small)", opacity: active ? 0.75 : 0.6 }}
               >
-                {group.label}
-              </h2>
-            </Reveal>
-            <div className="mt-4 flex flex-col">
-              {items.map((cs, i) => (
-                <Reveal key={cs.slug} delay={i * 80}>
-                  <ProjectIndexItem
-                    title={cs.title}
-                    description={cs.oneLiner}
-                    meta={`${evidenceLabel(cs)} · ${cs.role} · ${yearOf(cs.timeframe)}`}
-                    href={`/work/${cs.slug}`}
-                    variant="complete"
-                    image={cs.heroMedia}
-                  />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+                {counts[t.id]}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div key={tab} className="mt-8 flex flex-col">
+        {items.map((cs, i) => (
+          <Reveal key={cs.slug} delay={i * 70}>
+            <ProjectIndexItem
+              title={cs.title}
+              description={cs.oneLiner}
+              meta={`${evidenceLabel(cs)} · ${cs.role} · ${yearOf(cs.timeframe)}`}
+              href={`/work/${cs.slug}`}
+              variant="complete"
+              image={cs.heroMedia}
+            />
+          </Reveal>
+        ))}
+      </div>
     </div>
   );
 }

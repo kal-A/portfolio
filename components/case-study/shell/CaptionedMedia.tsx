@@ -29,6 +29,7 @@ export default function CaptionedMedia({
   priority = false,
   parallax = false,
   interactive = true,
+  fit = "cover",
   label,
   caption,
   className = "",
@@ -42,6 +43,8 @@ export default function CaptionedMedia({
   priority?: boolean;
   parallax?: boolean;
   interactive?: boolean;
+  /** "contain" shows the whole image un-cropped (for screenshots read in full). */
+  fit?: "cover" | "contain";
   /** Small accent eyebrow above the caption, e.g. "Before" / "Climate". */
   label?: string;
   caption?: string;
@@ -65,6 +68,7 @@ export default function CaptionedMedia({
         priority={priority}
         parallax={parallax}
         interactive={interactive}
+        fit={fit}
         className={`${aspect} ${frameClassName}`}
       />
       {(label || caption) && (
