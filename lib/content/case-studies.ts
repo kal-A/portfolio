@@ -984,7 +984,7 @@ const caseStudiesData: CaseStudy[] = [
 // Reverse-chronological display order (most recent first). Course/undated
 // projects (pill-pal) sort last. The two independent, in-progress projects
 // (uwmsa-redesign, cities-of-east) sort after the established work.
-const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal", "uwmsa-redesign", "cities-of-east", "uwosp-redesign"];
+const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "uwmsa-redesign", "cities-of-east", "uwosp-redesign", "pill-pal"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

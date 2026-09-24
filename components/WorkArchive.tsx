@@ -12,13 +12,14 @@ import Reveal from "@/components/Reveal";
  * three thematic buckets: a reviewer usually wants either "where has he
  * worked" or "what has he built on his own," and the tab answers that directly.
  * The split is driven by `entryType` so new entries land in the right tab
- * automatically: internships and the capstone are work experience; independent
- * and course projects are projects. Order within each tab follows the shared
- * `caseStudies` display order (proof strength / recency), so the requested
- * redesigns sit mid-list, not at the top. Rows reuse the same ProjectIndexItem
- * as before; only the grouping around them changed.
+ * automatically: internships are work experience; everything self-directed
+ * (the capstone, course projects, and independent projects) is a project.
+ * Order within each tab follows the shared `caseStudies` display order (proof
+ * strength / recency), so the strongest roles and projects lead, the requested
+ * redesigns sit mid-list, and Pill Pal closes out the projects. Rows reuse the
+ * same ProjectIndexItem as before; only the grouping around them changed.
  */
-const EXPERIENCE_TYPES = new Set(["internship", "capstone"]);
+const EXPERIENCE_TYPES = new Set(["internship"]);
 
 const TABS = [
   { id: "experiences", label: "Work experience" },

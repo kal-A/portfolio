@@ -12,6 +12,7 @@ import Metric from "@/components/case-study/shell/Metric";
 import DecisionBlock from "@/components/case-study/shell/DecisionBlock";
 import Action from "@/components/ui/Action";
 import Reveal from "@/components/Reveal";
+import MediaFrame from "@/components/ui/MediaFrame";
 
 /**
  * Cities of East, an independent research-and-design case study on the shared
@@ -191,7 +192,6 @@ export default function CitiesOfEastCaseStudy() {
                 lead={cs.oneLiner}
                 meta={cs.timeframe}
                 artifacts={cs.artifacts}
-                media={cs.heroMedia}
               />
               {cs.links && cs.links.length > 0 && (
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -205,6 +205,20 @@ export default function CitiesOfEastCaseStudy() {
             </div>
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          {cs.heroMedia && (
+            <Reveal delay={150}>
+              <MediaFrame
+                src={cs.heroMedia.src}
+                alt={cs.heroMedia.alt}
+                objectPosition={cs.heroMedia.position}
+                sizes="(min-width: 1024px) 1200px, 100vw"
+                priority
+                parallax
+                className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+              />
+            </Reveal>
+          )}
         </Container>
       </section>
 
@@ -372,14 +386,9 @@ export default function CitiesOfEastCaseStudy() {
             </div>
 
             {cs.note && (
-              <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
-                <p
-                  className="mx-auto text-center italic"
-                  style={{ color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
-                >
-                  {cs.note}
-                </p>
-              </div>
+              <p className="mt-10 text-sm italic" style={{ color: "var(--color-text-subtle)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
+                {cs.note}
+              </p>
             )}
           </Container>
         </section>

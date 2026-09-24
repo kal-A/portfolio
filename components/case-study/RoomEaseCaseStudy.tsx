@@ -460,10 +460,21 @@ export default function RoomEaseCaseStudy() {
               lead={HERO_LEAD}
               meta={`Waterloo, ON · ${cs.timeframe}`}
               artifacts={cs.artifacts}
-              media={{ src: "/case-studies/roomease/hero.png", alt: "The RoomEase booking prototype interface", position: "top" }}
             />
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          <Reveal delay={150}>
+            <MediaFrame
+              src="/case-studies/roomease/hero.png"
+              alt="The RoomEase booking prototype interface"
+              objectPosition="top"
+              sizes="(min-width: 1024px) 1200px, 100vw"
+              priority
+              parallax
+              className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+            />
+          </Reveal>
         </Container>
       </section>
 

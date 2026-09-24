@@ -425,10 +425,23 @@ export default function ChronicleCaseStudy() {
               lead={HERO_LEAD}
               meta={cs.timeframe}
               artifacts={cs.artifacts}
-              media={cs.heroMedia}
             />
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          {cs.heroMedia && (
+            <Reveal delay={150}>
+              <MediaFrame
+                src={cs.heroMedia.src}
+                alt={cs.heroMedia.alt}
+                objectPosition={cs.heroMedia.position}
+                sizes="(min-width: 1024px) 1200px, 100vw"
+                priority
+                parallax
+                className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+              />
+            </Reveal>
+          )}
         </Container>
       </section>
 

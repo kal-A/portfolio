@@ -38,8 +38,9 @@ export default function WorkIndex() {
               color: "var(--color-text-muted)",
             }}
           >
-            Internships and a capstone on one side, the things I have built on my
-            own on the other. Switch between work experience and projects below.
+            Internships on one side; the things I have built on my own, from a
+            capstone to independent work, on the other. Switch between work
+            experience and projects below.
           </p>
         </Container>
       </div>

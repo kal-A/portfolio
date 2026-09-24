@@ -382,14 +382,9 @@ export default function UwmsaRedesignCaseStudy() {
             </div>
 
             {cs.note && (
-              <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
-                <p
-                  className="mx-auto text-center italic"
-                  style={{ color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
-                >
-                  {cs.note}
-                </p>
-              </div>
+              <p className="mt-10 text-sm italic" style={{ color: "var(--color-text-subtle)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}>
+                {cs.note}
+              </p>
             )}
           </Container>
         </section>

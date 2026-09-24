@@ -8,6 +8,7 @@ import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
 import ForceNWorkflowDiagram from "@/components/case-study/ForceNWorkflowDiagram";
 import Reveal from "@/components/Reveal";
+import MediaFrame from "@/components/ui/MediaFrame";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
@@ -283,10 +284,21 @@ export default function ForceNCaseStudy() {
               lead={HERO_LEAD}
               meta={`${cs.location} · ${cs.timeframe}`}
               artifacts={cs.artifacts}
-              media={{ src: "/case-studies/forceN/homepage-hero.png", alt: "ForceN's Dev Systems product line", position: "center 40%" }}
             />
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          <Reveal delay={150}>
+            <MediaFrame
+              src="/case-studies/forceN/homepage-hero.png"
+              alt="ForceN's Dev Systems product line"
+              objectPosition="center 40%"
+              sizes="(min-width: 1024px) 1200px, 100vw"
+              priority
+              parallax
+              className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+            />
+          </Reveal>
         </Container>
       </section>
 
