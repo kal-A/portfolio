@@ -7,27 +7,48 @@ import Section from "@/components/layout/Section";
 import CaseStudyHero from "@/components/case-study/shell/CaseStudyHero";
 import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
+import CaptionedMedia from "@/components/case-study/shell/CaptionedMedia";
 import Metric from "@/components/case-study/shell/Metric";
 import DecisionBlock from "@/components/case-study/shell/DecisionBlock";
 import Action from "@/components/ui/Action";
 import Reveal from "@/components/Reveal";
 
 /**
- * Cities of East, an independent case study on the shared case-study shell.
- * A cover with the live atlas link as the primary artifact, an at-a-glance
- * snapshot plus metrics, the problem the atlas answers and its working
- * constraints, a numbered process, the key decisions as decision blocks, and
- * outcomes plus reflection. Every fact traces to lib/content/case-studies.ts.
- * Screenshots are intentionally deferred: this is an in-progress, low-key
- * entry and the live, interactive atlas is the real artifact, so the page is
- * typographic until real captures are added to heroMedia/images.
+ * Cities of East, an independent research-and-design case study on the shared
+ * shell. The atlas is the argument, so the page is map-led: a cover map, a
+ * field-study detail as the problem's evidence, and the same geography read
+ * three ways (terrain, climate, waterways) as the centerpiece. Every capture
+ * is from the live atlas (public/case-studies/cities-of-east) and every fact
+ * traces to lib/content/case-studies.ts.
  */
+const WIDE = "aspect-[16/10]";
+const WIDE_SIZES = "(min-width: 1024px) 1200px, 100vw";
+
 const TOC_ITEMS = [
   { href: "#s-glance", label: "At a glance" },
   { href: "#s-problem", label: "The problem" },
+  { href: "#s-layers", label: "Three readings" },
   { href: "#s-process", label: "Process" },
   { href: "#s-decisions", label: "Decisions" },
   { href: "#s-outcome", label: "Outcomes" },
+];
+
+const LAYERS = [
+  {
+    src: "atlas-terrain",
+    label: "Terrain",
+    caption: "Open and mixed land, arid desert, rugged highlands, and forested river gorges, so form can be read against the land it sits on.",
+  },
+  {
+    src: "atlas-climate",
+    label: "Climate",
+    caption: "Six schematic climate families, from arid desert to cold alpine, a deliberately coarse tool for reasoning about built form.",
+  },
+  {
+    src: "atlas-waterways",
+    label: "Waterways",
+    caption: "Major rivers and water-linked land, the corridors that decide where oasis settlements and trade cities actually sit.",
+  },
 ];
 
 const BAND = {
@@ -35,6 +56,10 @@ const BAND = {
   tint: { background: "var(--color-surface-1)", borderTop: "1px solid var(--color-line)" },
   baseBordered: { background: "var(--color-bg)", borderTop: "1px solid var(--color-line)" },
 } as const;
+
+function img(name: string) {
+  return `/case-studies/cities-of-east/${name}.webp`;
+}
 
 function NumberedList({ items }: { items: string[] }) {
   return (
@@ -144,7 +169,7 @@ export default function CitiesOfEastCaseStudy() {
         </Container>
       </section>
 
-      {/* ---------- The problem + constraints ---------- */}
+      {/* ---------- The problem + a field study ---------- */}
       <section style={BAND.baseBordered}>
         <Container variant="page" className="py-16 md:py-20">
           <Section anchor="s-problem" number="02" heading="Style, detached from why it exists">
@@ -155,8 +180,20 @@ export default function CitiesOfEastCaseStudy() {
               {cs.problem}
             </p>
 
+            <Reveal className="mt-10">
+              <CaptionedMedia
+                src={img("study-arabian")}
+                alt="A Cities of East field study: the Arabian Peninsula, opened to Shibam, the barjeel, and Souq Waqif"
+                sizes={WIDE_SIZES}
+                aspect={WIDE}
+                parallax
+                label="A region opened up"
+                caption="Each region opens into field studies of specific responses: Shibam's tower houses, Dubai's barjeel and mangh, Souq Waqif, each tied back to climate, land, and patterns of life."
+              />
+            </Reveal>
+
             {cs.constraints && cs.constraints.length > 0 && (
-              <div className="mt-10">
+              <div className="mt-12">
                 <p
                   style={{
                     fontSize: "var(--text-label)",
@@ -188,13 +225,41 @@ export default function CitiesOfEastCaseStudy() {
         </Container>
       </section>
 
-      {/* ---------- Process ---------- */}
+      {/* ---------- Three readings of one geography ---------- */}
       <section style={BAND.tint}>
         <Container variant="page" className="py-16 md:py-20">
           <Section
-            anchor="s-process"
+            anchor="s-layers"
             number="03"
-            heading="A reading tool, not a gallery"
+            heading="The same geography, read three ways"
+            intro="The basemap can be read by terrain, by climate, and by waterways, so the same land can be interrogated from different environmental angles instead of presenting buildings as isolated images."
+          >
+            <div className="mt-8 flex flex-col gap-10">
+              {LAYERS.map((layer, i) => (
+                <Reveal key={layer.src} delay={i * 90}>
+                  <CaptionedMedia
+                    src={img(layer.src)}
+                    alt={`Cities of East atlas, ${layer.label} reading`}
+                    sizes={WIDE_SIZES}
+                    aspect={WIDE}
+                    parallax
+                    label={layer.label}
+                    caption={layer.caption}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Container>
+      </section>
+
+      {/* ---------- Process ---------- */}
+      <section style={BAND.baseBordered}>
+        <Container variant="page" className="py-16 md:py-20">
+          <Section
+            anchor="s-process"
+            number="04"
+            heading="Building a reading tool, not a gallery"
             intro="The atlas is built around one relationship, architecture as a response to climate and land, and expands region by region with real, sourced studies."
           >
             <NumberedList items={cs.process} />
@@ -204,9 +269,9 @@ export default function CitiesOfEastCaseStudy() {
 
       {/* ---------- Decisions ---------- */}
       {cs.decisions && cs.decisions.length > 0 && (
-        <section style={BAND.baseBordered}>
+        <section style={BAND.tint}>
           <Container variant="page" className="py-16 md:py-20">
-            <Section anchor="s-decisions" number="04" heading="The decisions that shaped it">
+            <Section anchor="s-decisions" number="05" heading="The decisions that shaped it">
               <div className="mt-8 flex flex-col gap-10">
                 {cs.decisions.map((d, i) => (
                   <Reveal key={d.decision} delay={i * 70}>
@@ -225,9 +290,9 @@ export default function CitiesOfEastCaseStudy() {
       )}
 
       {/* ---------- Outcomes + reflection ---------- */}
-      <section style={BAND.tint}>
+      <section style={BAND.baseBordered}>
         <Container variant="page" className="pt-16 pb-24 md:pt-20 md:pb-28">
-          <Section anchor="s-outcome" number="05" heading="Where it stands">
+          <Section anchor="s-outcome" number="06" heading="Where it stands">
             <NumberedList items={cs.outcome} />
 
             {cs.reflection && cs.reflection.length > 0 && (

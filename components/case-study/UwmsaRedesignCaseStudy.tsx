@@ -7,29 +7,46 @@ import Section from "@/components/layout/Section";
 import CaseStudyHero from "@/components/case-study/shell/CaseStudyHero";
 import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
+import CaptionedMedia from "@/components/case-study/shell/CaptionedMedia";
 import Metric from "@/components/case-study/shell/Metric";
 import DecisionBlock from "@/components/case-study/shell/DecisionBlock";
 import Action from "@/components/ui/Action";
 import Reveal from "@/components/Reveal";
 
 /**
- * UWMSA app redesign, a self-initiated case study. Built on the shared
- * case-study shell (same vocabulary as Greenhouse/Chronicle): a cover with
- * the live-prototype and process-atlas links as the primary artifact, an
- * at-a-glance snapshot plus metrics, the problem and its fixed constraints,
- * a numbered process, the key decisions as decision blocks, and outcomes
- * plus reflection. Every fact traces to lib/content/case-studies.ts, which is
- * sourced from the project's own process atlas. Screenshots are intentionally
- * deferred: this is an in-progress, low-key entry and the live prototype is
- * the real artifact, so the page is typographic until real captures are added
- * to heroMedia/images.
+ * UWMSA app redesign, an independent product-design case study on the shared
+ * case-study shell. The evidence here is the interface itself, so the page is
+ * image-led: a device-shelf cover, a real before/after of the home screen, the
+ * three art directions explored on identical Friday data, and the built
+ * screens that grew Home into a system. Every screenshot is a real capture
+ * from the live prototype's own process atlas (public/case-studies/
+ * uwmsa-redesign), and every fact traces to lib/content/case-studies.ts.
  */
+const PHONE = "aspect-[78/169]"; // exact source ratio of the 780x1690 captures: no crop
+const PHONE_SIZES = "(min-width: 1024px) 340px, (min-width: 640px) 44vw, 90vw";
+const WIDE_SIZES = "(min-width: 1024px) 1200px, 100vw";
+
 const TOC_ITEMS = [
   { href: "#s-glance", label: "At a glance" },
   { href: "#s-problem", label: "The problem" },
+  { href: "#s-directions", label: "Three directions" },
+  { href: "#s-system", label: "The system" },
   { href: "#s-process", label: "Process" },
   { href: "#s-decisions", label: "Decisions" },
   { href: "#s-outcome", label: "Outcomes" },
+];
+
+const DIRECTIONS = [
+  { src: "dir-a-quiet", label: "A. Quiet Utility", caption: "Hierarchy carried by spacing and type, not a card per object." },
+  { src: "dir-b-islamic", label: "B. Islamic Editorial", caption: "Devotional character led from the top of the scan." },
+  { src: "dir-c-campus", label: "C. Campus Editorial", caption: "Community and campus life pulled forward as the frame." },
+];
+
+const SCREENS = [
+  { src: "screen-events", label: "Events", caption: "Forced recurrence, tentative and major-event states, calendar traversal." },
+  { src: "screen-prayer", label: "Prayer", caption: "One clear next-prayer signal alongside adhan and iqamah." },
+  { src: "screen-campus", label: "Campus", caption: "Tested list-and-map depth without breaking the calm shell." },
+  { src: "screen-duas", label: "Duas", caption: "Held long-form Arabic and audio reading in the same language." },
 ];
 
 const BAND = {
@@ -37,6 +54,10 @@ const BAND = {
   tint: { background: "var(--color-surface-1)", borderTop: "1px solid var(--color-line)" },
   baseBordered: { background: "var(--color-bg)", borderTop: "1px solid var(--color-line)" },
 } as const;
+
+function img(name: string) {
+  return `/case-studies/uwmsa-redesign/${name}.webp`;
+}
 
 function NumberedList({ items }: { items: string[] }) {
   return (
@@ -90,7 +111,6 @@ export default function UwmsaRedesignCaseStudy() {
                 lead={cs.oneLiner}
                 meta={cs.timeframe}
                 artifacts={cs.artifacts}
-                media={cs.heroMedia}
               />
               {cs.links && cs.links.length > 0 && (
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -110,6 +130,19 @@ export default function UwmsaRedesignCaseStudy() {
             </div>
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          {/* Device-shelf cover shot: the built prototype is the hero. */}
+          <Reveal delay={120} className="mt-12 md:mt-16">
+            <CaptionedMedia
+              src={img("cover-shelf")}
+              alt="Three screens of the redesigned UWMSA app in the Quiet Utility direction: Prayer, Home, and Duas"
+              sizes={WIDE_SIZES}
+              aspect="aspect-[16/10]"
+              priority
+              interactive={false}
+              caption="The redesigned app in its Quiet Utility direction: Prayer, Home, and Duas, built as an interactive prototype rather than flat frames."
+            />
+          </Reveal>
         </Container>
       </section>
 
@@ -131,7 +164,7 @@ export default function UwmsaRedesignCaseStudy() {
               </Section>
             )}
 
-            <Section anchor="s-metrics" number="01" heading="Shape of the work">
+            <Section anchor="s-metrics" number="01" heading="What the redesign covers">
               <Grid className="mt-8">
                 {cs.metrics.map((m, i) => (
                   <div key={m.label} className="col-span-2 lg:col-span-3">
@@ -146,10 +179,10 @@ export default function UwmsaRedesignCaseStudy() {
         </Container>
       </section>
 
-      {/* ---------- The problem + constraints ---------- */}
+      {/* ---------- The problem + before/after ---------- */}
       <section style={BAND.baseBordered}>
         <Container variant="page" className="py-16 md:py-20">
-          <Section anchor="s-problem" number="02" heading="Useful, but hard to read at a glance">
+          <Section anchor="s-problem" number="02" heading="Composition, not content, was the problem">
             <p
               className="mt-4"
               style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)", maxWidth: "var(--measure-body)" }}
@@ -157,8 +190,33 @@ export default function UwmsaRedesignCaseStudy() {
               {cs.problem}
             </p>
 
+            <div className="mt-10 grid gap-8 sm:grid-cols-2 max-w-[720px]">
+              <Reveal>
+                <CaptionedMedia
+                  src={img("baseline-home")}
+                  alt="The original UWMSA home screen: a separate card for every object"
+                  sizes={PHONE_SIZES}
+                  aspect={PHONE}
+                  parallax={false}
+                  label="Before"
+                  caption="A card for every object, and a greeting competing with next prayer for the first scan."
+                />
+              </Reveal>
+              <Reveal delay={90}>
+                <CaptionedMedia
+                  src={img("home-quiet")}
+                  alt="The redesigned home screen: one next-prayer signal and the day's essentials"
+                  sizes={PHONE_SIZES}
+                  aspect={PHONE}
+                  parallax={false}
+                  label="After"
+                  caption="One next-prayer signal leads; the day's essentials step forward, everything else steps back."
+                />
+              </Reveal>
+            </div>
+
             {cs.constraints && cs.constraints.length > 0 && (
-              <div className="mt-10">
+              <div className="mt-12">
                 <p
                   style={{
                     fontSize: "var(--text-label)",
@@ -167,7 +225,7 @@ export default function UwmsaRedesignCaseStudy() {
                     color: "var(--color-text-subtle)",
                   }}
                 >
-                  Fixed constraints
+                  Working constraints
                 </p>
                 <ul className="mt-4 grid gap-x-10 gap-y-4 md:grid-cols-2">
                   {cs.constraints.map((c) => (
@@ -190,14 +248,68 @@ export default function UwmsaRedesignCaseStudy() {
         </Container>
       </section>
 
+      {/* ---------- Three directions ---------- */}
+      <section style={BAND.tint}>
+        <Container variant="page" className="py-16 md:py-20">
+          <Section
+            anchor="s-directions"
+            number="03"
+            heading="Three directions, one Friday"
+            intro="To separate product character from content edits dressed up as progress, three genuinely different first Home screens were built on the same Friday data."
+          >
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {DIRECTIONS.map((d, i) => (
+                <Reveal key={d.src} delay={i * 90}>
+                  <CaptionedMedia
+                    src={img(d.src)}
+                    alt={`UWMSA home screen, direction ${d.label}`}
+                    sizes={PHONE_SIZES}
+                    aspect={PHONE}
+                    label={d.label}
+                    caption={d.caption}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Container>
+      </section>
+
+      {/* ---------- The system across screens ---------- */}
+      <section style={BAND.baseBordered}>
+        <Container variant="page" className="py-16 md:py-20">
+          <Section
+            anchor="s-system"
+            number="04"
+            heading="Growing Home into a system"
+            intro="A design system invented up front fits the first screen and fights the rest. Home set the language; then the harder screens exposed the states and components the system actually needed."
+          >
+            <div className="mt-8 grid gap-8 grid-cols-2 lg:grid-cols-4">
+              {SCREENS.map((s, i) => (
+                <Reveal key={s.src} delay={i * 80}>
+                  <CaptionedMedia
+                    src={img(s.src)}
+                    alt={`UWMSA ${s.label} screen in the Quiet Utility direction`}
+                    sizes={PHONE_SIZES}
+                    aspect={PHONE}
+                    label={s.label}
+                    caption={s.caption}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Container>
+      </section>
+
       {/* ---------- Process ---------- */}
       <section style={BAND.tint}>
         <Container variant="page" className="py-16 md:py-20">
           <Section
             anchor="s-process"
-            number="03"
-            heading="From the whole product to a working system"
-            intro="The redesign started from the complete existing app, not a hero screen, and grew Home into a system by building the screens that were actually hard."
+            number="05"
+            heading="From the whole product to a foundation"
+            intro="The redesign started from the complete existing app, not a single hero screen, and ended by setting Quiet Utility as the foundation to keep building on."
           >
             <NumberedList items={cs.process} />
           </Section>
@@ -208,7 +320,7 @@ export default function UwmsaRedesignCaseStudy() {
       {cs.decisions && cs.decisions.length > 0 && (
         <section style={BAND.baseBordered}>
           <Container variant="page" className="py-16 md:py-20">
-            <Section anchor="s-decisions" number="04" heading="The decisions that shaped it">
+            <Section anchor="s-decisions" number="06" heading="The decisions that shaped it">
               <div className="mt-8 flex flex-col gap-10">
                 {cs.decisions.map((d, i) => (
                   <Reveal key={d.decision} delay={i * 70}>
@@ -226,10 +338,45 @@ export default function UwmsaRedesignCaseStudy() {
         </section>
       )}
 
-      {/* ---------- Outcomes + reflection ---------- */}
+      {/* ---------- Palette and emphasis studies ---------- */}
       <section style={BAND.tint}>
+        <Container variant="page" className="py-16 md:py-20">
+          <Section
+            anchor="s-palette"
+            number="07"
+            heading="Two studies on emphasis"
+            intro="With composition settled, two focused studies pushed only visual emphasis on the same Home content, to see how far tone could move without touching the structure."
+          >
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 max-w-[720px]">
+              <Reveal>
+                <CaptionedMedia
+                  src={img("palette-warm")}
+                  alt="UWMSA home screen, Warm Ledger emphasis study"
+                  sizes={PHONE_SIZES}
+                  aspect={PHONE}
+                  label="Warm Ledger"
+                  caption="A warmer, ledger-like reading of the same hierarchy."
+                />
+              </Reveal>
+              <Reveal delay={90}>
+                <CaptionedMedia
+                  src={img("palette-contrast")}
+                  alt="UWMSA home screen, Gold Contrast emphasis study"
+                  sizes={PHONE_SIZES}
+                  aspect={PHONE}
+                  label="Gold Contrast"
+                  caption="Heritage gold pushed harder as the single point of emphasis."
+                />
+              </Reveal>
+            </div>
+          </Section>
+        </Container>
+      </section>
+
+      {/* ---------- Outcomes + reflection ---------- */}
+      <section style={BAND.baseBordered}>
         <Container variant="page" className="pt-16 pb-24 md:pt-20 md:pb-28">
-          <Section anchor="s-outcome" number="05" heading="Where it stands">
+          <Section anchor="s-outcome" number="08" heading="Where it stands">
             <NumberedList items={cs.outcome} />
 
             {cs.reflection && cs.reflection.length > 0 && (

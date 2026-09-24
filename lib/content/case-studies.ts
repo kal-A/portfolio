@@ -656,6 +656,11 @@ const caseStudiesData: CaseStudy[] = [
     entryType: "independent-project",
     caseStudyType: "product-ux",
     tier: "standard",
+    heroMedia: {
+      src: "/case-studies/uwmsa-redesign/cover-shelf.webp",
+      alt: "The redesigned UWMSA app in the Quiet Utility direction: Prayer, Home, and Duas screens",
+      position: "center",
+    },
     title: "Redesigning the UWMSA app around a five-second scan",
     company: "UWMSA App - Independent Redesign",
     role: "Solo - product design and prototyping",
@@ -762,6 +767,11 @@ const caseStudiesData: CaseStudy[] = [
     entryType: "independent-project",
     caseStudyType: "technical",
     tier: "standard",
+    heroMedia: {
+      src: "/case-studies/cities-of-east/atlas-climate.webp",
+      alt: "The Cities of East living atlas, read as climate families across the historic East",
+      position: "center",
+    },
     title: "Cities of East: a living atlas of architecture and climate",
     company: "Cities of East - Independent Project",
     role: "Solo - research, design, and build",
@@ -850,7 +860,7 @@ const caseStudiesData: CaseStudy[] = [
       "Writing method into each region slowed the work down and was worth it: a sourced claim about form and climate is the whole point, and it is exactly what an interactive map makes tempting to skip.",
     ],
     note: "Cities of East is an active, independent research-and-design project. It uses deliberately schematic climate and terrain layers as reasoning tools, not precise scientific classification, and several regions are still marked Atlas Expanding. This page reflects the state of the atlas at the time it was written.",
-    links: [{ label: "Explore the atlas", href: "https://cities-of-east-atlas.kalahsn2003.chatgpt.site/#/atlas" }],
+    links: [{ label: "Explore the atlas", href: "https://cities-of-east-atlas.kalahsn2003.chatgpt.site/" }],
     atAGlance: [
       { label: "Role", value: "Solo research, design, and build" },
       { label: "Type", value: "Independent interactive atlas" },
