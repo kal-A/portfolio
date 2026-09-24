@@ -345,13 +345,21 @@ export default function UwospRedesignCaseStudy() {
         </Container>
       </section>
 
-      {/* ---------- Mobile navigation ---------- */}
-      <section style={BAND.baseBordered}>
+      {/* ---------- Mobile navigation ----------
+          A stretch-card layout: the text card fills to the phone's height so
+          the tall mobile capture never leaves the copy floating in dead space. */}
+      <section id="s-mobile" style={BAND.baseBordered}>
         <Container variant="standard" className="py-16 md:py-20">
-          <div className="grid lg:grid-cols-[1fr_320px] gap-x-14 gap-y-10 items-center">
-            <div>
-              <Section accentLabel anchor="s-mobile" number="06" label="Mobile nav" heading="Navigation became a layer, not a collision" />
-              <p className="mt-5" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
+          <div className="grid lg:grid-cols-[1fr_300px] gap-x-14 gap-y-10 items-stretch">
+            <div
+              className="h-full flex flex-col justify-center rounded-[var(--radius-default)] border border-l-[3px] px-7 py-9 md:px-9"
+              style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-1)" }}
+            >
+              <p style={EYEBROW}>06 &middot; Mobile nav</p>
+              <h2 className="mt-3" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+                Navigation became a layer, not a collision
+              </h2>
+              <p className="mt-4" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
                 The prototype menu had collided with the logo and the page beneath it. Clear separation, full-width targets, persistent orientation, and outside-click dismissal turned it into predictable navigation.
               </p>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -365,7 +373,7 @@ export default function UwospRedesignCaseStudy() {
                 ))}
               </ul>
             </div>
-            <Reveal className="mx-auto w-full max-w-[280px] lg:justify-self-end">
+            <Reveal className="w-full max-w-[300px] mx-auto lg:mx-0 lg:justify-self-end">
               <CaptionedMedia src={img("mobile-after")} alt="The redesigned UWOSP mobile navigation overlay" sizes={PHONE_SIZES} aspect={PHONE} label="A deliberate overlay" caption="The menu is a full-width overlay with outside-click dismissal." />
             </Reveal>
           </div>
@@ -411,12 +419,14 @@ export default function UwospRedesignCaseStudy() {
             )}
 
             {cs.note && (
-              <p
-                className="mt-14 pl-5 italic"
-                style={{ borderLeft: "2px solid var(--color-line)", color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
-              >
-                {cs.note}
-              </p>
+              <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
+                <p
+                  className="mx-auto text-center italic"
+                  style={{ color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
+                >
+                  {cs.note}
+                </p>
+              </div>
             )}
           </Section>
         </Container>

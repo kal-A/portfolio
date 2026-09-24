@@ -225,7 +225,7 @@ export default function CitiesOfEastCaseStudy() {
               aspect={WIDE}
               parallax
               label="A region opened up"
-              caption="Each region opens into field studies of specific responses: Shibam's tower houses, Dubai's barjeel and mangh, Souq Waqif, each tied back to climate, land, and patterns of life."
+              caption="Each region opens into the collaborators' field studies, with the built responses rendered as 3D models on the map: Shibam's tower houses, Dubai's barjeel and mangh, Souq Waqif, each tied back to climate, land, and patterns of life."
             />
           </Reveal>
 
@@ -326,12 +326,14 @@ export default function CitiesOfEastCaseStudy() {
             )}
 
             {cs.note && (
-              <p
-                className="mt-14 pl-5 italic"
-                style={{ borderLeft: "2px solid var(--color-line)", color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
-              >
-                {cs.note}
-              </p>
+              <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
+                <p
+                  className="mx-auto text-center italic"
+                  style={{ color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
+                >
+                  {cs.note}
+                </p>
+              </div>
             )}
           </Section>
         </Container>

@@ -668,7 +668,7 @@ const caseStudiesData: CaseStudy[] = [
     oneLiner:
       "The Waterloo MSA app already had the right daily utilities, but oversized cards, repeated pills, and competing hierarchy made a quick between-class glance harder than it needed to be.",
     summary:
-      "A self-initiated redesign of the University of Waterloo Muslim Students Association app: keep every useful daily utility and the fixed brand, and rebuild the composition so next prayer, room changes, and the next community item read in about five seconds. Built as an interactive prototype, screen by screen, with the design system pulled from real interface needs rather than imposed up front.",
+      "A redesign of the University of Waterloo Muslim Students Association app, requested by the club: keep every useful daily utility and the fixed brand, and rebuild the composition so next prayer, room changes, and the next community item read in about five seconds. Built as an interactive prototype, screen by screen, with the design system pulled from real interface needs rather than imposed up front.",
     tags: ["Product Design", "UX", "Design Systems"],
     toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
     artifacts: ["Interactive Prototype", "Process Atlas", "Design Directions", "Palette Studies"],
@@ -699,7 +699,7 @@ const caseStudiesData: CaseStudy[] = [
       "Fixed brand: the official UWMSA mark and heritage gold were givens, so identity had to come from composition, not a new palette.",
       "Keep it recognizable: the goal was to change the composition without making the app feel like a different product the community had to relearn.",
       "Preserve real depth: a campus map, long-form Arabic and audio duʿāʾ content, and community links all had to fit the same calmer language.",
-      "In progress: this is a self-initiated redesign, not an adopted or shipped update, so it is a working prototype and a direction, not a release.",
+      "In progress: this redesign was requested but is not the final, shipped update yet, so it is a working prototype and a direction.",
     ],
     snapshot: {
       challenge:
@@ -749,14 +749,14 @@ const caseStudiesData: CaseStudy[] = [
       "Exploring three directions on identical data was the decision that kept the work honest, because it separated product character from content edits dressed up as progress.",
       "Fixing the brand and information architecture in advance was freeing, not limiting: with identity and structure settled, every remaining decision was about hierarchy and composition, which is where the real problem was.",
     ],
-    note: "A self-initiated redesign of the UWMSA app, not affiliated with, endorsed by, or adopted by UWMSA. It is a working interactive prototype and a design direction in progress, not a shipped release. Screens and studies reflect the state of the prototype and process atlas at the time this page was written.",
+    note: "This redesign was requested by UWMSA and is a work in progress: an interactive prototype and design direction, not the final, shipped update yet. Screens and studies reflect the state of the prototype and process atlas at the time this page was written.",
     links: [
       { label: "Live prototype", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/" },
       { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/process-atlas.html" },
     ],
     atAGlance: [
       { label: "Role", value: "Solo product design and prototyping" },
-      { label: "Type", value: "Self-initiated app redesign" },
+      { label: "Type", value: "Requested app redesign" },
       { label: "Status", value: "In progress" },
       { label: "Focus", value: "Hierarchy, composition, and a five-second scan" },
     ],
@@ -774,15 +774,15 @@ const caseStudiesData: CaseStudy[] = [
     },
     title: "Cities of East: a living atlas of architecture and climate",
     company: "Cities of East - Independent Project",
-    role: "Solo - research, design, and build",
+    role: "Solo - interaction design and 3D browser rendering",
     timeframe: "2026 - ongoing",
     oneLiner:
-      "Vernacular architecture across the historic East reads as style in most references, when it is really a set of answers to climate, terrain, and water.",
+      "Collaborators researched how the historic East built for its climate and land; I translated that finished research into an interactive, browser-rendered 3D atlas.",
     summary:
-      "An independent, interactive Living Atlas that ties architecture to climate, terrain, and waterways across regions of the historic East, from the Arabian Peninsula to the Iranian Plateau and South Asia. Each region opens into field studies of specific building responses, grounded in a stated sources-and-method approach and rendered on a layered map that can be read by terrain, climate, or waterway.",
-    tags: ["Design Research", "Interaction Design", "Cartography"],
-    toolTags: ["TypeScript", "React", "HTML Canvas", "SVG"],
-    artifacts: ["Interactive Atlas", "Field Studies", "Layered Basemap", "Sources & Method"],
+      "An interactive Living Atlas that translates existing field research, reported by collaborators on LinkedIn and Substack, into a browser-based map with 3D-rendered building models. I built it to practice Three.js and on-canvas 3D rendering, and to test whether that technique could carry into another project of mine (Chronicle). The research and its climate-and-method framing are the collaborators'; my contribution is the interaction design, the layered basemap, and the 3D translation of their studies.",
+    tags: ["Interaction Design", "3D / WebGL", "Cartography"],
+    toolTags: ["Three.js", "TypeScript", "React", "HTML Canvas"],
+    artifacts: ["Interactive Atlas", "3D Building Models", "Layered Basemap", "Field Studies"],
     metrics: [
       { value: "11", label: "regions mapped, from the Arabian Peninsula to East Asia" },
       { value: "3", label: "readable map layers: terrain, climate, waterways" },
@@ -790,82 +790,82 @@ const caseStudiesData: CaseStudy[] = [
       { value: "Studies", label: "built for early regions; the rest marked Atlas Expanding" },
     ],
     problem:
-      "Traditional architecture across the Islamic and eastern world is usually catalogued as ornament and style, detached from why it exists. A barjeel wind tower, a Shibam tower house, or an oasis settlement is really an answer to aridity, heat, terrain, and the location of water. The project's problem was to build a reading tool, not a gallery: a way to see a city's form as a response to its environment, and to hold that reasoning to real sources instead of aesthetic assertion.",
+      "Traditional architecture across the Islamic and eastern world is usually catalogued as ornament and style, detached from why it exists. A barjeel wind tower, a Shibam tower house, or an oasis settlement is really an answer to aridity, heat, terrain, and the location of water. Collaborators had already made that argument in their research; the problem I took on was to translate it into something you can explore, a reading tool rather than a gallery, where a city's form and its 3D-rendered buildings sit on the climate and terrain that produced them.",
     process: [
-      "Framed the atlas around one relationship, architecture as a response to climate and land, and designed the whole interface to keep returning to it rather than presenting buildings as isolated images.",
+      "Started from collaborators' finished research on the historic East, reported on LinkedIn and Substack, and treated my job as translation: turning a written argument into something explorable.",
       "Built a layered basemap that can be read three ways, by terrain, by climate, and by waterways, with a detail lens, so the same geography can be interrogated from different environmental angles.",
-      "Reduced climate to six schematic families (arid desert, semi-arid steppe, Mediterranean dry-summer, humid temperate, tropical monsoon, cold alpine) as a deliberately coarse reasoning tool, with a stated caveat that local conditions vary.",
-      "Structured the content as regions that open into field studies of specific responses: Shibam's tower houses as urban form, Dubai's barjeel and mangh as passive cooling, Souq Waqif as living heritage.",
-      "Wrote a sources-and-method section into each populated region so a claim about form and climate is traceable, not asserted.",
-      "Shipped the atlas as an expanding system: early regions carry real studies while later ones are openly marked Atlas Expanding, so the map stays honest about what is researched versus still to come.",
+      "Rendered key building responses as 3D models on the browser canvas (the barjeel, the malqaf, Shibam's tower houses), which was the real technical practice: Three.js and on-canvas 3D.",
+      "Carried the research's own six schematic climate families (arid desert, semi-arid steppe, Mediterranean dry-summer, humid temperate, tropical monsoon, cold alpine) and its sources-and-method framing into each region, so the translation stayed faithful to the reporting rather than re-deriving it.",
+      "Structured the content as regions that open into the collaborators' field studies, each tied back to climate-and-land and patterns-of-life context.",
+      "Shipped the atlas as an expanding system: early regions carry translated studies while later ones are openly marked Atlas Expanding, so the map stays honest about what is done versus still to come.",
     ],
     outcome: [
-      "An interactive atlas is live and navigable: eleven regions on a layered map, with terrain, climate, and waterway readings and a detail lens.",
-      "Early regions carry real field studies (the Arabian Peninsula alone holds Shibam, barjeel passive cooling, and Souq Waqif), each tied back to climate-and-land and patterns-of-life context.",
-      "Every populated region exposes a sources-and-method note, so the architecture-to-climate reasoning is auditable rather than decorative.",
-      "The structure scales: unbuilt regions are labelled Atlas Expanding instead of faked, so the atlas grows without misrepresenting its coverage.",
+      "An interactive atlas is live and navigable: eleven regions on a layered map, with terrain, climate, and waterway readings, a detail lens, and 3D-rendered building models.",
+      "Early regions carry the collaborators' field studies (the Arabian Peninsula alone holds Shibam, barjeel passive cooling, and Souq Waqif), each tied back to climate-and-land and patterns-of-life context.",
+      "Every populated region keeps its sources-and-method note, so the architecture-to-climate reasoning stays credited and auditable rather than decorative.",
+      "The 3D rendering technique now has a tested home, and a clear path to reuse in another project of mine (Chronicle).",
     ],
     constraints: [
-      "Solo across disciplines: the research, the editorial and cartographic design, and the interactive build were all self-directed, so scope had to stay honest about what was actually studied.",
-      "Coarse by design: six climate families and schematic layers are intentionally simplified reasoning tools, which the interface has to state rather than imply as precise fact.",
-      "Breadth versus depth: the historic East is enormous, so the atlas commits to expanding region by region with real studies instead of thin global coverage.",
+      "Faithful translation: the research, its climate framing, and its sources are the collaborators'; my job was to translate them into an atlas, not to re-derive or restate them as my own.",
+      "Coarse by design: the six climate families and schematic layers are intentionally simplified reasoning tools from the source research, which the interface has to state rather than imply as precise fact.",
+      "Breadth versus depth: only some regions have been researched and reported, so the atlas expands region by region with real studies instead of thin global coverage.",
       "In progress: several regions are still marked Atlas Expanding, so this is a growing project, not a finished reference.",
     ],
     snapshot: {
       challenge:
-        "Turn traditional architecture across the historic East from a catalogue of styles into a readable argument about climate, terrain, and water, and keep that argument sourced.",
+        "Turn collaborators' finished research argument about the historic East (that built form answers climate, terrain, and water) into something you can explore, with real 3D building models in the browser.",
       contribution:
-        "Solo research, editorial and cartographic design, and the interactive build: a layered basemap, a region-and-field-study structure, and a sources-and-method discipline.",
+        "Interaction design, a layered basemap, and the Three.js 3D translation of the collaborators' field studies, plus honest Atlas Expanding scaffolding.",
       outcome:
-        "A live, expanding Living Atlas: eleven regions, three map layers, and real field studies for early regions, honest about what is still to come.",
-      tools: ["TypeScript", "React", "HTML Canvas", "SVG"],
+        "A live, expanding atlas that renders the source research as an explorable, 3D map, and a browser-3D technique ready to reuse in Chronicle.",
+      tools: ["Three.js", "TypeScript", "React", "HTML Canvas"],
     },
     decisions: [
       {
-        decision: "Make climate the organizing idea, not architectural style.",
+        decision: "Translate a written argument into an explorable 3D atlas, not a slideshow.",
         rationale:
-          "Most references sort traditional buildings by period or ornament. Reading them as environmental responses is the actual insight, so climate, terrain, and water became the spine of the interface instead of a caption.",
-        alternatives: "Organize the atlas by region and style, with climate as background context.",
+          "The research already made the climate-as-cause case in prose. The opportunity was to let someone inspect it, with real 3D building models on the map, rather than read it linearly.",
+        alternatives: "Present the research as an illustrated article.",
         result:
-          "The map leads with terrain, climate, and waterway layers, and every field study connects a building's form back to the conditions that produced it.",
+          "The map leads with terrain, climate, and waterway layers, and buildings render as 3D models you can bring into view.",
       },
       {
-        decision: "Use six coarse climate families, and say so.",
+        decision: "Use the atlas as Three.js and browser-3D practice with a real payoff.",
         rationale:
-          "A precise climate classification would imply a false accuracy the sources cannot support at this scale. A small, schematic set is a better reasoning tool for connecting form to environment.",
-        alternatives: "Adopt a full technical climate classification for the appearance of rigor.",
+          "I wanted hands-on browser 3D and a technique I could carry into another project (Chronicle), not a throwaway demo. Wiring real research to real 3D forced the technique to hold up.",
+        alternatives: "Practice 3D on a synthetic scene with no content behind it.",
         result:
-          "Six families carry the reasoning, with an explicit caveat that local conditions vary, so the simplification is honest rather than hidden.",
+          "The 3D rendering approach now has a tested home and a clear path to reuse in Chronicle.",
       },
       {
-        decision: "Expand region by region with real studies, not thin global coverage.",
+        decision: "Keep the collaborators' six coarse climate families, and credit them.",
         rationale:
-          "The historic East is too large to cover credibly all at once. Depth in a few regions is more honest and more useful than a shallow pin on every country.",
-        alternatives: "Populate every region immediately with light, unsourced summaries.",
+          "The families are a deliberately schematic reasoning tool from the source research, not my classification. Presenting them faithfully, with the caveat that local conditions vary, keeps the translation honest.",
+        alternatives: "Swap in a different climate model to look more rigorous.",
         result:
-          "Early regions hold real field studies while the rest are marked Atlas Expanding, so coverage grows without pretending to be complete.",
+          "Six families carry the reasoning with an explicit caveat, credited to the source research.",
       },
       {
-        decision: "Attach a sources-and-method note to every populated region.",
+        decision: "Expand region by region, and mark the rest Atlas Expanding.",
         rationale:
-          "A claim that a building's form answers its climate is easy to assert and hard to trust without provenance. Method has to be visible for the atlas to be more than an aesthetic mood board.",
-        alternatives: "Present the studies as authoritative without exposing how they were built.",
+          "Only some regions had been researched and reported. Faking the rest would misrepresent both the research and the atlas.",
+        alternatives: "Populate every region with thin, unsourced summaries.",
         result:
-          "Each region's reasoning is traceable, which is what separates this from a gallery of pretty vernacular buildings.",
+          "Early regions hold translated field studies while the rest are marked Atlas Expanding, so coverage grows without pretending to be complete.",
       },
     ],
     reflection: [
-      "Committing to climate as the spine, rather than style, was the decision that gave the atlas a reason to exist beyond a collection of nice buildings.",
-      "Marking regions Atlas Expanding instead of filling them with thin content kept the project honest, and made it easier to keep working without the map ever lying about its coverage.",
-      "Writing method into each region slowed the work down and was worth it: a sourced claim about form and climate is the whole point, and it is exactly what an interactive map makes tempting to skip.",
+      "This atlas was really a Three.js and browser-3D exercise with a real payoff: translating finished research into something explorable made the technique earn its keep, and gave me a rendering approach I can carry into Chronicle.",
+      "Keeping the research and its method credited to the collaborators, rather than dressing it up as my own, was the point: my contribution is the translation and the 3D build, not the field work.",
+      "Marking regions Atlas Expanding instead of filling them kept the translation honest, and made it easy to keep adding as more of the source research is reported.",
     ],
-    note: "Cities of East is an active, independent research-and-design project. It uses deliberately schematic climate and terrain layers as reasoning tools, not precise scientific classification, and several regions are still marked Atlas Expanding. This page reflects the state of the atlas at the time it was written.",
+    note: "Cities of East is a research project by collaborators, reported on LinkedIn and Substack. This atlas is my interactive, 3D-rendered translation of that finished research, built to practice Three.js and browser 3D and to explore the technique for another project (Chronicle). The research, its climate framing, and its sources are the collaborators'; several regions are still marked Atlas Expanding. This page reflects the state of the atlas at the time it was written.",
     links: [{ label: "Explore the atlas", href: "https://cities-of-east-atlas.kalahsn2003.chatgpt.site/" }],
     atAGlance: [
-      { label: "Role", value: "Solo research, design, and build" },
-      { label: "Type", value: "Independent interactive atlas" },
+      { label: "Role", value: "Solo interaction design and 3D build" },
+      { label: "Type", value: "Interactive 3D atlas of others' research" },
       { label: "Status", value: "In progress, expanding" },
-      { label: "Idea", value: "Architecture as a response to climate and land" },
+      { label: "Idea", value: "Translate climate-and-form research into browser 3D" },
     ],
   },
   {
@@ -886,7 +886,7 @@ const caseStudiesData: CaseStudy[] = [
     oneLiner:
       "The UW Orphan Sponsorship Program site had the campaigns, donations, and impact to prove its work, but dense cards and unearned empty space made that work read smaller than it was.",
     summary:
-      "A self-initiated redesign of the University of Waterloo Orphan Sponsorship Program website, shaped through direct critique. It keeps every piece of real evidence (campaign names, money, partners, households, and the children the program serves) and rebuilds the composition so each remaining element carries more meaning: editorial type as the brand, one cobalt interaction colour, motion that earns attention, and interior pages that finally match the homepage's presence.",
+      "A redesign of the University of Waterloo Orphan Sponsorship Program website, requested by the program and shaped through direct critique. It keeps every piece of real evidence (campaign names, money, partners, households, and the children the program serves) and rebuilds the composition so each remaining element carries more meaning: editorial type as the brand, one cobalt interaction colour, motion that earns attention, and interior pages that finally match the homepage's presence.",
     tags: ["Web Design", "UX", "Design Systems"],
     toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
     artifacts: ["Interactive Prototype", "Process Atlas", "Before / After Studies", "Allocation Chart"],
@@ -917,7 +917,7 @@ const caseStudiesData: CaseStudy[] = [
       "Real information over placeholder polish: campaign names, money, partners, households, and the children the program serves all had to stay.",
       "Economical, not empty: open space had to create contrast or pace, never look like missing content.",
       "Motion with a reason: animation was reserved for entry, progress, and state change, not to rescue a weak layout.",
-      "In progress: a self-initiated redesign and interactive prototype, not an adopted or shipped update to the live site.",
+      "In progress: a requested redesign and interactive prototype, not the final, shipped update to the live site yet.",
     ],
     snapshot: {
       challenge:
@@ -967,14 +967,14 @@ const caseStudiesData: CaseStudy[] = [
       "Keeping the real campaign names, money, and partners rather than placeholder content was the decision that let restraint feel like confidence instead of missing information.",
       "Reserving motion for entry, progress, and state change kept it meaningful: a counter that only ever enters upward reads as an achievement, where the same motion used everywhere would have read as noise.",
     ],
-    note: "A self-initiated redesign of the UWOSP website, not affiliated with, endorsed by, or adopted by UWOSP. It is a working interactive prototype and a design direction in progress, not a shipped release. Screens reflect the state of the prototype and process atlas at the time this page was written.",
+    note: "This redesign was requested by UWOSP and is a work in progress: an interactive prototype and design direction, not the final, shipped update yet. Screens reflect the state of the prototype and process atlas at the time this page was written.",
     links: [
       { label: "Live prototype", href: "https://uwosp-redesign-feedback.kalahsn2003.chatgpt.site/" },
       { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/osp-process-atlas" },
     ],
     atAGlance: [
       { label: "Role", value: "Solo product and visual design" },
-      { label: "Type", value: "Self-initiated website redesign" },
+      { label: "Type", value: "Requested website redesign" },
       { label: "Status", value: "In progress" },
       { label: "Focus", value: "Restraint, story, and interaction" },
     ],

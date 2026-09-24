@@ -75,33 +75,6 @@ function img(name: string) {
   return `/case-studies/uwmsa-redesign/${name}.webp`;
 }
 
-/** One deliberate typographic beat per page: a single strong line lifted to
- *  display scale with a large pale accent quotation mark. */
-function PullQuote({ children, cite }: { children: React.ReactNode; cite?: string }) {
-  return (
-    <figure className="relative pl-10 md:pl-14">
-      <span
-        aria-hidden="true"
-        className="absolute left-0 top-0 select-none"
-        style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h1)", lineHeight: 0.7, color: "var(--accent-bright, var(--color-project-accent))" }}
-      >
-        &ldquo;
-      </span>
-      <blockquote
-        className="text-balance"
-        style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}
-      >
-        {children}
-      </blockquote>
-      {cite && (
-        <figcaption className="mt-5" style={EYEBROW}>
-          {cite}
-        </figcaption>
-      )}
-    </figure>
-  );
-}
-
 function NumberedList({ items }: { items: string[] }) {
   return (
     <ul className="mt-6 flex flex-col">
@@ -350,24 +323,25 @@ export default function UwmsaRedesignCaseStudy() {
         </section>
       )}
 
-      {/* ---------- Palette and emphasis studies ---------- */}
-      <section style={BAND.tint}>
+      {/* ---------- Palette and emphasis studies ----------
+          A stretch-card layout (text card fills to the phones' height) so the
+          tall media never leaves a short text column floating in blank space. */}
+      <section id="s-palette" style={BAND.tint}>
         <Container variant="standard" className="py-16 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-x-14 gap-y-12 items-center">
-            <div>
-              <Section
-                accentLabel
-                anchor="s-palette"
-                number="07"
-                label="Emphasis studies"
-                heading="Two studies on emphasis"
-                intro="With composition settled, two focused studies pushed only visual emphasis on the same Home content, to see how far tone could move without touching the structure."
-              />
-              <PullQuote cite="Same structure, different voice">
-                Identity comes from composition and tone, not a new palette.
-              </PullQuote>
+          <div className="grid lg:grid-cols-2 gap-x-14 gap-y-10 items-stretch">
+            <div
+              className="h-full flex flex-col justify-center rounded-[var(--radius-default)] border border-l-[3px] px-7 py-9 md:px-9"
+              style={{ borderColor: "var(--color-line)", borderLeftColor: "var(--accent-bright, var(--color-project-accent))", background: "var(--color-surface-2)" }}
+            >
+              <p style={EYEBROW}>07 &middot; Emphasis studies</p>
+              <h2 className="mt-3" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h2)", lineHeight: "var(--leading-h2)", color: "var(--color-text)" }}>
+                Two studies on emphasis
+              </h2>
+              <p className="mt-4" style={{ color: "var(--color-text-muted)", lineHeight: "var(--leading-body-l)" }}>
+                With composition settled, two focused studies pushed only visual emphasis on the same Home content, to see how far tone could move without touching the structure. Identity comes from composition and tone, not a new palette.
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-6 md:gap-8 max-w-[520px] lg:max-w-none lg:justify-self-end">
+            <div className="grid grid-cols-2 gap-6 md:gap-8">
               <Reveal>
                 <CaptionedMedia src={img("palette-warm")} alt="UWMSA home screen, Warm Ledger emphasis study" sizes={PHONE_SIZES} aspect={PHONE} label="Warm Ledger" caption="A warmer, ledger-like reading of the same hierarchy." />
               </Reveal>
@@ -401,12 +375,14 @@ export default function UwmsaRedesignCaseStudy() {
             )}
 
             {cs.note && (
-              <p
-                className="mt-14 pl-5 italic"
-                style={{ borderLeft: "2px solid var(--color-line)", color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
-              >
-                {cs.note}
-              </p>
+              <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-line)" }}>
+                <p
+                  className="mx-auto text-center italic"
+                  style={{ color: "var(--color-text-subtle)", fontSize: "var(--text-small)", lineHeight: "var(--leading-body)", maxWidth: "var(--measure-body)" }}
+                >
+                  {cs.note}
+                </p>
+              </div>
             )}
           </Section>
         </Container>
