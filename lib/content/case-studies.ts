@@ -1,6 +1,8 @@
 export interface Metric {
   value: string;
   label: string;
+  /** States when a number is a proxy, estimate, or design target rather than a measured result. Rendered by the shell Metric component, never hidden. */
+  qualifier?: string;
 }
 
 export interface CaseStudy {
@@ -648,11 +650,341 @@ const caseStudiesData: CaseStudy[] = [
       "The map-first workspace has automated keyboard, accessibility, and mechanical test coverage, but no real human comprehension study has been run yet. That's the next validation gap I'd close before trusting the workspace design, and it's written down as an open test plan rather than skipped.",
     note: "Chronicle is an active, independent project. This page reflects the state of the project's own documentation at the time it was written, and is explicit about what's built versus what's still architected only.",
   },
+  {
+    slug: "uwmsa-redesign",
+    category: "visual",
+    entryType: "independent-project",
+    caseStudyType: "product-ux",
+    tier: "standard",
+    heroMedia: {
+      src: "/case-studies/uwmsa-redesign/cover-shelf.webp",
+      alt: "The redesigned UWMSA app in the Quiet Utility direction: Prayer, Home, and Duas screens",
+      position: "center",
+    },
+    title: "Redesigning the UWMSA app around a five-second scan",
+    company: "UWMSA App - Independent Redesign",
+    role: "Solo - product design and prototyping",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "The Waterloo MSA app already had the right daily utilities, but oversized cards, repeated pills, and competing hierarchy made a quick between-class glance harder than it needed to be.",
+    summary:
+      "A redesign of the University of Waterloo Muslim Students Association app, requested by the club: keep every useful daily utility and the fixed brand, and rebuild the composition so next prayer, room changes, and the next community item read in about five seconds. Built as an interactive prototype, screen by screen, with the design system pulled from real interface needs rather than imposed up front.",
+    tags: ["Product Design", "UX", "Design Systems"],
+    toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
+    artifacts: ["Interactive Prototype", "Process Atlas", "Design Directions", "Palette Studies"],
+    metrics: [
+      { value: "5", label: "primary screens rebuilt: Home, Events, Prayer, Campus, Duas" },
+      { value: "3", label: "distinct art directions explored from the same Friday data" },
+      { value: "~5s", label: "scan target for the daily essentials", qualifier: "design target, not a measured result" },
+      { value: "2", label: "supporting palette and emphasis studies (Warm Ledger, Gold Contrast)" },
+    ],
+    problem:
+      "The existing app was genuinely useful: real prayer times, Jumuʿah sessions, a campus map, duʿāʾ reading, and community links. The problem was composition, not content. Every object lived in its own card, a greeting competed with next-prayer data for the first scan, Friday sessions all received equal weight, and the secondary drawers behaved like a website navigation list dropped inside an app. The redesign had to preserve the usefulness and the brand while replacing that competing hierarchy with a calmer system a student could read between classes.",
+    process: [
+      "Started from the complete existing product, not a single hero screen: audited Home, Prayer, Jumuʿah, Campus, Duas, and the menu, and treated each real feature (map, long-form Arabic content, community links) as a constraint the new language had to support.",
+      "Fixed the non-negotiables up front: the official UWMSA mark, the heritage gold, and the real schedules and locations stayed; only composition, hierarchy, and interaction were open.",
+      "Set four working principles: design for a five-second scan, stop using a card for every object, keep the information architecture, and prototype before extracting a system.",
+      "Built three genuinely different first Home screens on the same Friday data (Quiet Utility, Islamic Editorial, Campus Editorial) so the comparison isolated product character instead of dressing content edits up as visual progress.",
+      "Ran the drafts through specific review and kept the marked-up failures: one announcement feed instead of unrelated sections, importance carried by metadata and typography rather than false selection, Jumuʿah returned to the full next-prayer width, and one room-change record shared across Home and the affected Prayer rows.",
+      "Grew Home into a real system by building the harder screens: Events forced recurrence, tentative and major-event states, and calendar traversal; Prayer forced one clear next-prayer signal alongside adhan and iqāmah; Campus tested list-and-map depth; Duas tested long-form devotional reading.",
+      "Refined the three core directions onto one consistent shell, added two focused palette studies, then set Quiet Utility as the foundation and kept building screen by screen.",
+    ],
+    outcome: [
+      "An interactive prototype of the redesigned app exists and is navigable, with Home, Events, Prayer, Campus, and Duas built rather than mocked as flat frames.",
+      "A design system is being pulled from actual interface needs: shared header geometry, navigation, spacing, type scale, and interaction now hold across screens, with visual emphasis the only thing that varies between directions.",
+      "The information architecture the community already knows is intact: Home, Events, Prayer, Campus, and Duas stay primary, while About, Donate, Linktree, and the IIC Library move behind the logo menu.",
+      "A process atlas documents the path from baseline to current decision, keeping the cause of each change, not only the polished result.",
+    ],
+    constraints: [
+      "Fixed brand: the official UWMSA mark and heritage gold were givens, so identity had to come from composition, not a new palette.",
+      "Keep it recognizable: the goal was to change the composition without making the app feel like a different product the community had to relearn.",
+      "Preserve real depth: a campus map, long-form Arabic and audio duʿāʾ content, and community links all had to fit the same calmer language.",
+      "In progress: this redesign was requested but is not the final, shipped update yet, so it is a working prototype and a direction.",
+    ],
+    snapshot: {
+      challenge:
+        "Keep a genuinely useful community app and its fixed brand, but replace competing card-heavy hierarchy with a system readable in a five-second, between-class glance.",
+      contribution:
+        "Solo-audited the existing product, set the principles and constraints, explored three directions from the same data, corrected them through specific review, and built the primary screens as an interactive prototype.",
+      outcome:
+        "A navigable prototype and an emerging design system built on the Quiet Utility direction, with the information architecture the community already knows left intact.",
+      tools: ["Figma", "HTML", "CSS", "JavaScript"],
+    },
+    decisions: [
+      {
+        decision: "Design for a five-second scan as the primary constraint.",
+        rationale:
+          "The app is checked between classes. Next prayer, time remaining, room changes, and the next community item have to be understandable at a glance, so the whole hierarchy was built backward from that moment.",
+        alternatives: "Optimize each screen for completeness and let the daily glance emerge from it.",
+        result:
+          "Home leads with one next-prayer signal and the day's essentials, and secondary information steps back instead of competing for the first scan.",
+      },
+      {
+        decision: "Stop using a card for every object.",
+        rationale:
+          "Repeated containers and pills flattened importance: everything looked equally emphasized, which is the same as nothing being emphasized. Spacing, rules, type scale, and alignment can carry hierarchy on their own.",
+        alternatives: "Keep the card-per-object pattern and try to fix hierarchy with color and size alone.",
+        result:
+          "Containers are reserved for true emphasis or action; the rest of the hierarchy is carried by composition, which is what let the five-second scan work.",
+      },
+      {
+        decision: "Keep the information architecture; change the composition.",
+        rationale:
+          "The community already knows where things live. Reorganizing navigation would have added a relearning cost the redesign was never meant to impose.",
+        alternatives: "Restructure navigation around the new visual system.",
+        result:
+          "Home, Events, Prayer, Campus, and Duas stay primary; only lower-frequency destinations moved behind the logo menu.",
+      },
+      {
+        decision: "Prototype before extracting the system.",
+        rationale:
+          "A design system invented up front tends to fit the first screen and fight the rest. Home established the language, then Events, Prayer, Campus, and Duas exposed the states and components the system actually needed.",
+        alternatives: "Define a full component library first, then apply it to every screen.",
+        result:
+          "The system is being pulled from real interface needs (recurrence, major-event states, iqāmah, list-and-map, long-form reading) rather than imposed, which is why it holds across such different screens.",
+      },
+    ],
+    reflection: [
+      "Keeping the marked-up failures in a process archive, not just the polished result, made the review reasoning reusable: the cause of a change is more useful later than the change itself.",
+      "Exploring three directions on identical data was the decision that kept the work honest, because it separated product character from content edits dressed up as progress.",
+      "Fixing the brand and information architecture in advance was freeing, not limiting: with identity and structure settled, every remaining decision was about hierarchy and composition, which is where the real problem was.",
+    ],
+    note: "This redesign was requested by UWMSA and is a work in progress: an interactive prototype and design direction, not the final, shipped update yet. Screens and studies reflect the state of the prototype and process atlas at the time this page was written.",
+    links: [
+      { label: "Live prototype", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/" },
+      { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/process-atlas.html" },
+    ],
+    atAGlance: [
+      { label: "Role", value: "Solo product design and prototyping" },
+      { label: "Type", value: "Requested app redesign" },
+      { label: "Status", value: "In progress" },
+      { label: "Focus", value: "Hierarchy, composition, and a five-second scan" },
+    ],
+  },
+  {
+    slug: "cities-of-east",
+    category: "systems",
+    entryType: "independent-project",
+    caseStudyType: "technical",
+    tier: "standard",
+    heroMedia: {
+      src: "/case-studies/cities-of-east/atlas-climate.webp",
+      alt: "The Cities of East living atlas, read as climate families across the historic East",
+      position: "center",
+    },
+    title: "Cities of East: a living atlas of architecture and climate",
+    company: "Cities of East - Independent Project",
+    role: "Solo - interaction design and 3D browser rendering",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "Collaborators researched how the historic East built for its climate and land; I translated that finished research into an interactive, browser-rendered 3D atlas.",
+    summary:
+      "An interactive Living Atlas that translates existing field research, reported by collaborators on LinkedIn and Substack, into a browser-based map with 3D-rendered building models. I built it to practice Three.js and on-canvas 3D rendering, and to test whether that technique could carry into another project of mine (Chronicle). The research and its climate-and-method framing are the collaborators'; my contribution is the interaction design, the layered basemap, and the 3D translation of their studies.",
+    tags: ["Interaction Design", "3D / WebGL", "Cartography"],
+    toolTags: ["Three.js", "TypeScript", "React", "HTML Canvas"],
+    artifacts: ["Interactive Atlas", "3D Building Models", "Layered Basemap", "Field Studies"],
+    metrics: [
+      { value: "11", label: "regions mapped, from the Arabian Peninsula to East Asia" },
+      { value: "3", label: "readable map layers: terrain, climate, waterways" },
+      { value: "6", label: "schematic climate families used to reason about built form" },
+      { value: "Studies", label: "built for early regions; the rest marked Atlas Expanding" },
+    ],
+    problem:
+      "Traditional architecture across the Islamic and eastern world is usually catalogued as ornament and style, detached from why it exists. A barjeel wind tower, a Shibam tower house, or an oasis settlement is really an answer to aridity, heat, terrain, and the location of water. Collaborators had already made that argument in their research; the problem I took on was to translate it into something you can explore, a reading tool rather than a gallery, where a city's form and its 3D-rendered buildings sit on the climate and terrain that produced them.",
+    process: [
+      "Started from collaborators' finished research on the historic East, reported on LinkedIn and Substack, and treated my job as translation: turning a written argument into something explorable.",
+      "Built a layered basemap that can be read three ways, by terrain, by climate, and by waterways, with a detail lens, so the same geography can be interrogated from different environmental angles.",
+      "Rendered key building responses as 3D models on the browser canvas (the barjeel, the malqaf, Shibam's tower houses), which was the real technical practice: Three.js and on-canvas 3D.",
+      "Carried the research's own six schematic climate families (arid desert, semi-arid steppe, Mediterranean dry-summer, humid temperate, tropical monsoon, cold alpine) and its sources-and-method framing into each region, so the translation stayed faithful to the reporting rather than re-deriving it.",
+      "Structured the content as regions that open into the collaborators' field studies, each tied back to climate-and-land and patterns-of-life context.",
+      "Shipped the atlas as an expanding system: early regions carry translated studies while later ones are openly marked Atlas Expanding, so the map stays honest about what is done versus still to come.",
+    ],
+    outcome: [
+      "An interactive atlas is live and navigable: eleven regions on a layered map, with terrain, climate, and waterway readings, a detail lens, and 3D-rendered building models.",
+      "Early regions carry the collaborators' field studies (the Arabian Peninsula alone holds Shibam, barjeel passive cooling, and Souq Waqif), each tied back to climate-and-land and patterns-of-life context.",
+      "Every populated region keeps its sources-and-method note, so the architecture-to-climate reasoning stays credited and auditable rather than decorative.",
+      "The 3D rendering technique now has a tested home, and a clear path to reuse in another project of mine (Chronicle).",
+    ],
+    constraints: [
+      "Faithful translation: the research, its climate framing, and its sources are the collaborators'; my job was to translate them into an atlas, not to re-derive or restate them as my own.",
+      "Coarse by design: the six climate families and schematic layers are intentionally simplified reasoning tools from the source research, which the interface has to state rather than imply as precise fact.",
+      "Breadth versus depth: only some regions have been researched and reported, so the atlas expands region by region with real studies instead of thin global coverage.",
+      "In progress: several regions are still marked Atlas Expanding, so this is a growing project, not a finished reference.",
+    ],
+    snapshot: {
+      challenge:
+        "Turn collaborators' finished research argument about the historic East (that built form answers climate, terrain, and water) into something you can explore, with real 3D building models in the browser.",
+      contribution:
+        "Interaction design, a layered basemap, and the Three.js 3D translation of the collaborators' field studies, plus honest Atlas Expanding scaffolding.",
+      outcome:
+        "A live, expanding atlas that renders the source research as an explorable, 3D map, and a browser-3D technique ready to reuse in Chronicle.",
+      tools: ["Three.js", "TypeScript", "React", "HTML Canvas"],
+    },
+    decisions: [
+      {
+        decision: "Translate a written argument into an explorable 3D atlas, not a slideshow.",
+        rationale:
+          "The research already made the climate-as-cause case in prose. The opportunity was to let someone inspect it, with real 3D building models on the map, rather than read it linearly.",
+        alternatives: "Present the research as an illustrated article.",
+        result:
+          "The map leads with terrain, climate, and waterway layers, and buildings render as 3D models you can bring into view.",
+      },
+      {
+        decision: "Use the atlas as Three.js and browser-3D practice with a real payoff.",
+        rationale:
+          "I wanted hands-on browser 3D and a technique I could carry into another project (Chronicle), not a throwaway demo. Wiring real research to real 3D forced the technique to hold up.",
+        alternatives: "Practice 3D on a synthetic scene with no content behind it.",
+        result:
+          "The 3D rendering approach now has a tested home and a clear path to reuse in Chronicle.",
+      },
+      {
+        decision: "Keep the collaborators' six coarse climate families, and credit them.",
+        rationale:
+          "The families are a deliberately schematic reasoning tool from the source research, not my classification. Presenting them faithfully, with the caveat that local conditions vary, keeps the translation honest.",
+        alternatives: "Swap in a different climate model to look more rigorous.",
+        result:
+          "Six families carry the reasoning with an explicit caveat, credited to the source research.",
+      },
+      {
+        decision: "Expand region by region, and mark the rest Atlas Expanding.",
+        rationale:
+          "Only some regions had been researched and reported. Faking the rest would misrepresent both the research and the atlas.",
+        alternatives: "Populate every region with thin, unsourced summaries.",
+        result:
+          "Early regions hold translated field studies while the rest are marked Atlas Expanding, so coverage grows without pretending to be complete.",
+      },
+    ],
+    reflection: [
+      "This atlas was really a Three.js and browser-3D exercise with a real payoff: translating finished research into something explorable made the technique earn its keep, and gave me a rendering approach I can carry into Chronicle.",
+      "Keeping the research and its method credited to the collaborators, rather than dressing it up as my own, was the point: my contribution is the translation and the 3D build, not the field work.",
+      "Marking regions Atlas Expanding instead of filling them kept the translation honest, and made it easy to keep adding as more of the source research is reported.",
+    ],
+    note: "Cities of East is a research project by collaborators, reported on LinkedIn and Substack. This atlas is my interactive, 3D-rendered translation of that finished research, built to practice Three.js and browser 3D and to explore the technique for another project (Chronicle). The research, its climate framing, and its sources are the collaborators'; several regions are still marked Atlas Expanding. This page reflects the state of the atlas at the time it was written.",
+    links: [{ label: "Explore the atlas", href: "https://cities-of-east-atlas.kalahsn2003.chatgpt.site/" }],
+    atAGlance: [
+      { label: "Role", value: "Solo interaction design and 3D build" },
+      { label: "Type", value: "Interactive 3D atlas of others' research" },
+      { label: "Status", value: "In progress, expanding" },
+      { label: "Idea", value: "Translate climate-and-form research into browser 3D" },
+    ],
+  },
+  {
+    slug: "uwosp-redesign",
+    category: "visual",
+    entryType: "independent-project",
+    caseStudyType: "product-ux",
+    tier: "standard",
+    heroMedia: {
+      src: "/case-studies/uwosp-redesign/home.webp",
+      alt: "The redesigned UWOSP homepage: large editorial type over real photography",
+      position: "top",
+    },
+    title: "Redesigning the UWOSP site so restraint reads as intentional",
+    company: "UWOSP Website - Independent Redesign",
+    role: "Solo - product and visual design, prototyping",
+    timeframe: "2026 - ongoing",
+    oneLiner:
+      "The UW Orphan Sponsorship Program site had the campaigns, donations, and impact to prove its work, but dense cards and unearned empty space made that work read smaller than it was.",
+    summary:
+      "A redesign of the University of Waterloo Orphan Sponsorship Program website, requested by the program and shaped through direct critique. It keeps every piece of real evidence (campaign names, money, partners, households, and the children the program serves) and rebuilds the composition so each remaining element carries more meaning: editorial type as the brand, one cobalt interaction colour, motion that earns attention, and interior pages that finally match the homepage's presence.",
+    tags: ["Web Design", "UX", "Design Systems"],
+    toolTags: ["Figma", "HTML", "CSS", "JavaScript"],
+    artifacts: ["Interactive Prototype", "Process Atlas", "Before / After Studies", "Allocation Chart"],
+    metrics: [
+      { value: "4", label: "interior page systems reworked: Campaigns, Donate, Impact, and the CTA and footer" },
+      { value: "4", label: "design principles pulled from direct critique" },
+      { value: "1", label: "cobalt interaction colour, used consistently across the site" },
+      { value: "1", label: "pie chart rebuilt as an explorable, accessible allocation" },
+    ],
+    problem:
+      "The original UWOSP site already had the right facts: real campaigns, donation progress, volunteer reasons, and trusted partner names. The problem was that dense cards and generic page patterns made that work feel smaller than it was, with no clear story tying it together. The fix could not be decoration, and it could not be stripping content to look minimal. The brief that came out of critique was sharper: keep every piece of real evidence, and make each remaining element carry more meaning, so that less actually reads as intentional rather than as missing content.",
+    process: [
+      "Audited the original site as a whole (campaigns, events, impact, and recruitment) and named the real problem as composition and story, not missing content.",
+      "Found the brand voice on the homepage first: large editorial type as the primary expression, one cobalt interaction colour, and ink-and-paper contrast with real photography.",
+      "Ran the drafts through direct, specific critique and kept the marked-up failures: impact buried under unearned space, a join sequence that tiny numbers did not explain, a mobile menu colliding with the logo, and donate padding that separated the message instead of supporting it.",
+      "Rebuilt the impact page so proof reads like an achievement: a stronger narrative, metrics given ceremony, and location cards that own the lower field instead of floating in space.",
+      "Turned the old four-bar allocation into one explorable donut: a selected slice lifts, the amount moves to the center without layout shift, legend and chart share a single active state, and motion is reduced on request.",
+      "Reworked mobile navigation from a collision into a deliberate overlay: full-width targets, the logo and close action on their own row, outside-click dismissal, and focus returned to the trigger.",
+      "Gave each interior page a distinct job on one shared system: Campaigns prioritize discovery, Donate turns numbers into proof, and Impact lets visitors inspect the record, all sharing type, rules, motion, and actions.",
+    ],
+    outcome: [
+      "An interactive prototype of the redesigned site exists and is navigable, from the homepage through Campaigns, Impact, Donate, and the CTA and footer.",
+      "Restraint reads as active rather than empty: the homepage's elegance carries into interior pages that now have enough personality, evidence, and interaction to support the mission.",
+      "The impact story reads as achievement: counters enter upward, reset only out of view, and never visibly reverse.",
+      "A shared system holds it together: navigation, buttons, inline links, cards, stats, and charts share predictable states, and the real content can be wired to the existing admin dashboard and CRM.",
+    ],
+    constraints: [
+      "Real information over placeholder polish: campaign names, money, partners, households, and the children the program serves all had to stay.",
+      "Economical, not empty: open space had to create contrast or pace, never look like missing content.",
+      "Motion with a reason: animation was reserved for entry, progress, and state change, not to rescue a weak layout.",
+      "In progress: a requested redesign and interactive prototype, not the final, shipped update to the live site yet.",
+    ],
+    snapshot: {
+      challenge:
+        "Keep a nonprofit site's real evidence and its fixed mission, but replace dense cards and unearned empty space with a composition where restraint reads as intentional.",
+      contribution:
+        "Solo-audited the original site, found the brand voice on the homepage, corrected the interior pages through direct critique, and built the primary pages and interactions as a prototype.",
+      outcome:
+        "A navigable prototype and an emerging system where every interior page has a clear job, real evidence, and interaction that earns its motion.",
+      tools: ["Figma", "HTML", "CSS", "JavaScript"],
+    },
+    decisions: [
+      {
+        decision: "Make every remaining element carry more meaning instead of adding decoration.",
+        rationale:
+          "The guiding critique was that less is more, and adding more to the less breaks the philosophy. The fix for a thin-feeling page was not ornament, it was density of meaning: real campaigns, money, partners, and people.",
+        alternatives: "Fill the open space with decorative graphics and secondary content.",
+        result:
+          "Real evidence stayed, and open space became a tool for contrast and pace, so the site reads as deliberately economical rather than empty.",
+      },
+      {
+        decision: "Let type and one interaction colour carry the brand.",
+        rationale:
+          "The homepage found its voice through large editorial type and a single cobalt action colour before the rest of the system did. Making that the brand kept interior pages coherent without a heavy visual kit.",
+        alternatives: "Introduce more colours and decorative components per page to add variety.",
+        result:
+          "Type became the primary brand expression, and one interaction colour reads consistently across the whole site.",
+      },
+      {
+        decision: "Rebuild the pie chart as one explorable, accessible allocation.",
+        rationale:
+          "The original four bars did not match the new system. A single donut where a slice lifts and the amount recenters turns a static stat into something a visitor can inspect, and it had to stay legible with reduced motion.",
+        alternatives: "Keep the four separate bars, or animate the chart with no reduced-motion path.",
+        result:
+          "Legend and chart now share one active state, the center label changes without layout shift, and motion is reduced when the visitor asks for it.",
+      },
+      {
+        decision: "Treat mobile navigation as a deliberate layer.",
+        rationale:
+          "The prototype menu collided with the logo and the page beneath it, which read as a bug, not a design. Navigation needed clear separation and predictable dismissal.",
+        alternatives: "Keep the inline menu and fix only the spacing.",
+        result:
+          "The menu became a full-width overlay with outside-click dismissal, its own row for logo and close, and focus returned to the trigger.",
+      },
+    ],
+    reflection: [
+      "Working from direct, specific critique (marks on the exact places where whitespace and alignment stopped feeling intentional) made the redesign faster to reason about than a vague sense that something was off.",
+      "Keeping the real campaign names, money, and partners rather than placeholder content was the decision that let restraint feel like confidence instead of missing information.",
+      "Reserving motion for entry, progress, and state change kept it meaningful: a counter that only ever enters upward reads as an achievement, where the same motion used everywhere would have read as noise.",
+    ],
+    note: "This redesign was requested by UWOSP and is a work in progress: an interactive prototype and design direction, not the final, shipped update yet. Screens reflect the state of the prototype and process atlas at the time this page was written.",
+    links: [
+      { label: "Live prototype", href: "https://uwosp-redesign-feedback.kalahsn2003.chatgpt.site/" },
+      { label: "Process atlas", href: "https://uwmsa-redesign-feedback.kalahsn2003.chatgpt.site/portfolio/osp-process-atlas" },
+    ],
+    atAGlance: [
+      { label: "Role", value: "Solo product and visual design" },
+      { label: "Type", value: "Requested website redesign" },
+      { label: "Status", value: "In progress" },
+      { label: "Focus", value: "Restraint, story, and interaction" },
+    ],
+  },
 ];
 
 // Reverse-chronological display order (most recent first). Course/undated
-// projects (pill-pal) sort last.
-const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "pill-pal"];
+// projects (pill-pal) sort last. The two independent, in-progress projects
+// (uwmsa-redesign, cities-of-east) sort after the established work.
+const displayOrder = ["chronicle", "roomease", "forcen", "greenhouse", "informatica", "hera-fertility", "pathpeer", "uwmsa-redesign", "cities-of-east", "uwosp-redesign", "pill-pal"];
 
 export const caseStudies: CaseStudy[] = displayOrder
   .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))

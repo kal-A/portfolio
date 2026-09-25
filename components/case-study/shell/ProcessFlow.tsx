@@ -219,8 +219,15 @@ export default function ProcessFlow({
     );
   }
 
+  // items-center, not items-stretch: the flow and the detail panel are rarely
+  // the same height, and stretching the shorter one to match left a lopsided
+  // empty strip under whichever was shorter (usually the flow, under a taller
+  // detail panel). Centering both columns balances that gap above and below the
+  // shorter one so the pairing reads as an intentional composition, not a box
+  // that spilled past the flowchart. topAlignRows still governs the flow's own
+  // internal justify for its (now natural) height.
   return (
-    <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-stretch">
+    <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-center">
       {stepsBlock}
       {detailPanel}
     </div>

@@ -10,6 +10,7 @@ import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
 import Metric from "@/components/case-study/shell/Metric";
 import Reveal from "@/components/Reveal";
+import MediaFrame from "@/components/ui/MediaFrame";
 import ProcessFlow, { type ProcessStep } from "@/components/case-study/shell/ProcessFlow";
 import CategoryGrid from "@/components/case-study/shell/CategoryGrid";
 
@@ -112,10 +113,23 @@ export default function GreenhouseCaseStudy() {
               lead={cs.oneLiner}
               meta={`${cs.location} · ${cs.timeframe}`}
               artifacts={cs.artifacts}
-              media={cs.heroMedia}
             />
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          {cs.heroMedia && (
+            <Reveal delay={150}>
+              <MediaFrame
+                src={cs.heroMedia.src}
+                alt={cs.heroMedia.alt}
+                objectPosition={cs.heroMedia.position}
+                sizes="(min-width: 1024px) 1520px, 100vw"
+                priority
+                parallax
+                className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+              />
+            </Reveal>
+          )}
         </Container>
       </section>
 

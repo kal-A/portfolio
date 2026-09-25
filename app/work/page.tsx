@@ -38,8 +38,10 @@ export default function WorkIndex() {
               color: "var(--color-text-muted)",
             }}
           >
-            Every internship, capstone, and course project, grouped by what each one
-            demonstrates rather than by title or date.
+            Everything I have worked on, grouped by the kind of work it is:
+            systems and technical builds, product and design, research and
+            strategy. Filter to just hired work or just the things I have built
+            on my own, or browse it all.
           </p>
         </Container>
       </div>

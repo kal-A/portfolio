@@ -9,6 +9,7 @@ import CaseStudyTOC from "@/components/case-study/shell/CaseStudyTOC";
 import CaseStudySnapshot from "@/components/case-study/shell/CaseStudySnapshot";
 import ProcessFlow, { type ProcessStep } from "@/components/case-study/shell/ProcessFlow";
 import Reveal from "@/components/Reveal";
+import MediaFrame from "@/components/ui/MediaFrame";
 
 /**
  * Case-study format playbook rollout (docs/redesign/11-case-study-format-playbook.md),
@@ -302,14 +303,21 @@ export default function PathPeerCaseStudy() {
               lead={HERO_LEAD}
               meta={`${cs.location} · ${cs.timeframe}`}
               artifacts={cs.artifacts}
-              media={{
-                src: "/case-studies/pathpeer/pathpeer-hero-home.png",
-                alt: "PathPeer's live landing page, where a student asks a mentor how to prepare for a software engineering interview",
-                position: "top",
-              }}
             />
             <CaseStudyTOC items={TOC_ITEMS} />
           </div>
+
+          <Reveal delay={150}>
+            <MediaFrame
+              src="/case-studies/pathpeer/pathpeer-hero-home.png"
+              alt="PathPeer's live landing page, where a student asks a mentor how to prepare for a software engineering interview"
+              objectPosition="top"
+              sizes="(min-width: 1024px) 1200px, 100vw"
+              priority
+              parallax
+              className="aspect-[2/1] mt-10 lg:mt-12 w-full"
+            />
+          </Reveal>
         </Container>
       </section>
 

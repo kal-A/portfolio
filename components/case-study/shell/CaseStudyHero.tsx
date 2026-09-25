@@ -1,5 +1,4 @@
 import Link from "next/link";
-import MediaFrame from "@/components/ui/MediaFrame";
 import Reveal from "@/components/Reveal";
 
 /**
@@ -11,6 +10,13 @@ import Reveal from "@/components/Reveal";
  * reads that token for the eyebrow line only — everything else is the
  * site's standard dark text/muted-text tokens, so every case study now
  * shares one hero shell instead of hand-building its own gradient.
+ *
+ * Text only, by design. The cover image is rendered by each case study as a
+ * full-width frame BELOW the hero-text/TOC grid, not inside this component:
+ * this hero sits in the grid's narrow `1fr` column, so any media rendered
+ * here would stop short of the TOC column and leave a dead strip on the
+ * right. Every case study now renders its cover full-bleed under the grid
+ * (the UWMSA/UWOSP pattern), so covers extend the full container width.
  */
 export default function CaseStudyHero({
   company,
@@ -19,7 +25,6 @@ export default function CaseStudyHero({
   lead,
   meta,
   artifacts,
-  media,
 }: {
   company: string;
   role: string;
@@ -28,7 +33,6 @@ export default function CaseStudyHero({
   /** e.g. "Mississauga, ON · Jan 2025 – Apr 2025" — already-composed, since which parts appear varies per entry type. */
   meta: string;
   artifacts: string[];
-  media?: { src: string; alt: string; position?: string };
 }) {
   return (
     <div>
@@ -96,20 +100,6 @@ export default function CaseStudyHero({
           </div>
         )}
       </Reveal>
-
-      {media && (
-        <Reveal delay={150}>
-          <MediaFrame
-            src={media.src}
-            alt={media.alt}
-            objectPosition={media.position}
-            sizes="(min-width: 1024px) 1120px, 100vw"
-            priority
-            parallax
-            className="aspect-[2/1] mt-10"
-          />
-        </Reveal>
-      )}
     </div>
   );
 }
